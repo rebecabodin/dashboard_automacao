@@ -784,46 +784,78 @@ if not df_captacao.empty:
             
             
     elif menu_selecionado == '🕸️ Funil Manychat (WPP)':
-        st.header("🕸️ Funil de Boas-Vindas Manychat (Teste A/B)")
+        st.header("🕸️ Funil de Boas-Vindas Manychat (BI A/B)")
+        st.write("Identifique vazamentos na automação e entenda qual versão converte mais leads.")
         st.write("---")
         
         st.info("💡 **Aguardando dados oficiais:** Este é um protótipo visual. Para que os dados sejam reais, assegure-se de que a automação N8N/Manychat grave a tag específica na planilha ou conectaremos direto a API.")
         
+        # --- FILTROS DE BI ---
+        visao_funil = st.radio("Selecione a Visão de Análise (BI):", ["Visão Macro (Consolidado)", "Comparativo de Copys", "Comparativo de Perfis"], horizontal=True)
+        
+        st.markdown("### ⚡ Engajamento Inicial (Fase 1)")
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Total de Envios", "541", help="Total de pessoas que entraram no fluxo")
+        with col2:
+            st.metric("Taxa de Entrega", "93.3%", delta="Excelente", help="Leads que efetivamente receberam a mensagem (505/541)")
+        with col3:
+            st.metric("Taxa de Clique (CTR)", "56.2%", help="284 cliques em 505 entregas")
+        with col4:
+            st.metric("Opt-out (Rejeição)", "1.0%", delta="Menor é melhor", delta_color="inverse", help="O Manychat cravou 10 descadastros (1%).")
+            
+        st.markdown("---")
         import plotly.graph_objects as go
         
-        # Estrutura do Funil Mockada baseada nos fluxos lidos
-        col1, col2, col3 = st.columns([1, 1, 1.5])
-        with col1:
+        if visao_funil == "Visão Macro (Consolidado)":
+            col_a, col_b = st.columns([2, 1])
+            with col_a:
+                st.markdown("### 🌪️ Funil de Conversão (Pós-Clique)")
+                fig_sankey = go.Figure(go.Funnel(
+                    y=["1. Clique Inicial", "2. Visualização do Vídeo", "3. Convite para Grupo VIP", "4. Recebeu Pesquisa", "5. Preencheu Pesquisa"],
+                    x=[284, 243, 241, 116, 70],
+                    textinfo="value+percent previous",
+                    marker={"color": ["#4B8BBE", "#4B8BBE", "#4B8BBE", "#FFD43B", "#FFD43B"]}
+                ))
+                fig_sankey.update_layout(height=400)
+                st.plotly_chart(fig_sankey, use_container_width=True)
+            with col_b:
+                st.markdown("### 🚨 Diagnóstico de Gargalos")
+                st.info("**Insight DBA:** A maior quebra do fluxo global ocorre entre o 'Convite para o Grupo' e o envio da 'Pesquisa'. Apenas 48% (116/241) chegam na pesquisa. **Ação recomendada:** Otimizar o engajamento dentro do grupo do WhatsApp.")
+                
+                st.markdown("### 🥧 Público Atraído")
+                import plotly.express as px
+                df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [192, 51]})
+                fig_pie = px.pie(df_pie, values='Qtd', names='Perfil', hole=0.4, color_discrete_sequence=['#4B8BBE', '#FFD43B'])
+                fig_pie.update_layout(height=220, margin=dict(l=0, r=0, t=0, b=0))
+                st.plotly_chart(fig_pie, use_container_width=True)
+
+        elif visao_funil == "Comparativo de Copys":
             st.markdown("### 🏆 Vencedor do Teste A/B")
-            st.metric(label="Copy V2 (Empreendedor)", value="65% CTR", delta="Engajamento")
-            st.caption("Copy V2 puxou o maior volume de cliques absolutos.")
+            st.success("A **Copy V2** puxou o maior volume de engajamento relativo inicial.")
             
-        with col2:
-            st.markdown("### 🚫 Taxa de Rejeição")
-            st.metric(label="Descadastros Iniciais", value="1%", delta="Menor é melhor", delta_color="inverse", help="Leads que clicaram em 'Parar Mensagens' ou 'Bloquear Contato'. O Manychat cravou a marca estatística global de 1% de opt-out (10 descadastros absolutos).")
-            st.caption("Excelente! A sua rejeição está esmagadoramente abaixo de 5%.")
-        
-        with col3:
-            st.markdown("### 🥧 Público Atraído")
-            import plotly.express as px
-            df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [192, 51]})
-            fig_pie = px.pie(df_pie, values='Qtd', names='Perfil', hole=0.4, color_discrete_sequence=['#4B8BBE', '#FFD43B'])
-            fig_pie.update_layout(height=200, margin=dict(l=0, r=0, t=0, b=0))
-            st.plotly_chart(fig_pie, use_container_width=True)
+            fig = go.Figure()
+            fig.add_trace(go.Funnel(name='V1', y=["Cliques", "Vídeos", "Grupo"], x=[106, 92, 90], textinfo="value+percent initial"))
+            fig.add_trace(go.Funnel(name='V2', y=["Cliques", "Vídeos", "Grupo"], x=[117, 92, 92], textinfo="value+percent initial"))
+            fig.add_trace(go.Funnel(name='V3', y=["Cliques", "Vídeos", "Grupo"], x=[61, 59, 59], textinfo="value+percent initial"))
+            st.plotly_chart(fig, use_container_width=True)
             
-        st.markdown("### 🌪️ Taxa de Conversão por Etapa (Geral)")
-        fig_sankey = go.Figure(go.Funnel(
-            y=["1. Início do Fluxo (Disparos)", 
-               "2. Recebimento da Copy", 
-               "3. Interesse (Técnico/Empreendedor)", 
-               "4. Visualização do Vídeo", 
-               "5. Convite para Grupo VIP",
-               "6. Recebimento da Pesquisa",
-               "7. Conclusão da Pesquisa (Links VIP)"],
-            x=[541, 505, 284, 243, 241, 116, 70],
-            textinfo="value+percent initial"
-        ))
-        st.plotly_chart(fig_sankey, use_container_width=True)
+            st.markdown("### 🚨 Diagnóstico de Copys")
+            st.warning("**Insight DBA:** A copy V3 obteve menos disparos brutos, porém sua retenção até a fase do Grupo (96%) é muito alta se comparada à V1. Pode ser a copy mais qualificada do teste.")
+
+        elif visao_funil == "Comparativo de Perfis":
+            col_t, col_e = st.columns(2)
+            with col_t:
+                st.markdown("#### 🔧 Jornada do Técnico")
+                fig_tec = go.Figure(go.Funnel(y=["Cliques", "Vídeo Téc", "Grupo Téc"], x=[205, 192, 193], textinfo="value+percent previous", marker={"color": "#4B8BBE"}))
+                st.plotly_chart(fig_tec, use_container_width=True)
+            with col_e:
+                st.markdown("#### 💼 Jornada do Empreendedor")
+                fig_emp = go.Figure(go.Funnel(y=["Cliques", "Vídeo Emp", "Grupo Emp"], x=[79, 51, 48], textinfo="value+percent previous", marker={"color": "#FFD43B"}))
+                st.plotly_chart(fig_emp, use_container_width=True)
+
+            st.markdown("### 🚨 Diagnóstico de Perfis")
+            st.warning("**Insight DBA:** O perfil 'Técnico' avança absurdamente melhor para o Vídeo (93%) do que o 'Empreendedor' (64%). A mensagem inicial atrai o Empreendedor, mas o direcionamento para o Vídeo precisa ser mais forte.")
         
 else:
     st.warning("Não foi possível carregar os dados. Verifique a planilha.")
