@@ -811,22 +811,24 @@ if not df_captacao.empty:
             col_a, col_b = st.columns([2, 1])
             with col_a:
                 st.subheader(
-                    "🌪️ Funil de Conversão (Pós-Clique)",
-                    help="**Glossário do Funil:**\\n\\n**1. Interesse:** Soma de todos os cliques na 1ª Mensagem (V1 + V2 + V3).\\n\\n**2. Escolha do Perfil:** Total de leads que optaram pelos botões 'Técnico' ou 'Empreendedor'.\\n\\n**3. Assistiu ao Vídeo:** Total que assistiu aos vídeos de qualificação e chegaram na página do Grupo VIP.\\n\\n**4. Recebeu Pesquisa:** Leads que permaneceram no Grupo VIP e receberam a notificação da pesquisa.\\n\\n**5. Concluiu (Fim):** Aqueles que engajaram na pesquisa e concluíram a jornada (potenciais Super Quentes)."
+                    "🌪️ Funil de Conversão (Global)",
+                    help="**Glossário do Funil:**\\n\\n**1. Total Disparado:** Todos os leads acionados pela automação (V1+V2+V3).\\n\\n**2. Entregue no Celular:** Leads que de fato receberam a mensagem (excluindo números inválidos ou sem internet no momento).\\n\\n**3. Interesse:** Soma de todos os cliques na 1ª Mensagem.\\n\\n**4. Escolheu Perfil:** Total de leads que optaram por 'Técnico' ou 'Empreendedor'.\\n\\n**5. Assistiu ao Vídeo:** Total que chegou na página do Grupo VIP.\\n\\n**6. Recebeu Pesquisa:** Leads que permaneceram e receberam a pesquisa.\\n\\n**7. Concluiu (Fim):** Aqueles que preencheram a pesquisa e concluíram a jornada."
                 )
                 fig_sankey = go.Figure(go.Funnel(
-                    y=["1. Interesse (Cliques na Copy)", "2. Escolha do Perfil (Téc/Emp)", "3. Assistiu ao Vídeo", "4. Recebeu Pesquisa", "5. Concluiu (Fim)"],
-                    x=[284, 248, 243, 118, 62],
+                    y=["1. Disparado", "2. Entregue", "3. Interesse (Cliques)", "4. Escolheu Perfil", "5. Assistiu Vídeo", "6. Recebeu Pesquisa", "7. Concluiu (Fim)"],
+                    x=[541, 505, 284, 248, 243, 118, 62],
                     textinfo="value+percent previous",
                     hoverinfo="text",
                     hovertext=[
+                        "Total de disparos pela automação",
+                        "Mensagens confirmadas como entregues pelo WhatsApp",
                         "Soma de todos os cliques na 1ª Mensagem: V1 (Botões Perfil) + V2 (Receber Info) + V3 (Acessar Info).",
                         "Total de cliques nos botões 'Técnico' e 'Empreendedor'.",
                         "Total de leads que avançaram para assistir os vídeos.",
                         "Leads que receberam a pesquisa.",
                         "Leads finais que preencheram a pesquisa."
                     ],
-                    marker={"color": ["#4B8BBE", "#4B8BBE", "#4B8BBE", "#FFD43B", "#FFD43B"]}
+                    marker={"color": ["#B0C4DE", "#87CEFA", "#4B8BBE", "#4B8BBE", "#4B8BBE", "#FFD43B", "#FFD43B"]}
                 ))
                 fig_sankey.update_layout(height=400)
                 st.plotly_chart(fig_sankey, use_container_width=True)
