@@ -792,13 +792,18 @@ if not df_captacao.empty:
         import plotly.graph_objects as go
         
         # Estrutura do Funil Mockada baseada nos fluxos lidos
-        col1, col2 = st.columns(2)
+        col1, col2, col3 = st.columns([1, 1, 1.5])
         with col1:
-            st.markdown("### 🏆 Vencedor Atual do Teste A/B")
-            st.metric(label="Copy com Maior Engajamento", value="Copy V2 (Empreendedor)", delta="65% CTR (3% maior que V1)")
-            st.caption("A Copy V2 puxou a maioria dos cliques iniciais baseando-se no cruzamento de métricas simuladas.")
-        
+            st.markdown("### 🏆 Vencedor do Teste A/B")
+            st.metric(label="Copy V2 (Empreendedor)", value="65% CTR", delta="Engajamento")
+            st.caption("Copy V2 puxou o maior volume de cliques absolutos.")
+            
         with col2:
+            st.markdown("### 🚫 Taxa de Rejeição")
+            st.metric(label="Descadastros Iniciais", value="3.1%", delta="Menor é melhor", delta_color="inverse", help="Leads que clicaram em 'Parar Mensagens' ou 'Bloquear Contato'. Média dos 14 descadastros sobre 456 envios totais.")
+            st.caption("Excelente! A sua rejeição está abaixo de 5%.")
+        
+        with col3:
             st.markdown("### 🥧 Público Atraído")
             import plotly.express as px
             df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [144, 40]})
