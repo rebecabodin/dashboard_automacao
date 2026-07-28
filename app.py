@@ -220,48 +220,49 @@ if not df_captacao.empty:
         
     menu_selecionado = st.sidebar.radio("Ir para:", opcoes_menu, label_visibility="collapsed")
 
-    if menu_selecionado == '📊 Visão Principal':
-        # --- PROCESSAMENTO DOS KPIs ---
-        total_capturados = len(df_captacao)
-        total_automação = len(df_boasvindas)
-    
-        # Métrica de Entregues: leads que possuem a tag específica do evento atual
-        if 'tag_atual' in df_boasvindas.columns:
-            sucesso_envio = len(df_boasvindas[df_boasvindas['tag_atual'].astype(str).str.contains('lc7_mde_ago26_boas_vindas_inicial_enviada', case=False, na=False)])
-        else:
-            sucesso_envio = 0
-    
-        # Métrica de Erros: leads que possuem a sinalização exata de 'erro' na coluna status_boas_vindas
-        if 'status_boas_vindas' in df_boasvindas.columns:
-            erros = len(df_boasvindas[df_boasvindas['status_boas_vindas'].astype(str).str.strip().str.lower() == 'erro'])
-        else:
-            erros = 0
-        taxa_entrega = (sucesso_envio / total_automação) * 100 if total_automação > 0 else 0
-    
-        custo_por_mensagem = 0.01
-        custo_total = sucesso_envio * custo_por_mensagem
+    # --- PROCESSAMENTO DOS KPIs GLOBAIS ---
+    total_capturados = len(df_captacao)
+    total_automação = len(df_boasvindas)
 
-        # --- SCORECARDS (Métricas de Topo) ---
-        total_duplicados = len(get_duplicados(df_captacao))
+    # Métrica de Entregues: leads que possuem a tag específica do evento atual
+    if 'tag_atual' in df_boasvindas.columns:
+        sucesso_envio = len(df_boasvindas[df_boasvindas['tag_atual'].astype(str).str.contains('lc7_mde_ago26_boas_vindas_inicial_enviada', case=False, na=False)])
+    else:
+        sucesso_envio = 0
+
+    # Métrica de Erros: leads que possuem a sinalização exata de 'erro' na coluna status_boas_vindas
+    if 'status_boas_vindas' in df_boasvindas.columns:
+        erros = len(df_boasvindas[df_boasvindas['status_boas_vindas'].astype(str).str.strip().str.lower() == 'erro'])
+    else:
+        erros = 0
+    taxa_entrega = (sucesso_envio / total_automação) * 100 if total_automação > 0 else 0
+
+    custo_por_mensagem = 0.01
+    custo_total = sucesso_envio * custo_por_mensagem
+
+    # --- SCORECARDS (Métricas de Topo) ---
+    total_duplicados = len(get_duplicados(df_captacao))
+    
+    # Limpeza Global para cálculos rigorosos de Quebra
+    df_captacao_clean = df_captacao.copy()
+    df_boasvindas_clean = df_boasvindas.copy()
+    df_captacao_clean.columns = df_captacao_clean.columns.str.strip().str.lower()
+    df_boasvindas_clean.columns = df_boasvindas_clean.columns.str.strip().str.lower()
+    
+    if 'email' in df_captacao_clean.columns:
+        df_captacao_clean['email_limpo'] = df_captacao_clean['email'].astype(str).str.lower().str.strip()
+    else:
+        df_captacao_clean['email_limpo'] = ''
         
-        # Limpeza Global para cálculos rigorosos de Quebra
-        df_captacao_clean = df_captacao.copy()
-        df_boasvindas_clean = df_boasvindas.copy()
-        df_captacao_clean.columns = df_captacao_clean.columns.str.strip().str.lower()
-        df_boasvindas_clean.columns = df_boasvindas_clean.columns.str.strip().str.lower()
+    if 'lead_email' in df_boasvindas_clean.columns:
+        df_boasvindas_clean['lead_email'] = df_boasvindas_clean['lead_email'].astype(str).str.lower().str.strip()
+    else:
+        df_boasvindas_clean['lead_email'] = ''
         
-        if 'email' in df_captacao_clean.columns:
-            df_captacao_clean['email_limpo'] = df_captacao_clean['email'].astype(str).str.lower().str.strip()
-        else:
-            df_captacao_clean['email_limpo'] = ''
-            
-        if 'lead_email' in df_boasvindas_clean.columns:
-            df_boasvindas_clean['lead_email'] = df_boasvindas_clean['lead_email'].astype(str).str.lower().str.strip()
-        else:
-            df_boasvindas_clean['lead_email'] = ''
-            
-        df_falhas_global = calcular_leads_perdidos_20m(df_captacao_clean, df_boasvindas_clean)
-        leads_perdidos = len(df_falhas_global)
+    df_falhas_global = calcular_leads_perdidos_20m(df_captacao_clean, df_boasvindas_clean)
+    leads_perdidos = len(df_falhas_global)
+
+    if menu_selecionado == '📊 Visão Principal':
         col1, col2, col3, col4, col5, col6 = st.columns(6)
         col1.metric("Leads Capturados", f"{total_capturados}", help="Volume bruto de cadastros registrados na base principal (Landing Page).")
         col2.metric("Duplicados", f"{total_duplicados}", delta_color="inverse", help="Cadastros suspeitos de repetição (mesmo e-mail ou telefone).")
