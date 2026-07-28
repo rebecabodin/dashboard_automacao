@@ -229,14 +229,13 @@ if not df_captacao.empty:
     
         # Métrica de Entregues: leads que possuem alguma tag na coluna 'tag_atual'
         if 'tag_atual' in df_boasvindas.columns:
-            # Conta se a tag não está vazia nem é nula (nan)
-            sucesso_envio = len(df_boasvindas[df_boasvindas['tag_atual'].astype(str).str.strip().str.lower().replace('nan', '') != ''])
+            sucesso_envio = len(df_boasvindas[(df_boasvindas['tag_atual'].notna()) & (df_boasvindas['tag_atual'].astype(str).str.strip() != '') & (df_boasvindas['tag_atual'].astype(str).str.lower() != 'nan')])
         else:
             sucesso_envio = 0
     
         # Métrica de Erros: leads que possuem alguma mensagem na coluna 'erro'
         if 'erro' in df_boasvindas.columns:
-            erros = len(df_boasvindas[df_boasvindas['erro'].astype(str).str.strip().str.lower().replace('nan', '') != ''])
+            erros = len(df_boasvindas[(df_boasvindas['erro'].notna()) & (df_boasvindas['erro'].astype(str).str.strip() != '') & (df_boasvindas['erro'].astype(str).str.lower() != 'nan')])
         else:
             erros = 0
         taxa_entrega = (sucesso_envio / total_automação) * 100 if total_automação > 0 else 0
