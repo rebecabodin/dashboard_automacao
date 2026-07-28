@@ -233,9 +233,9 @@ if not df_captacao.empty:
         else:
             sucesso_envio = 0
     
-        # Métrica de Erros: leads que possuem alguma mensagem na coluna 'erro'
-        if 'erro' in df_boasvindas.columns:
-            erros = len(df_boasvindas[(df_boasvindas['erro'].notna()) & (df_boasvindas['erro'].astype(str).str.strip() != '') & (df_boasvindas['erro'].astype(str).str.lower() != 'nan')])
+        # Métrica de Erros: leads que possuem a sinalização exata de 'erro' na coluna status_boas_vindas
+        if 'status_boas_vindas' in df_boasvindas.columns:
+            erros = len(df_boasvindas[df_boasvindas['status_boas_vindas'].astype(str).str.strip().str.lower() == 'erro'])
         else:
             erros = 0
         taxa_entrega = (sucesso_envio / total_automação) * 100 if total_automação > 0 else 0
