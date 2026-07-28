@@ -1,0 +1,18 @@
+# Segredos e Ambientes Locais
+.env
+.venv/
+.venv_pandas/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Arquivos sensíveis
+credentials.json
+.streamlit/secrets.toml
+*.xlsx
+*.csv
+
+# Outros
+.DS_Store
+.streamlit/secrets.toml
