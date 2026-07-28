@@ -821,7 +821,7 @@ if not df_captacao.empty:
                 st.plotly_chart(fig_sankey, use_container_width=True)
             with col_b:
                 st.markdown("### 🚨 Diagnóstico de Gargalos")
-                st.info("**Insight DBA:** Você tem altíssima retenção nos vídeos (97%). A maior quebra do fluxo global ocorre ao entrar no Grupo VIP para a Pesquisa (Apenas 49% - 118/241 - recebem). E dos que recebem a pesquisa, 52% (62/118) chegam no fim. **Ação:** Reforçar a presença no grupo.")
+                st.info("**Insight DBA:** Você tem altíssima retenção nos vídeos (97%). A maior quebra do fluxo global ocorre ao entrar no Grupo VIP para a Pesquisa (Apenas 49% - 118/241 - recebem). E dos que recebem a pesquisa, 52% (62/118) chegam no fim. \\n\\n**🏆 O Pote de Ouro:** Dos 62 leads que terminam a jornada, incríveis **90% (56 leads)** pedem ativamente para receber os links das aulas no privado! Sua automação gerou 56 leads 'Super Quentes'. **Ação:** Focar as mensagens manuais para esse grupo de 56.")
                 
                 st.markdown("### 🥧 Público Atraído")
                 import plotly.express as px
