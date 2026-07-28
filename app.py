@@ -855,7 +855,7 @@ if not df_captacao.empty:
                 st.plotly_chart(fig_emp, use_container_width=True)
 
             st.markdown("### 🚨 Diagnóstico de Perfis")
-            st.warning("**Insight DBA:** As suas copys de Perfil estão perfeitamente equilibradas na retenção pós-vídeo! Dos que chegam no Vídeo, **75% dos Técnicos** e **72% dos Empreendedores** clicam para entrar no Grupo VIP. O fluxo está maduro e não precisa de mudança drástica nas copys dos vídeos.")
+            st.warning("**Insight DBA:** As suas copys de Perfil estão perfeitamente equilibradas na retenção pós-vídeo! Dos que chegam no Vídeo, **75% dos Técnicos** e **72% dos Empreendedores** chegam na mensagem do Grupo VIP.\\n\\n**🎯 Destaque para a Repescagem:** A sua estratégia de perguntar 'Conseguiu entrar no grupo?' salva vidas! O lembrete secundário conseguiu recuperar **42 Técnicos** e **9 Empreendedores** que não tinham conseguido clicar de primeira. Sem esse nó de repescagem, você perderia quase 30% dos leads nesse gargalo tecnológico.")
         
 else:
     st.warning("Não foi possível carregar os dados. Verifique a planilha.")
