@@ -800,8 +800,8 @@ if not df_captacao.empty:
             
         with col2:
             st.markdown("### 🚫 Taxa de Rejeição")
-            st.metric(label="Descadastros Iniciais", value="2.2%", delta="Menor é melhor", delta_color="inverse", help="Leads que clicaram em 'Parar Mensagens' ou 'Bloquear Contato'. Total de 10 descadastros sobre 456 envios totais.")
-            st.caption("Excelente! A sua rejeição está abaixo de 5%.")
+            st.metric(label="Descadastros Iniciais", value="1%", delta="Menor é melhor", delta_color="inverse", help="Leads que clicaram em 'Parar Mensagens' ou 'Bloquear Contato'. O Manychat cravou a marca estatística global de 1% de opt-out (10 descadastros absolutos).")
+            st.caption("Excelente! A sua rejeição está esmagadoramente abaixo de 5%.")
         
         with col3:
             st.markdown("### 🥧 Público Atraído")
