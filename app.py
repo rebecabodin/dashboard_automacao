@@ -810,9 +810,12 @@ if not df_captacao.empty:
         if visao_funil == "Visão Macro (Consolidado)":
             col_a, col_b = st.columns([2, 1])
             with col_a:
-                st.markdown("### 🌪️ Funil de Conversão (Pós-Clique)")
+                st.subheader(
+                    "🌪️ Funil de Conversão (Pós-Clique)",
+                    help="**Glossário do Funil:**\\n\\n**1. Interesse:** Soma de todos os cliques na 1ª Mensagem (V1 + V2 + V3).\\n\\n**2. Escolha do Perfil:** Total de leads que optaram pelos botões 'Técnico' ou 'Empreendedor'.\\n\\n**3. Assistiu ao Vídeo:** Total que assistiu aos vídeos de qualificação e chegaram na página do Grupo VIP.\\n\\n**4. Recebeu Pesquisa:** Leads que permaneceram no Grupo VIP e receberam a notificação da pesquisa.\\n\\n**5. Concluiu (Fim):** Aqueles que engajaram na pesquisa e concluíram a jornada (potenciais Super Quentes)."
+                )
                 fig_sankey = go.Figure(go.Funnel(
-                    y=["1. Interesse (Cliques na Copy) ℹ️", "2. Escolha do Perfil (Téc/Emp) ℹ️", "3. Assistiu ao Vídeo ℹ️", "4. Recebeu Pesquisa ℹ️", "5. Concluiu (Fim) ℹ️"],
+                    y=["1. Interesse (Cliques na Copy)", "2. Escolha do Perfil (Téc/Emp)", "3. Assistiu ao Vídeo", "4. Recebeu Pesquisa", "5. Concluiu (Fim)"],
                     x=[284, 248, 243, 118, 62],
                     textinfo="value+percent previous",
                     hoverinfo="text",
