@@ -237,7 +237,25 @@ if not df_captacao.empty:
 
         # --- SCORECARDS (Métricas de Topo) ---
         total_duplicados = len(get_duplicados(df_captacao))
-        leads_perdidos = max(0, total_capturados - total_automação - total_duplicados)
+        
+        # Limpeza Global para cálculos rigorosos de Quebra
+        df_captacao_clean = df_captacao.copy()
+        df_boasvindas_clean = df_boasvindas.copy()
+        df_captacao_clean.columns = df_captacao_clean.columns.str.strip().str.lower()
+        df_boasvindas_clean.columns = df_boasvindas_clean.columns.str.strip().str.lower()
+        
+        if 'email' in df_captacao_clean.columns:
+            df_captacao_clean['email_limpo'] = df_captacao_clean['email'].astype(str).str.lower().str.strip()
+        else:
+            df_captacao_clean['email_limpo'] = ''
+            
+        if 'lead_email' in df_boasvindas_clean.columns:
+            df_boasvindas_clean['lead_email'] = df_boasvindas_clean['lead_email'].astype(str).str.lower().str.strip()
+        else:
+            df_boasvindas_clean['lead_email'] = ''
+            
+        df_falhas_global = calcular_leads_perdidos_20m(df_captacao_clean, df_boasvindas_clean)
+        leads_perdidos = len(df_falhas_global)
         col1, col2, col3, col4, col5, col6 = st.columns(6)
         col1.metric("Leads Capturados", f"{total_capturados}", help="Volume bruto de cadastros registrados na base principal (Landing Page).")
         col2.metric("Duplicados", f"{total_duplicados}", delta_color="inverse", help="Cadastros suspeitos de repetição (mesmo e-mail ou telefone).")
@@ -633,14 +651,6 @@ if not df_captacao.empty:
             # --- ALERTA 3: GARGALO DE PROCESSAMENTO ---
             st.subheader("⏳ Gargalo de Automação (Tempo de Resposta)")
             try:
-                df_captacao_clean = df_captacao.copy()
-                df_boasvindas_clean = df_boasvindas.copy()
-                df_captacao_clean.columns = df_captacao_clean.columns.str.strip().str.lower()
-                df_boasvindas_clean.columns = df_boasvindas_clean.columns.str.strip().str.lower()
-                
-                df_captacao_clean['email_limpo'] = df_captacao_clean['email'].astype(str).str.lower().str.strip()
-                df_boasvindas_clean['lead_email'] = df_boasvindas_clean['lead_email'].astype(str).str.lower().str.strip()
-                
                 df_merge = pd.merge(df_captacao_clean, df_boasvindas_clean, left_on='email_limpo', right_on='lead_email', how='inner', suffixes=('_cap', '_bv'))
                 
                 if not df_merge.empty and 'data' in df_merge.columns and 'created_at' in df_merge.columns:
@@ -679,7 +689,7 @@ if not df_captacao.empty:
             
             st.subheader("❌ Leads Perdidos (Falha de Processamento)")
             try:
-                df_falhas = calcular_leads_perdidos_20m(df_captacao_clean, df_boasvindas_clean)
+                df_falhas = df_falhas_global
                 
                 if not df_falhas.empty:
                     st.error(f"⚠️ Encontramos **{len(df_falhas)} leads** na captação que não chegaram no WhatsApp.")
