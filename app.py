@@ -806,7 +806,7 @@ if not df_captacao.empty:
         with col3:
             st.markdown("### 🥧 Público Atraído")
             import plotly.express as px
-            df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [144, 40]})
+            df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [192, 51]})
             fig_pie = px.pie(df_pie, values='Qtd', names='Perfil', hole=0.4, color_discrete_sequence=['#4B8BBE', '#FFD43B'])
             fig_pie.update_layout(height=200, margin=dict(l=0, r=0, t=0, b=0))
             st.plotly_chart(fig_pie, use_container_width=True)
@@ -820,7 +820,7 @@ if not df_captacao.empty:
                "5. Convite para Grupo VIP",
                "6. Recebimento da Pesquisa",
                "7. Conclusão da Pesquisa (Links VIP)"],
-            x=[456, 430, 288, 184, 182, 116, 70],
+            x=[541, 505, 284, 243, 241, 116, 70],
             textinfo="value+percent initial"
         ))
         st.plotly_chart(fig_sankey, use_container_width=True)
