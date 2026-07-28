@@ -808,36 +808,36 @@ if not df_captacao.empty:
         import plotly.graph_objects as go
         
         if visao_funil == "Visão Macro (Consolidado)":
-            st.markdown("### 🌪️ Funil de Conversão (Pós-Clique)")
-            fig_sankey = go.Figure(go.Funnel(
-                y=["1. Interesse (Cliques na Copy)", "2. Escolha do Perfil (Téc/Emp)", "3. Assistiu ao Vídeo", "4. Recebeu Pesquisa", "5. Concluiu (Fim)"],
-                x=[284, 248, 243, 118, 62],
-                textinfo="value+percent previous",
-                hoverinfo="text",
-                hovertext=[
-                    "Soma de todos os cliques na 1ª Mensagem: V1 (Botões Perfil) + V2 (Receber Info) + V3 (Acessar Info).",
-                    "Total de cliques nos botões 'Técnico' e 'Empreendedor'.",
-                    "Total de leads que avançaram para assistir os vídeos.",
-                    "Leads que receberam a pesquisa.",
-                    "Leads finais que preencheram a pesquisa."
-                ],
-                marker={"color": ["#4B8BBE", "#4B8BBE", "#4B8BBE", "#FFD43B", "#FFD43B"]}
-            ))
-            fig_sankey.update_layout(height=400)
-            st.plotly_chart(fig_sankey, use_container_width=True)
-            
             col_a, col_b = st.columns([2, 1])
             with col_a:
-                st.markdown("### 🚨 Diagnóstico de Gargalos")
-                st.info("**Insight DBA:** Você tem altíssima retenção nos vídeos (97%). A maior quebra do fluxo global ocorre ao entrar no Grupo VIP para a Pesquisa (Apenas 49% - 118/241 - recebem). E dos que recebem a pesquisa, 52% (62/118) chegam no fim. \\n\\n**🏆 O Pote de Ouro:** Dos 62 leads que terminam a jornada, incríveis **90% (56 leads)** pedem ativamente para receber os links das aulas no privado! Sua automação gerou 56 leads 'Super Quentes'. **Ação:** Focar as mensagens manuais para esse grupo de 56.")
-                
+                st.markdown("### 🌪️ Funil de Conversão (Pós-Clique)")
+                fig_sankey = go.Figure(go.Funnel(
+                    y=["1. Interesse (Cliques na Copy)", "2. Escolha do Perfil (Téc/Emp)", "3. Assistiu ao Vídeo", "4. Recebeu Pesquisa", "5. Concluiu (Fim)"],
+                    x=[284, 248, 243, 118, 62],
+                    textinfo="value+percent previous",
+                    hoverinfo="text",
+                    hovertext=[
+                        "Soma de todos os cliques na 1ª Mensagem: V1 (Botões Perfil) + V2 (Receber Info) + V3 (Acessar Info).",
+                        "Total de cliques nos botões 'Técnico' e 'Empreendedor'.",
+                        "Total de leads que avançaram para assistir os vídeos.",
+                        "Leads que receberam a pesquisa.",
+                        "Leads finais que preencheram a pesquisa."
+                    ],
+                    marker={"color": ["#4B8BBE", "#4B8BBE", "#4B8BBE", "#FFD43B", "#FFD43B"]}
+                ))
+                fig_sankey.update_layout(height=400)
+                st.plotly_chart(fig_sankey, use_container_width=True)
+            
             with col_b:
                 st.markdown("### 🥧 Público Atraído")
                 import plotly.express as px
                 df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [195, 53]})
                 fig_pie = px.pie(df_pie, values='Qtd', names='Perfil', hole=0.4, color_discrete_sequence=['#4B8BBE', '#FFD43B'])
-                fig_pie.update_layout(height=220, margin=dict(l=0, r=0, t=0, b=0))
+                fig_pie.update_layout(height=400, margin=dict(l=0, r=0, t=20, b=0))
                 st.plotly_chart(fig_pie, use_container_width=True)
+
+            st.markdown("### 🚨 Diagnóstico de Gargalos")
+            st.info("**Insight DBA:** Você tem altíssima retenção nos vídeos (97%). A maior quebra do fluxo global ocorre ao entrar no Grupo VIP para a Pesquisa (Apenas 49% - 118/241 - recebem). E dos que recebem a pesquisa, 52% (62/118) chegam no fim. \\n\\n**🏆 O Pote de Ouro:** Dos 62 leads que terminam a jornada, incríveis **90% (56 leads)** pedem ativamente para receber os links das aulas no privado! Sua automação gerou 56 leads 'Super Quentes'. **Ação:** Focar as mensagens manuais para esse grupo de 56.")
 
         elif visao_funil == "Comparativo de Copys":
             st.markdown("### 🏆 Vencedor do Teste A/B")
