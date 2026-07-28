@@ -812,7 +812,7 @@ if not df_captacao.empty:
             with col_a:
                 st.markdown("### 🌪️ Funil de Conversão (Pós-Clique)")
                 fig_sankey = go.Figure(go.Funnel(
-                    y=["1. Interesse (Cliques na Copy)", "2. Escolha do Perfil (Téc/Emp)", "3. Assistiu ao Vídeo", "4. Recebeu Pesquisa", "5. Concluiu (Fim)"],
+                    y=["1. Interesse (Cliques na Copy) ℹ️", "2. Escolha do Perfil (Téc/Emp) ℹ️", "3. Assistiu ao Vídeo ℹ️", "4. Recebeu Pesquisa ℹ️", "5. Concluiu (Fim) ℹ️"],
                     x=[284, 248, 243, 118, 62],
                     textinfo="value+percent previous",
                     hoverinfo="text",
