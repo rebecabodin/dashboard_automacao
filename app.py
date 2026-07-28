@@ -812,8 +812,8 @@ if not df_captacao.empty:
             with col_a:
                 st.markdown("### 🌪️ Funil de Conversão (Pós-Clique)")
                 fig_sankey = go.Figure(go.Funnel(
-                    y=["1. Clique Inicial", "2. Visualização do Vídeo", "3. Convite para Grupo VIP", "4. Recebeu Pesquisa", "5. Preencheu Pesquisa"],
-                    x=[284, 243, 241, 118, 62],
+                    y=["1. Interesse (Cliques na Copy)", "2. Escolha do Perfil (Téc/Emp)", "3. Assistiu ao Vídeo", "4. Recebeu Pesquisa", "5. Concluiu (Fim)"],
+                    x=[284, 248, 243, 118, 62],
                     textinfo="value+percent previous",
                     marker={"color": ["#4B8BBE", "#4B8BBE", "#4B8BBE", "#FFD43B", "#FFD43B"]}
                 ))
@@ -821,41 +821,41 @@ if not df_captacao.empty:
                 st.plotly_chart(fig_sankey, use_container_width=True)
             with col_b:
                 st.markdown("### 🚨 Diagnóstico de Gargalos")
-                st.info("**Insight DBA:** A maior quebra do fluxo global ocorre entre o 'Convite para o Grupo' e o envio da 'Pesquisa'. Apenas 49% (118/241) chegam na pesquisa. E dos que chegam, apenas 52% (62/118) chegam no fim. **Ação:** Otimizar o CTA dentro do grupo do WhatsApp.")
+                st.info("**Insight DBA:** Você tem altíssima retenção nos vídeos (97%). A maior quebra do fluxo global ocorre ao entrar no Grupo VIP para a Pesquisa (Apenas 49% - 118/241 - recebem). E dos que recebem a pesquisa, 52% (62/118) chegam no fim. **Ação:** Reforçar a presença no grupo.")
                 
                 st.markdown("### 🥧 Público Atraído")
                 import plotly.express as px
-                df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [192, 51]})
+                df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [195, 53]})
                 fig_pie = px.pie(df_pie, values='Qtd', names='Perfil', hole=0.4, color_discrete_sequence=['#4B8BBE', '#FFD43B'])
                 fig_pie.update_layout(height=220, margin=dict(l=0, r=0, t=0, b=0))
                 st.plotly_chart(fig_pie, use_container_width=True)
 
         elif visao_funil == "Comparativo de Copys":
             st.markdown("### 🏆 Vencedor do Teste A/B")
-            st.success("A **Copy V2** puxou o maior volume de engajamento relativo inicial.")
+            st.success("A **Copy V2** teve o maior volume de Engajamento, mas a **Copy V1** entrega o lead direto pro funil sem atrito (sem nó extra).")
             
             fig = go.Figure()
-            fig.add_trace(go.Funnel(name='V1', y=["Cliques", "Vídeos", "Grupo"], x=[106, 92, 90], textinfo="value+percent initial"))
-            fig.add_trace(go.Funnel(name='V2', y=["Cliques", "Vídeos", "Grupo"], x=[117, 92, 92], textinfo="value+percent initial"))
-            fig.add_trace(go.Funnel(name='V3', y=["Cliques", "Vídeos", "Grupo"], x=[61, 59, 59], textinfo="value+percent initial"))
+            fig.add_trace(go.Funnel(name='V1 (Direta)', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[100, 101], textinfo="value+percent initial"))
+            fig.add_trace(go.Funnel(name='V2 (1 Nó Extra)', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[116, 88], textinfo="value+percent initial"))
+            fig.add_trace(go.Funnel(name='V3 (1 Nó Extra)', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[68, 59], textinfo="value+percent initial"))
             st.plotly_chart(fig, use_container_width=True)
             
             st.markdown("### 🚨 Diagnóstico de Copys")
-            st.warning("**Insight DBA:** A copy V3 obteve menos disparos brutos, porém sua retenção até a fase do Grupo (96%) é muito alta se comparada à V1. Pode ser a copy mais qualificada do teste.")
+            st.warning("**Insight DBA:** Como a V2 e a V3 exigem que o lead clique em 'Receber Info' ANTES de escolher o perfil, você perde quase 25% dos curiosos nesse nó intermediário (Drop-off). A V1 atira direto pras opções de Perfil e retém mais tráfego bruto na escolha.")
 
         elif visao_funil == "Comparativo de Perfis":
             col_t, col_e = st.columns(2)
             with col_t:
                 st.markdown("#### 🔧 Jornada do Técnico")
-                fig_tec = go.Figure(go.Funnel(y=["Cliques", "Vídeo Téc", "Grupo Téc"], x=[205, 192, 193], textinfo="value+percent previous", marker={"color": "#4B8BBE"}))
+                fig_tec = go.Figure(go.Funnel(y=["Escolheu Técnico", "Assistiu Vídeo Téc", "Entrou Grupo Téc"], x=[195, 192, 193], textinfo="value+percent previous", marker={"color": "#4B8BBE"}))
                 st.plotly_chart(fig_tec, use_container_width=True)
             with col_e:
                 st.markdown("#### 💼 Jornada do Empreendedor")
-                fig_emp = go.Figure(go.Funnel(y=["Cliques", "Vídeo Emp", "Grupo Emp"], x=[79, 51, 48], textinfo="value+percent previous", marker={"color": "#FFD43B"}))
+                fig_emp = go.Figure(go.Funnel(y=["Escolheu Empreendedor", "Assistiu Vídeo Emp", "Entrou Grupo Emp"], x=[53, 51, 48], textinfo="value+percent previous", marker={"color": "#FFD43B"}))
                 st.plotly_chart(fig_emp, use_container_width=True)
 
             st.markdown("### 🚨 Diagnóstico de Perfis")
-            st.warning("**Insight DBA:** O perfil 'Técnico' avança absurdamente melhor para o Vídeo (93%) do que o 'Empreendedor' (64%). A mensagem inicial atrai o Empreendedor, mas o direcionamento para o Vídeo precisa ser mais forte.")
+            st.warning("**Insight DBA:** Tanto o Técnico quanto o Empreendedor estão ultra-engajados pós-escolha. 98% dos Técnicos vão pro vídeo, e 96% dos Empreendedores também. A sua cópia para os perfis está validada!")
         
 else:
     st.warning("Não foi possível carregar os dados. Verifique a planilha.")
