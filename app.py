@@ -808,14 +808,14 @@ if not df_captacao.empty:
             
         st.markdown("### 🌪️ Taxa de Conversão por Etapa (Geral)")
         fig_sankey = go.Figure(go.Funnel(
-            y=["1. Mensagens Iniciais Enviadas", 
-               "2. Receberam Copy V1, V2 ou V3", 
-               "3. Clicaram em Técnico/Empreendedor", 
-               "4. Avançaram para Vídeos", 
-               "5. Entraram no Grupo VIP",
-               "6. Responderam Pesquisa Final",
-               "7. Aceitaram Receber Link das Aulas"],
-            x=[456, 430, 288, 184, 182, 116, 80],
+            y=["1. Início do Fluxo (Disparos)", 
+               "2. Recebimento da Copy", 
+               "3. Interesse (Técnico/Empreendedor)", 
+               "4. Visualização do Vídeo", 
+               "5. Convite para Grupo VIP",
+               "6. Recebimento da Pesquisa",
+               "7. Conclusão da Pesquisa (Links VIP)"],
+            x=[456, 430, 288, 184, 182, 116, 70],
             textinfo="value+percent initial"
         ))
         st.plotly_chart(fig_sankey, use_container_width=True)
