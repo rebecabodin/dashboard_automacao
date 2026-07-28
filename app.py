@@ -227,11 +227,18 @@ if not df_captacao.empty:
         total_capturados = len(df_captacao)
         total_automação = len(df_boasvindas)
     
-        enviadas = len(df_boasvindas[df_boasvindas['status_boas_vindas'].str.lower() == 'enviada'])
-        perfil_definido = len(df_boasvindas[df_boasvindas['status_boas_vindas'].str.lower() == 'perfil_definido'])
-        sucesso_envio = enviadas + perfil_definido
+        # Métrica de Entregues: leads que possuem alguma tag na coluna 'tag_atual'
+        if 'tag_atual' in df_boasvindas.columns:
+            # Conta se a tag não está vazia nem é nula (nan)
+            sucesso_envio = len(df_boasvindas[df_boasvindas['tag_atual'].astype(str).str.strip().str.lower().replace('nan', '') != ''])
+        else:
+            sucesso_envio = 0
     
-        erros = len(df_boasvindas[df_boasvindas['status_boas_vindas'].str.lower() == 'erro'])
+        # Métrica de Erros: leads que possuem alguma mensagem na coluna 'erro'
+        if 'erro' in df_boasvindas.columns:
+            erros = len(df_boasvindas[df_boasvindas['erro'].astype(str).str.strip().str.lower().replace('nan', '') != ''])
+        else:
+            erros = 0
         taxa_entrega = (sucesso_envio / total_automação) * 100 if total_automação > 0 else 0
     
         custo_por_mensagem = 0.01
