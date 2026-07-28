@@ -847,15 +847,15 @@ if not df_captacao.empty:
             col_t, col_e = st.columns(2)
             with col_t:
                 st.markdown("#### 🔧 Jornada do Técnico")
-                fig_tec = go.Figure(go.Funnel(y=["Escolheu Técnico", "Assistiu Vídeo Téc", "Entrou Grupo Téc"], x=[195, 192, 193], textinfo="value+percent previous", marker={"color": "#4B8BBE"}))
+                fig_tec = go.Figure(go.Funnel(y=["Escolheu Técnico", "Assistiu Vídeo Téc", "Entrou Grupo Téc"], x=[195, 192, 145], textinfo="value+percent previous", marker={"color": "#4B8BBE"}))
                 st.plotly_chart(fig_tec, use_container_width=True)
             with col_e:
                 st.markdown("#### 💼 Jornada do Empreendedor")
-                fig_emp = go.Figure(go.Funnel(y=["Escolheu Empreendedor", "Assistiu Vídeo Emp", "Entrou Grupo Emp"], x=[53, 51, 48], textinfo="value+percent previous", marker={"color": "#FFD43B"}))
+                fig_emp = go.Figure(go.Funnel(y=["Escolheu Empreendedor", "Assistiu Vídeo Emp", "Entrou Grupo Emp"], x=[53, 51, 37], textinfo="value+percent previous", marker={"color": "#FFD43B"}))
                 st.plotly_chart(fig_emp, use_container_width=True)
 
             st.markdown("### 🚨 Diagnóstico de Perfis")
-            st.warning("**Insight DBA:** Tanto o Técnico quanto o Empreendedor estão ultra-engajados pós-escolha. 98% dos Técnicos vão pro vídeo, e 96% dos Empreendedores também. A sua cópia para os perfis está validada!")
+            st.warning("**Insight DBA:** As suas copys de Perfil estão perfeitamente equilibradas na retenção pós-vídeo! Dos que chegam no Vídeo, **75% dos Técnicos** e **72% dos Empreendedores** clicam para entrar no Grupo VIP. O fluxo está maduro e não precisa de mudança drástica nas copys dos vídeos.")
         
 else:
     st.warning("Não foi possível carregar os dados. Verifique a planilha.")
