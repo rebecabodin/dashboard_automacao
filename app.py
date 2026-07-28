@@ -815,6 +815,14 @@ if not df_captacao.empty:
                     y=["1. Interesse (Cliques na Copy)", "2. Escolha do Perfil (Téc/Emp)", "3. Assistiu ao Vídeo", "4. Recebeu Pesquisa", "5. Concluiu (Fim)"],
                     x=[284, 248, 243, 118, 62],
                     textinfo="value+percent previous",
+                    hoverinfo="text",
+                    hovertext=[
+                        "Soma de todos os cliques na 1ª Mensagem: V1 (Botões Perfil) + V2 (Receber Info) + V3 (Acessar Info).",
+                        "Total de cliques nos botões 'Técnico' e 'Empreendedor'.",
+                        "Total de leads que avançaram para assistir os vídeos.",
+                        "Leads que receberam a pesquisa.",
+                        "Leads finais que preencheram a pesquisa."
+                    ],
                     marker={"color": ["#4B8BBE", "#4B8BBE", "#4B8BBE", "#FFD43B", "#FFD43B"]}
                 ))
                 fig_sankey.update_layout(height=400)
