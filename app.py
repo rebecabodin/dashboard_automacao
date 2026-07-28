@@ -819,6 +819,7 @@ if not df_captacao.empty:
                     x=[541, 505, 284, 248, 243, 118, 62],
                     textinfo="value+percent previous",
                     hoverinfo="text",
+                    textfont=dict(size=15, family="Arial, sans-serif", color="black"),
                     hovertext=[
                         "Total de disparos pela automação",
                         "Mensagens confirmadas como entregues pelo WhatsApp",
@@ -830,7 +831,11 @@ if not df_captacao.empty:
                     ],
                     marker={"color": ["#B0C4DE", "#87CEFA", "#4B8BBE", "#4B8BBE", "#4B8BBE", "#FFD43B", "#FFD43B"]}
                 ))
-                fig_sankey.update_layout(height=400)
+                fig_sankey.update_layout(
+                    height=500,
+                    margin=dict(l=180, r=20, t=20, b=20),
+                    yaxis=dict(tickfont=dict(size=14, color="#333333", family="Arial, sans-serif"))
+                )
                 st.plotly_chart(fig_sankey, use_container_width=True)
             
             with col_b:
