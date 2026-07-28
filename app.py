@@ -210,19 +210,17 @@ if not df_captacao.empty:
     # --- SISTEMA DE ACESSO ADMIN (URL SECRETA) ---
     is_admin = st.query_params.get("admin") == "mda2026"
     
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("### 🧭 Navegação")
+    
     if is_admin:
-        tabs = st.tabs(['📊 Visão Principal', '🚨 Monitoramento Avançado (Analista)', '🧠 Plano de Ação (DBA)'])
-        tab_main = tabs[0]
-        tab_alerts = tabs[1]
-        tab_action = tabs[2]
+        opcoes_menu = ['📊 Visão Principal', '🕸️ Funil Manychat (WPP)', '🚨 Monitoramento Avançado', '🧠 Plano de Ação']
     else:
-        # Se for o cliente acessando normalmente, ele só vê uma aba
-        tabs = st.tabs(['📊 Visão Principal'])
-        tab_main = tabs[0]
-        tab_alerts = None
-        tab_action = None
+        opcoes_menu = ['📊 Visão Principal', '🕸️ Funil Manychat (WPP)']
+        
+    menu_selecionado = st.sidebar.radio("Ir para:", opcoes_menu, label_visibility="collapsed")
 
-    with tab_main:
+    if menu_selecionado == '📊 Visão Principal':
         # --- PROCESSAMENTO DOS KPIs ---
         total_capturados = len(df_captacao)
         total_automação = len(df_boasvindas)
@@ -599,8 +597,8 @@ if not df_captacao.empty:
 
 
 
-    if tab_alerts:
-        with tab_alerts:
+    elif menu_selecionado == '🚨 Monitoramento Avançado':
+        if True:
             st.header("🚨 Monitoramento Avançado (Analista)")
             st.markdown("Bem-vinda ao painel de infraestrutura técnica. Estes dados **não são visíveis** para o cliente.")
             
@@ -714,8 +712,8 @@ if not df_captacao.empty:
             except Exception as e:
                 st.error(f"Erro ao cruzar dados de perda: {e}") 
 
-    if tab_action:
-        with tab_action:
+    elif menu_selecionado == '🧠 Plano de Ação':
+        if True:
             st.header("🧠 Central de Insights e Plano de Ação")
             st.markdown("Bem-vinda ao cérebro do projeto. Aqui eu mapeio os principais gargalos e te dou o passo a passo para resolver. Marque as caixinhas conforme for concluindo!")
             
@@ -783,5 +781,37 @@ if not df_captacao.empty:
                 if check3:
                     st.success("Alinhamento feito! Vamos acompanhar se a distribuição melhora na próxima semana.")
             
+            
+    elif menu_selecionado == '🕸️ Funil Manychat (WPP)':
+        st.header("🕸️ Funil de Boas-Vindas Manychat (Teste A/B)")
+        st.write("---")
+        
+        st.info("💡 **Aguardando dados oficiais:** Este é um protótipo visual. Para que os dados sejam reais, assegure-se de que a automação N8N/Manychat grave a tag específica na planilha ou conectaremos direto a API.")
+        
+        import plotly.graph_objects as go
+        
+        # Estrutura do Funil Mockada baseada nos fluxos lidos
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("### 🏆 Vencedor Atual do Teste A/B")
+            st.metric(label="Copy com Maior Engajamento", value="Copy V2 (Empreendedor)", delta="65% CTR (3% maior que V1)")
+            st.caption("A Copy V2 puxou a maioria dos cliques iniciais baseando-se no cruzamento de métricas simuladas.")
+        
+        with col2:
+            st.markdown("### 🥧 Público Atraído")
+            import plotly.express as px
+            df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [432, 111]})
+            fig_pie = px.pie(df_pie, values='Qtd', names='Perfil', hole=0.4, color_discrete_sequence=['#4B8BBE', '#FFD43B'])
+            fig_pie.update_layout(height=200, margin=dict(l=0, r=0, t=0, b=0))
+            st.plotly_chart(fig_pie, use_container_width=True)
+            
+        st.markdown("### 🌪️ Taxa de Conversão por Etapa (Geral)")
+        fig_sankey = go.Figure(go.Funnel(
+            y=["Mensagens Enviadas (Total)", "Receberam Copy V1, V2 ou V3", "Avançaram p/ Botão Técnico/Empreendedor", "Assistiram aos Vídeos", "Entraram no Grupo VIP"],
+            x=[543, 536, 320, 290, 150],
+            textinfo="value+percent initial"
+        ))
+        st.plotly_chart(fig_sankey, use_container_width=True)
+        
 else:
     st.warning("Não foi possível carregar os dados. Verifique a planilha.")
