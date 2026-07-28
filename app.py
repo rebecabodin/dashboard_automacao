@@ -813,7 +813,7 @@ if not df_captacao.empty:
                 st.markdown("### 🌪️ Funil de Conversão (Pós-Clique)")
                 fig_sankey = go.Figure(go.Funnel(
                     y=["1. Clique Inicial", "2. Visualização do Vídeo", "3. Convite para Grupo VIP", "4. Recebeu Pesquisa", "5. Preencheu Pesquisa"],
-                    x=[284, 243, 241, 116, 70],
+                    x=[284, 243, 241, 118, 62],
                     textinfo="value+percent previous",
                     marker={"color": ["#4B8BBE", "#4B8BBE", "#4B8BBE", "#FFD43B", "#FFD43B"]}
                 ))
@@ -821,7 +821,7 @@ if not df_captacao.empty:
                 st.plotly_chart(fig_sankey, use_container_width=True)
             with col_b:
                 st.markdown("### 🚨 Diagnóstico de Gargalos")
-                st.info("**Insight DBA:** A maior quebra do fluxo global ocorre entre o 'Convite para o Grupo' e o envio da 'Pesquisa'. Apenas 48% (116/241) chegam na pesquisa. **Ação recomendada:** Otimizar o engajamento dentro do grupo do WhatsApp.")
+                st.info("**Insight DBA:** A maior quebra do fluxo global ocorre entre o 'Convite para o Grupo' e o envio da 'Pesquisa'. Apenas 49% (118/241) chegam na pesquisa. E dos que chegam, apenas 52% (62/118) chegam no fim. **Ação:** Otimizar o CTA dentro do grupo do WhatsApp.")
                 
                 st.markdown("### 🥧 Público Atraído")
                 import plotly.express as px
