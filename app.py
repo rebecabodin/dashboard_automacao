@@ -227,9 +227,9 @@ if not df_captacao.empty:
         total_capturados = len(df_captacao)
         total_automação = len(df_boasvindas)
     
-        # Métrica de Entregues: leads que possuem alguma tag na coluna 'tag_atual'
+        # Métrica de Entregues: leads que possuem a tag específica do evento atual
         if 'tag_atual' in df_boasvindas.columns:
-            sucesso_envio = len(df_boasvindas[(df_boasvindas['tag_atual'].notna()) & (df_boasvindas['tag_atual'].astype(str).str.strip() != '') & (df_boasvindas['tag_atual'].astype(str).str.lower() != 'nan')])
+            sucesso_envio = len(df_boasvindas[df_boasvindas['tag_atual'].astype(str).str.contains('lc7_mde_ago26_boas_vindas_inicial_enviada', case=False, na=False)])
         else:
             sucesso_envio = 0
     
