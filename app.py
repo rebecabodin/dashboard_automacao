@@ -800,7 +800,7 @@ if not df_captacao.empty:
             
         with col2:
             st.markdown("### 🚫 Taxa de Rejeição")
-            st.metric(label="Descadastros Iniciais", value="3.1%", delta="Menor é melhor", delta_color="inverse", help="Leads que clicaram em 'Parar Mensagens' ou 'Bloquear Contato'. Média dos 14 descadastros sobre 456 envios totais.")
+            st.metric(label="Descadastros Iniciais", value="2.2%", delta="Menor é melhor", delta_color="inverse", help="Leads que clicaram em 'Parar Mensagens' ou 'Bloquear Contato'. Total de 10 descadastros sobre 456 envios totais.")
             st.caption("Excelente! A sua rejeição está abaixo de 5%.")
         
         with col3:
