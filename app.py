@@ -161,9 +161,11 @@ pausar_atualizacao = st.sidebar.checkbox("⏸️ Pausar Atualização Automátic
 if not pausar_atualizacao:
     # Atualiza a cada 10 segundos sem pular a tela pro topo!
     count = st_autorefresh(interval=10000, key="f1_refresh")
-    st.caption(f"🔄 Última atualização: **{datetime.datetime.now().strftime('%H:%M:%S')}** (Atualiza sozinho a cada 10s sem pular a tela)")
+    hora_br = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-3))).strftime('%H:%M:%S')
+    st.caption(f"🔄 Última atualização: **{hora_br}** (Atualiza sozinho a cada 10s sem pular a tela)")
 else:
-    st.caption(f"⏸️ **Modo Leitura Ativado.** A tela parou de atualizar. Última checagem: {datetime.datetime.now().strftime('%H:%M:%S')}")
+    hora_br = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-3))).strftime('%H:%M:%S')
+    st.caption(f"⏸️ **Modo Leitura Ativado.** A tela parou de atualizar. Última checagem: {hora_br}")
 
 @st.cache_data(ttl=1200)
 def calcular_leads_perdidos_20m(df_cap, df_bv):
