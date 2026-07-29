@@ -796,13 +796,13 @@ if not df_captacao.empty:
         st.markdown("### ⚡ Engajamento Inicial (Fase 1)")
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric("Total de Envios", "541", help="Total de pessoas que entraram no fluxo")
+            st.metric("Total de Envios", "1001", help="Total de pessoas que entraram no fluxo")
         with col2:
-            st.metric("Taxa de Entrega", "93.3%", delta="Excelente", help="Leads que efetivamente receberam a mensagem (505/541)")
+            st.metric("Taxa de Entrega", "94.2%", delta="Excelente", help="Leads que efetivamente receberam a mensagem (943/1001)")
         with col3:
-            st.metric("Taxa de Clique (CTR)", "56.2%", help="284 cliques em 505 entregas")
+            st.metric("Taxa de Clique (CTR)", "57.4%", help="541 cliques em 943 entregas")
         with col4:
-            st.metric("Opt-out (Rejeição)", "1.0%", delta="Menor é melhor", delta_color="inverse", help="O Manychat cravou 10 descadastros (1%).")
+            st.metric("Opt-out (Rejeição)", "1.9%", delta="Menor é melhor", delta_color="inverse", help="O Manychat cravou 19 descadastros (1.9%).")
             
         st.markdown("---")
         import plotly.graph_objects as go
@@ -816,7 +816,7 @@ if not df_captacao.empty:
                 )
                 fig_sankey = go.Figure(go.Funnel(
                     y=["1. Disparado", "2. Entregue", "3. Interesse (Cliques)", "4. Escolheu Perfil", "5. Assistiu Vídeo", "6. Recebeu Pesquisa", "7. Concluiu (Fim)"],
-                    x=[541, 505, 284, 248, 243, 118, 62],
+                    x=[1001, 943, 541, 502, 367, 250, 132],
                     textinfo="value+percent previous",
                     hoverinfo="text",
                     textfont=dict(size=15, family="Arial, sans-serif", color="black"),
@@ -841,40 +841,40 @@ if not df_captacao.empty:
             with col_b:
                 st.markdown("### 🥧 Público Atraído")
                 import plotly.express as px
-                df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [195, 53]})
+                df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [400, 102]})
                 fig_pie = px.pie(df_pie, values='Qtd', names='Perfil', hole=0.4, color_discrete_sequence=['#4B8BBE', '#FFD43B'])
                 fig_pie.update_layout(height=400, margin=dict(l=0, r=0, t=20, b=0))
                 st.plotly_chart(fig_pie, use_container_width=True)
 
             st.markdown("### 🚨 Diagnóstico de Gargalos")
-            st.info("**Insight DBA:** Você tem altíssima retenção nos vídeos (97%). A maior quebra do fluxo global ocorre ao entrar no Grupo VIP para a Pesquisa (Apenas 49% - 118/241 - recebem). E dos que recebem a pesquisa, 52% (62/118) chegam no fim. \\n\\n**🏆 O Pote de Ouro:** Dos 62 leads que terminam a jornada, incríveis **90% (56 leads)** pedem ativamente para receber os links das aulas no privado! Sua automação gerou 56 leads 'Super Quentes'. **Ação:** Focar as mensagens manuais para esse grupo de 56.")
+            st.info("**Insight DBA:** Você tem altíssima retenção nos vídeos. A quebra do fluxo global ao entrar no Grupo VIP para a Pesquisa diminuiu bastante (Agora 68% - 250/367 - recebem). E dos que recebem a pesquisa, 53% (132/250) chegam no fim. \\n\\n**🏆 O Pote de Ouro:** Dos 132 leads que terminam a jornada, incríveis **90% (119 leads)** pedem ativamente para receber os links das aulas no privado! Sua automação gerou 119 leads 'Super Quentes'. **Ação:** Focar as mensagens manuais para esse grupo de 119.")
 
         elif visao_funil == "Comparativo de Copys":
             st.markdown("### 🏆 Vencedor do Teste A/B")
             st.success("A **Copy V2** teve o maior volume de Engajamento, mas a **Copy V1** entrega o lead direto pro funil sem atrito (sem nó extra).")
             
             fig = go.Figure()
-            fig.add_trace(go.Funnel(name='V1 (Direta)', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[100, 101], textinfo="value+percent initial"))
-            fig.add_trace(go.Funnel(name='V2 (1 Nó Extra)', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[116, 88], textinfo="value+percent initial"))
-            fig.add_trace(go.Funnel(name='V3 (1 Nó Extra)', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[68, 59], textinfo="value+percent initial"))
+            fig.add_trace(go.Funnel(name='V1 (Direta)', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[204, 200], textinfo="value+percent initial"))
+            fig.add_trace(go.Funnel(name='V2 (1 Nó Extra)', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[206, 181], textinfo="value+percent initial"))
+            fig.add_trace(go.Funnel(name='V3 (1 Nó Extra)', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[131, 114], textinfo="value+percent initial"))
             st.plotly_chart(fig, use_container_width=True)
             
             st.markdown("### 🚨 Diagnóstico de Copys")
-            st.warning("**Insight DBA:** Como a V2 e a V3 exigem que o lead clique em 'Receber Info' ANTES de escolher o perfil, você perde quase 25% dos curiosos nesse nó intermediário (Drop-off). A V1 atira direto pras opções de Perfil e retém mais tráfego bruto na escolha.")
+            st.warning("**Insight DBA:** Como a V2 e a V3 exigem que o lead clique em 'Receber Info' ANTES de escolher o perfil, você perde quase 15% dos curiosos nesse nó intermediário (Drop-off). A V1 atira direto pras opções de Perfil e retém mais tráfego bruto na escolha.")
 
         elif visao_funil == "Comparativo de Perfis":
             col_t, col_e = st.columns(2)
             with col_t:
                 st.markdown("#### 🔧 Jornada do Técnico")
-                fig_tec = go.Figure(go.Funnel(y=["Escolheu Técnico", "Assistiu Vídeo Téc", "Entrou Grupo Téc"], x=[195, 192, 145], textinfo="value+percent previous", marker={"color": "#4B8BBE"}))
+                fig_tec = go.Figure(go.Funnel(y=["Escolheu Técnico", "Assistiu Vídeo Téc", "Entrou Grupo Téc"], x=[400, 400, 291], textinfo="value+percent previous", marker={"color": "#4B8BBE"}))
                 st.plotly_chart(fig_tec, use_container_width=True)
             with col_e:
                 st.markdown("#### 💼 Jornada do Empreendedor")
-                fig_emp = go.Figure(go.Funnel(y=["Escolheu Empreendedor", "Assistiu Vídeo Emp", "Entrou Grupo Emp"], x=[53, 51, 37], textinfo="value+percent previous", marker={"color": "#FFD43B"}))
+                fig_emp = go.Figure(go.Funnel(y=["Escolheu Empreendedor", "Assistiu Vídeo Emp", "Entrou Grupo Emp"], x=[102, 102, 76], textinfo="value+percent previous", marker={"color": "#FFD43B"}))
                 st.plotly_chart(fig_emp, use_container_width=True)
 
             st.markdown("### 🚨 Diagnóstico de Perfis")
-            st.warning("**Insight DBA:** As suas copys de Perfil estão perfeitamente equilibradas na retenção pós-vídeo! Dos que chegam no Vídeo, **75% dos Técnicos** e **72% dos Empreendedores** chegam na mensagem do Grupo VIP.\\n\\n**🎯 Destaque para a Repescagem:** A sua estratégia de perguntar 'Conseguiu entrar no grupo?' salva vidas! O lembrete secundário conseguiu recuperar **42 Técnicos** e **9 Empreendedores** que não tinham conseguido clicar de primeira. Sem esse nó de repescagem, você perderia quase 30% dos leads nesse gargalo tecnológico.")
+            st.warning("**Insight DBA:** As suas copys de Perfil estão perfeitamente equilibradas na retenção pós-vídeo! Dos que chegam no Vídeo, **73% dos Técnicos** e **75% dos Empreendedores** chegam na mensagem do Grupo VIP.\\n\\n**🎯 Destaque para a Repescagem:** A sua estratégia de perguntar 'Conseguiu entrar no grupo?' salva vidas! O lembrete secundário conseguiu ajudar **94 Técnicos** e **17 Empreendedores** que não tinham conseguido entrar de primeira. Sem esse nó de repescagem, você perderia quase 30% dos leads nesse gargalo tecnológico.")
         
 else:
     st.warning("Não foi possível carregar os dados. Verifique a planilha.")
