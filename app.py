@@ -842,7 +842,7 @@ if not df_captacao.empty:
                 st.markdown("### 🥧 Público Atraído")
                 import plotly.express as px
                 df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [400, 102]})
-                fig_pie = px.pie(df_pie, values='Qtd', names='Perfil', hole=0.4, color_discrete_sequence=['#4B8BBE', '#FFD43B'])
+                fig_pie = px.pie(df_pie, values='Qtd', names='Perfil', hole=0.4, color_discrete_sequence=['#F97316', '#8B5CF6'])
                 fig_pie.update_layout(height=400, margin=dict(l=0, r=0, t=20, b=0))
                 st.plotly_chart(fig_pie, use_container_width=True)
 
@@ -866,11 +866,11 @@ if not df_captacao.empty:
             col_t, col_e = st.columns(2)
             with col_t:
                 st.markdown("#### 🔧 Jornada do Técnico")
-                fig_tec = go.Figure(go.Funnel(y=["Escolheu Técnico", "Assistiu Vídeo Téc", "Entrou Grupo Téc"], x=[400, 400, 291], textinfo="value+percent previous", marker={"color": "#4B8BBE"}))
+                fig_tec = go.Figure(go.Funnel(y=["Escolheu Técnico", "Assistiu Vídeo Téc", "Entrou Grupo Téc"], x=[400, 400, 291], textinfo="value+percent previous", marker={"color": "#F97316"}))
                 st.plotly_chart(fig_tec, use_container_width=True)
             with col_e:
                 st.markdown("#### 💼 Jornada do Empreendedor")
-                fig_emp = go.Figure(go.Funnel(y=["Escolheu Empreendedor", "Assistiu Vídeo Emp", "Entrou Grupo Emp"], x=[102, 102, 76], textinfo="value+percent previous", marker={"color": "#FFD43B"}))
+                fig_emp = go.Figure(go.Funnel(y=["Escolheu Empreendedor", "Assistiu Vídeo Emp", "Entrou Grupo Emp"], x=[102, 102, 76], textinfo="value+percent previous", marker={"color": "#8B5CF6"}))
                 st.plotly_chart(fig_emp, use_container_width=True)
 
             st.markdown("### 🚨 Diagnóstico de Perfis")
