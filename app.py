@@ -816,7 +816,7 @@ if not df_captacao.empty:
         st.markdown("### ⚡ Engajamento Inicial (Fase 1)")
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric("Total de Envios", "2126", help="Total de pessoas que entraram no fluxo (V1+V2+V3)")
+            st.metric("Total de Envios", "2127", help="Total de pessoas que entraram no fluxo (V1+V2+V3)")
         with col2:
             st.metric("Taxa de Entrega", "95.5%", delta="Excelente", help="Leads que efetivamente receberam a mensagem (2030/2126)")
         with col3:
@@ -832,11 +832,11 @@ if not df_captacao.empty:
             with col_a:
                 st.subheader(
                     "🌪️ Funil de Conversão (Global)",
-                    help="**Glossário do Funil:**\\n\\n**1. Total Disparado:** Todos os leads acionados pela automação (V1+V2+V3).\\n\\n**2. Entregue no Celular:** Leads que de fato receberam a mensagem (excluindo números inválidos ou sem internet no momento).\\n\\n**3. Interesse:** Soma de todos os cliques na 1ª Mensagem.\\n\\n**4. Escolheu Perfil:** Total de leads que optaram por 'Técnico' ou 'Empreendedor'.\\n\\n**5. Assistiu ao Vídeo:** Total que chegou na página do Grupo VIP.\\n\\n**6. Recebeu Pesquisa:** Leads que permaneceram e receberam a pesquisa.\\n\\n**7. Concluiu (Fim):** Aqueles que preencheram a pesquisa e concluíram a jornada."
+                    help="**Glossário do Funil:**\n\n**1. Total Disparado:** Todos os leads acionados pela automação (V1+V2+V3).\n\n**2. Entregue no Celular:** Leads que de fato receberam a mensagem (excluindo números inválidos ou sem internet no momento).\n\n**3. Interesse:** Soma de todos os cliques na 1ª Mensagem.\n\n**4. Escolheu Perfil:** Total de leads que optaram por 'Técnico' ou 'Empreendedor'.\n\n**5. Assistiu ao Vídeo:** Total que chegou na página do Grupo VIP.\n\n**6. Recebeu Pesquisa:** Leads que permaneceram e receberam a pesquisa.\n\n**7. Concluiu (Fim):** Aqueles que preencheram a pesquisa e concluíram a jornada."
                 )
                 fig_sankey = go.Figure(go.Funnel(
                     y=["1. Disparado", "2. Entregue", "3. Interesse (Cliques)", "4. Escolheu Perfil", "5. Assistiu Vídeo", "6. Recebeu Pesquisa", "7. Concluiu (Fim)"],
-                    x=[2126, 2030, 1147, 1067, 1066, 555, 307],
+                    x=[2127, 2031, 1148, 1071, 1066, 555, 307],
                     textinfo="value+percent previous",
                     hoverinfo="text",
                     textfont=dict(size=15, family="Arial, sans-serif", color="black"),
@@ -861,13 +861,13 @@ if not df_captacao.empty:
             with col_b:
                 st.markdown("### 🥧 Público Atraído")
                 import plotly.express as px
-                df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [865, 202]})
+                df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [866, 205]})
                 fig_pie = px.pie(df_pie, values='Qtd', names='Perfil', hole=0.4, color_discrete_sequence=['#F97316', '#8B5CF6'])
                 fig_pie.update_layout(height=400, margin=dict(l=0, r=0, t=20, b=0))
                 st.plotly_chart(fig_pie, use_container_width=True)
 
             st.markdown("### 🚨 Diagnóstico de Gargalos")
-            st.info("**Insight DBA:** Os dados de disparo inicial foram atualizados. Vemos que 56.5% dos leads demonstram interesse na 1ª mensagem (v1, v2, v3). O público atraído consolida-se em ~81% Técnicos (865) e ~19% Empreendedores (202).\\n\\n**♻️ Retenção no Opt-out:** O botão de descadastramento (Parar Mensagens/Bloquear) foi acionado por 34 pessoas (apenas 1.6% do tráfego). Destas, **35** chegaram no nó final de confirmação de saída e **6 delas (17.1%)** clicaram no genial botão de repescagem **'Mudei de Ideia'**, retornando ativamente para o funil! Essa estratégia recuperou leads valiosos e protegeu o CPL.\\n\\n**🏆 O Pote de Ouro (Dados Oficiais):** Exatamente **307 leads** preencheram o formulário e receberam a última mensagem do funil. Desses, **271 leads (88%)** clicaram em 'Sim, pode mandar' e apenas **34 leads (11%)** avisaram que já estavam no grupo (totalizando 305 interações; apenas 2 leads ignoraram os botões). A sua automação filtrou e entregou **271 leads 'Super Quentes'**! **Ação Recomendada:** A equipe comercial já tem a volumetria exata e precisa focar 100% da energia no atendimento 1x1 para fechar vendas com esses 271 diamantes.")
+            st.info("**Insight DBA:** Os dados de disparo inicial foram atualizados. Vemos que 56.5% dos leads demonstram interesse na 1ª mensagem (v1, v2, v3). O público atraído consolida-se em ~81% Técnicos (866) e ~19% Empreendedores (205).\n\n**♻️ Retenção no Opt-out:** O botão de descadastramento (Parar Mensagens/Bloquear) foi acionado por 34 pessoas (apenas 1.6% do tráfego). Destas, **35** chegaram no nó final de confirmação de saída e **6 delas (17.1%)** clicaram no genial botão de repescagem **'Mudei de Ideia'**, retornando ativamente para o funil! Essa estratégia recuperou leads valiosos e protegeu o CPL.\n\n**🏆 O Pote de Ouro (Dados Oficiais):** Exatamente **307 leads** preencheram o formulário e receberam a última mensagem do funil. Desses, **271 leads (88%)** clicaram em 'Sim, pode mandar' e apenas **34 leads (11%)** avisaram que já estavam no grupo (totalizando 305 interações; apenas 2 leads ignoraram os botões). A sua automação filtrou e entregou **271 leads 'Super Quentes'**! **Ação Recomendada:** A equipe comercial já tem a volumetria exata e precisa focar 100% da energia no atendimento 1x1 para fechar vendas com esses 271 diamantes.")
 
         elif visao_funil == "Comparativo de Copys":
             st.markdown("### 🏆 Vencedor do Teste A/B")
@@ -876,7 +876,7 @@ if not df_captacao.empty:
             fig = go.Figure()
             fig.add_trace(go.Funnel(name='V1 (Direta)', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[436, 436], textinfo="value+percent initial"))
             fig.add_trace(go.Funnel(name='V2 (1 Nó Extra)', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[421, 375], textinfo="value+percent initial"))
-            fig.add_trace(go.Funnel(name='V3 (1 Nó Extra)', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[275, 245], textinfo="value+percent initial"))
+            fig.add_trace(go.Funnel(name='V3 (1 Nó Extra)', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[278, 248], textinfo="value+percent initial"))
             st.plotly_chart(fig, use_container_width=True)
             
             st.markdown("### 🚨 Diagnóstico de Copys")
@@ -886,15 +886,15 @@ if not df_captacao.empty:
             col_t, col_e = st.columns(2)
             with col_t:
                 st.markdown("#### 🔧 Jornada do Técnico")
-                fig_tec = go.Figure(go.Funnel(y=["Escolheu Técnico", "Assistiu Vídeo Téc", "Entrou Grupo Téc"], x=[865, 865, 638], textinfo="value+percent previous", marker={"color": "#F97316"}))
+                fig_tec = go.Figure(go.Funnel(y=["Escolheu Técnico", "Assistiu Vídeo Téc", "Entrou Grupo Téc"], x=[866, 865, 638], textinfo="value+percent previous", marker={"color": "#F97316"}))
                 st.plotly_chart(fig_tec, use_container_width=True)
             with col_e:
                 st.markdown("#### 💼 Jornada do Empreendedor")
-                fig_emp = go.Figure(go.Funnel(y=["Escolheu Empreendedor", "Assistiu Vídeo Emp", "Entrou Grupo Emp"], x=[202, 201, 150], textinfo="value+percent previous", marker={"color": "#8B5CF6"}))
+                fig_emp = go.Figure(go.Funnel(y=["Escolheu Empreendedor", "Assistiu Vídeo Emp", "Entrou Grupo Emp"], x=[205, 201, 150], textinfo="value+percent previous", marker={"color": "#8B5CF6"}))
                 st.plotly_chart(fig_emp, use_container_width=True)
 
             st.markdown("### 🚨 Diagnóstico de Perfis")
-            st.warning("**Insight DBA:** O seu funil apresenta uma taxa alta de ação na pós-visualização do vídeo.\\n\\n**🎯 Destaque para a Repescagem:** A sua estratégia de perguntar 'Conseguiu entrar no grupo?' é fantástica! O lembrete secundário foi acionado para 145 Técnicos e 39 Empreendedores que clicaram em 'Não consegui'. Desse volume, o link bruto da repescagem conseguiu salvar e converter **121 Técnicos** (83.4%) e **36 Empreendedores** (92.3%). Sem esse nó inteligente, você teria perdido 157 leads extremamente qualificados e o seu CPL (Custo por Lead) teria disparado!")
+            st.warning("**Insight DBA:** O seu funil apresenta uma taxa alta de ação na pós-visualização do vídeo.\n\n**🎯 Destaque para a Repescagem:** A sua estratégia de perguntar 'Conseguiu entrar no grupo?' é fantástica! O lembrete secundário foi acionado para 145 Técnicos e 39 Empreendedores que clicaram em 'Não consegui'. Desse volume, o link bruto da repescagem conseguiu salvar e converter **121 Técnicos** (83.4%) e **36 Empreendedores** (92.3%). Sem esse nó inteligente, você teria perdido 157 leads extremamente qualificados e o seu CPL (Custo por Lead) teria disparado!")
         
 else:
     st.warning("Não foi possível carregar os dados. Verifique a planilha.")
