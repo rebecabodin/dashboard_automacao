@@ -185,7 +185,8 @@ def carregar_dados():
         aba_captacao = urllib.parse.quote("📈 Captação")
         aba_boasvindas = urllib.parse.quote("Boas-vindas")
         aba_grupo_tec = urllib.parse.quote("📈 Grupos - Técnico")
-        aba_grupo_emp = urllib.parse.quote(" 📈 Grupos - Empreendedores") # O espaço extra no início existe na planilha
+        aba_grupo_emp = urllib.parse.quote(" 📈 Grupos - Empreendedores")
+        aba_pagina32 = urllib.parse.quote("Página32")
         
         # O "&_t=..." força o Google Sheets a entregar a versão mais nova ignorando o próprio cache
         timestamp = int(time.time())
@@ -193,18 +194,41 @@ def carregar_dados():
         url_boasvindas = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={aba_boasvindas}&_t={timestamp}"
         url_grupo_tec = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={aba_grupo_tec}&_t={timestamp}"
         url_grupo_emp = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={aba_grupo_emp}&_t={timestamp}"
+        url_pagina32 = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={aba_pagina32}&_t={timestamp}"
         
         df_captacao = pd.read_csv(url_captacao)
         df_boasvindas = pd.read_csv(url_boasvindas)
         df_grupo_tec = pd.read_csv(url_grupo_tec)
         df_grupo_emp = pd.read_csv(url_grupo_emp)
+        df_pagina32 = pd.read_csv(url_pagina32, on_bad_lines="skip")
         
-        return df_captacao, df_boasvindas, df_grupo_tec, df_grupo_emp
+        return df_captacao, df_boasvindas, df_grupo_tec, df_grupo_emp, df_pagina32
     except Exception as e:
         st.error(f"Erro ao ler o Google Sheets: {e}")
-        return pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
+        return pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
 
-df_captacao, df_boasvindas, df_grupo_tec, df_grupo_emp = carregar_dados()
+df_captacao, df_boasvindas, df_grupo_tec, df_grupo_emp, df_pagina32 = carregar_dados()
+
+# --- CONSOLIDAÇÃO DE DISPAROS DE BOAS-VINDAS ---
+if not df_boasvindas.empty:
+    df_boasvindas['origem_disparo'] = 'Boas-Vindas'
+if not df_pagina32.empty:
+    df_pagina32_renamed = df_pagina32.rename(columns={
+        'data e hora': 'created_at',
+        'nome': 'lead_name',
+        'telefone': 'lead_phone'
+    })
+    df_pagina32_renamed['origem_disparo'] = 'Página32'
+else:
+    df_pagina32_renamed = pd.DataFrame()
+
+if not df_boasvindas.empty and not df_pagina32_renamed.empty:
+    df_disparos_consolidados = pd.concat([df_boasvindas, df_pagina32_renamed], ignore_index=True)
+elif not df_boasvindas.empty:
+    df_disparos_consolidados = df_boasvindas.copy()
+else:
+    df_disparos_consolidados = pd.DataFrame()
+
 
 if not df_captacao.empty:
     # --- SISTEMA DE ACESSO ADMIN (URL SECRETA) ---
@@ -222,17 +246,17 @@ if not df_captacao.empty:
 
     # --- PROCESSAMENTO DOS KPIs GLOBAIS ---
     total_capturados = len(df_captacao)
-    total_automação = len(df_boasvindas)
+    total_automação = len(df_disparos_consolidados)
 
-    # Métrica de Entregues: leads que possuem a tag específica do evento atual
-    if 'tag_atual' in df_boasvindas.columns:
-        sucesso_envio = len(df_boasvindas[df_boasvindas['tag_atual'].astype(str).str.contains('lc7_mde_ago26_boas_vindas_inicial_enviada', case=False, na=False)])
+    # Métrica de Entregues: leads que possuem a tag específica do evento atual na coluna status_boas_vindas
+    if 'status_boas_vindas' in df_disparos_consolidados.columns:
+        sucesso_envio = len(df_disparos_consolidados[df_disparos_consolidados['status_boas_vindas'].astype(str).str.contains('lc7_mde_ago26_boas_vindas_inicial_enviada', case=False, na=False)])
     else:
         sucesso_envio = 0
 
     # Métrica de Erros: leads que possuem a sinalização exata de 'erro' na coluna status_boas_vindas
-    if 'status_boas_vindas' in df_boasvindas.columns:
-        erros = len(df_boasvindas[df_boasvindas['status_boas_vindas'].astype(str).str.strip().str.lower() == 'erro'])
+    if 'status_boas_vindas' in df_disparos_consolidados.columns:
+        erros = len(df_disparos_consolidados[df_disparos_consolidados['status_boas_vindas'].astype(str).str.strip().str.lower() == 'erro'])
     else:
         erros = 0
     taxa_entrega = (sucesso_envio / total_automação) * 100 if total_automação > 0 else 0
@@ -447,7 +471,7 @@ if not df_captacao.empty:
             * **S/ WhatsApp ou Bloqueio da Meta:** O número é um celular válido e perfeito, mas o chip não possui conta ativa de WhatsApp, ou o lead bloqueou a empresa previamente.
             """)
         
-        df_erros = df_boasvindas[df_boasvindas['status_boas_vindas'] == 'erro'].copy()
+        df_erros = df_disparos_consolidados[df_disparos_consolidados['status_boas_vindas'].astype(str).str.strip().str.lower() == 'erro'].copy()
     
         if not df_erros.empty:
             # Função para diagnosticar o erro baseado no número
@@ -472,12 +496,20 @@ if not df_captacao.empty:
         
             st.warning(f"Encontramos {len(df_erros)} leads com erro no envio. Análise inteligente aplicada.")
             
-            df_erros_display = df_erros[['created_at', 'lead_name', 'lead_phone', 'diagnostico_do_erro', 'utm_source']].copy()
+            
+            # Garante que origem_disparo exista
+            if 'origem_disparo' not in df_erros.columns:
+                df_erros['origem_disparo'] = 'Boas-Vindas'
+            if 'utm_source' not in df_erros.columns:
+                df_erros['utm_source'] = 'N/A'
+                
+            df_erros_display = df_erros[['created_at', 'lead_name', 'lead_phone', 'diagnostico_do_erro', 'origem_disparo', 'utm_source']].copy()
             df_erros_display = df_erros_display.rename(columns={
                 'created_at': 'Data/Hora',
                 'lead_name': 'Nome',
                 'lead_phone': 'Telefone',
                 'diagnostico_do_erro': 'Diagnóstico do Erro',
+                'origem_disparo': 'Aba da Planilha',
                 'utm_source': 'Origem (UTM)'
             })
             
