@@ -248,11 +248,14 @@ if not df_captacao.empty:
     total_capturados = len(df_captacao)
     total_automação = len(df_disparos_consolidados)
 
-    # Métrica de Entregues: leads que possuem a tag específica do evento atual na coluna status_boas_vindas
+    # Métrica de Entregues: leads que possuem a tag específica do evento atual na coluna tag_atual ou status_boas_vindas
+    mask_sucesso = pd.Series(False, index=df_disparos_consolidados.index)
+    if 'tag_atual' in df_disparos_consolidados.columns:
+        mask_sucesso = mask_sucesso | df_disparos_consolidados['tag_atual'].astype(str).str.contains('lc7_mde_ago26_boas_vindas_inicial_enviada', case=False, na=False)
     if 'status_boas_vindas' in df_disparos_consolidados.columns:
-        sucesso_envio = len(df_disparos_consolidados[df_disparos_consolidados['status_boas_vindas'].astype(str).str.contains('lc7_mde_ago26_boas_vindas_inicial_enviada', case=False, na=False)])
-    else:
-        sucesso_envio = 0
+        mask_sucesso = mask_sucesso | df_disparos_consolidados['status_boas_vindas'].astype(str).str.contains('lc7_mde_ago26_boas_vindas_inicial_enviada', case=False, na=False)
+    
+    sucesso_envio = len(df_disparos_consolidados[mask_sucesso])
 
     # Métrica de Erros: leads que possuem a sinalização exata de 'erro' na coluna status_boas_vindas
     if 'status_boas_vindas' in df_disparos_consolidados.columns:
