@@ -245,7 +245,7 @@ if not df_captacao.empty:
     menu_selecionado = st.sidebar.radio("Ir para:", opcoes_menu, label_visibility="collapsed")
 
     # --- PROCESSAMENTO DOS KPIs GLOBAIS ---
-    total_capturados = len(df_captacao)
+    total_capturados = len(df_captacao) + len(df_pagina32)
     total_automação = len(df_disparos_consolidados)
 
     # Métrica de Entregues: leads que possuem a tag específica do evento atual na coluna tag_atual ou status_boas_vindas
