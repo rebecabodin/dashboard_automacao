@@ -1144,12 +1144,14 @@ if not df_captacao.empty:
         st.header("1️⃣ Dashboard de Tração e CPLs")
         st.markdown("Análise de conversão do funil de avisos: Disparos ➔ Entrega ➔ Clique.")
         
-        # Dados de CPLs atualizados
+        # Dados de CPLs atualizados (Com Custos do Manychat)
         df_cpl = pd.DataFrame({
             "CPL": ["CPL 01", "CPL 02", "CPL 03", "CPL 04"],
-            "Disparados": [1117, 515, 927, 4122],
-            "Entregues": [1107, 500, 900, 3900],
-            "Cliques": [259, 94, 90, 203],
+            "Data_Disparo": ["11/08/2026", "13/08/2026", "15/08/2026", "17/08/2026"],
+            "Disparados": [4259, 515, 927, 4122],
+            "Entregues": [4200, 500, 900, 3900],
+            "Cliques": [800, 94, 90, 203],
+            "Custo_US": [33.22, 36.98, 66.56, 287.00]
         })
         
         cpl_selecionado = st.selectbox("Selecione o CPL para análise detalhada:", ["Visão Geral"] + df_cpl['CPL'].tolist())
@@ -1192,11 +1194,13 @@ if not df_captacao.empty:
             # Visão Individual por CPL
             with st.container(border=True):
                 dados_cpl = df_cpl[df_cpl['CPL'] == cpl_selecionado].iloc[0]
-                st.markdown(f"### 📈 Performance do {cpl_selecionado}")
+                data_disp = dados_cpl.get('Data_Disparo', 'N/D')
+                st.markdown(f"### 📈 Performance do {cpl_selecionado} (Disparado em {data_disp})")
                 
                 disp = dados_cpl['Disparados']
                 ent = dados_cpl['Entregues']
                 cli = dados_cpl['Cliques']
+                custo = dados_cpl['Custo_US']
                 
                 col1, col2, col3 = st.columns(3)
                 with col1:
@@ -1221,6 +1225,9 @@ if not df_captacao.empty:
                     st.error(f"**🚨 Alerta Crítico:** A taxa de clique do {cpl_selecionado} despencou para {tx_cli:.1f}%. Enviar link para uma base fria (ou com copy fraca) destrói o CTR. Reveja a chamada de ação para os próximos envios.")
                 else:
                     st.success(f"**✅ Insight Estratégico Multi-Copy:** O {cpl_selecionado} alcançou um CTR de {tx_cli:.1f}% ao combinar duas abordagens de copywriting no mesmo fluxo. **1. Recuperação (Reprise):** A primeira copy age com utilidade ('se ainda não assistiu... vou deixar o link'), repescando leads sem pressão. **2. Escassez e Urgência (Ao Vivo):** A segunda copy ataca com um micro-compromisso imediato ('Bora? Estamos ao vivo agora!'). **Plano de Ação:** A conversão foi fortíssima porque a copy atendeu a dois perfis (o atrasado e o pontual). Mantenha essa dobra de comunicação para os próximos CPLs.")
+                
+                cpc = custo / cli if cli > 0 else 0
+                st.info(f"💰 **Inteligência Financeira (ROI da Automação):** O {cpl_selecionado} teve um volume total de **{disp} disparos** processados pelo Manychat, gerando um custo operacional de **US$ {custo:.2f}**. Considerando os **{cli} cliques absolutos** recebidos, o seu Custo Por Clique (CPC) direto no WhatsApp foi de apenas **US$ {cpc:.2f}**. Um tráfego extremamente barato, hiper qualificado e que não depende do algoritmo do Instagram para entregar!")
 
     elif menu_selecionado == '2️⃣ Vendas e Carrinho':
         st.header("2️⃣ Captação de Vendas e Abandono de Carrinho")
