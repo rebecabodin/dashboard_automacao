@@ -976,13 +976,21 @@ if not df_captacao.empty:
             col1, col2 = st.columns(2)
             
             with col1:
-                fig_idade = px.pie(df_pesq, names='Idade', title='Faixa Etária', hole=0.4, color_discrete_sequence=px.colors.qualitative.Set2)
-                fig_idade.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
+                df_idade = df_pesq['Idade'].value_counts().reset_index()
+                df_idade.columns = ['Idade', 'Quantidade']
+                # Ordenar faixas etárias
+                df_idade = df_idade.sort_values(by='Idade')
+                fig_idade = px.bar(df_idade, x='Idade', y='Quantidade', title='Faixa Etária', text_auto=True, color='Idade', color_discrete_sequence=px.colors.qualitative.Pastel)
+                fig_idade.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", showlegend=False, xaxis_title=None, yaxis_title=None)
                 st.plotly_chart(fig_idade, use_container_width=True)
                 
             with col2:
-                fig_tec = px.pie(df_pesq, names='Nivel_Tecnico', title='Nível de Conhecimento Técnico', hole=0.4, color_discrete_sequence=px.colors.qualitative.Set1)
-                fig_tec.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
+                df_tec = df_pesq['Nivel_Tecnico'].value_counts().reset_index()
+                df_tec.columns = ['Nivel_Tecnico', 'Quantidade']
+                # Encurtar labels longos (ex: "Básico. Somente parte mecânica" -> "Básico")
+                df_tec['Nivel_Curto'] = df_tec['Nivel_Tecnico'].apply(lambda x: str(x).split('.')[0] if pd.notnull(x) else 'Não Informado')
+                fig_tec = px.bar(df_tec, x='Nivel_Curto', y='Quantidade', title='Nível de Conhecimento Técnico', text_auto=True, color='Nivel_Curto', color_discrete_sequence=px.colors.qualitative.Set1)
+                fig_tec.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", showlegend=False, xaxis_title=None, yaxis_title=None)
                 st.plotly_chart(fig_tec, use_container_width=True)
                 
             st.info("**🎯 Insight Demográfico:** O público é predominantemente leigo ('Nenhum' ou 'Básico') e concentrado em faixas etárias maduras (35-54 anos). Isso exige uma copy didática, sem jargões complexos, focada em segurança e passo-a-passo estruturado.")
