@@ -973,64 +973,67 @@ if not df_captacao.empty:
             st.metric(label="Total de Respostas Analisadas", value=total_respostas, help="Volume total de leads que completaram o formulário de Check-in.")
             st.markdown("<br>", unsafe_allow_html=True)
             
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                df_idade = df_pesq['Idade'].value_counts().reset_index()
-                df_idade.columns = ['Idade', 'Quantidade']
-                # Ordenar faixas etárias
-                df_idade = df_idade.sort_values(by='Idade')
-                fig_idade = px.bar(df_idade, x='Idade', y='Quantidade', title='Faixa Etária', text_auto=True, color='Idade', color_discrete_sequence=px.colors.qualitative.Pastel)
-                fig_idade.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", showlegend=False, xaxis_title=None, yaxis_title=None)
-                st.plotly_chart(fig_idade, use_container_width=True)
+            with st.container(border=True):
+                col1, col2 = st.columns(2)
                 
-            with col2:
-                df_tec = df_pesq['Nivel_Tecnico'].value_counts().reset_index()
-                df_tec.columns = ['Nivel_Tecnico', 'Quantidade']
-                # Encurtar labels longos (ex: "Básico. Somente parte mecânica" -> "Básico")
-                df_tec['Nivel_Curto'] = df_tec['Nivel_Tecnico'].apply(lambda x: str(x).split('.')[0] if pd.notnull(x) else 'Não Informado')
-                fig_tec = px.bar(df_tec, x='Nivel_Curto', y='Quantidade', title='Nível de Conhecimento Técnico', text_auto=True, color='Nivel_Curto', color_discrete_sequence=px.colors.qualitative.Set1)
-                fig_tec.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", showlegend=False, xaxis_title=None, yaxis_title=None)
-                st.plotly_chart(fig_tec, use_container_width=True)
+                with col1:
+                    df_idade = df_pesq['Idade'].value_counts().reset_index()
+                    df_idade.columns = ['Idade', 'Quantidade']
+                    # Ordenar faixas etárias
+                    df_idade = df_idade.sort_values(by='Idade')
+                    fig_idade = px.bar(df_idade, x='Idade', y='Quantidade', title='Faixa Etária', text_auto=True, color='Idade', color_discrete_sequence=px.colors.qualitative.Pastel)
+                    fig_idade.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", showlegend=False, xaxis_title=None, yaxis_title=None)
+                    st.plotly_chart(fig_idade, use_container_width=True)
+                    
+                with col2:
+                    df_tec = df_pesq['Nivel_Tecnico'].value_counts().reset_index()
+                    df_tec.columns = ['Nivel_Tecnico', 'Quantidade']
+                    # Encurtar labels longos (ex: "Básico. Somente parte mecânica" -> "Básico")
+                    df_tec['Nivel_Curto'] = df_tec['Nivel_Tecnico'].apply(lambda x: str(x).split('.')[0] if pd.notnull(x) else 'Não Informado')
+                    fig_tec = px.bar(df_tec, x='Nivel_Curto', y='Quantidade', title='Nível de Conhecimento Técnico', text_auto=True, color='Nivel_Curto', color_discrete_sequence=px.colors.qualitative.Set1)
+                    fig_tec.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", showlegend=False, xaxis_title=None, yaxis_title=None)
+                    st.plotly_chart(fig_tec, use_container_width=True)
                 
             st.info("**🎯 Insight Demográfico:** O público é predominantemente leigo ('Nenhum' ou 'Básico') e concentrado em faixas etárias maduras (35-54 anos). Isso exige uma copy didática, sem jargões complexos, focada em segurança e passo-a-passo estruturado.")
             st.markdown("<hr style='border: 1px solid #d3d3d3; margin: 50px 0;'>", unsafe_allow_html=True)
             st.markdown("<h2 style='color: #4B8BBE;'>2. Poder de Compra (Renda vs Cartão)</h2>", unsafe_allow_html=True)
             
-            col3, col4 = st.columns(2)
-            with col3:
-                fig_renda = px.histogram(df_pesq.dropna(subset=['Renda']), y='Renda', title='Distribuição de Renda', color_discrete_sequence=['#28a745'])
-                fig_renda.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
-                st.plotly_chart(fig_renda, use_container_width=True)
-                
-            with col4:
-                fig_cartao = px.pie(df_pesq.dropna(subset=['Cartao']), names='Cartao', title='Possui Cartão de Crédito?', color_discrete_sequence=px.colors.qualitative.Set3)
-                fig_cartao.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
-                st.plotly_chart(fig_cartao, use_container_width=True)
+            with st.container(border=True):
+                col3, col4 = st.columns(2)
+                with col3:
+                    fig_renda = px.histogram(df_pesq.dropna(subset=['Renda']), y='Renda', title='Distribuição de Renda', color_discrete_sequence=['#28a745'])
+                    fig_renda.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
+                    st.plotly_chart(fig_renda, use_container_width=True)
+                    
+                with col4:
+                    fig_cartao = px.pie(df_pesq.dropna(subset=['Cartao']), names='Cartao', title='Possui Cartão de Crédito?', color_discrete_sequence=px.colors.qualitative.Set3)
+                    fig_cartao.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
+                    st.plotly_chart(fig_cartao, use_container_width=True)
                 
             st.info("**💰 Insight Financeiro:** A base apresenta alta adesão a cartão de crédito, mas a renda predominante sugere cautela na ancoragem do ticket. Ofertas com parcelamento estendido (ex: 12x sem juros ou boleto parcelado) terão altíssima conversão.")
             st.markdown("<hr style='border: 1px solid #d3d3d3; margin: 50px 0;'>", unsafe_allow_html=True)
             st.markdown("<h2 style='color: #F97316;'>3. Nuvem de Palavras (Desejos Latentes)</h2>", unsafe_allow_html=True)
             st.markdown("O que a audiência respondeu quando perguntada sobre suas expectativas.")
             
-            # Wordcloud
-            try:
-                import matplotlib.pyplot as plt
-                from wordcloud import WordCloud, STOPWORDS
-                
-                textos = " ".join(df_pesq['Expectativa'].dropna().astype(str).tolist())
-                stop_words = set(STOPWORDS)
-                pt_stops = ["o", "a", "os", "as", "um", "uma", "uns", "umas", "de", "do", "da", "dos", "das", "em", "no", "na", "nos", "nas", "para", "pra", "com", "que", "se", "por", "como", "mais", "mas", "eu", "ele", "ela", "eles", "elas", "me", "te", "se", "nos", "vos", "e", "ou", "tudo", "muito", "sobre", "ser", "ter", "aprender", "fazer", "saber"]
-                stop_words.update(pt_stops)
-                
-                wordcloud = WordCloud(width=800, height=400, background_color='#1E1E1E', stopwords=stop_words, colormap='Wistia').generate(textos)
-                
-                fig_wc, ax = plt.subplots(figsize=(10, 5), facecolor='#1E1E1E')
-                ax.imshow(wordcloud, interpolation='bilinear')
-                ax.axis("off")
-                st.pyplot(fig_wc)
-            except ImportError:
-                st.error("As bibliotecas 'wordcloud' ou 'matplotlib' não estão instaladas neste ambiente da nuvem.")
+            with st.container(border=True):
+                # Wordcloud
+                try:
+                    import matplotlib.pyplot as plt
+                    from wordcloud import WordCloud, STOPWORDS
+                    
+                    textos = " ".join(df_pesq['Expectativa'].dropna().astype(str).tolist())
+                    stop_words = set(STOPWORDS)
+                    pt_stops = ["o", "a", "os", "as", "um", "uma", "uns", "umas", "de", "do", "da", "dos", "das", "em", "no", "na", "nos", "nas", "para", "pra", "com", "que", "se", "por", "como", "mais", "mas", "eu", "ele", "ela", "eles", "elas", "me", "te", "se", "nos", "vos", "e", "ou", "tudo", "muito", "sobre", "ser", "ter", "aprender", "fazer", "saber"]
+                    stop_words.update(pt_stops)
+                    
+                    wordcloud = WordCloud(width=800, height=400, background_color='#1E1E1E', stopwords=stop_words, colormap='Wistia').generate(textos)
+                    
+                    fig_wc, ax = plt.subplots(figsize=(10, 5), facecolor='#1E1E1E')
+                    ax.imshow(wordcloud, interpolation='bilinear')
+                    ax.axis("off")
+                    st.pyplot(fig_wc)
+                except ImportError:
+                    st.error("As bibliotecas 'wordcloud' ou 'matplotlib' não estão instaladas neste ambiente da nuvem.")
             
         except Exception as e:
             st.error(f"Erro ao processar a pesquisa: {e}")
