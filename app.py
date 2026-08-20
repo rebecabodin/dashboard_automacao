@@ -996,7 +996,14 @@ if not df_captacao.empty:
                     fig_tec.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", showlegend=False, xaxis_title=None, yaxis_title=None)
                     st.plotly_chart(fig_tec, use_container_width=True)
                 
-            st.info("**🎯 Insight Demográfico:** O público é predominantemente leigo ('Nenhum' ou 'Básico') e concentrado em faixas etárias maduras (35-54 anos). Isso exige uma copy didática, sem jargões complexos, focada em segurança e passo-a-passo estruturado.")
+            try:
+                idade_comum = df_pesq['Idade'].mode()[0] if not df_pesq['Idade'].empty else "Não informada"
+                tecnico_counts = df_pesq['Nivel_Tecnico'].value_counts(normalize=True) * 100
+                perc_leigo = tecnico_counts[tecnico_counts.index.str.contains('Nenhum|Básico', case=False, na=False)].sum()
+                
+                st.info(f"**🎯 Insight Demográfico (Aprofundado):** A esmagadora maioria do público ({perc_leigo:.1f}%) é de iniciantes ('Nenhum' ou 'Básico'), com a faixa etária principal concentrada em **{idade_comum}**. \n\n**O que isso significa na prática?** Essa audiência madura busca transição de carreira ou uma nova fonte de renda segura, mas sente profunda insegurança técnica (medo de não conseguir aprender ou de estragar um equipamento). \n\n**Estratégia de Copy e Conteúdo:** Remova completamente jargões complexos das aulas gratuitas (CPLs). Foque nos termos 'passo a passo', 'do zero', 'qualquer um consegue' e 'método à prova de falhas'. A promessa principal deve girar em torno da *segurança financeira* e *facilidade de implementação*, reduzindo a fricção e o medo da complexidade elétrica.")
+            except:
+                st.info("**🎯 Insight Demográfico:** O público é predominantemente leigo ('Nenhum' ou 'Básico') e concentrado em faixas etárias maduras (35-54 anos). Isso exige uma copy didática, sem jargões complexos, focada em segurança e passo-a-passo estruturado.")
             st.markdown("<hr style='border: 1px solid #d3d3d3; margin: 50px 0;'>", unsafe_allow_html=True)
             st.markdown("<h2 style='color: #4B8BBE;'>2. Poder de Compra (Renda vs Cartão)</h2>", unsafe_allow_html=True)
             
