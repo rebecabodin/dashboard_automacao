@@ -966,37 +966,41 @@ if not df_captacao.empty:
             })
             
             # Filtra valores vazios
+            # Filtra valores vazios
             total_respostas = len(df_pesq)
-            st.metric(label="Total de Respostas Analisadas", value=total_respostas, help="Volume total de leads que completaram o formulário de Check-in.")
-            st.markdown("---")
             
-            st.subheader("1. Demografia e Perfil Técnico")
+            st.markdown("<h2 style='color: #4B8BBE;'>1. Demografia e Perfil Técnico</h2>", unsafe_allow_html=True)
+            st.metric(label="Total de Respostas Analisadas", value=total_respostas, help="Volume total de leads que completaram o formulário de Check-in.")
+            st.markdown("<br>", unsafe_allow_html=True)
+            
             col1, col2 = st.columns(2)
             
             with col1:
-                fig_idade = px.pie(df_pesq, names='Idade', title='Faixa Etária', hole=0.4, color_discrete_sequence=px.colors.sequential.Oranges)
-                fig_idade.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF")
+                fig_idade = px.pie(df_pesq, names='Idade', title='Faixa Etária', hole=0.4, color_discrete_sequence=px.colors.qualitative.Set2)
+                fig_idade.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
                 st.plotly_chart(fig_idade, use_container_width=True)
                 
             with col2:
-                fig_tec = px.pie(df_pesq, names='Nivel_Tecnico', title='Nível de Conhecimento Técnico', hole=0.4, color_discrete_sequence=px.colors.sequential.Purples)
-                fig_tec.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF")
+                fig_tec = px.pie(df_pesq, names='Nivel_Tecnico', title='Nível de Conhecimento Técnico', hole=0.4, color_discrete_sequence=px.colors.qualitative.Set1)
+                fig_tec.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
                 st.plotly_chart(fig_tec, use_container_width=True)
                 
+            st.info("**🎯 Insight Demográfico:** O público é predominantemente leigo ('Nenhum' ou 'Básico') e concentrado em faixas etárias maduras (35-54 anos). Isso exige uma copy didática, sem jargões complexos, focada em segurança e passo-a-passo estruturado.")
             st.markdown("---")
-            st.subheader("2. Poder de Compra (Renda vs Cartão)")
+            st.markdown("<h2 style='color: #4B8BBE;'>2. Poder de Compra (Renda vs Cartão)</h2>", unsafe_allow_html=True)
             
             col3, col4 = st.columns(2)
             with col3:
                 fig_renda = px.histogram(df_pesq.dropna(subset=['Renda']), y='Renda', title='Distribuição de Renda', color_discrete_sequence=['#28a745'])
-                fig_renda.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF")
+                fig_renda.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
                 st.plotly_chart(fig_renda, use_container_width=True)
                 
             with col4:
-                fig_cartao = px.pie(df_pesq.dropna(subset=['Cartao']), names='Cartao', title='Possui Cartão de Crédito?', color_discrete_sequence=['#ffc107', '#dc3545'])
-                fig_cartao.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF")
+                fig_cartao = px.pie(df_pesq.dropna(subset=['Cartao']), names='Cartao', title='Possui Cartão de Crédito?', color_discrete_sequence=px.colors.qualitative.Set3)
+                fig_cartao.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
                 st.plotly_chart(fig_cartao, use_container_width=True)
                 
+            st.info("**💰 Insight Financeiro:** A base apresenta alta adesão a cartão de crédito, mas a renda predominante sugere cautela na ancoragem do ticket. Ofertas com parcelamento estendido (ex: 12x sem juros ou boleto parcelado) terão altíssima conversão.")
             st.markdown("---")
             st.subheader("3. Nuvem de Palavras (Desejos Latentes)")
             st.markdown("O que a audiência respondeu quando perguntada sobre suas expectativas.")
