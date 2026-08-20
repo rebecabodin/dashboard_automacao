@@ -973,22 +973,21 @@ if not df_captacao.empty:
             st.metric(label="Total de Respostas Analisadas", value=total_respostas, help="Volume total de leads que completaram o formulário de Check-in.")
             st.markdown("<br>", unsafe_allow_html=True)
             
-            with st.container(border=True):
-                col1, col2 = st.columns(2)
-                
-                with col1:
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                with st.container(border=True):
                     df_idade = df_pesq['Idade'].value_counts().reset_index()
                     df_idade.columns = ['Idade', 'Quantidade']
-                    # Ordenar faixas etárias
                     df_idade = df_idade.sort_values(by='Idade')
                     fig_idade = px.bar(df_idade, x='Idade', y='Quantidade', title='Faixa Etária', text_auto=True, color='Idade', color_discrete_sequence=px.colors.qualitative.Pastel)
                     fig_idade.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", showlegend=False, xaxis_title=None, yaxis_title=None)
                     st.plotly_chart(fig_idade, use_container_width=True)
                     
-                with col2:
+            with col2:
+                with st.container(border=True):
                     df_tec = df_pesq['Nivel_Tecnico'].value_counts().reset_index()
                     df_tec.columns = ['Nivel_Tecnico', 'Quantidade']
-                    # Encurtar labels longos (ex: "Básico. Somente parte mecânica" -> "Básico")
                     df_tec['Nivel_Curto'] = df_tec['Nivel_Tecnico'].apply(lambda x: str(x).split('.')[0] if pd.notnull(x) else 'Não Informado')
                     fig_tec = px.bar(df_tec, x='Nivel_Curto', y='Quantidade', title='Nível de Conhecimento Técnico', text_auto=True, color='Nivel_Curto', color_discrete_sequence=px.colors.qualitative.Set1)
                     fig_tec.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", showlegend=False, xaxis_title=None, yaxis_title=None)
@@ -998,19 +997,27 @@ if not df_captacao.empty:
             st.markdown("<hr style='border: 1px solid #d3d3d3; margin: 50px 0;'>", unsafe_allow_html=True)
             st.markdown("<h2 style='color: #4B8BBE;'>2. Poder de Compra (Renda vs Cartão)</h2>", unsafe_allow_html=True)
             
-            with st.container(border=True):
-                col3, col4 = st.columns(2)
-                with col3:
+            col3, col4 = st.columns(2)
+            
+            with col3:
+                with st.container(border=True):
                     fig_renda = px.histogram(df_pesq.dropna(subset=['Renda']), y='Renda', title='Distribuição de Renda', color_discrete_sequence=['#28a745'])
                     fig_renda.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
                     st.plotly_chart(fig_renda, use_container_width=True)
                     
-                with col4:
+            with col4:
+                with st.container(border=True):
                     fig_cartao = px.pie(df_pesq.dropna(subset=['Cartao']), names='Cartao', title='Possui Cartão de Crédito?', color_discrete_sequence=px.colors.qualitative.Set3)
                     fig_cartao.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
                     st.plotly_chart(fig_cartao, use_container_width=True)
                 
-            st.info("**💰 Insight Financeiro:** A base apresenta alta adesão a cartão de crédito, mas a renda predominante sugere cautela na ancoragem do ticket. Ofertas com parcelamento estendido (ex: 12x sem juros ou boleto parcelado) terão altíssima conversão.")
+            try:
+                perc_cartao = (df_pesq['Cartao'].value_counts(normalize=True).get('Sim', 0) * 100)
+                renda_comum = df_pesq['Renda'].mode()[0] if not df_pesq['Renda'].empty else "Não informada"
+                
+                st.info(f"**💰 Insight Financeiro (Aprofundado):** Uma enorme parcela da sua base ({perc_cartao:.1f}%) afirma possuir Cartão de Crédito. No entanto, a renda predominante detectada nos gráficos se concentra na faixa de **{renda_comum}**. \n\n**O que isso significa na prática?** O lead *tem o limite no cartão*, mas o orçamento mental mensal dele é extremamente restrito. \n\n**Estratégia de Vendas (Copy):** A ancoragem do preço cheio (ex: R$ 997) pode gerar susto e abandono de carrinho. O foco absoluto do seu pitch e da página de vendas deve ser o valor da parcela ('Por menos de X reais por dia' ou '12x de Y'). Além disso, oferecer modalidades híbridas (Pix + Cartão) ou Boleto Parcelado será o grande diferencial para contornar o bloqueio de limite único.")
+            except:
+                st.info("**💰 Insight Financeiro:** A base apresenta alta adesão a cartão de crédito, mas a renda predominante sugere cautela na ancoragem do ticket. Ofertas com parcelamento estendido terão altíssima conversão.")
             st.markdown("<hr style='border: 1px solid #d3d3d3; margin: 50px 0;'>", unsafe_allow_html=True)
             st.markdown("<h2 style='color: #F97316;'>3. Nuvem de Palavras (Desejos Latentes)</h2>", unsafe_allow_html=True)
             st.markdown("O que a audiência respondeu quando perguntada sobre suas expectativas.")
