@@ -1005,8 +1005,15 @@ if not df_captacao.empty:
                 with st.container(border=True):
                     df_renda = df_pesq['Renda'].dropna().value_counts().reset_index()
                     df_renda.columns = ['Renda', 'Quantidade']
-                    fig_renda = px.bar(df_renda, y='Renda', x='Quantidade', orientation='h', title='Distribuição de Renda', color_discrete_sequence=['#28a745'], text_auto=True)
-                    fig_renda.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", xaxis_title="Quantidade", yaxis_title=None)
+                    
+                    # Limpar rótulos longos e ordenar do menor para o maior
+                    df_renda['Renda'] = df_renda['Renda'].apply(lambda x: str(x).split('(')[0].strip())
+                    ordem_renda = ["Nenhuma renda", "Até 1 salário mínimo", "De 1 a 3 salários mínimos", "De 3 a 5 salários mínimos", "Mais de 5 salários mínimos"]
+                    df_renda['Renda'] = pd.Categorical(df_renda['Renda'], categories=ordem_renda, ordered=True)
+                    df_renda = df_renda.sort_values('Renda', ascending=False)
+                    
+                    fig_renda = px.bar(df_renda, y='Renda', x='Quantidade', orientation='h', title='Distribuição de Renda', color='Renda', color_discrete_sequence=px.colors.qualitative.Pastel, text_auto=True)
+                    fig_renda.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", xaxis_title="Quantidade", yaxis_title=None, showlegend=False)
                     st.plotly_chart(fig_renda, use_container_width=True)
                     
             with col4:
