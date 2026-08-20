@@ -1144,12 +1144,12 @@ if not df_captacao.empty:
         st.header("1️⃣ Dashboard de Tração e CPLs")
         st.markdown("Análise de conversão do funil de avisos: Disparos ➔ Entrega ➔ Clique.")
         
-        # Mock de dados do funil (para futura substituição via Google Sheets)
+        # Dados de CPLs atualizados
         df_cpl = pd.DataFrame({
             "CPL": ["CPL 01", "CPL 02", "CPL 03", "CPL 04"],
-            "Disparados": [4259, 515, 927, 4122],
-            "Entregues": [4200, 500, 900, 3900],
-            "Cliques": [800, 94, 90, 203],
+            "Disparados": [1117, 515, 927, 4122],
+            "Entregues": [1107, 500, 900, 3900],
+            "Cliques": [259, 94, 90, 203],
         })
         
         cpl_selecionado = st.selectbox("Selecione o CPL para análise detalhada:", ["Visão Geral"] + df_cpl['CPL'].tolist())
