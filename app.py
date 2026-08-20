@@ -1046,18 +1046,44 @@ if not df_captacao.empty:
                 try:
                     import matplotlib.pyplot as plt
                     from wordcloud import WordCloud, STOPWORDS
+                    from collections import Counter
+                    import re
                     
                     textos = " ".join(df_pesq['Expectativa'].dropna().astype(str).tolist())
+                    
+                    # Limpeza para contagem correta
+                    texto_limpo = re.sub(r'[^\w\s]', '', textos.lower())
+                    palavras = texto_limpo.split()
+                    
                     stop_words = set(STOPWORDS)
-                    pt_stops = ["o", "a", "os", "as", "um", "uma", "uns", "umas", "de", "do", "da", "dos", "das", "em", "no", "na", "nos", "nas", "para", "pra", "com", "que", "se", "por", "como", "mais", "mas", "eu", "ele", "ela", "eles", "elas", "me", "te", "se", "nos", "vos", "e", "ou", "tudo", "muito", "sobre", "ser", "ter", "aprender", "fazer", "saber"]
+                    pt_stops = ["o", "a", "os", "as", "um", "uma", "uns", "umas", "de", "do", "da", "dos", "das", "em", "no", "na", "nos", "nas", "para", "pra", "com", "que", "se", "por", "como", "mais", "mas", "eu", "ele", "ela", "eles", "elas", "me", "te", "se", "nos", "vos", "e", "ou", "tudo", "muito", "sobre", "ser", "ter", "aprender", "fazer", "saber", "isso", "aquilo", "estou", "quero", "vou", "nao", "não", "sim", "sou", "q", "ja", "já", "meu", "minha", "vem", "tem", "até", "dos", "das"]
                     stop_words.update(pt_stops)
                     
+                    # Top 5 Métricas
+                    palavras_filtradas = [p for p in palavras if p not in stop_words and len(p) > 2]
+                    contagem = Counter(palavras_filtradas)
+                    top_5 = contagem.most_common(5)
+                    
+                    st.markdown("##### 🏆 Top 5 Temas Mais Citados")
+                    cols_top = st.columns(5)
+                    for i, (palavra, freq) in enumerate(top_5):
+                        with cols_top[i]:
+                            st.metric(label=f"#{i+1} Tema", value=palavra.title(), delta=f"{freq} citações", delta_color="off")
+                    
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    
+                    # Renderização Wordcloud
                     wordcloud = WordCloud(width=800, height=400, background_color='#1E1E1E', stopwords=stop_words, colormap='Wistia').generate(textos)
                     
                     fig_wc, ax = plt.subplots(figsize=(10, 5), facecolor='#1E1E1E')
                     ax.imshow(wordcloud, interpolation='bilinear')
                     ax.axis("off")
                     st.pyplot(fig_wc)
+                    
+                    # Insight Comportamental
+                    termos_top = [p.title() for p, c in top_5]
+                    st.info(f"**🧠 Insight Comportamental (Dores e Desejos):** As 5 palavras que mais ecoam na mente do seu lead são: **{', '.join(termos_top)}**. \n\n**O que isso revela?** Estes termos representam as maiores 'dores latentes' ou ambições do cliente. A copy de abertura do CPL e dos anúncios de remarketing deve utilizar exatamente este vocabulário para gerar ancoragem e conexão instantânea (ex: 'Eu sei que o que você mais quer agora é [Tema #1] e [Tema #2]').")
+                    
                 except ImportError:
                     st.error("As bibliotecas 'wordcloud' ou 'matplotlib' não estão instaladas neste ambiente da nuvem.")
             
