@@ -986,7 +986,7 @@ if not df_captacao.empty:
                 st.plotly_chart(fig_tec, use_container_width=True)
                 
             st.info("**🎯 Insight Demográfico:** O público é predominantemente leigo ('Nenhum' ou 'Básico') e concentrado em faixas etárias maduras (35-54 anos). Isso exige uma copy didática, sem jargões complexos, focada em segurança e passo-a-passo estruturado.")
-            st.markdown("---")
+            st.markdown("<hr style='border: 1px solid #d3d3d3; margin: 50px 0;'>", unsafe_allow_html=True)
             st.markdown("<h2 style='color: #4B8BBE;'>2. Poder de Compra (Renda vs Cartão)</h2>", unsafe_allow_html=True)
             
             col3, col4 = st.columns(2)
@@ -1001,8 +1001,8 @@ if not df_captacao.empty:
                 st.plotly_chart(fig_cartao, use_container_width=True)
                 
             st.info("**💰 Insight Financeiro:** A base apresenta alta adesão a cartão de crédito, mas a renda predominante sugere cautela na ancoragem do ticket. Ofertas com parcelamento estendido (ex: 12x sem juros ou boleto parcelado) terão altíssima conversão.")
-            st.markdown("---")
-            st.subheader("3. Nuvem de Palavras (Desejos Latentes)")
+            st.markdown("<hr style='border: 1px solid #d3d3d3; margin: 50px 0;'>", unsafe_allow_html=True)
+            st.markdown("<h2 style='color: #F97316;'>3. Nuvem de Palavras (Desejos Latentes)</h2>", unsafe_allow_html=True)
             st.markdown("O que a audiência respondeu quando perguntada sobre suas expectativas.")
             
             # Wordcloud
