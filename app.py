@@ -1220,7 +1220,7 @@ if not df_captacao.empty:
                 if tx_cli < 10:
                     st.error(f"**🚨 Alerta Crítico:** A taxa de clique do {cpl_selecionado} despencou para {tx_cli:.1f}%. Enviar link para uma base fria (ou com copy fraca) destrói o CTR. Reveja a chamada de ação para os próximos envios.")
                 else:
-                    st.success(f"**✅ Insight:** O {cpl_selecionado} performou bem com {tx_cli:.1f}% de CTR. Replique a estrutura desta copy para os próximos avisos.")
+                    st.success(f"**✅ Desempenho Excepcional de Tração:** O {cpl_selecionado} converteu {tx_cli:.1f}% dos leads em cliques reais (acessos à aula). Um CTR no WhatsApp nessa casa de grandeza indica uma excelente ancoragem psicológica e aquecimento prévio. **Plano de Ação:** Isole os gatilhos mentais usados nesta Copy (curiosidade, escassez ou dores latentes mapeadas na aba de Pesquisa) e padronize este exato esqueleto de script para garantir que a tração das próximas aulas não caia.")
 
     elif menu_selecionado == '2️⃣ Vendas e Carrinho':
         st.header("2️⃣ Captação de Vendas e Abandono de Carrinho")
