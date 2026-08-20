@@ -151,8 +151,8 @@ def render_alert_duplicados(df_captacao):
         st.warning(f"Não foi possível verificar leads duplicados: {e}")
 
 
-st.title("📊 Dashboard de Lançamento e Boas-Vindas")
-st.markdown("Acompanhamento em tempo real de conversão e perfil dos leads capturados.")
+st.title("📊 Dashboard Executivo (Tração, CPLs e Avisos)")
+st.markdown("Acompanhamento em tempo real do funil de conversão, engajamento de aulas e perfil dos leads.")
 
 # --- CONTROLE DE ATUALIZAÇÃO ---
 st.sidebar.title("⚙️ Configurações")
@@ -1133,10 +1133,10 @@ if not df_captacao.empty:
         """)
 
     elif menu_selecionado == '1️⃣ CPLs (Análise e Funil)':
-        st.header("1️⃣ Monitoramento de CPLs")
-        st.markdown("Visualização de engajamento em cada Aula (CPL) via automação Manychat.")
+        st.header("1️⃣ Dashboard de Tração e CPLs")
+        st.markdown("Análise de conversão do funil de avisos: Disparos ➔ Entrega ➔ Clique.")
         
-        # Mock de dados reais do funil
+        # Mock de dados do funil (para futura substituição via Google Sheets)
         df_cpl = pd.DataFrame({
             "CPL": ["CPL 01", "CPL 02", "CPL 03", "CPL 04"],
             "Disparados": [4259, 515, 927, 4122],
@@ -1144,18 +1144,75 @@ if not df_captacao.empty:
             "Cliques": [800, 94, 90, 203],
         })
         
-        df_cpl['Taxa_Entrega'] = (df_cpl['Entregues'] / df_cpl['Disparados']) * 100
-        df_cpl['Taxa_Clique'] = (df_cpl['Cliques'] / df_cpl['Entregues']) * 100
-
-        col1, col2 = st.columns(2)
-        with col1:
-            fig_entrega = px.bar(df_cpl, x='CPL', y='Taxa_Entrega', title='Taxa de Entrega (%)', text_auto='.2f', color_discrete_sequence=['#4B8BBE'])
-            st.plotly_chart(fig_entrega, use_container_width=True)
-        with col2:
-            fig_clique = px.bar(df_cpl, x='CPL', y='Taxa_Clique', title='Taxa de Clique (CTR %)', text_auto='.2f', color_discrete_sequence=['#FFD43B'])
-            st.plotly_chart(fig_clique, use_container_width=True)
-            
-        st.markdown('<div class="alert-box"><b>🔍 Insight de CPLs:</b> Houve uma queda abrupta de disparos no CPL 2 e CPL 3, seguido por um pico no CPL 4. A taxa de clique despencou no CPL 4 (Apenas 5.21%), provando que mandar o link para uma base fria no final não recupera o engajamento perdido.</div>', unsafe_allow_html=True)
+        cpl_selecionado = st.selectbox("Selecione o CPL para análise detalhada:", ["Visão Geral"] + df_cpl['CPL'].tolist())
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+        if cpl_selecionado == "Visão Geral":
+            with st.container(border=True):
+                st.markdown("### 📊 Funil Consolidado (Todos os CPLs)")
+                
+                # Somatórias Globais
+                total_disp = df_cpl['Disparados'].sum()
+                total_ent = df_cpl['Entregues'].sum()
+                total_cli = df_cpl['Cliques'].sum()
+                
+                # Métricas em Cards
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.metric("Total Enviado", f"{total_disp:,}".replace(',','.'))
+                with col2:
+                    taxa_ent = (total_ent / total_disp) * 100 if total_disp > 0 else 0
+                    st.metric("Total Entregue", f"{total_ent:,}".replace(',','.'), f"{taxa_ent:.1f}% de Entrega", delta_color="normal")
+                with col3:
+                    taxa_cli = (total_cli / total_ent) * 100 if total_ent > 0 else 0
+                    st.metric("Total de Cliques", f"{total_cli:,}".replace(',','.'), f"{taxa_cli:.1f}% CTR", delta_color="normal")
+                
+                # Gráfico de Funil
+                fig_funnel = go.Figure(go.Funnel(
+                    y=["Enviados", "Entregues (Inbox)", "Cliques (Acessos)"],
+                    x=[total_disp, total_ent, total_cli],
+                    textinfo="value+percent initial",
+                    marker={"color": ["#4B8BBE", "#28a745", "#FFD43B"]}
+                ))
+                fig_funnel.update_layout(margin=dict(t=20, b=20), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
+                st.plotly_chart(fig_funnel, use_container_width=True)
+                
+                st.warning(f"**🔍 Insight Global:** A taxa média de clique de toda a campanha de CPLs é de **{taxa_cli:.1f}%**. A quebra primária acontece entre a entrega e o clique. O WhatsApp entrega excelentemente, mas a Copy não está forçando o lead a agir.")
+                
+        else:
+            # Visão Individual por CPL
+            with st.container(border=True):
+                dados_cpl = df_cpl[df_cpl['CPL'] == cpl_selecionado].iloc[0]
+                st.markdown(f"### 📈 Performance do {cpl_selecionado}")
+                
+                disp = dados_cpl['Disparados']
+                ent = dados_cpl['Entregues']
+                cli = dados_cpl['Cliques']
+                
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.metric("Enviado", f"{disp:,}".replace(',','.'))
+                with col2:
+                    tx_ent = (ent/disp)*100 if disp > 0 else 0
+                    st.metric("Entregue", f"{ent:,}".replace(',','.'), f"{tx_ent:.1f}% de Entrega", delta_color="normal")
+                with col3:
+                    tx_cli = (cli/ent)*100 if ent > 0 else 0
+                    st.metric("Cliques", f"{cli:,}".replace(',','.'), f"{tx_cli:.1f}% CTR", delta_color="normal")
+                
+                fig_funnel = go.Figure(go.Funnel(
+                    y=["Enviados", "Entregues (Inbox)", "Cliques (Acessos)"],
+                    x=[disp, ent, cli],
+                    textinfo="value+percent previous",
+                    marker={"color": ["#4B8BBE", "#28a745", "#FFD43B"]}
+                ))
+                fig_funnel.update_layout(margin=dict(t=20, b=20), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
+                st.plotly_chart(fig_funnel, use_container_width=True)
+                
+                if tx_cli < 10:
+                    st.error(f"**🚨 Alerta Crítico:** A taxa de clique do {cpl_selecionado} despencou para {tx_cli:.1f}%. Enviar link para uma base fria (ou com copy fraca) destrói o CTR. Reveja a chamada de ação para os próximos envios.")
+                else:
+                    st.success(f"**✅ Insight:** O {cpl_selecionado} performou bem com {tx_cli:.1f}% de CTR. Replique a estrutura desta copy para os próximos avisos.")
 
     elif menu_selecionado == '2️⃣ Vendas e Carrinho':
         st.header("2️⃣ Captação de Vendas e Abandono de Carrinho")
