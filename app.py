@@ -151,8 +151,8 @@ def render_alert_duplicados(df_captacao):
         st.warning(f"Não foi possível verificar leads duplicados: {e}")
 
 
-st.title("📊 Dashboard Executivo (Tração, CPLs e Avisos)")
-st.markdown("Acompanhamento em tempo real do funil de conversão, engajamento de aulas e perfil dos leads.")
+title_placeholder = st.empty()
+subtitle_placeholder = st.empty()
 
 # --- CONTROLE DE ATUALIZAÇÃO ---
 st.sidebar.title("⚙️ Configurações")
@@ -255,6 +255,14 @@ if not df_captacao.empty:
         opcoes_menu = ['📊 Visão Principal', '🕸️ Funil Manychat (WPP)']
         
     menu_selecionado = st.sidebar.radio("Ir para:", opcoes_menu, label_visibility="collapsed")
+    
+    # Define o título dinamicamente com base na aba selecionada
+    if menu_selecionado == '1️⃣ CPLs (Análise e Funil)':
+        title_placeholder.title("📊 Dashboard Executivo (Tração, CPLs e Avisos)")
+        subtitle_placeholder.markdown("Acompanhamento em tempo real do funil de conversão, engajamento de aulas e perfil dos leads.")
+    else:
+        title_placeholder.title("📊 Dashboard de Lançamento e Boas-Vindas")
+        subtitle_placeholder.markdown("Acompanhamento em tempo real de conversão e perfil dos leads capturados.")
 
     # --- PROCESSAMENTO DOS KPIs GLOBAIS ---
     total_capturados = len(df_captacao) + len(df_pagina32)
