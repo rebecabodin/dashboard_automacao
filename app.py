@@ -965,8 +965,10 @@ if not df_captacao.empty:
                 "O que você espera aprender na Jornada Mundo dos Elétricos?": "Expectativa"
             })
             
-            # Filtra valores vazios
-            # Filtra valores vazios
+            # Filtra erros da planilha (como #ERROR!)
+            df_pesq = df_pesq.replace('#ERROR!', pd.NA)
+            
+            # Conta totais reais
             total_respostas = len(df_pesq)
             
             st.markdown("<h2 style='color: #4B8BBE;'>1. Demografia e Perfil Técnico</h2>", unsafe_allow_html=True)
@@ -1001,8 +1003,10 @@ if not df_captacao.empty:
             
             with col3:
                 with st.container(border=True):
-                    fig_renda = px.histogram(df_pesq.dropna(subset=['Renda']), y='Renda', title='Distribuição de Renda', color_discrete_sequence=['#28a745'])
-                    fig_renda.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
+                    df_renda = df_pesq['Renda'].dropna().value_counts().reset_index()
+                    df_renda.columns = ['Renda', 'Quantidade']
+                    fig_renda = px.bar(df_renda, y='Renda', x='Quantidade', orientation='h', title='Distribuição de Renda', color_discrete_sequence=['#28a745'], text_auto=True)
+                    fig_renda.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", xaxis_title="Quantidade", yaxis_title=None)
                     st.plotly_chart(fig_renda, use_container_width=True)
                     
             with col4:
