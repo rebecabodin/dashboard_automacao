@@ -151,7 +151,8 @@ def render_alert_duplicados(df_captacao):
         st.warning(f"Não foi possível verificar leads duplicados: {e}")
 
 
-
+st.title("📊 Dashboard de Lançamento e Boas-Vindas")
+st.markdown("Acompanhamento em tempo real de conversão e perfil dos leads capturados.")
 
 # --- CONTROLE DE ATUALIZAÇÃO ---
 st.sidebar.title("⚙️ Configurações")
@@ -301,8 +302,6 @@ if not df_captacao.empty:
     leads_perdidos = len(df_falhas_global)
 
     if menu_selecionado == '📊 Visão Principal':
-        st.title("📊 Dashboard de Lançamento e Boas-Vindas")
-        st.markdown("Acompanhamento em tempo real de conversão e perfil dos leads capturados.")
         col1, col2, col3, col4, col5, col6 = st.columns(6)
         col1.metric("Leads Capturados", f"{total_capturados}", help="Volume bruto de cadastros registrados na base principal (Landing Page).")
         col2.metric("Duplicados", f"{total_duplicados}", delta_color="inverse", help="Cadastros suspeitos de repetição (mesmo e-mail ou telefone).")
@@ -946,10 +945,8 @@ if not df_captacao.empty:
             st.warning("**Insight DBA:** O seu funil apresenta uma taxa alta de ação na pós-visualização do vídeo.\n\n**🎯 Destaque para a Repescagem:** A sua estratégia de perguntar 'Conseguiu entrar no grupo?' é fantástica! O lembrete secundário foi acionado para 213 Técnicos e 60 Empreendedores que clicaram em 'Não consegui'. Desse volume, o link bruto da repescagem conseguiu salvar e converter **181 Técnicos** (85.0%) e **55 Empreendedores** (91.7%). Sem esse nó inteligente, você teria perdido 236 leads extremamente qualificados e o seu CPL (Custo por Lead) teria disparado!")
         
     elif menu_selecionado == '📊 Pesquisa (WordCloud)':
-        st.markdown("<h1 style='text-align: center; color: #4B8BBE; font-size: 3rem;'>🧠 Raio-X da Audiência</h1>", unsafe_allow_html=True)
-        st.markdown("<h3 style='text-align: center; color: #AAAAAA; font-weight: 300;'>Decodificando os desejos, dores e o poder de compra do seu cliente.</h3>", unsafe_allow_html=True)
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("<div style='background-color: #1a2b1a; border-left: 5px solid #4CAF50; padding: 15px; border-radius: 8px;'><b>📚 Storytelling Estratégico:</b> Mais do que números, a pesquisa de check-in revela a <i>alma</i> do lançamento. Aqui, saímos do 'achismo' e ouvimos a voz da audiência para escrever copys cirúrgicas que quebram objeções antes mesmo de o carrinho abrir.</div><br>", unsafe_allow_html=True)
+        st.header("📊 Raio-X da Pesquisa (Check-in)")
+        st.markdown("Análise comportamental profunda dos leads captados. Quem são, o que querem e quanto ganham.")
         
         try:
             df_pesq = pd.read_csv("pesquisa.csv")
@@ -999,8 +996,8 @@ if not df_captacao.empty:
                 st.plotly_chart(fig_cartao, use_container_width=True)
                 
             st.markdown("---")
-            st.markdown("<h2 style='color: #F97316;'>3. Nuvem de Palavras (Desejos Latentes)</h2>", unsafe_allow_html=True)
-            st.markdown("A representação visual das palavras mais digitadas pelos leads. Quanto maior a palavra, maior a dor/desejo latente da audiência.")
+            st.subheader("3. Nuvem de Palavras (Desejos Latentes)")
+            st.markdown("O que a audiência respondeu quando perguntada sobre suas expectativas.")
             
             # Wordcloud
             try:
