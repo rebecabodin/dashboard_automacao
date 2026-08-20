@@ -5,3 +5,5 @@ st-gsheets-connection
 openpyxl
 streamlit-autorefresh
 python-dotenv
+wordcloud
+matplotlib

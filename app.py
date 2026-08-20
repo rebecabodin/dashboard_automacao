@@ -238,7 +238,7 @@ if not df_captacao.empty:
     st.sidebar.markdown("### 🧭 Navegação")
     
     if is_admin:
-        opcoes_menu = ['📊 Visão Principal', '🕸️ Funil Manychat (WPP)', '🚨 Monitoramento Avançado', '🧠 Plano de Ação']
+        opcoes_menu = ['📊 Visão Principal', '🕸️ Funil Manychat (WPP)', '🚨 Monitoramento Avançado', '🧠 Plano de Ação', '📊 Pesquisa (WordCloud)', '📝 Relatório Executivo']
     else:
         opcoes_menu = ['📊 Visão Principal', '🕸️ Funil Manychat (WPP)']
         
@@ -931,6 +931,125 @@ if not df_captacao.empty:
 
             st.markdown("### 🚨 Diagnóstico de Perfis")
             st.warning("**Insight DBA:** O seu funil apresenta uma taxa alta de ação na pós-visualização do vídeo.\n\n**🎯 Destaque para a Repescagem:** A sua estratégia de perguntar 'Conseguiu entrar no grupo?' é fantástica! O lembrete secundário foi acionado para 213 Técnicos e 60 Empreendedores que clicaram em 'Não consegui'. Desse volume, o link bruto da repescagem conseguiu salvar e converter **181 Técnicos** (85.0%) e **55 Empreendedores** (91.7%). Sem esse nó inteligente, você teria perdido 236 leads extremamente qualificados e o seu CPL (Custo por Lead) teria disparado!")
+        
+    elif menu_selecionado == '📊 Pesquisa (WordCloud)':
+        st.header("📊 Raio-X da Pesquisa (Check-in)")
+        st.markdown("Análise comportamental profunda dos leads captados. Quem são, o que querem e quanto ganham.")
+        
+        try:
+            df_pesq = pd.read_csv("pesquisa.csv")
+            # Renomeando as colunas difíceis
+            df_pesq = df_pesq.rename(columns={
+                "Qual a sua idade?": "Idade",
+                "Qual dessas opções mais representa você hoje?\\n": "Perfil_Inicial",
+                "Qual o seu objetivo para aprender a manutenção de Scooter Elétrica?\\n\\nSOU/SER UM TÉCNICO\\nQuero fazer ou faço a manutenção de Scooters Elétricas.\\n\\nSOU/SER UM EMPREENDEDOR\\nQuero ou tenho uma oficina/loja no ramo de Scooters Elétricas.\\n": "Objetivo_Geral",
+                "Como Técnico, qual o seu objetivo principal?\\n": "Objetivo_Tecnico",
+                "Como Empreendedor, qual a sua situação hoje?\\n": "Situacao_Empreendedor",
+                "Qual o seu nível de Conhecimento Técnico das Scooters/Motos Elétricas?": "Nivel_Tecnico",
+                "Hoje em dia, qual é a sua renda mensal aproximada?": "Renda",
+                "Você tem cartão de crédito?": "Cartao",
+                "O que você espera aprender na Jornada Mundo dos Elétricos?": "Expectativa"
+            })
+            
+            # Filtra valores vazios
+            total_respostas = len(df_pesq)
+            st.markdown(f"**Total de Respostas Analisadas:** {total_respostas}")
+            st.markdown("---")
+            
+            st.subheader("1. Demografia e Perfil Técnico")
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                fig_idade = px.pie(df_pesq, names='Idade', title='Faixa Etária', hole=0.4, color_discrete_sequence=px.colors.sequential.Oranges)
+                fig_idade.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF")
+                st.plotly_chart(fig_idade, use_container_width=True)
+                
+            with col2:
+                fig_tec = px.pie(df_pesq, names='Nivel_Tecnico', title='Nível de Conhecimento Técnico', hole=0.4, color_discrete_sequence=px.colors.sequential.Purples)
+                fig_tec.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF")
+                st.plotly_chart(fig_tec, use_container_width=True)
+                
+            st.markdown("---")
+            st.subheader("2. Poder de Compra (Renda vs Cartão)")
+            
+            col3, col4 = st.columns(2)
+            with col3:
+                fig_renda = px.histogram(df_pesq.dropna(subset=['Renda']), y='Renda', title='Distribuição de Renda', color_discrete_sequence=['#28a745'])
+                fig_renda.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF")
+                st.plotly_chart(fig_renda, use_container_width=True)
+                
+            with col4:
+                fig_cartao = px.pie(df_pesq.dropna(subset=['Cartao']), names='Cartao', title='Possui Cartão de Crédito?', color_discrete_sequence=['#ffc107', '#dc3545'])
+                fig_cartao.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF")
+                st.plotly_chart(fig_cartao, use_container_width=True)
+                
+            st.markdown("---")
+            st.subheader("3. Nuvem de Palavras (Desejos Latentes)")
+            st.markdown("O que a audiência respondeu quando perguntada sobre suas expectativas.")
+            
+            # Wordcloud
+            try:
+                import matplotlib.pyplot as plt
+                from wordcloud import WordCloud, STOPWORDS
+                
+                textos = " ".join(df_pesq['Expectativa'].dropna().astype(str).tolist())
+                stop_words = set(STOPWORDS)
+                pt_stops = ["o", "a", "os", "as", "um", "uma", "uns", "umas", "de", "do", "da", "dos", "das", "em", "no", "na", "nos", "nas", "para", "pra", "com", "que", "se", "por", "como", "mais", "mas", "eu", "ele", "ela", "eles", "elas", "me", "te", "se", "nos", "vos", "e", "ou", "tudo", "muito", "sobre", "ser", "ter", "aprender", "fazer", "saber"]
+                stop_words.update(pt_stops)
+                
+                wordcloud = WordCloud(width=800, height=400, background_color='#1E1E1E', stopwords=stop_words, colormap='Wistia').generate(textos)
+                
+                fig_wc, ax = plt.subplots(figsize=(10, 5), facecolor='#1E1E1E')
+                ax.imshow(wordcloud, interpolation='bilinear')
+                ax.axis("off")
+                st.pyplot(fig_wc)
+            except ImportError:
+                st.error("As bibliotecas 'wordcloud' ou 'matplotlib' não estão instaladas neste ambiente da nuvem.")
+            
+        except Exception as e:
+            st.error(f"Erro ao processar a pesquisa: {e}")
+            
+    elif menu_selecionado == '📝 Relatório Executivo':
+        st.header("📝 Relatório Executivo (Post-Mortem)")
+        st.markdown("Auditoria estratégica pós-lançamento. Identificação de onde ganhamos dinheiro e onde perdemos leads, para não cometer os mesmos erros.")
+        st.markdown("---")
+        
+        st.header("✅ 1. O que funcionou e deve ser repetido")
+        st.markdown('<div class="alert-box">'
+                    '💡 <b>Segmentação Técnico vs Empreendedor funcionou!</b><br>'
+                    'O fluxo conseguiu mapear perfeitamente que o público esmagador é TÉCNICO. '
+                    'Isso significa que a comunicação dos criativos foi altamente atraente para quem busca colocar a mão na massa, mas não converteu tão bem quem busca gestão.'
+                    '</div>', unsafe_allow_html=True)
+                    
+        st.markdown('<div class="alert-box">'
+                    '💡 <b>Repescagem (Mudei de Ideia) é obrigatória!</b><br>'
+                    'A estratégia de recuperar leads no Opt-Out através do botão "Mudei de Ideia" salvou mais de 20% das pessoas que iriam sair do funil. '
+                    'Isso diminuiu radicalmente o custo por lead final. Um gol de placa da automação.'
+                    '</div>', unsafe_allow_html=True)
+
+        st.header("⚠️ 2. Gargalos e Pontos Críticos (Onde perdemos leads)")
+        st.markdown('<div class="alert-box">'
+                    '❌ <b>Captação Nativa (In-App) Subutilizada</b><br>'
+                    'Foi desenhado um fluxo excelente de <b>"Captação sem Landing Page"</b> direto na DM do Instagram, '
+                    'com impressionantes <b>61% de CTR</b> no botão de aceite. '
+                    'Porém, essa automação atingiu apenas 22 pessoas no lançamento inteiro. '
+                    'Em vez de focar 100% em forçar as pessoas a saírem do Instagram para uma Landing Page (onde perdemos leads no carregamento), '
+                    'essa estratégia provou que captações In-App têm aderência altíssima, mas foi "esquecida" no plano de mídia.'
+                    '</div>', unsafe_allow_html=True)
+                    
+        st.markdown('<div class="alert-box">'
+                    '❌ <b>Silenciamento do Manychat no Carrinho Aberto</b><br>'
+                    'Ao optarmos por não mandar o link do checkout no 1-a-1 do WhatsApp (onde temos 85% de abertura comprovada), deixamos de avisar milhares de leads quentes no dia de maior impulso de compra. '
+                    'Emails tiveram abertura pífia (2%). Depender do email e dos grupos para Vendas foi um erro financeiro.'
+                    '</div>', unsafe_allow_html=True)
+                    
+        st.header("📌 3. Plano de Ação para o próximo LC")
+        st.markdown("""
+        1. **Foco 100% em Captação Nativa:** Parar de gastar 100% da verba mandando leads para Landing Page. Separar pelo menos 30% da verba para campanhas de Direct (Manychat), dado o CTR de 61%.
+        2. **Botões de CTA Oficiais no Meta:** Nunca mais mandar link "solto" no WhatsApp. Usar sempre Botões Nativos nos templates da Meta para garantir que o Analytics rastreie o Clique (CTR).
+        3. **Copy V1 (Direta) é Rei:** Pedir permissão no funil de Boas-Vindas custa quase 70% de abandono. O roteamento no Manychat deve ser direto para a escolha do perfil.
+        4. **WhatsApp 1-a-1 no Carrinho Aberto:** O custo do disparo de Marketing (R$0,35) se paga infinitamente mais do que perder milhares de vendas porque o e-mail não chegou na caixa de entrada.
+        """)
         
 else:
     st.warning("Não foi possível carregar os dados. Verifique a planilha.")
