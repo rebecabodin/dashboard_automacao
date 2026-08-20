@@ -1148,10 +1148,10 @@ if not df_captacao.empty:
         df_cpl = pd.DataFrame({
             "CPL": ["CPL 01", "CPL 02", "CPL 03", "CPL 04"],
             "Data_Disparo": ["11/08/2026", "13/08/2026", "15/08/2026", "17/08/2026"],
-            "Disparados": [4259, 515, 927, 4122],
-            "Entregues": [4200, 500, 900, 3900],
-            "Cliques": [800, 94, 90, 203],
-            "Custo_US": [33.22, 36.98, 66.56, 287.00]
+            "Disparados": [887, 515, 927, 4122],
+            "Entregues": [878, 500, 900, 3900],
+            "Cliques": [174, 94, 90, 203],
+            "Custo_US": [6.91, 36.98, 66.56, 287.00] # Custo proporcional (887 * (33.22/4259))
         })
         
         cpl_selecionado = st.selectbox("Selecione o CPL para análise detalhada:", ["Visão Geral"] + df_cpl['CPL'].tolist())
