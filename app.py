@@ -965,8 +965,9 @@ if not df_captacao.empty:
                 "O que você espera aprender na Jornada Mundo dos Elétricos?": "Expectativa"
             })
             
-            # Filtra erros da planilha (como #ERROR!)
-            df_pesq = df_pesq.replace('#ERROR!', pd.NA)
+            import numpy as np
+            # Filtra erros da planilha (como #ERROR!) usando np.nan para evitar erro de JSON do Plotly
+            df_pesq = df_pesq.replace('#ERROR!', np.nan)
             
             # Conta totais reais
             total_respostas = len(df_pesq)
