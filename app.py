@@ -1277,7 +1277,10 @@ if not df_captacao.empty:
                         st.info('**🤖 O "SDR" Virtual (Follow-up de 2 Horas):** Após entregar o link, o robô ativou um Smart Delay impecável. Ele esperou 2 horas e voltou para cobrar o lead ("Passei aqui rapidinho só para saber..."). **376 pessoas** receberam essa cobrança automática. Desses, **34% clicaram que assistiram** e 8% confessaram que não. A automação fez o trabalho de 10 vendedores gratuitamente.')
                         
                         st.info('**♻️ Comportamento de Rejeição (A Prova da Base):** Dos 3.153 leads que abriram a mensagem, apenas **42 pessoas (1,3%)** clicaram em "Bloquear Contato". A base não está fria. A baixa conversão inicial foi só excesso de botões. E mais: a copy genial de opt-out ("Caso mude de ideias...") conseguiu resgatar **2 pessoas** de volta pro funil instantaneamente!')
-
+                        
+                        st.markdown("### 🎯 Plano de Ação para o Próximo Lançamento")
+                        st.error('**1. Eliminar o Pedágio:** O botão "Receber Informação" provou ser fatal (perda de 2.000 leads). Para a próxima vez, o Template (HSM) deve ter o link da Aula direto no botão principal, ou pelo menos um Call to Action mais forte como "Liberar Minha Aula Agora". Menos cliques = Mais visualizações.')
+                        st.error('**2. Expandir o SDR Virtual:** O delay de 2 horas foi incrível. Podemos adicionar um gatilho extra: quem responder "Ainda não assisti" para o robô, entra em uma lista de remarketing no WhatsApp para ser cobrado no dia seguinte com urgência ("A aula sai do ar em breve").')
                     elif disparo_selecionado == "2️⃣ Engajamento":
                         st.markdown("### ✅ O Contraste Perfeito (Disparo 02)")
                         st.markdown("Análise do Disparo de Engajamento: 'Vou deixar o link do Instagram...'")
