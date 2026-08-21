@@ -1196,9 +1196,10 @@ if not df_captacao.empty:
                 if cpl_selecionado == "CPL 01":
                     st.markdown("### 📈 Performance da CPL 01 (Visão Detalhada)")
                     
-                    disparo_selecionado = st.selectbox(
+                    disparo_selecionado = st.radio(
                         "Filtre por Disparo (CPL 01):", 
-                        ["📦 Visão Consolidada", "1️⃣ Disparo Principal (Aula 1)", "2️⃣ Engajamento (Instagram)", "3️⃣ Reprise e Ao Vivo"]
+                        ["📦 Visão Consolidada", "1️⃣ Disparo Principal", "2️⃣ Engajamento", "3️⃣ Reprise e Ao Vivo"],
+                        horizontal=True
                     )
                     
                     if disparo_selecionado == "📦 Visão Consolidada":
@@ -1213,7 +1214,7 @@ if not df_captacao.empty:
                         })
                         st.dataframe(df_cpl1_disparos, use_container_width=True, hide_index=True)
 
-                    elif disparo_selecionado == "1️⃣ Disparo Principal (Aula 1)":
+                    elif disparo_selecionado == "1️⃣ Disparo Principal":
                         st.markdown("### 🔀 O Mapa da Distribuição (Comportamento do Lead)")
                         st.markdown("O que aconteceu com os leads após abrirem a primeira mensagem:")
                         
@@ -1242,7 +1243,7 @@ if not df_captacao.empty:
                         
                         st.info('**♻️ Comportamento de Rejeição (A Prova da Base):** Dos 3.153 leads que abriram a mensagem, apenas **42 pessoas (1,3%)** clicaram em "Bloquear Contato". A base não está fria. A baixa conversão inicial foi só excesso de botões. E mais: a copy genial de opt-out ("Caso mude de ideias...") conseguiu resgatar **2 pessoas** de volta pro funil instantaneamente!')
 
-                    elif disparo_selecionado == "2️⃣ Engajamento (Instagram)":
+                    elif disparo_selecionado == "2️⃣ Engajamento":
                         st.markdown("### ✅ O Contraste Perfeito (Disparo 02)")
                         st.markdown("Análise do Disparo de Engajamento: 'Vou deixar o link do Instagram...'")
                         
