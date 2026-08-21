@@ -1364,7 +1364,7 @@ if not df_captacao.empty:
                         with st.container(border=True):
                             st.metric("2. Passaram no Filtro Inicial", "896", "19,6% da base total", delta_color="normal")
                             
-                    st.warning('**⚠️ Análise do Filtro:** Logo na largada, a automação bloqueou **80% da base** de receber a mensagem. Se o filtro exigia que a pessoa tivesse assistido à CPL 01 para receber a CPL 02, nós perdemos a chance de re-engajar a base inteira e levar sangue novo para a aula.')
+                    st.error('**🚨 Bloqueio por Falta de Verba (Filtro Involuntário):** Logo na largada, o disparo parou de enviar para **80% da base**. O motivo não foi uma condição lógica do fluxo, mas sim **Falta de Verba**. A reclassificação inesperada do template para a tarifa de Marketing sugou o saldo da carteira instantaneamente, e a plataforma bloqueou os disparos. Tentar recarregar e forçar como Utility depois não reverteu a perda do *timing* do envio.')
                     
                     st.markdown("<br>", unsafe_allow_html=True)
                     
@@ -1399,7 +1399,7 @@ if not df_captacao.empty:
                         "**1. A Alta Intenção da Base:** Dos 63 leads que escolheram 'Assistir Agora', 55 de fato foram para a aula (uma taxa brutal de 87,3%). Isso mostra que quando oferecemos o caminho direto para o objetivo, a conversão é quase garantida.\n\n"
                         "**2. A Regra de Ouro Violada:** Lembra que o perfil desse lead **não quer ser distraído**? No caminho 'Já Assisti', criamos um labirinto de 3 passos para levá-los a comentar no Instagram. Resultado: de 79 pessoas super engajadas que chegaram, apenas 25 concluíram no Instagram. "
                         "Desperdiçamos a energia de 54 pessoas hiper-engajadas em um fluxo de interação longa, que poderiam estar sendo redirecionadas para um Resumo em PDF ou oferta VIP.\n\n"
-                        "**3. O Custo Oculto (Alerta Financeiro da API):** O template foi aprovado originalmente como 'Utility' (Utilitária), mas durante o disparo a Meta reclassificou **635 mensagens** para a categoria 'Marketing' (Marketing Lite). Essa mudança forçada gerou um custo inesperado de **US$ 36,98**. A inteligência artificial do WhatsApp pune copys que soam promocionais cobrando a tarifa mais cara, mesmo após a aprovação manual."
+                        "**3. O Efeito Dominó do Custo (Falta de Verba):** O template foi aprovado originalmente como 'Utility' (gratuito/barato), mas durante o disparo a Meta reclassificou as mensagens para 'Marketing' (Marketing Lite). Essa mudança gerou um custo inesperado de **US$ 36,98** que esgotou o saldo da carteira instantaneamente. Esse foi o verdadeiro motivo de 80% da base não ter recebido a Aula 2: o fluxo simplesmente foi interrompido por falta de fundos."
                     )
                 
                 elif cpl_selecionado == "CPL 03":
@@ -1417,7 +1417,7 @@ if not df_captacao.empty:
                         with st.container(border=True):
                             st.metric("2. Passaram no Filtro Inicial", "900", "19,8% da base total", delta_color="normal")
                             
-                    st.warning('**⚠️ Persistência do Gargalo:** Novamente, a automação bloqueou **80% da base** de receber o aviso da CPL 03. Se as pessoas estão perdendo as aulas anteriores, barrá-las de receber o link da Aula 3 diminui drasticamente as chances de recuperação na hora de abrir o carrinho de vendas.')
+                    st.error('**🚨 Persistência do Bloqueio Financeiro:** Novamente, a automação deixou de enviar para **80% da base** pelo mesmo problema da CPL 02. O saldo da carteira esgotou porque as mensagens foram cobradas como Marketing em vez de Utility. Essa interrupção nos envios prejudicou drasticamente o alcance da última aula antes da abertura do carrinho.')
                     
                     st.markdown("<br>", unsafe_allow_html=True)
                     
@@ -1451,7 +1451,7 @@ if not df_captacao.empty:
                     st.info(
                         "**1. A Lealdade da Base:** Mesmo no terceiro envio da campanha, 111 pessoas clicaram para assistir a aula imediatamente e a conversão final para o link foi de 66,7%. Quem quer o conteúdo, não hesita.\n\n"
                         "**2. O Erro de Foco Persiste:** O fluxo redirecionou os leads que queriam 'Ver Aulas Passadas' para um labirinto focado no Instagram. Como resultado, de 89 pessoas que clicaram, só 22 chegaram ao final (fuga de 75%). O botão prometia aulas passadas, mas a automação entregou um pedido de comentário na rede social, quebrando a expectativa do lead.\n\n"
-                        "**3. Punição Financeira Repetida:** O histórico de uso mostra o mesmo padrão da CPL 02. O WhatsApp reclassificou **846 mensagens** para a categoria 'Marketing' no disparo, gerando uma cobrança de **US$ 49,27**. O algoritmo continua identificando as mensagens de CPL como material promocional caro."
+                        "**3. Punição Financeira Repetida:** O histórico mostra o mesmo padrão da CPL 02. O WhatsApp cobrou **846 mensagens** como 'Marketing', gerando um custo de **US$ 49,27** que travou os disparos novamente. É urgente adaptar a copy (texto) dessas mensagens de CPL para que soem menos promocionais aos olhos do algoritmo do WhatsApp, evitando essas quedas de saldo e alcance."
                     )
                 
                 else:
