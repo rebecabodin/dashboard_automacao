@@ -1203,14 +1203,20 @@ if not df_captacao.empty:
                     )
                     
                     if disparo_selecionado == "📦 Visão Consolidada":
-                        st.subheader("📦 Visão Consolidada: Os 3 Disparos da CPL 01")
-                        st.markdown("O esforço total de tráfego e envios para garantir o comparecimento na primeira aula.")
+                        st.subheader("📦 Visão Consolidada: A Estratégia de 3 Passos")
+                        st.markdown("Para garantir que a base assistisse à CPL 01, não enviamos apenas uma mensagem solta. O fluxo foi dividido em 3 etapas estratégicas para 'cercar' o lead:")
+                        
+                        st.info(
+                            "**1. Disparo Principal (Em Massa):** O convite oficial enviado para toda a base ativa.\n\n"
+                            "**2. Aviso Direto:** Uma mensagem curta enviada logo depois, apenas para 'cutucar' quem precisava de um empurrãozinho extra.\n\n"
+                            "**3. Repescagem (Dia Seguinte):** Um lembrete com a gravação da aula, aproveitando para já fisgar a pessoa para o 'Ao Vivo' da aula seguinte."
+                        )
+                        
                         df_cpl1_disparos = pd.DataFrame({
-                            "Disparo (Manychat)": ["1. Aula 1_LC7_AGO26_Inscritos", "2. Vou deixar o link da ...", "3. Reprise_Aula 1_LC7"],
+                            "Etapa da Estratégia": ["1. Disparo Principal (Massa)", "2. Aviso Direto (Engajamento)", "3. Repescagem (Reprise/Ao Vivo)"],
                             "Data/Hora": ["10 Ago, 20:25", "10 Ago, 20:33", "11 Ago, 18:30"],
-                            "Volume Enviado": [4604, 164, 887],
-                            "Abertura": ["68,0% (Base do 1º Nó)", "87,8%", "80,9%"],
-                            "Estratégia": ["Disparo de Massa (HSM)", "Aviso Manual/Atrasados", "Repescagem + Aviso Aula 2"]
+                            "Volume de Pessoas": ["4.604 leads", "164 leads", "887 leads"],
+                            "Taxa de Abertura": ["68,0%", "87,8%", "80,9%"]
                         })
                         st.dataframe(df_cpl1_disparos, use_container_width=True, hide_index=True)
 
@@ -1279,18 +1285,35 @@ if not df_captacao.empty:
                             "Também devemos evitar mandar o lead para outras redes (como o Instagram) no meio do fluxo, pois isso tira o foco do objetivo principal."
                         )
                     elif disparo_selecionado == "2️⃣ Engajamento":
-                        st.markdown("### ✅ O Contraste Perfeito (Disparo 02)")
-                        st.markdown("Análise do Disparo de Engajamento: 'Vou deixar o link do Instagram...'")
+                        st.markdown("### ✅ O Contraste Perfeito (Aviso Direto)")
+                        st.markdown("Neste pequeno disparo, testamos enviar apenas uma mensagem super curta: *'Vou deixar o link aqui...'* (Sem enrolação, sem pedir cliques extras).")
                         
-                        st.success('**🎯 Menos é Mais (Fricção Zero):** Em total contraste com o "Labirinto" do fluxo principal, este pequeno disparo para **164 pessoas** foi a aula de como se faz. Uma única mensagem curta e um botão direto. O resultado? **100% de entrega e 22% de cliques no botão** (36 leads indo comentar). Isso prova que a nossa base é altamente reativa quando não colocamos pedágios no caminho. O lead só quer o link na mão dele.')
+                        col1, arr1, col2, arr2, col3 = st.columns([3, 1, 3, 1, 3])
+                        with col1:
+                            with st.container(border=True):
+                                st.metric("1. Enviados", "164", "Pessoas", delta_color="off")
+                        with arr1:
+                            st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
+                        with col2:
+                            with st.container(border=True):
+                                st.metric("2. Entregues", "164", "100% de Entrega", delta_color="normal")
+                        with arr2:
+                            st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
+                        with col3:
+                            with st.container(border=True):
+                                st.metric("3. Clicaram no Link", "36", "22% de Conversão", delta_color="normal")
+                                
+                        st.markdown("<br>", unsafe_allow_html=True)
+                        
+                        st.success('**🎯 Lição Aprendida (A Regra do Menos é Mais):** Compare esse fluxo minúsculo com o labirinto do Disparo Principal (onde 2.000 pessoas desistiram). Aqui, nós entregamos o link diretamente na mão de 164 pessoas. O resultado? **Todos receberam a mensagem e 22% clicaram na mesma hora!** Isso prova matematicamente que a nossa base é altamente reativa quando o caminho é fácil.')
 
                     elif disparo_selecionado == "3️⃣ Reprise e Ao Vivo":
-                        st.markdown("### 🕵️‍♀️ Mergulho Profundo: Reprise (Disparo 03) e Aviso Ao Vivo")
-                        st.markdown("Análise detalhada do comportamento dos leads na repescagem.")
+                        st.markdown("### 🕵️‍♀️ A Repescagem (Reprise e Lembrete da Aula 2)")
+                        st.markdown("No dia seguinte, o robô foi atrás de quem perdeu a aula para entregar a Gravação (Reprise) e já avisar do Ao Vivo que ia acontecer.")
                         
-                        st.info('**🎯 O Filtro Natural (Janela 24h):** De 887 contatos iniciais, 230 chegaram até o aviso de "Ao Vivo" (CPL02) devido à janela de 24h do WhatsApp. Isso filtrou os nossos **25% "Super-Engajados"** da base.')
+                        st.info('**⏳ A Regra das 24 Horas do WhatsApp:** O WhatsApp não deixa o robô mandar mensagens automáticas gratuitas para sempre. Ele só permite falar de graça com quem respondeu algo nas últimas 24h. Das 887 pessoas da repescagem, **apenas 230 (25%) ainda estavam dentro desse limite**. Esses 230 são o que chamamos de leads "Super-Engajados".')
                         
-                        st.warning('**🔥 O Poder da Urgência:** A taxa de cliques para quem recebe o aviso de "Estamos Ao Vivo" praticamente dobra! Foi de 15% no aviso comum (Reprise) para incríveis **26% exclusivos** no Ao Vivo.')
+                        st.warning('**🔥 O Poder da palavra "Ao Vivo":** Quando a mensagem oferecia a gravação (Reprise), 15% das pessoas clicavam. Mas, para os Super-Engajados que receberam o alerta "Estamos Ao Vivo agora!", o clique pulou para incríveis **26%**! A urgência gera muito mais cliques.')
                                         
                         cpl1_funnel = dict(
                             number=[887, 878, 712, 137],
@@ -1322,7 +1345,7 @@ if not df_captacao.empty:
                         with col_c2:
                             st.plotly_chart(fig_f2, use_container_width=True)
                     
-                        st.success('**💡 Oportunidade de Ouro (Dinheiro na Mesa):** Identificamos ~650 leads extremamente engajados que não receberam o convite do "Ao Vivo" apenas porque não conversaram com o robô nas últimas 24 horas (regra padrão do WhatsApp). **A Solução:** No próximo lançamento, basta enviar uma **Mensagem Oficial (Paga)** avisando que a aula começou para todo mundo. Se aplicarmos a taxa de clique de 26% nesses 650 leads, vamos gerar **mais de 160 cliques imediatos** extras para a live. O custo extra de envio será de poucos reais, mas o retorno em audiência e vendas será enorme.')
+                        st.success('**💡 Dinheiro na Mesa (Oportunidade de Ouro):** O WhatsApp bloqueou quase 650 pessoas (que já tinham saído da Janela de 24h gratuitas) de receberem o aviso de que a Live estava começando. \n\n**A Solução para o Próximo Lançamento:** Basta pagar alguns centavos por lead e mandar uma "Mensagem Oficial" da Meta passando por cima dessa regra das 24h. Se pagássemos para avisar essas 650 pessoas atrasadas, e elas clicassem na mesma taxa de 26%, teríamos jogado **mais de 160 pessoas extras na sua Live** instantaneamente. O custo das mensagens é moedas perto do lucro das vendas que elas fariam!')
 
                 else:
                     dados_cpl = df_cpl[df_cpl['CPL'] == cpl_selecionado].iloc[0]
