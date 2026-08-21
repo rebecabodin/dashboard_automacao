@@ -1403,7 +1403,76 @@ if not df_captacao.empty:
                     )
                 
                 elif cpl_selecionado == "CPL 03":
-                    st.markdown("### 📈 Performance da CPL 03 (Aula 3)")
+                    st.markdown("### 📈 Performance da CPL 03 (Aula 3: Teste A/B/C e Resgate)")
+                    
+                    st.markdown("---")
+                    st.markdown("### 🧪 Disparo 1: O Teste A/B/C (A Base Toda)")
+                    st.markdown("Um randomizador dividiu a base para testar qual copy convertia mais cliques para a Aula 3. Infelizmente, este disparo também foi vítima da taxação da Meta.")
+                    
+                    col0, arr0, col1 = st.columns([3, 1, 3])
+                    with col0:
+                        with st.container(border=True):
+                            st.metric("Público Alvo (Aviso Aula 3)", "4.501", "Pessoas", delta_color="off")
+                    with arr0:
+                        st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
+                    with col1:
+                        with st.container(border=True):
+                            st.metric("Enviados Reais", "1.269", "Interrompido por Falta de Verba", delta_color="normal")
+                            
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    st.markdown("#### 📊 Resultado do Teste de Copys")
+                    
+                    col_a, col_b, col_c = st.columns(3)
+                    with col_a:
+                        with st.container(border=True):
+                            st.markdown("<h4 style='text-align: center; color: #94a3b8;'>Copy A (Direta s/ Img)</h4>", unsafe_allow_html=True)
+                            st.metric("Enviados", "433 leads", "", delta_color="off")
+                            st.metric("Cliques Totais", "39 cliques", "CTR 9%", delta_color="off")
+                            
+                    with col_b:
+                        with st.container(border=True):
+                            st.markdown("<h4 style='text-align: center; color: #facc15;'>🏆 Copy B (Pergunta c/ Img)</h4>", unsafe_allow_html=True)
+                            st.metric("Enviados", "409 leads", "", delta_color="off")
+                            st.metric("Cliques Totais", "41 cliques", "CTR 10%", delta_color="off")
+                            
+                    with col_c:
+                        with st.container(border=True):
+                            st.markdown("<h4 style='text-align: center; color: #94a3b8;'>Copy C (Pergunta s/ Img)</h4>", unsafe_allow_html=True)
+                            st.metric("Enviados", "427 leads", "", delta_color="off")
+                            st.metric("Cliques Totais", "34 cliques", "CTR 8%", delta_color="off")
+                            
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    st.markdown("#### 🔀 O Desempenho dos 3 Caminhos (União das 3 Copys)")
+                    
+                    col_path_a, col_path_b, col_path_c = st.columns(3)
+                    
+                    with col_path_a:
+                        with st.container(border=True):
+                            st.markdown("<h4 style='text-align: center; color: #22c55e;'>🟢 'Assistir Agora'</h4>", unsafe_allow_html=True)
+                            st.metric("Receberam o Link", "74 leads", "A união dos cliques", delta_color="off")
+                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
+                            st.metric("Follow-up (1h depois)", "19 respostas", "Sim / Ainda Não", delta_color="normal")
+                            
+                    with col_path_b:
+                        with st.container(border=True):
+                            st.markdown("<h4 style='text-align: center; color: #f59e0b;'>🟡 'Já Assisti'</h4>", unsafe_allow_html=True)
+                            st.metric("Chegaram na Etapa", "36 leads", "A união dos cliques", delta_color="off")
+                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
+                            st.metric("Foram pro Instagram", "12 cliques", "🚨 Fuga de 66%", delta_color="off")
+                            
+                    with col_path_c:
+                        with st.container(border=True):
+                            st.markdown("<h4 style='text-align: center; color: #ef4444;'>🔴 'Parar Mensagem'</h4>", unsafe_allow_html=True)
+                            st.metric("Chegaram na Etapa", "17 leads", "A união dos cliques", delta_color="off")
+                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
+                            st.metric("Descadastrados", "17 pessoas", "Fim do Fluxo", delta_color="off")
+
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    st.markdown("#### 🔄 Análise do Caminho Verde (O Follow-up Inteligente)")
+                    st.info("Para os 74 leads que clicaram para receber o link da aula, a automação inovou: aguardou 1 hora e fez uma verificação ativa ('Deu tempo de assistir à Aula 3?'). Isso é excelente para segmentar quem realmente consumiu o conteúdo na boca do funil.")
+
+                    st.markdown("---")
+                    st.markdown("### 🛟 Disparo 2: O Resgate (Reprise)")
                     
                     st.markdown("#### 🚧 Fase 1: O Filtro Inicial (Gargalo Repetido)")
                     col0, arr0, col1 = st.columns([3, 1, 3])
@@ -1449,7 +1518,8 @@ if not df_captacao.empty:
                     st.markdown("---")
                     st.markdown("### 🧠 Diagnóstico Executivo (CPL 03)")
                     st.info(
-                        "**1. A Lealdade da Base:** Mesmo no terceiro envio da campanha, 111 pessoas clicaram para assistir a aula imediatamente e a conversão final para o link foi de 66,7%. Quem quer o conteúdo, não hesita.\n\n"
+                        "**1. A Força da Imagem (Teste A/B/C):** O Disparo 1 provou que mandar o aviso da aula fazendo uma pergunta atrelada a uma imagem (Copy B) tem o melhor CTR (10%). O uso de mídias aumenta a atenção na caixa de entrada do WhatsApp em relação ao texto puro.\n\n"
+                        "**2. A Lealdade da Base (Resgate):** Mesmo no último envio da campanha, 111 pessoas clicaram para assistir a aula imediatamente e a conversão final para o link foi de 66,7%. Quem quer o conteúdo, não hesita.\n\n"
                         "**2. O Erro de Foco Persiste:** O fluxo redirecionou os leads que queriam 'Ver Aulas Passadas' para um labirinto focado no Instagram. Como resultado, de 89 pessoas que clicaram, só 22 chegaram ao final (fuga de 75%). O botão prometia aulas passadas, mas a automação entregou um pedido de comentário na rede social, quebrando a expectativa do lead.\n\n"
                         "**3. Punição Financeira Repetida:** O histórico mostra o mesmo padrão da CPL 02. O WhatsApp cobrou **846 mensagens** como 'Marketing', gerando um custo de **US$ 49,27** que travou os disparos novamente. É urgente adaptar a copy (texto) dessas mensagens de CPL para que soem menos promocionais aos olhos do algoritmo do WhatsApp, evitando essas quedas de saldo e alcance."
                     )
