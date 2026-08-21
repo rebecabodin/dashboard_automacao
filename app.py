@@ -1235,7 +1235,14 @@ if not df_captacao.empty:
                         st.warning('**⚠️ O "Pedágio" do Template (Gargalo Inicial):** Foi pago um disparo para **4.259 leads reais**. Deles, 3.153 abriram. O template exigia um clique inicial no botão "Receber Informação". Resultado: apenas **1.022 leads** passaram por esse pedágio. Cerca de 2.000 pessoas ficaram pelo caminho na primeira etapa.')
                         
                         st.success('**✅ A Bifurcação Inteligente (Sim vs Não):** O fluxo perguntou de forma humanizada: "Você assistiu?". Aqui a automação brilhou. O Caminho "Sim" mandou 414 leads para engajar no Instagram. O Caminho "Não" enviou o link da aula de forma acolhedora para 540 leads.')
-                                     elif disparo_selecionado == "2️⃣ Engajamento (Instagram)":
+                        
+                        st.success('**🏆 A Grande Vitória do Caminho "Não":** A copy acolhedora enviada para os contatos "atrasados" gerou um engajamento absurdo. Exatos **477 leads (88%)** clicaram no link para assistir a aula imediatamente! Isso prova que segmentar quem está atrasado tem uma conversão quase perfeita.')
+                        
+                        st.info('**🤖 O "SDR" Virtual (Follow-up de 2 Horas):** Após entregar o link, o robô ativou um Smart Delay impecável. Ele esperou 2 horas e voltou para cobrar o lead ("Passei aqui rapidinho só para saber..."). **376 pessoas** receberam essa cobrança automática. Desses, **34% clicaram que assistiram** e 8% confessaram que não. A automação fez o trabalho de 10 vendedores gratuitamente.')
+                        
+                        st.info('**♻️ Comportamento de Rejeição (A Prova da Base):** Dos 3.153 leads que abriram a mensagem, apenas **42 pessoas (1,3%)** clicaram em "Bloquear Contato". A base não está fria. A baixa conversão inicial foi só excesso de botões. E mais: a copy genial de opt-out ("Caso mude de ideias...") conseguiu resgatar **2 pessoas** de volta pro funil instantaneamente!')
+
+                    elif disparo_selecionado == "2️⃣ Engajamento (Instagram)":
                         st.markdown("### ✅ O Contraste Perfeito (Disparo 02)")
                         st.markdown("Análise do Disparo de Engajamento: 'Vou deixar o link do Instagram...'")
                         
