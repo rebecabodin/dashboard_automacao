@@ -244,11 +244,8 @@ if not df_captacao.empty:
             '🚨 Monitoramento Avançado', 
             '🧠 Plano de Ação', 
             '📊 Pesquisa (WordCloud)', 
-            '📝 Relatório Executivo',
             '1️⃣ CPLs (Análise e Funil)',
             '2️⃣ Vendas e Carrinho',
-            '3️⃣ API e Custos',
-            '4️⃣ Automações Orgânicas',
             '5️⃣ E-mails'
         ]
     else:
@@ -1098,48 +1095,6 @@ if not df_captacao.empty:
         except Exception as e:
             st.error(f"Erro ao processar a pesquisa: {e}")
             
-    elif menu_selecionado == '📝 Relatório Executivo':
-        st.header("📝 Relatório Executivo (Post-Mortem)")
-        st.markdown("Auditoria estratégica pós-lançamento. Identificação de onde ganhamos dinheiro e onde perdemos leads, para não cometer os mesmos erros.")
-        st.markdown("---")
-        
-        st.header("✅ 1. O que funcionou e deve ser repetido")
-        st.markdown('<div class="alert-box">'
-                    '💡 <b>Segmentação Técnico vs Empreendedor funcionou!</b><br>'
-                    'O fluxo conseguiu mapear perfeitamente que o público esmagador é TÉCNICO. '
-                    'Isso significa que a comunicação dos criativos foi altamente atraente para quem busca colocar a mão na massa, mas não converteu tão bem quem busca gestão.'
-                    '</div>', unsafe_allow_html=True)
-                    
-        st.markdown('<div class="alert-box">'
-                    '💡 <b>Repescagem (Mudei de Ideia) é obrigatória!</b><br>'
-                    'A estratégia de recuperar leads no Opt-Out através do botão "Mudei de Ideia" salvou mais de 20% das pessoas que iriam sair do funil. '
-                    'Isso diminuiu radicalmente o custo por lead final. Um gol de placa da automação.'
-                    '</div>', unsafe_allow_html=True)
-
-        st.header("⚠️ 2. Gargalos e Pontos Críticos (Onde perdemos leads)")
-        st.markdown('<div class="alert-box">'
-                    '❌ <b>Captação Nativa (In-App) Subutilizada</b><br>'
-                    'Foi desenhado um fluxo excelente de <b>"Captação sem Landing Page"</b> direto na DM do Instagram, '
-                    'com impressionantes <b>61% de CTR</b> no botão de aceite. '
-                    'Porém, essa automação atingiu apenas 22 pessoas no lançamento inteiro. '
-                    'Em vez de focar 100% em forçar as pessoas a saírem do Instagram para uma Landing Page (onde perdemos leads no carregamento), '
-                    'essa estratégia provou que captações In-App têm aderência altíssima, mas foi "esquecida" no plano de mídia.'
-                    '</div>', unsafe_allow_html=True)
-                    
-        st.markdown('<div class="alert-box">'
-                    '❌ <b>Silenciamento do Manychat no Carrinho Aberto</b><br>'
-                    'Ao optarmos por não mandar o link do checkout no 1-a-1 do WhatsApp (onde temos 85% de abertura comprovada), deixamos de avisar milhares de leads quentes no dia de maior impulso de compra. '
-                    'Emails tiveram abertura pífia (2%). Depender do email e dos grupos para Vendas foi um erro financeiro.'
-                    '</div>', unsafe_allow_html=True)
-                    
-        st.header("📌 3. Plano de Ação para o próximo LC")
-        st.markdown("""
-        1. **Foco 100% em Captação Nativa:** Parar de gastar 100% da verba mandando leads para Landing Page. Separar pelo menos 30% da verba para campanhas de Direct (Manychat), dado o CTR de 61%.
-        2. **Botões de CTA Oficiais no Meta:** Nunca mais mandar link "solto" no WhatsApp. Usar sempre Botões Nativos nos templates da Meta para garantir que o Analytics rastreie o Clique (CTR).
-        3. **Copy V1 (Direta) é Rei:** Pedir permissão no funil de Boas-Vindas custa quase 70% de abandono. O roteamento no Manychat deve ser direto para a escolha do perfil.
-        4. **WhatsApp 1-a-1 no Carrinho Aberto:** O custo do disparo de Marketing (R$0,35) se paga infinitamente mais do que perder milhares de vendas porque o e-mail não chegou na caixa de entrada.
-        """)
-
     elif menu_selecionado == '1️⃣ CPLs (Análise e Funil)':
         st.header("1️⃣ Dashboard de Tração e CPLs")
         st.markdown("Análise de conversão do funil de avisos: Disparos ➔ Entrega ➔ Clique.")
@@ -1590,44 +1545,6 @@ if not df_captacao.empty:
         ))
         st.plotly_chart(fig_funil, use_container_width=True)
         st.markdown('<div class="alert-box" style="border-left: 5px solid #4CAF50; background-color: #1a2b1a; padding: 15px; border-radius: 8px;"><b>🔍 Insight de Vendas:</b> A equipe comercial foi agressiva na recuperação de boletos e abandonos via WhatsApp, mas faltou volume de visitas na página. O topo do funil de vendas (tráfego para o checkout) foi o real gargalo.</div>', unsafe_allow_html=True)
-
-    elif menu_selecionado == '3️⃣ API e Custos':
-        st.header("3️⃣ Consumo de API (WhatsApp) e Custos Meta")
-        
-        col_a, col_b = st.columns(2)
-        with col_a:
-            st.subheader("Custos Totais por CPL (Meta Ads + WPP)")
-            df_custo = pd.DataFrame({
-                "Etapa": ["Captação", "CPL 1", "CPL 2", "CPL 3", "CPL 4", "Carrinho"],
-                "Custo_Estimado_US": [1500.00, 33.22, 36.98, 66.56, 287.00, 120.00]
-            })
-            fig_custo = px.bar(df_custo, x='Etapa', y='Custo_Estimado_US', title='Distribuição de Verba', text_auto=True)
-            st.plotly_chart(fig_custo, use_container_width=True)
-        
-        with col_b:
-            st.subheader("Monitoramento API Evolution")
-            st.metric("Disparos Totais (WPP)", "9.813")
-            st.metric("Custo WhatsApp (US$)", "$423.76")
-            
-        st.markdown('<div class="alert-box" style="padding: 15px; border-radius: 8px; background-color: #2b1a1a; border-left: 5px solid #FF4B4B;"><b>⚠️ Insight Financeiro Crítico:</b> Houve picos de leads falsos de madrugada gerados pela Rede de Audiência (Audience Network) do Meta. Muito orçamento foi queimado para captar números inexistentes.</div>', unsafe_allow_html=True)
-
-    elif menu_selecionado == '4️⃣ Automações Orgânicas':
-        st.header("4️⃣ Análise: Captação In-App (Instagram DM)")
-        
-        c1, c2, c3 = st.columns(3)
-        c1.metric("Leads Atingidos", "22")
-        c2.metric("Cliques no Botão de Aceite", "13")
-        c3.metric("CTR In-App", "61.0%", delta="Excelente")
-        
-        fig_inapp = go.Figure(go.Funnel(
-            y=["Visualizou Automação", "Engajou (Clique)"],
-            x=[22, 13],
-            textinfo="value+percent initial",
-            marker={"color": ["#8B5CF6", "#F97316"]}
-        ))
-        st.plotly_chart(fig_inapp, use_container_width=True)
-        
-        st.markdown('<div class="alert-box" style="padding: 15px; border-radius: 8px; background-color: #2b1a1a; border-left: 5px solid #FF4B4B;"><b>❌ O Grande Gargalo do Orgânico:</b> Desenhamos um fluxo de "Captação sem Landing Page" que alcançou um formidável CTR de 61%. No entanto, ele quase não foi testado/escalado. Todo o esforço de tráfego focou na LP externa. Faltou alinhamento para impulsionar Reels com automação Manychat via DM.</div>', unsafe_allow_html=True)
 
     elif menu_selecionado == '5️⃣ E-mails':
         st.header("5️⃣ Performance de E-mail Marketing")
