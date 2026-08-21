@@ -1214,37 +1214,51 @@ if not df_captacao.empty:
                         st.dataframe(df_cpl1_disparos, use_container_width=True, hide_index=True)
 
                     elif disparo_selecionado == "1️⃣ Disparo Principal (Aula 1)":
-                        st.markdown("### 🚨 Autópsia Crítica (Disparo 01)")
-                        st.markdown("Análise de gargalos e vazamentos no fluxo pago de 4.600 leads (Template HSM).")
+                        st.markdown("### 🚨 Anatomia do Fluxo Principal (Disparo 01)")
+                        st.markdown("Análise da jornada de 4.600 leads (Template HSM) e a bifurcação de respostas.")
                         
                         col_a1, col_a2 = st.columns(2)
                         with col_a1:
-                            st.markdown('<div class="alert-box" style="background-color: #3b1212; border-left-color: #FF0000;">'
-                                        '<b>❌ Erro Estratégico: O "Pedágio" do Template</b><br>'
-                                        'Foi pago um disparo para <b>4.259 leads reais</b> (conforme faturamento Meta). Deles, 3.153 abriram. Porém, o template pedia um clique no botão "Receber Informação" (Opt-in) em vez de entregar a aula direto. '
-                                        'Resultado: <b>Mais de 2.000 pessoas que abriram a mensagem ficaram sem a aula</b> porque não passaram nesse "pedágio". Regra de ouro: Se o HSM custa dinheiro, a conversão deve estar nele.'
+                            st.markdown('<div class="alert-box" style="background-color: #3b3b12; border-left-color: #FFA500;">'
+                                        '<b>⚠️ O "Pedágio" do Template (Gargalo Inicial)</b><br>'
+                                        'Foi pago um disparo para <b>4.259 leads reais</b> (conforme faturamento Meta). Deles, 3.153 abriram. O template exigia um clique inicial no botão "Receber Informação". '
+                                        'Resultado: <b>1.022 leads</b> passaram pelo pedágio. Cerca de 2.000 pessoas que abriram a mensagem ficaram pelo caminho na primeira etapa.'
                                         '</div>', unsafe_allow_html=True)
                         with col_a2:
-                            st.markdown('<div class="alert-box" style="background-color: #3b1212; border-left-color: #FF0000;">'
-                                        '<b>❌ O Labirinto do Chatbot (Excesso de Fricção)</b><br>'
-                                        'Dos 994 leads que clicaram e disseram "sim", o Manychat iniciou um interrogatório: "Você aceita?" -> "Promete que vai prestar atenção?" -> "Clique OK". '
-                                        'Resultado: Dos 994 que entraram no bate-papo, apenas <b>278 tiveram paciência de chegar até o link da AULA LIBERADA</b>. '
-                                        'Gamificar a entrega gerou exaustão e <b>matou 72% dos leads ultra-quentes</b> no meio do caminho.'
+                            st.markdown('<div class="alert-box" style="background-color: #123b12; border-left-color: #00FF00;">'
+                                        '<b>✅ A Bifurcação Inteligente (Sim vs Não)</b><br>'
+                                        'O fluxo perguntou de forma humanizada: <i>"Você assistiu?"</i>. Aqui a automação brilhou:<br>'
+                                        '• <b>Caminho "Sim" (414 leads):</b> Foram direcionados para comentar no Instagram.<br>'
+                                        '• <b>Caminho "Não" (540 leads):</b> Receberam a mensagem acolhedora ("A correria é grande...") e o link da aula.'
                                         '</div>', unsafe_allow_html=True)
                 
-                        # Main Funnel Data (Gargalo)
-                        main_funnel = dict(
-                            number=[4604, 3153, 994, 278],
-                            stage=["Base Paga (Custo Meta)", "Abriram a Mensagem", "Passaram no Pedágio (Opt-in)", "Sobreviveram ao Labirinto (Aula 1)"]
-                        )
-                        fig_main = go.Figure(go.Funnel(
-                            y=main_funnel["stage"],
-                            x=main_funnel["number"],
-                            textinfo="value+percent initial",
-                            marker={"color": ["#555555", "#333333", "#FF4B4B", "#FF0000"]}
-                        ))
-                        fig_main.update_layout(title="O Grande Gargalo do Fluxo Principal", plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF", height=400)
-                        st.plotly_chart(fig_main, use_container_width=True)
+                        st.markdown("<br>### 🔀 O Mapa da Distribuição (Comportamento do Lead)", unsafe_allow_html=True)
+                        st.markdown("O que aconteceu com os leads após abrirem a mensagem:")
+                        
+                        c1, c2, c3, c4, c5 = st.columns(5)
+                        with c1:
+                            st.metric("1. Abriram", "3.153", "Base Ativa")
+                        with c2:
+                            st.metric("2. 'Receber Info'", "1.022", "32% de Conversão", delta_color="normal")
+                        with c3:
+                            st.metric("3. Interagiram", "791", "Respostas Sim/Não", delta_color="off")
+                        with c4:
+                            st.metric("➡️ Disseram 'Sim'", "414", "Foram pro Instagram", delta_color="normal")
+                        with c5:
+                            st.metric("➡️ Disseram 'Não'", "540", "Receberam o Link", delta_color="normal")
+                        
+                        st.markdown('<div style="margin-top: 15px; padding: 15px; background-color: #1a2b1a; border-radius: 8px; border-left: 5px solid #4CAF50; font-size: 14px;">'
+                                    '<b>A Grande Vitória do Caminho "Não":</b> A copy acolhedora enviada para os 540 contatos que ainda não tinham assistido a aula gerou um engajamento absurdo. '
+                                    'Exatos <b>477 leads (88%)</b> clicaram no link para assistir a aula imediatamente. Isso prova que segmentar quem está "atrasado" e enviar uma mensagem compreensiva tem uma taxa de conversão quase perfeita!'
+                                    '</div>', unsafe_allow_html=True)
+                                    
+                        st.markdown("---")
+                        st.markdown("### ♻️ Comportamento de Rejeição (Botão 'Bloquear')")
+                        st.markdown('<div class="alert-box" style="background-color: #12123b; border-left-color: #0000FF;">'
+                                    '<b>A Prova de Qualidade da Base:</b> Dos 3.153 leads que abriram a mensagem, apenas <b>42 pessoas (1,3%)</b> clicaram em "Bloquear Contato". '
+                                    'Isso demonstra que a base não está fria nem irritada, o problema da baixa conversão foi unicamente o excesso de cliques exigidos, e não a rejeição à sua marca.<br><br>'
+                                    '<b>Micro-Recuperação:</b> A sua copy genial de opt-out ("Caso mude de ideias...") ainda conseguiu resgatar <b>2 pessoas</b> (5% dos bloqueios) de volta para o funil instantaneamente!'
+                                    '</div>', unsafe_allow_html=True)
 
                     elif disparo_selecionado == "2️⃣ Engajamento (Instagram)":
                         st.markdown("### ✅ O Contraste Perfeito (Disparo 02)")
