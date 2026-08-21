@@ -1149,8 +1149,8 @@ if not df_captacao.empty:
                 st.markdown("## 🧠 Autópsia Final e Regras de Ouro (Próximo Lançamento)")
                 st.markdown("Um compilado das grandes lições aprendidas nos disparos das CPLs, focadas em maximizar a entrega e evitar punições do WhatsApp.")
                 
-                st.markdown("### ⚠️ O Perigo do 'Botão de Consentimento' (CPL 1)")
-                st.error("**O Erro:** Exigir que o lead clique em 'Receber Informação' na primeira mensagem antes de entregar o link. Isso causou uma **fuga de 68%** na CPL 01.")
+                st.markdown("### ⚠️ O Perigo do 'Botão de Consentimento' (CPL 1 e CPL 4)")
+                st.error("**O Erro:** Exigir que o lead clique em 'Receber Informação' na primeira mensagem antes de entregar o link. Isso causou uma **fuga de 68% na CPL 01 e de assustadores 95% na CPL 04**.")
                 st.warning("**A Punição da Meta:** Quando você dispara para milhares de pessoas e a grande maioria não interage, a Meta enxerga **Baixo Engajamento**. O algoritmo de Qualidade da Conta (Quality Rating) cai para Amarelo ou Vermelho. Trabalhar com a base inteira sem engajamento faz a Meta limitar os envios diários (Tier Limits) e derrubar a sua taxa de entrega de forma generalizada, interpretando a automação como SPAM.")
                 st.success("**A Solução:** Comunicação direta. A primeira mensagem já deve entregar o valor real (o link da aula) com um botão claro ('Assistir Agora'). A fricção deve ser zero para consumir o evento.")
                 
