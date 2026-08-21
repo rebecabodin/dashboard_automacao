@@ -1220,20 +1220,29 @@ if not df_captacao.empty:
                         
                         # Fase 1
                         st.markdown("#### 🚧 Fase 1: O Pedágio Inicial")
-                        col1, arr1, col2, arr2, col3 = st.columns([3, 1, 3, 1, 3])
+                        col0, arr0, col1, arr1, col2, arr2, col3 = st.columns([3, 1, 3, 1, 3, 1, 3])
+                        
+                        with col0:
+                            with st.container(border=True):
+                                st.metric("1. Disparo Total", "4.259", "Base Ativa", delta_color="off")
+                        with arr0:
+                            st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
+                            
                         with col1:
                             with st.container(border=True):
-                                st.metric("1. Abriram a Mensagem", "3.153", "Base Ativa")
+                                st.metric("2. Abriram", "3.153", "74% de Abertura", delta_color="normal")
                         with arr1:
                             st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
+                            
                         with col2:
                             with st.container(border=True):
-                                st.metric("2. Clicaram 'Receber Info'", "1.022", "32% de Conversão", delta_color="normal")
+                                st.metric("3. Clicaram", "1.022", "32% p/ Info", delta_color="normal")
                         with arr2:
                             st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
+                            
                         with col3:
                             with st.container(border=True):
-                                st.metric("3. Interagiram (Sim/Não)", "791", "Passaram pelo Gargalo", delta_color="off")
+                                st.metric("4. Interagiram", "791", "Passaram o Gargalo", delta_color="off")
                             
                         st.markdown("<br>", unsafe_allow_html=True)
                         
