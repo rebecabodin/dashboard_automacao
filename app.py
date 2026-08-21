@@ -1218,24 +1218,32 @@ if not df_captacao.empty:
                         st.markdown("### 🔀 O Mapa da Distribuição (Comportamento do Lead)")
                         st.markdown("O que aconteceu com os leads após abrirem a primeira mensagem:")
                         
-                        c1, c2, c3, c4, c5 = st.columns(5)
+                        st.markdown("**Fase 1: O Pedágio Inicial**")
+                        c1, c2, c3 = st.columns(3)
                         with c1:
-                            st.metric("1. Abriram", "3.153", "Base Ativa")
+                            st.metric("1. Abriram a Mensagem", "3.153", "Base Ativa")
                         with c2:
-                            st.metric("2. 'Receber Info'", "1.022", "32% de Conversão", delta_color="normal")
+                            st.metric("2. Clicaram 'Receber Info'", "1.022", "32% de Conversão", delta_color="normal")
                         with c3:
-                            st.metric("3. Interagiram", "791", "Respostas Sim/Não", delta_color="off")
+                            st.metric("3. Interagiram (Sim/Não)", "791", "Passaram pelo Gargalo", delta_color="off")
+                            
+                        st.markdown("**Fase 2: Os Destinos da Bifurcação**")
+                        c4, c5, c6, c7 = st.columns(4)
                         with c4:
-                            st.metric("➡️ Disseram 'Sim'", "414", "Foram pro Instagram", delta_color="normal")
+                            st.metric("➡️ Disseram 'Sim'", "414 leads", "Já assistiram", delta_color="off")
                         with c5:
-                            st.metric("➡️ Disseram 'Não'", "540", "Receberam o Link", delta_color="normal")
+                            st.metric("📸 Foram pro Instagram", "170 cliques", "41% de conversão (Comentar)", delta_color="normal")
+                        with c6:
+                            st.metric("➡️ Disseram 'Não'", "540 leads", "Atrasados", delta_color="off")
+                        with c7:
+                            st.metric("▶️ Foram pra Aula", "477 cliques", "88% de conversão (Assistir)", delta_color="normal")
 
                         st.markdown("---")
                         st.markdown("### 🚨 Autópsia Crítica e Insights")
                         
                         st.warning('**⚠️ O "Pedágio" do Template (Gargalo Inicial):** Foi pago um disparo para **4.259 leads reais**. Deles, 3.153 abriram. O template exigia um clique inicial no botão "Receber Informação". Resultado: apenas **1.022 leads** passaram por esse pedágio. Cerca de 2.000 pessoas ficaram pelo caminho na primeira etapa.')
                         
-                        st.success('**✅ A Bifurcação Inteligente (Sim vs Não):** O fluxo perguntou de forma humanizada: "Você assistiu?". Aqui a automação brilhou. O Caminho "Sim" mandou 414 leads para engajar no Instagram. O Caminho "Não" enviou o link da aula de forma acolhedora para 540 leads.')
+                        st.success('**✅ A Bifurcação Inteligente (Sim vs Não):** O fluxo perguntou de forma humanizada: "Você assistiu?". Aqui a automação brilhou. O Caminho "Sim" mandou 414 leads para engajar no Instagram (gerando **170 cliques p/ comentar**). O Caminho "Não" enviou o link da aula de forma acolhedora para 540 leads.')
                         
                         st.success('**🏆 A Grande Vitória do Caminho "Não":** A copy acolhedora enviada para os contatos "atrasados" gerou um engajamento absurdo. Exatos **477 leads (88%)** clicaram no link para assistir a aula imediatamente! Isso prova que segmentar quem está atrasado tem uma conversão quase perfeita.')
                         
