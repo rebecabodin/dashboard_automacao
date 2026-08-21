@@ -1148,10 +1148,10 @@ if not df_captacao.empty:
         df_cpl = pd.DataFrame({
             "CPL": ["CPL 01", "CPL 02", "CPL 03", "CPL 04"],
             "Data_Disparo": ["11/08/2026", "13/08/2026", "15/08/2026", "17/08/2026"],
-            "Disparados": [887, 515, 927, 4122],
-            "Entregues": [878, 500, 900, 3900],
-            "Cliques": [174, 94, 90, 203],
-            "Custo_US": [6.91, 36.98, 66.56, 287.00] # Custo proporcional (887 * (33.22/4259))
+            "Disparados": [4259, 515, 927, 4122],
+            "Entregues": [4200, 500, 900, 3900],
+            "Cliques": [800, 94, 90, 203],
+            "Custo_US": [33.22, 36.98, 66.56, 287.00]
         })
         
         cpl_selecionado = st.selectbox("Selecione o CPL para análise detalhada:", ["Visão Geral"] + df_cpl['CPL'].tolist())
@@ -1193,41 +1193,160 @@ if not df_captacao.empty:
         else:
             # Visão Individual por CPL
             with st.container(border=True):
-                dados_cpl = df_cpl[df_cpl['CPL'] == cpl_selecionado].iloc[0]
-                data_disp = dados_cpl.get('Data_Disparo', 'N/D')
-                st.markdown(f"### 📈 Performance do {cpl_selecionado} (Disparado em {data_disp})")
+                if cpl_selecionado == "CPL 01":
+                    st.markdown("### 📈 Performance da CPL 01 (Visão Detalhada)")
+                    
+                    disparo_selecionado = st.selectbox(
+                        "Filtre por Disparo (CPL 01):", 
+                        ["📦 Visão Consolidada", "1️⃣ Disparo Principal (Aula 1)", "2️⃣ Engajamento (Instagram)", "3️⃣ Reprise e Ao Vivo"]
+                    )
+                    
+                    if disparo_selecionado == "📦 Visão Consolidada":
+                        st.subheader("📦 Visão Consolidada: Os 3 Disparos da CPL 01")
+                        st.markdown("O esforço total de tráfego e envios para garantir o comparecimento na primeira aula.")
+                        df_cpl1_disparos = pd.DataFrame({
+                            "Disparo (Manychat)": ["1. Aula 1_LC7_AGO26_Inscritos", "2. Vou deixar o link da ...", "3. Reprise_Aula 1_LC7"],
+                            "Data/Hora": ["10 Ago, 20:25", "10 Ago, 20:33", "11 Ago, 18:30"],
+                            "Volume Enviado": [4604, 164, 887],
+                            "Abertura": ["68,0% (Base do 1º Nó)", "87,8%", "80,9%"],
+                            "Estratégia": ["Disparo de Massa (HSM)", "Aviso Manual/Atrasados", "Repescagem + Aviso Aula 2"]
+                        })
+                        st.dataframe(df_cpl1_disparos, use_container_width=True, hide_index=True)
+
+                    elif disparo_selecionado == "1️⃣ Disparo Principal (Aula 1)":
+                        st.markdown("### 🚨 Autópsia Crítica (Disparo 01)")
+                        st.markdown("Análise de gargalos e vazamentos no fluxo pago de 4.600 leads (Template HSM).")
+                        
+                        col_a1, col_a2 = st.columns(2)
+                        with col_a1:
+                            st.markdown('<div class="alert-box" style="background-color: #3b1212; border-left-color: #FF0000;">'
+                                        '<b>❌ Erro Estratégico: O "Pedágio" do Template</b><br>'
+                                        'Foi pago um disparo para <b>4.259 leads reais</b> (conforme faturamento Meta). Deles, 3.153 abriram. Porém, o template pedia um clique no botão "Receber Informação" (Opt-in) em vez de entregar a aula direto. '
+                                        'Resultado: <b>Mais de 2.000 pessoas que abriram a mensagem ficaram sem a aula</b> porque não passaram nesse "pedágio". Regra de ouro: Se o HSM custa dinheiro, a conversão deve estar nele.'
+                                        '</div>', unsafe_allow_html=True)
+                        with col_a2:
+                            st.markdown('<div class="alert-box" style="background-color: #3b1212; border-left-color: #FF0000;">'
+                                        '<b>❌ O Labirinto do Chatbot (Excesso de Fricção)</b><br>'
+                                        'Dos 994 leads que clicaram e disseram "sim", o Manychat iniciou um interrogatório: "Você aceita?" -> "Promete que vai prestar atenção?" -> "Clique OK". '
+                                        'Resultado: Dos 994 que entraram no bate-papo, apenas <b>278 tiveram paciência de chegar até o link da AULA LIBERADA</b>. '
+                                        'Gamificar a entrega gerou exaustão e <b>matou 72% dos leads ultra-quentes</b> no meio do caminho.'
+                                        '</div>', unsafe_allow_html=True)
                 
-                disp = dados_cpl['Disparados']
-                ent = dados_cpl['Entregues']
-                cli = dados_cpl['Cliques']
-                custo = dados_cpl['Custo_US']
-                
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    st.metric("Enviado", f"{disp:,}".replace(',','.'))
-                with col2:
-                    tx_ent = (ent/disp)*100 if disp > 0 else 0
-                    st.metric("Entregue", f"{ent:,}".replace(',','.'), f"{tx_ent:.1f}% de Entrega", delta_color="normal")
-                with col3:
-                    tx_cli = (cli/ent)*100 if ent > 0 else 0
-                    st.metric("Cliques", f"{cli:,}".replace(',','.'), f"{tx_cli:.1f}% CTR", delta_color="normal")
-                
-                fig_funnel = go.Figure(go.Funnel(
-                    y=["Enviados", "Entregues (Inbox)", "Cliques (Acessos)"],
-                    x=[disp, ent, cli],
-                    textinfo="value+percent previous",
-                    marker={"color": ["#4B8BBE", "#28a745", "#FFD43B"]}
-                ))
-                fig_funnel.update_layout(margin=dict(t=20, b=20), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
-                st.plotly_chart(fig_funnel, use_container_width=True)
-                
-                if tx_cli < 10:
-                    st.error(f"**🚨 Alerta Crítico:** A taxa de clique do {cpl_selecionado} despencou para {tx_cli:.1f}%. Enviar link para uma base fria (ou com copy fraca) destrói o CTR. Reveja a chamada de ação para os próximos envios.")
+                        # Main Funnel Data (Gargalo)
+                        main_funnel = dict(
+                            number=[4604, 3153, 994, 278],
+                            stage=["Base Paga (Custo Meta)", "Abriram a Mensagem", "Passaram no Pedágio (Opt-in)", "Sobreviveram ao Labirinto (Aula 1)"]
+                        )
+                        fig_main = go.Figure(go.Funnel(
+                            y=main_funnel["stage"],
+                            x=main_funnel["number"],
+                            textinfo="value+percent initial",
+                            marker={"color": ["#555555", "#333333", "#FF4B4B", "#FF0000"]}
+                        ))
+                        fig_main.update_layout(title="O Grande Gargalo do Fluxo Principal", plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF", height=400)
+                        st.plotly_chart(fig_main, use_container_width=True)
+
+                    elif disparo_selecionado == "2️⃣ Engajamento (Instagram)":
+                        st.markdown("### ✅ O Contraste Perfeito (Disparo 02)")
+                        st.markdown("Análise do Disparo de Engajamento: 'Vou deixar o link do Instagram...'")
+                        
+                        st.markdown('<div class="alert-box" style="background-color: #123b12; border-left-color: #00FF00;">'
+                                    '<b>🎯 Menos é Mais (Fricção Zero)</b><br>'
+                                    'Em total contraste com o "Labirinto" do fluxo principal, este pequeno disparo para <b>164 pessoas</b> foi a aula de como se faz. '
+                                    'Uma única mensagem curta e um botão direto. O resultado? <b>100% de entrega e 22% de cliques no botão (36 leads indo comentar)</b>. '
+                                    'Isso prova que a nossa base é altamente reativa quando não colocamos pedágios no caminho. O lead só quer o link na mão dele.'
+                                    '</div>', unsafe_allow_html=True)
+
+                    elif disparo_selecionado == "3️⃣ Reprise e Ao Vivo":
+                        st.markdown("### 🕵️‍♀️ Mergulho Profundo: Reprise (Disparo 03) e Aviso Ao Vivo")
+                        st.markdown("Análise detalhada do comportamento dos leads na repescagem.")
+                        
+                        col_f1, col_f2 = st.columns(2)
+                        with col_f1:
+                            st.markdown('<div class="alert-box" style="background-color: #123b12; border-left-color: #00FF00;">'
+                                        '<b>🎯 O Filtro Natural (Janela 24h)</b><br>'
+                                        'De 887 contatos iniciais, 230 chegaram até o aviso de "Ao Vivo" (CPL02) devido à janela de 24h do WhatsApp. '
+                                        'Isso filtrou os nossos <b>25% "Super-Engajados"</b> da base.'
+                                        '</div>', unsafe_allow_html=True)
+                        with col_f2:
+                             st.markdown('<div class="alert-box" style="background-color: #3b1212; border-left-color: #FF4B4B;">'
+                                        '<b>🔥 O Poder da Urgência</b><br>'
+                                        'A taxa de cliques para quem recebe o aviso de "Estamos Ao Vivo" praticamente dobra! '
+                                        'Foi de 15% no aviso comum (Reprise) para incríveis <b>26% exclusivos</b> no Ao Vivo.'
+                                        '</div>', unsafe_allow_html=True)
+                                        
+                        cpl1_funnel = dict(
+                            number=[887, 878, 712, 137],
+                            stage=["Base Selecionada (Reprise)", "Entregues (99%)", "Abriram a Mensagem (80%)", "Clicaram na Reprise (15%)"]
+                        )
+                        fig_f1 = go.Figure(go.Funnel(
+                            y=cpl1_funnel["stage"],
+                            x=cpl1_funnel["number"],
+                            textinfo="value+percent initial",
+                            marker={"color": ["#111111", "#333333", "#555555", "#FF4B4B"]}
+                        ))
+                        fig_f1.update_layout(title="Aviso da Reprise (Aula 1)", plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF", height=350, margin=dict(t=50, b=0))
+                        
+                        cpl1_live = dict(
+                            number=[230, 229, 189, 59],
+                            stage=["Super-Engajados (Restaram na Janela 24h)", "Entregues (100%)", "Abriram o 'Ao Vivo' (82%)", "Clicaram na Aula 2 (26%)"]
+                        )
+                        fig_f2 = go.Figure(go.Funnel(
+                            y=cpl1_live["stage"],
+                            x=cpl1_live["number"],
+                            textinfo="value+percent initial",
+                            marker={"color": ["#111111", "#333333", "#555555", "#00FF00"]}
+                        ))
+                        fig_f2.update_layout(title="Lembrete 'Ao Vivo' (Aula 2)", plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF", height=350, margin=dict(t=50, b=0))
+                        
+                        col_c1, col_c2 = st.columns(2)
+                        with col_c1:
+                            st.plotly_chart(fig_f1, use_container_width=True)
+                        with col_c2:
+                            st.plotly_chart(fig_f2, use_container_width=True)
+                    
+                        st.markdown('<div class="alert-box" style="background-color: #3b3b12; border-left-color: #FFA500;">'
+                                    '💡 <b>Oportunidade de Ouro (Dinheiro na Mesa):</b> Identificamos ~650 leads extremamente engajados que não receberam o convite do "Ao Vivo" apenas porque não conversaram com o robô nas últimas 24 horas (regra padrão do WhatsApp). '
+                                    '<b>A Solução:</b> No próximo lançamento, basta enviar uma <b>Mensagem Oficial (Paga)</b> avisando que a aula começou para todo mundo. Se aplicarmos a taxa de clique de 26% nesses 650 leads, '
+                                    'vamos gerar <b>mais de 160 cliques imediatos</b> extras para a live. O custo extra de envio será de poucos reais, mas o retorno em audiência e vendas será enorme.'
+                                    '</div>', unsafe_allow_html=True)
+
                 else:
-                    st.success(f"**✅ Insight Estratégico Multi-Copy:** O {cpl_selecionado} alcançou um CTR de {tx_cli:.1f}% ao combinar duas abordagens de copywriting no mesmo fluxo. **1. Recuperação (Reprise):** A primeira copy age com utilidade ('se ainda não assistiu... vou deixar o link'), repescando leads sem pressão. **2. Escassez e Urgência (Ao Vivo):** A segunda copy ataca com um micro-compromisso imediato ('Bora? Estamos ao vivo agora!'). **Plano de Ação:** A conversão foi fortíssima porque a copy atendeu a dois perfis (o atrasado e o pontual). Mantenha essa dobra de comunicação para os próximos CPLs.")
-                
-                cpc = custo / cli if cli > 0 else 0
-                st.info(f"💰 **Inteligência Financeira (ROI da Automação):** O {cpl_selecionado} teve um volume total de **{disp} disparos** processados pelo Manychat, gerando um custo operacional de **US$ {custo:.2f}**. Considerando os **{cli} cliques absolutos** recebidos, o seu Custo Por Clique (CPC) direto no WhatsApp foi de apenas **US$ {cpc:.2f}**. Um tráfego extremamente barato, hiper qualificado e que não depende do algoritmo do Instagram para entregar!")
+                    dados_cpl = df_cpl[df_cpl['CPL'] == cpl_selecionado].iloc[0]
+                    data_disp = dados_cpl.get('Data_Disparo', 'N/D')
+                    st.markdown(f"### 📈 Performance do {cpl_selecionado} (Disparado em {data_disp})")
+                    
+                    disp = dados_cpl['Disparados']
+                    ent = dados_cpl['Entregues']
+                    cli = dados_cpl['Cliques']
+                    custo = dados_cpl['Custo_US']
+                    
+                    col1, col2, col3 = st.columns(3)
+                    with col1:
+                        st.metric("Enviado", f"{disp:,}".replace(',','.'))
+                    with col2:
+                        tx_ent = (ent/disp)*100 if disp > 0 else 0
+                        st.metric("Entregue", f"{ent:,}".replace(',','.'), f"{tx_ent:.1f}% de Entrega", delta_color="normal")
+                    with col3:
+                        tx_cli = (cli/ent)*100 if ent > 0 else 0
+                        st.metric("Cliques", f"{cli:,}".replace(',','.'), f"{tx_cli:.1f}% CTR", delta_color="normal")
+                    
+                    fig_funnel = go.Figure(go.Funnel(
+                        y=["Enviados", "Entregues (Inbox)", "Cliques (Acessos)"],
+                        x=[disp, ent, cli],
+                        textinfo="value+percent previous",
+                        marker={"color": ["#4B8BBE", "#28a745", "#FFD43B"]}
+                    ))
+                    fig_funnel.update_layout(margin=dict(t=20, b=20), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
+                    st.plotly_chart(fig_funnel, use_container_width=True)
+                    
+                    if tx_cli < 10:
+                        st.error(f"**🚨 Alerta Crítico:** A taxa de clique do {cpl_selecionado} despencou para {tx_cli:.1f}%. Enviar link para uma base fria (ou com copy fraca) destrói o CTR. Reveja a chamada de ação para os próximos envios.")
+                    else:
+                        st.success(f"**✅ Insight Estratégico Multi-Copy:** O {cpl_selecionado} alcançou um CTR de {tx_cli:.1f}% ao combinar duas abordagens de copywriting no mesmo fluxo. **1. Recuperação (Reprise):** A primeira copy age com utilidade ('se ainda não assistiu... vou deixar o link'), repescando leads sem pressão. **2. Escassez e Urgência (Ao Vivo):** A segunda copy ataca com um micro-compromisso imediato ('Bora? Estamos ao vivo agora!'). **Plano de Ação:** A conversão foi fortíssima porque a copy atendeu a dois perfis (o atrasado e o pontual). Mantenha essa dobra de comunicação para os próximos CPLs.")
+                    
+                    cpc = custo / cli if cli > 0 else 0
+                    st.info(f"💰 **Inteligência Financeira (ROI da Automação):** O {cpl_selecionado} teve um volume total de **{disp} disparos** processados pelo Manychat, gerando um custo operacional de **US$ {custo:.2f}**. Considerando os **{cli} cliques absolutos** recebidos, o seu Custo Por Clique (CPC) direto no WhatsApp foi de apenas **US$ {cpc:.2f}**. Um tráfego extremamente barato, hiper qualificado e que não depende do algoritmo do Instagram para entregar!")
 
     elif menu_selecionado == '2️⃣ Vendas e Carrinho':
         st.header("2️⃣ Captação de Vendas e Abandono de Carrinho")
