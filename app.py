@@ -1398,7 +1398,8 @@ if not df_captacao.empty:
                     st.info(
                         "**1. A Alta Intenção da Base:** Dos 83 leads que escolheram 'Assistir Agora', 73 de fato foram para a aula (uma taxa brutal de 87,5%). Isso mostra que quando oferecemos o caminho direto para o objetivo, a conversão é quase garantida.\n\n"
                         "**2. A Regra de Ouro Violada:** Lembra que o perfil desse lead **não quer ser distraído**? No caminho 'Já Assisti', criamos um labirinto de 3 passos para levá-los a comentar no Instagram. Resultado: das 79 pessoas super engajadas, apenas 25 chegaram no Instagram. "
-                        "Desperdiçamos a energia de 54 pessoas hiper-engajadas em um fluxo de interação longa, que poderiam estar sendo redirecionadas para um Resumo em PDF ou oferta VIP."
+                        "Desperdiçamos a energia de 54 pessoas hiper-engajadas em um fluxo de interação longa, que poderiam estar sendo redirecionadas para um Resumo em PDF ou oferta VIP.\n\n"
+                        "**3. O Custo Oculto (Alerta Financeiro da API):** O template foi aprovado originalmente como 'Utility' (Utilitária), mas durante o disparo a Meta reclassificou **635 mensagens** para a categoria 'Marketing' (Marketing Lite). Essa mudança forçada gerou um custo inesperado de **US$ 36,98**. A inteligência artificial do WhatsApp pune copys que soam promocionais cobrando a tarifa mais cara, mesmo após a aprovação manual."
                     )
                 
                 else:
