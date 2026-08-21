@@ -1349,6 +1349,58 @@ if not df_captacao.empty:
                     
                         st.success('**💡 Dinheiro na Mesa (Oportunidade de Ouro):** O WhatsApp bloqueou quase 650 pessoas (que já tinham saído da Janela de 24h gratuitas) de receberem o aviso de que a Live estava começando. \n\n**A Solução para o Próximo Lançamento:** Basta pagar alguns centavos por lead e mandar uma "Mensagem Oficial" da Meta passando por cima dessa regra das 24h. Se pagássemos para avisar essas 650 pessoas atrasadas, e elas clicassem na mesma taxa de 26%, teríamos jogado **mais de 160 pessoas extras na sua Live** instantaneamente. O custo das mensagens é moedas perto do lucro das vendas que elas fariam!')
 
+                elif cpl_selecionado == "CPL 02":
+                    st.markdown("### 📈 Performance da CPL 02 (Aula 2 - Inscritos)")
+                    
+                    st.markdown("#### 🚧 Fase 1: O Filtro Inicial (Gargalo de Público)")
+                    col0, arr0, col1 = st.columns([3, 1, 3])
+                    
+                    with col0:
+                        with st.container(border=True):
+                            st.metric("1. Público Total Selecionado", "4.568", "Pessoas com a tag", delta_color="off")
+                    with arr0:
+                        st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
+                    with col1:
+                        with st.container(border=True):
+                            st.metric("2. Passaram no Filtro Inicial", "695", "15% da base total", delta_color="normal")
+                            
+                    st.warning('**⚠️ Análise do Filtro:** Logo na largada, a automação bloqueou **85% da base** de receber a mensagem. Se o filtro exigia que a pessoa tivesse assistido à CPL 01 para receber a CPL 02, nós perdemos a chance de re-engajar a base inteira e levar sangue novo para a aula.')
+                    
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    
+                    st.markdown("#### 🔀 Fase 2: O Desempenho dos 695 Leads (O que eles escolheram?)")
+                    
+                    col_a, col_b, col_c = st.columns(3)
+                    
+                    with col_a:
+                        with st.container(border=True):
+                            st.markdown("<h4 style='text-align: center; color: #22c55e;'>🟢 'Assistir Agora'</h4>", unsafe_allow_html=True)
+                            st.metric("Clicaram no Botão", "83 leads", "12% da Base", delta_color="off")
+                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
+                            st.metric("Foram pra Aula (Conversão)", "73 cliques", "87,5% de Conversão", delta_color="normal")
+                            
+                    with col_b:
+                        with st.container(border=True):
+                            st.markdown("<h4 style='text-align: center; color: #f59e0b;'>🟡 'Já Assisti'</h4>", unsafe_allow_html=True)
+                            st.metric("Clicaram no Botão", "79 leads", "11,4% da Base", delta_color="off")
+                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
+                            st.metric("Foram pro Instagram", "25 cliques", "🚨 Desvio (Fuga de 68%)", delta_color="off")
+                            
+                    with col_c:
+                        with st.container(border=True):
+                            st.markdown("<h4 style='text-align: center; color: #ef4444;'>🔴 'Parar Mensagem'</h4>", unsafe_allow_html=True)
+                            st.metric("Clicaram no Botão", "7 leads", "1% da Base", delta_color="off")
+                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
+                            st.metric("Descadastrados", "7 pessoas", "Fim do Fluxo", delta_color="off")
+                            
+                    st.markdown("---")
+                    st.markdown("### 🧠 Diagnóstico Executivo e Regra de Ouro (CPL 02)")
+                    st.info(
+                        "**1. A Alta Intenção da Base:** Dos 83 leads que escolheram 'Assistir Agora', 73 de fato foram para a aula (uma taxa brutal de 87,5%). Isso mostra que quando oferecemos o caminho direto para o objetivo, a conversão é quase garantida.\n\n"
+                        "**2. A Regra de Ouro Violada:** Lembra que o perfil desse lead **não quer ser distraído**? No caminho 'Já Assisti', criamos um labirinto de 3 passos para levá-los a comentar no Instagram. Resultado: das 79 pessoas super engajadas, apenas 25 chegaram no Instagram. "
+                        "Desperdiçamos a energia de 54 pessoas hiper-engajadas em um fluxo de interação longa, que poderiam estar sendo redirecionadas para um Resumo em PDF ou oferta VIP."
+                    )
+                
                 else:
                     dados_cpl = df_cpl[df_cpl['CPL'] == cpl_selecionado].iloc[0]
                     data_disp = dados_cpl.get('Data_Disparo', 'N/D')
