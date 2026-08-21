@@ -249,7 +249,8 @@ if not df_captacao.empty:
             '2️⃣ Vendas e Carrinho',
             '3️⃣ API e Custos',
             '4️⃣ Automações Orgânicas',
-            '5️⃣ E-mails'
+            '5️⃣ E-mails',
+            '6️⃣ Autópsia Final e Estratégia'
         ]
     else:
         opcoes_menu = ['📊 Visão Principal', '🕸️ Funil Manychat (WPP)']
@@ -1620,6 +1621,32 @@ if not df_captacao.empty:
         st.plotly_chart(fig_email, use_container_width=True)
         
         st.markdown('<div class="alert-box" style="padding: 15px; border-radius: 8px; background-color: #2b1a1a; border-left: 5px solid #FF4B4B;"><b>❌ Insight de Canal:</b> A dependência de E-mail Marketing para a Venda (Carrinho Aberto) foi letal. O Open Rate de 2% significa que de 10.000 pessoas, apenas 200 viram que o carrinho abriu.</div>', unsafe_allow_html=True)
+        
+    elif menu_selecionado == '6️⃣ Autópsia Final e Estratégia':
+        st.header("6️⃣ Autópsia Final e Regras de Ouro (Próximo Lançamento)")
+        st.markdown("Um compilado das grandes lições aprendidas nos disparos das CPLs, focadas em maximizar a entrega e evitar punições do WhatsApp.")
+        
+        st.markdown("### ⚠️ O Perigo do 'Botão de Consentimento' (CPL 1)")
+        st.error("**O Erro:** Exigir que o lead clique em 'Receber Informação' na primeira mensagem antes de entregar o link. Isso causou uma **fuga de 68%** na CPL 01.")
+        st.warning("**A Punição da Meta:** Quando você dispara para milhares de pessoas e a grande maioria não interage, a Meta enxerga **Baixo Engajamento**. O algoritmo de Qualidade da Conta (Quality Rating) cai para Amarelo ou Vermelho. Trabalhar com a base inteira sem engajamento faz a Meta limitar os envios diários (Tier Limits) e derrubar a sua taxa de entrega de forma generalizada, interpretando a automação como SPAM.")
+        st.success("**A Solução:** Comunicação direta. A primeira mensagem já deve entregar o valor real (o link da aula) com um botão claro ('Assistir Agora'). A fricção deve ser zero para consumir o evento.")
+        
+        st.markdown("---")
+        
+        st.markdown("### 💸 A Armadilha da 'Copy Promocional' (CPL 2 e 3)")
+        st.error("**O Erro:** Usar textos que soam muito comerciais. A Meta reclassificou templates 'Utility' para 'Marketing' de surpresa. Isso esgotou a verba da carteira em segundos e bloqueou os disparos, **barrando 80% da base** de receber os avisos das CPLs 02 e 03.")
+        st.success("**A Solução:** Blindar a Copy. Reduza gatilhos de escassez agressivos (ex: 'Liberado', 'Última Chance', Emojis de 🚨) nos avisos de aula gratuitos. Torne o texto puramente transacional e educacional para o crivo da IA do WhatsApp.")
+        
+        st.markdown("---")
+        
+        st.markdown("### 🧭 O Labirinto de Canais")
+        st.error("**O Erro:** Pegar o lead altamente engajado (que já clicou em 'Já assisti' ou 'Aulas Passadas') e forçá-lo a sair do WhatsApp para ir comentar em um post do Instagram. Isso quebrou o fluxo e causou **66% a 75% de fuga** nas interações.")
+        st.success("**A Solução:** Retenção absoluta. O WhatsApp é o ambiente de conversão. Se o lead engaja, ofereça um PDF nativo ou convide-o para o 'Grupo VIP' (como feito com sucesso na Reprise da CPL 3, convertendo 28%).")
+        
+        st.markdown("---")
+        
+        st.markdown("### 🧪 A Força do Visual (UX no WhatsApp)")
+        st.success("**O Acerto:** O Teste A/B/C da CPL 03 provou que o template com **Imagem + Pergunta** (Copy B) teve o maior CTR (10%). Por outro lado, enviar o link escondido no meio de um texto longo (como na Reprise da CPL 3) dificulta a ação. **Regra Máxima:** Use imagens para fisgar a atenção e SEMPRE utilize 'Botões' de ação claros no lugar de links no meio do texto.")
         
 else:
     st.warning("Não foi possível carregar os dados. Verifique a planilha.")
