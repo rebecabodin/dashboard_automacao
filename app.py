@@ -1265,18 +1265,16 @@ if not df_captacao.empty:
                                 st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
                                 st.metric("▶️ Foram pra Aula", "477 cliques", "88% (Para assistir)", delta_color="normal")
 
-                        st.markdown("---")
-                        st.markdown("### 🚨 Autópsia Crítica e Insights")
-                        
-                        st.warning('**⚠️ O "Pedágio" do Template (Gargalo Inicial):** Foi pago um disparo para **4.259 leads reais**. Deles, 3.153 abriram. O template exigia um clique inicial no botão "Receber Informação". Resultado: apenas **1.022 leads** passaram por esse pedágio. Cerca de 2.000 pessoas ficaram pelo caminho na primeira etapa.')
-                        
-                        st.success('**✅ A Bifurcação Inteligente (Sim vs Não):** O fluxo perguntou de forma humanizada: "Você assistiu?". Aqui a automação brilhou. O Caminho "Sim" mandou 414 leads para engajar no Instagram (gerando **170 cliques p/ comentar**). O Caminho "Não" enviou o link da aula de forma acolhedora para 540 leads.')
-                        
-                        st.success('**🏆 A Grande Vitória do Caminho "Não":** A copy acolhedora enviada para os contatos "atrasados" gerou um engajamento absurdo. Exatos **477 leads (88%)** clicaram no link para assistir a aula imediatamente! Isso prova que segmentar quem está atrasado tem uma conversão quase perfeita.')
-                        
-                        st.info('**🤖 O "SDR" Virtual (Follow-up de 2 Horas):** Após entregar o link, o robô ativou um Smart Delay impecável. Ele esperou 2 horas e voltou para cobrar o lead ("Passei aqui rapidinho só para saber..."). **376 pessoas** receberam essa cobrança automática. Desses, **34% clicaram que assistiram** e 8% confessaram que não. A automação fez o trabalho de 10 vendedores gratuitamente.')
-                        
-                        st.info('**♻️ Comportamento de Rejeição (A Prova da Base):** Dos 3.153 leads que abriram a mensagem, apenas **42 pessoas (1,3%)** clicaram em "Bloquear Contato". A base não está fria. A baixa conversão inicial foi só excesso de botões. E mais: a copy genial de opt-out ("Caso mude de ideias...") conseguiu resgatar **2 pessoas** de volta pro funil instantaneamente!')
+                        st.markdown("### 🧠 Diagnóstico Executivo da CPL 01")
+                        st.info(
+                            "A jornada da CPL 01 revelou uma base altamente quente e responsiva, porém freada por uma barreira técnica. "
+                            "Houve uma **fuga massiva de 2.000 leads** logo na largada devido ao 'pedágio' do template (o clique obrigatório em 'Receber Informação'). "
+                            "No entanto, os 1.022 leads que atravessaram esse gargalo provaram a genialidade da estratégia de automação desenhada.\n\n"
+                            "A **Bifurcação Inteligente** fez um trabalho impecável de segmentação: enviou a audiência adiantada para bombar o post do Instagram (**170 cliques**) "
+                            "e acolheu a audiência atrasada, alcançando assombrosos **88% de conversão (477 cliques)** em direção à aula. "
+                            "Para coroar, o **SDR Virtual** entrou em ação 2 horas depois, cobrando ativamente 376 pessoas de forma tão humanizada "
+                            "que **a taxa de rejeição (bloqueios) de todo o funil foi de irrelevantes 1,3%**. A automação não apenas filtrou, mas engajou e recuperou a base quente."
+                        )
                         
                         st.markdown("### 🎯 Plano de Ação para o Próximo Lançamento")
                         st.error('**1. Eliminar o Pedágio:** O botão "Receber Informação" provou ser fatal (perda de 2.000 leads). Para a próxima vez, o Template (HSM) deve ter o link da Aula direto no botão principal, ou pelo menos um Call to Action mais forte como "Liberar Minha Aula Agora". Menos cliques = Mais visualizações.')
