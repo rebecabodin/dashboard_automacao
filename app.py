@@ -1214,26 +1214,8 @@ if not df_captacao.empty:
                         st.dataframe(df_cpl1_disparos, use_container_width=True, hide_index=True)
 
                     elif disparo_selecionado == "1️⃣ Disparo Principal (Aula 1)":
-                        st.markdown("### 🚨 Anatomia do Fluxo Principal (Disparo 01)")
-                        st.markdown("Análise da jornada de 4.600 leads (Template HSM) e a bifurcação de respostas.")
-                        
-                        col_a1, col_a2 = st.columns(2)
-                        with col_a1:
-                            st.markdown('<div class="alert-box" style="background-color: #3b3b12; border-left-color: #FFA500;">'
-                                        '<b>⚠️ O "Pedágio" do Template (Gargalo Inicial)</b><br>'
-                                        'Foi pago um disparo para <b>4.259 leads reais</b> (conforme faturamento Meta). Deles, 3.153 abriram. O template exigia um clique inicial no botão "Receber Informação". '
-                                        'Resultado: <b>1.022 leads</b> passaram pelo pedágio. Cerca de 2.000 pessoas que abriram a mensagem ficaram pelo caminho na primeira etapa.'
-                                        '</div>', unsafe_allow_html=True)
-                        with col_a2:
-                            st.markdown('<div class="alert-box" style="background-color: #123b12; border-left-color: #00FF00;">'
-                                        '<b>✅ A Bifurcação Inteligente (Sim vs Não)</b><br>'
-                                        'O fluxo perguntou de forma humanizada: <i>"Você assistiu?"</i>. Aqui a automação brilhou:<br>'
-                                        '• <b>Caminho "Sim" (414 leads):</b> Foram direcionados para comentar no Instagram.<br>'
-                                        '• <b>Caminho "Não" (540 leads):</b> Receberam a mensagem acolhedora ("A correria é grande...") e o link da aula.'
-                                        '</div>', unsafe_allow_html=True)
-                
-                        st.markdown("<br>### 🔀 O Mapa da Distribuição (Comportamento do Lead)", unsafe_allow_html=True)
-                        st.markdown("O que aconteceu com os leads após abrirem a mensagem:")
+                        st.markdown("### 🔀 O Mapa da Distribuição (Comportamento do Lead)")
+                        st.markdown("O que aconteceu com os leads após abrirem a primeira mensagem:")
                         
                         c1, c2, c3, c4, c5 = st.columns(5)
                         with c1:
@@ -1246,54 +1228,26 @@ if not df_captacao.empty:
                             st.metric("➡️ Disseram 'Sim'", "414", "Foram pro Instagram", delta_color="normal")
                         with c5:
                             st.metric("➡️ Disseram 'Não'", "540", "Receberam o Link", delta_color="normal")
-                        
-                        st.markdown('<div style="margin-top: 15px; padding: 15px; background-color: #1a2b1a; border-radius: 8px; border-left: 5px solid #4CAF50; font-size: 14px;">'
-                                    '<b>A Grande Vitória do Caminho "Não":</b> A copy acolhedora enviada para os 540 contatos que ainda não tinham assistido a aula gerou um engajamento absurdo. '
-                                    'Exatos <b>477 leads (88%)</b> clicaram no link para assistir a aula imediatamente. Isso prova que segmentar quem está "atrasado" e enviar uma mensagem compreensiva tem uma taxa de conversão quase perfeita!'
-                                    '</div>', unsafe_allow_html=True)
-                                    
-                        st.markdown('<div style="margin-top: 15px; padding: 15px; background-color: #12123b; border-radius: 8px; border-left: 5px solid #0000FF; font-size: 14px;">'
-                                    '<b>🤖 O "SDR" Virtual (Follow-up de 2 Horas):</b> Após entregar o link, o robô ativou um <i>Smart Delay</i> impecável. '
-                                    'Ele esperou 2 horas e voltou para cobrar o lead ("Passei aqui rapidinho só para saber se conseguiu assistir"). <b>376 pessoas</b> receberam essa cobrança automática. '
-                                    'Desses, <b>34% clicaram que assistiram</b> e <b>8% confessaram que ainda não</b>. A automação fez o trabalho de 10 vendedores, sem gastar 1 minuto de tempo humano, garantindo que o lead se sentisse cobrado e acompanhado.'
-                                    '</div>', unsafe_allow_html=True)
-                                    
-                        st.markdown("---")
-                        st.markdown("### ♻️ Comportamento de Rejeição (Botão 'Bloquear')")
-                        st.markdown('<div class="alert-box" style="background-color: #12123b; border-left-color: #0000FF;">'
-                                    '<b>A Prova de Qualidade da Base:</b> Dos 3.153 leads que abriram a mensagem, apenas <b>42 pessoas (1,3%)</b> clicaram em "Bloquear Contato". '
-                                    'Isso demonstra que a base não está fria nem irritada, o problema da baixa conversão foi unicamente o excesso de cliques exigidos, e não a rejeição à sua marca.<br><br>'
-                                    '<b>Micro-Recuperação:</b> A sua copy genial de opt-out ("Caso mude de ideias...") ainda conseguiu resgatar <b>2 pessoas</b> (5% dos bloqueios) de volta para o funil instantaneamente!'
-                                    '</div>', unsafe_allow_html=True)
 
-                    elif disparo_selecionado == "2️⃣ Engajamento (Instagram)":
+                        st.markdown("---")
+                        st.markdown("### 🚨 Autópsia Crítica e Insights")
+                        
+                        st.warning('**⚠️ O "Pedágio" do Template (Gargalo Inicial):** Foi pago um disparo para **4.259 leads reais**. Deles, 3.153 abriram. O template exigia um clique inicial no botão "Receber Informação". Resultado: apenas **1.022 leads** passaram por esse pedágio. Cerca de 2.000 pessoas ficaram pelo caminho na primeira etapa.')
+                        
+                        st.success('**✅ A Bifurcação Inteligente (Sim vs Não):** O fluxo perguntou de forma humanizada: "Você assistiu?". Aqui a automação brilhou. O Caminho "Sim" mandou 414 leads para engajar no Instagram. O Caminho "Não" enviou o link da aula de forma acolhedora para 540 leads.')
+                                     elif disparo_selecionado == "2️⃣ Engajamento (Instagram)":
                         st.markdown("### ✅ O Contraste Perfeito (Disparo 02)")
                         st.markdown("Análise do Disparo de Engajamento: 'Vou deixar o link do Instagram...'")
                         
-                        st.markdown('<div class="alert-box" style="background-color: #123b12; border-left-color: #00FF00;">'
-                                    '<b>🎯 Menos é Mais (Fricção Zero)</b><br>'
-                                    'Em total contraste com o "Labirinto" do fluxo principal, este pequeno disparo para <b>164 pessoas</b> foi a aula de como se faz. '
-                                    'Uma única mensagem curta e um botão direto. O resultado? <b>100% de entrega e 22% de cliques no botão (36 leads indo comentar)</b>. '
-                                    'Isso prova que a nossa base é altamente reativa quando não colocamos pedágios no caminho. O lead só quer o link na mão dele.'
-                                    '</div>', unsafe_allow_html=True)
+                        st.success('**🎯 Menos é Mais (Fricção Zero):** Em total contraste com o "Labirinto" do fluxo principal, este pequeno disparo para **164 pessoas** foi a aula de como se faz. Uma única mensagem curta e um botão direto. O resultado? **100% de entrega e 22% de cliques no botão** (36 leads indo comentar). Isso prova que a nossa base é altamente reativa quando não colocamos pedágios no caminho. O lead só quer o link na mão dele.')
 
                     elif disparo_selecionado == "3️⃣ Reprise e Ao Vivo":
                         st.markdown("### 🕵️‍♀️ Mergulho Profundo: Reprise (Disparo 03) e Aviso Ao Vivo")
                         st.markdown("Análise detalhada do comportamento dos leads na repescagem.")
                         
-                        col_f1, col_f2 = st.columns(2)
-                        with col_f1:
-                            st.markdown('<div class="alert-box" style="background-color: #123b12; border-left-color: #00FF00;">'
-                                        '<b>🎯 O Filtro Natural (Janela 24h)</b><br>'
-                                        'De 887 contatos iniciais, 230 chegaram até o aviso de "Ao Vivo" (CPL02) devido à janela de 24h do WhatsApp. '
-                                        'Isso filtrou os nossos <b>25% "Super-Engajados"</b> da base.'
-                                        '</div>', unsafe_allow_html=True)
-                        with col_f2:
-                             st.markdown('<div class="alert-box" style="background-color: #3b1212; border-left-color: #FF4B4B;">'
-                                        '<b>🔥 O Poder da Urgência</b><br>'
-                                        'A taxa de cliques para quem recebe o aviso de "Estamos Ao Vivo" praticamente dobra! '
-                                        'Foi de 15% no aviso comum (Reprise) para incríveis <b>26% exclusivos</b> no Ao Vivo.'
-                                        '</div>', unsafe_allow_html=True)
+                        st.info('**🎯 O Filtro Natural (Janela 24h):** De 887 contatos iniciais, 230 chegaram até o aviso de "Ao Vivo" (CPL02) devido à janela de 24h do WhatsApp. Isso filtrou os nossos **25% "Super-Engajados"** da base.')
+                        
+                        st.warning('**🔥 O Poder da Urgência:** A taxa de cliques para quem recebe o aviso de "Estamos Ao Vivo" praticamente dobra! Foi de 15% no aviso comum (Reprise) para incríveis **26% exclusivos** no Ao Vivo.')
                                         
                         cpl1_funnel = dict(
                             number=[887, 878, 712, 137],
@@ -1303,9 +1257,9 @@ if not df_captacao.empty:
                             y=cpl1_funnel["stage"],
                             x=cpl1_funnel["number"],
                             textinfo="value+percent initial",
-                            marker={"color": ["#111111", "#333333", "#555555", "#FF4B4B"]}
+                            marker={"color": ["#4B8BBE", "#28a745", "#555555", "#FF4B4B"]}
                         ))
-                        fig_f1.update_layout(title="Aviso da Reprise (Aula 1)", plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF", height=350, margin=dict(t=50, b=0))
+                        fig_f1.update_layout(title="Aviso da Reprise (Aula 1)", plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF" if st.get_option("theme.base") == "dark" else "#000", height=350, margin=dict(t=50, b=0))
                         
                         cpl1_live = dict(
                             number=[230, 229, 189, 59],
@@ -1315,9 +1269,9 @@ if not df_captacao.empty:
                             y=cpl1_live["stage"],
                             x=cpl1_live["number"],
                             textinfo="value+percent initial",
-                            marker={"color": ["#111111", "#333333", "#555555", "#00FF00"]}
+                            marker={"color": ["#4B8BBE", "#28a745", "#555555", "#FFD43B"]}
                         ))
-                        fig_f2.update_layout(title="Lembrete 'Ao Vivo' (Aula 2)", plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF", height=350, margin=dict(t=50, b=0))
+                        fig_f2.update_layout(title="Lembrete 'Ao Vivo' (Aula 2)", plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF" if st.get_option("theme.base") == "dark" else "#000", height=350, margin=dict(t=50, b=0))
                         
                         col_c1, col_c2 = st.columns(2)
                         with col_c1:
@@ -1325,11 +1279,7 @@ if not df_captacao.empty:
                         with col_c2:
                             st.plotly_chart(fig_f2, use_container_width=True)
                     
-                        st.markdown('<div class="alert-box" style="background-color: #3b3b12; border-left-color: #FFA500;">'
-                                    '💡 <b>Oportunidade de Ouro (Dinheiro na Mesa):</b> Identificamos ~650 leads extremamente engajados que não receberam o convite do "Ao Vivo" apenas porque não conversaram com o robô nas últimas 24 horas (regra padrão do WhatsApp). '
-                                    '<b>A Solução:</b> No próximo lançamento, basta enviar uma <b>Mensagem Oficial (Paga)</b> avisando que a aula começou para todo mundo. Se aplicarmos a taxa de clique de 26% nesses 650 leads, '
-                                    'vamos gerar <b>mais de 160 cliques imediatos</b> extras para a live. O custo extra de envio será de poucos reais, mas o retorno em audiência e vendas será enorme.'
-                                    '</div>', unsafe_allow_html=True)
+                        st.success('**💡 Oportunidade de Ouro (Dinheiro na Mesa):** Identificamos ~650 leads extremamente engajados que não receberam o convite do "Ao Vivo" apenas porque não conversaram com o robô nas últimas 24 horas (regra padrão do WhatsApp). **A Solução:** No próximo lançamento, basta enviar uma **Mensagem Oficial (Paga)** avisando que a aula começou para todo mundo. Se aplicarmos a taxa de clique de 26% nesses 650 leads, vamos gerar **mais de 160 cliques imediatos** extras para a live. O custo extra de envio será de poucos reais, mas o retorno em audiência e vendas será enorme.')
 
                 else:
                     dados_cpl = df_cpl[df_cpl['CPL'] == cpl_selecionado].iloc[0]
