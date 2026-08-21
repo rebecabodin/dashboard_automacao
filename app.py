@@ -1573,27 +1573,108 @@ if not df_captacao.empty:
         st.markdown("Monitoramento de eventos (Vendas Aprovadas vs Abandono de Checkout).")
         
         try:
-            df_vendas = pd.read_csv(f"https://docs.google.com/spreadsheets/d/1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs/gviz/tq?tqx=out:csv&sheet=Compra%20Aprovada")
-            total_vendas = len(df_vendas)
-        except:
-            total_vendas = 150
+            # Lendo direto da Planilha no Google Sheets (preparado para Streamlit Cloud)
+            url_vendas = "https://docs.google.com/spreadsheets/d/1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs/gviz/tq?tqx=out:csv&sheet=%5Bpop-up%5D%20Vendas"
+            url_recuperacao = "https://docs.google.com/spreadsheets/d/1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs/gviz/tq?tqx=out:csv&sheet=%F0%9F%93%88%20Recupera%C3%A7%C3%A3o%20de%20Vendas"
             
-        abandonos = 245
-        recuperados = 45
-        
-        c1, c2, c3, c4 = st.columns(4)
-        c1.metric("Vendas Aprovadas", total_vendas)
-        c2.metric("Abandonos (Boletos/Pix)", abandonos)
-        c3.metric("Recuperados", recuperados)
-        c4.metric("Taxa Recup.", f"{(recuperados/abandonos)*100:.1f}%")
-        
-        fig_funil = go.Figure(go.Funnel(
-            y=["Visitas Checkout", "Abandonos", "Equipe Comercial Atuou", "Vendas Recuperadas"],
-            x=[1200, abandonos, abandonos, recuperados],
-            textinfo="value+percent initial"
-        ))
-        st.plotly_chart(fig_funil, use_container_width=True)
-        st.markdown('<div class="alert-box" style="border-left: 5px solid #4CAF50; background-color: #1a2b1a; padding: 15px; border-radius: 8px;"><b>🔍 Insight de Vendas:</b> A equipe comercial foi agressiva na recuperação de boletos e abandonos via WhatsApp, mas faltou volume de visitas na página. O topo do funil de vendas (tráfego para o checkout) foi o real gargalo.</div>', unsafe_allow_html=True)
+            df_vendas = pd.read_csv(url_vendas)
+            df_recuperacao = pd.read_csv(url_recuperacao)
+            
+            # Filtro Data: a partir de 17/08/2026 07:00:27
+            df_vendas['DATA'] = pd.to_datetime(df_vendas['DATA'], format='%d/%m/%Y %H:%M:%S', errors='coerce')
+            df_vendas = df_vendas[df_vendas['DATA'] >= '2026-08-17 07:00:27']
+            
+            df_recuperacao['DATA'] = pd.to_datetime(df_recuperacao['DATA'], format='%d/%m/%Y %H:%M:%S', errors='coerce')
+            df_recuperacao = df_recuperacao[df_recuperacao['DATA'] >= '2026-08-17 07:00:27']
+            
+            # Métricas Vendas
+            total_leads = len(df_vendas)
+            compras = len(df_vendas[df_vendas['Comprou?'] == 'Sim'])
+            abandonos = len(df_vendas[df_vendas['Comprou?'] == 'Não'])
+            taxa_conversao = (compras / total_leads * 100) if total_leads > 0 else 0
+            
+            receita_gerada = compras * 1497
+            receita_perdida = abandonos * 1497
+            
+            # Métricas Recuperação
+            recup_total = len(df_recuperacao)
+            recup_msg_enviada = len(df_recuperacao[df_recuperacao['STATUS PÓS AUTOMAÇÃO'] == 'Mensagem Enviada'])
+            recup_compraram_msg = len(df_recuperacao[(df_recuperacao['STATUS PÓS AUTOMAÇÃO'] == 'Mensagem Enviada') & (df_recuperacao['Comprou?'] == 'Sim')])
+            
+            cobertura = (recup_msg_enviada / recup_total * 100) if recup_total > 0 else 0
+
+            # --- TOPO: Resumo Executivo ---
+            st.markdown("### 💰 Financeiro & Conversão")
+            c1, c2, c3, c4 = st.columns(4)
+            c1.metric("Leads (Checkout)", total_leads)
+            c2.metric("Conversão", f"{taxa_conversao:.1f}%", f"{compras} Vendas")
+            c3.metric("Receita Gerada", f"R$ {receita_gerada:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+            c4.metric("Valor 'Na Mesa'", f"R$ {receita_perdida:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."), delta="- Abandonos", delta_color="inverse")
+            
+            # --- MEIO: Cobertura da Automação (Storytelling) ---
+            st.markdown("---")
+            st.markdown("### 🤖 Motor de Recuperação Ativa")
+            
+            col_chart, col_insight = st.columns([1, 1])
+            
+            with col_chart:
+                fig_gauge = go.Figure(go.Indicator(
+                    mode = "gauge+number",
+                    value = cobertura,
+                    number = {'suffix': "%"},
+                    title = {'text': "Cobertura da Automação (Envios)"},
+                    gauge = {
+                        'axis': {'range': [None, 100]},
+                        'bar': {'color': "#4CAF50"},
+                        'steps': [
+                            {'range': [0, 50], 'color': "#2b1a1a"},
+                            {'range': [50, 80], 'color': "#3e3e1c"},
+                            {'range': [80, 100], 'color': "#1a2b1a"}
+                        ]
+                    }
+                ))
+                fig_gauge.update_layout(height=250, margin=dict(l=10, r=10, t=40, b=10), paper_bgcolor="rgba(0,0,0,0)", font={'color': "white"})
+                st.plotly_chart(fig_gauge, use_container_width=True)
+                
+            with col_insight:
+                st.markdown(f"""
+                <div style="background-color: #1e1e1e; padding: 20px; border-radius: 10px; border-left: 5px solid #00E676;">
+                    <h4>🔥 Insight de ROI da Automação</h4>
+                    <p>A automação enviou mensagens para <b>{recup_msg_enviada} dos {recup_total}</b> abandonos rastreados.</p>
+                    <p>O mais impressionante: <b>{recup_compraram_msg} clientes compraram APÓS receber a mensagem</b>, provando que o fluxo está recuperando faturamento diretamente!</p>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            # --- BASE: Matriz de Qualidade / Acionável ---
+            st.markdown("---")
+            st.markdown("### 🎯 Fila de Recuperação Prioritária (Leads Quentes)")
+            
+            # Tratamento da tabela para UX
+            df_fila = df_vendas[df_vendas['Comprou?'] == 'Não'].copy()
+            df_fila['Mensagem Enviada'] = df_fila['Mensagem Enviada'].fillna('')
+            df_fila['Status Fila'] = df_fila.apply(
+                lambda x: "🔴 ALERTA: Valido s/ Mensagem" if x['TELEFONE_STATUS'] == 'VALIDO' and x['Mensagem Enviada'] == '' 
+                else ("🟡 Aguardando Resposta" if x['Mensagem Enviada'] != '' else "⚪ Frio (Erro Cliente)"), axis=1
+            )
+            
+            def color_status(val):
+                color = 'red' if 'ALERTA' in val else ('orange' if 'Aguardando' in val else 'gray')
+                return f'color: {color}; font-weight: bold;'
+                
+            colunas_exibicao = ['DATA', 'NOME', 'TELEFONE_STATUS', 'TELEFONE_DIAGNOSTICO', 'Status Fila']
+            df_display = df_fila[colunas_exibicao].sort_values(by='Status Fila')
+            
+            try:
+                st.dataframe(df_display.style.map(color_status, subset=['Status Fila']), use_container_width=True, hide_index=True)
+            except AttributeError:
+                st.dataframe(df_display.style.applymap(color_status, subset=['Status Fila']), use_container_width=True, hide_index=True)
+            
+            st.markdown('<div class="alert-box" style="border-left: 5px solid #FF4B4B; background-color: #2b1a1a; padding: 15px; border-radius: 8px;"><b>🚨 Atenção Comercial:</b> Os leads marcados em <b>Vermelho</b> não receberam a mensagem automática, MAS possuem telefones válidos! Ligar imediatamente. (Ex: Lorenzo, Joao Arthur).</div>', unsafe_allow_html=True)
+            
+            st.markdown("<br><br>", unsafe_allow_html=True)
+
+        except Exception as e:
+            st.error(f"Erro ao processar dados de vendas: {e}")
 
     elif menu_selecionado == '5️⃣ E-mails':
         st.header("5️⃣ Performance de E-mail Marketing")
