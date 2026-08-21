@@ -1261,6 +1261,8 @@ if not df_captacao.empty:
                             with st.container(border=True):
                                 st.markdown("<h4 style='text-align: center; color: #f59e0b;'>🟡 Caminho 'SIM'</h4>", unsafe_allow_html=True)
                                 st.metric("➡️ Escolheram 'Sim'", "414 leads", "Disseram que já assistiram", delta_color="off")
+                                st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
+                                st.metric("📸 Foram pro Instagram", "170 cliques", "🚨 Desvio (Saíram do WhatsApp)", delta_color="off")
                                 
                         with col_nao:
                             with st.container(border=True):
