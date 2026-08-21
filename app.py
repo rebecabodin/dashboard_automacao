@@ -1215,28 +1215,78 @@ if not df_captacao.empty:
                         st.dataframe(df_cpl1_disparos, use_container_width=True, hide_index=True)
 
                     elif disparo_selecionado == "1️⃣ Disparo Principal":
-                        st.markdown("### 🔀 O Mapa da Distribuição (Comportamento do Lead)")
-                        st.markdown("O que aconteceu com os leads após abrirem a primeira mensagem:")
+                        st.markdown("### 🔀 O Mapa da Distribuição (Sankey Diagram)")
+                        st.markdown("Visualize o volume e o vazamento de leads em cada etapa da jornada principal:")
                         
-                        st.markdown("**Fase 1: O Pedágio Inicial**")
-                        c1, c2, c3 = st.columns(3)
-                        with c1:
-                            st.metric("1. Abriram a Mensagem", "3.153", "Base Ativa")
-                        with c2:
-                            st.metric("2. Clicaram 'Receber Info'", "1.022", "32% de Conversão", delta_color="normal")
-                        with c3:
-                            st.metric("3. Interagiram (Sim/Não)", "791", "Passaram pelo Gargalo", delta_color="off")
-                            
-                        st.markdown("**Fase 2: Os Destinos da Bifurcação**")
-                        c4, c5, c6, c7 = st.columns(4)
-                        with c4:
-                            st.metric("➡️ Disseram 'Sim'", "414 leads", "Já assistiram", delta_color="off")
-                        with c5:
-                            st.metric("📸 Foram pro Instagram", "170 cliques", "41% de conversão (Comentar)", delta_color="normal")
-                        with c6:
-                            st.metric("➡️ Disseram 'Não'", "540 leads", "Atrasados", delta_color="off")
-                        with c7:
-                            st.metric("▶️ Foram pra Aula", "477 cliques", "88% de conversão (Assistir)", delta_color="normal")
+                        # Definindo o Diagrama de Sankey (Fluxo de Leads)
+                        labels = [
+                            "Abriram a Mensagem (3.153)",  # 0
+                            "Passaram no Pedágio (1.022)", # 1
+                            "Vazamento Inicial (2.131)",   # 2
+                            "Disseram 'Sim' (414)",        # 3
+                            "Disseram 'Não' (540)",        # 4
+                            "Sem Resposta (68)",           # 5
+                            "Post Instagram (170)",        # 6
+                            "Não Clicaram (244)",          # 7
+                            "Link da Aula (477)",          # 8
+                            "Não Clicaram (63)"            # 9
+                        ]
+                        
+                        source = [0, 0, 1, 1, 1, 3, 3, 4, 4]
+                        target = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                        value =  [1022, 2131, 414, 540, 68, 170, 244, 477, 63]
+                        
+                        # Cores dinâmicas para o Sankey
+                        color_node = [
+                            "#3b82f6", # 0: Azul (Origem)
+                            "#22c55e", # 1: Verde (Sucesso)
+                            "#ef4444", # 2: Vermelho (Drop)
+                            "#f59e0b", # 3: Amarelo (Sim)
+                            "#8b5cf6", # 4: Roxo (Não)
+                            "#9ca3af", # 5: Cinza (Drop)
+                            "#e1306c", # 6: Rosa (Instagram)
+                            "#9ca3af", # 7: Cinza (Drop)
+                            "#22c55e", # 8: Verde (Aula)
+                            "#9ca3af"  # 9: Cinza (Drop)
+                        ]
+                        
+                        color_link = [
+                            "rgba(34, 197, 94, 0.4)",  # 0->1 (Sucesso)
+                            "rgba(239, 68, 68, 0.2)",  # 0->2 (Drop)
+                            "rgba(245, 158, 11, 0.4)", # 1->3 (Sim)
+                            "rgba(139, 92, 246, 0.4)", # 1->4 (Não)
+                            "rgba(156, 163, 175, 0.2)",# 1->5 (Drop)
+                            "rgba(225, 48, 108, 0.5)", # 3->6 (Insta)
+                            "rgba(156, 163, 175, 0.2)",# 3->7 (Drop)
+                            "rgba(34, 197, 94, 0.5)",  # 4->8 (Aula)
+                            "rgba(156, 163, 175, 0.2)" # 4->9 (Drop)
+                        ]
+                        
+                        fig_sankey = go.Figure(data=[go.Sankey(
+                            node = dict(
+                              pad = 15,
+                              thickness = 20,
+                              line = dict(color = "black", width = 0.5),
+                              label = labels,
+                              color = color_node
+                            ),
+                            link = dict(
+                              source = source,
+                              target = target,
+                              value = value,
+                              color = color_link
+                            )
+                        )])
+                        
+                        fig_sankey.update_layout(
+                            font_size=13,
+                            height=500,
+                            margin=dict(t=20, l=20, r=20, b=20),
+                            plot_bgcolor="rgba(0,0,0,0)",
+                            paper_bgcolor="rgba(0,0,0,0)"
+                        )
+                        
+                        st.plotly_chart(fig_sankey, use_container_width=True, theme="streamlit")
 
                         st.markdown("---")
                         st.markdown("### 🚨 Autópsia Crítica e Insights")
