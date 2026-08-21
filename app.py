@@ -1252,6 +1252,12 @@ if not df_captacao.empty:
                                     'Exatos <b>477 leads (88%)</b> clicaram no link para assistir a aula imediatamente. Isso prova que segmentar quem está "atrasado" e enviar uma mensagem compreensiva tem uma taxa de conversão quase perfeita!'
                                     '</div>', unsafe_allow_html=True)
                                     
+                        st.markdown('<div style="margin-top: 15px; padding: 15px; background-color: #12123b; border-radius: 8px; border-left: 5px solid #0000FF; font-size: 14px;">'
+                                    '<b>🤖 O "SDR" Virtual (Follow-up de 2 Horas):</b> Após entregar o link, o robô ativou um <i>Smart Delay</i> impecável. '
+                                    'Ele esperou 2 horas e voltou para cobrar o lead ("Passei aqui rapidinho só para saber se conseguiu assistir"). <b>376 pessoas</b> receberam essa cobrança automática. '
+                                    'Desses, <b>34% clicaram que assistiram</b> e <b>8% confessaram que ainda não</b>. A automação fez o trabalho de 10 vendedores, sem gastar 1 minuto de tempo humano, garantindo que o lead se sentisse cobrado e acompanhado.'
+                                    '</div>', unsafe_allow_html=True)
+                                    
                         st.markdown("---")
                         st.markdown("### ♻️ Comportamento de Rejeição (Botão 'Bloquear')")
                         st.markdown('<div class="alert-box" style="background-color: #12123b; border-left-color: #0000FF;">'
