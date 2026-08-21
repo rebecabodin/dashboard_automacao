@@ -1247,38 +1247,37 @@ if not df_captacao.empty:
                         st.markdown("<br>", unsafe_allow_html=True)
                         
                         # Fase 2
-                        st.markdown("#### 🔀 Fase 2: Os Destinos da Bifurcação")
+                        st.markdown("#### 🔀 Fase 2: O Foco na Conversão (Aula 1)")
                         
                         col_sim, col_nao = st.columns(2)
                         
                         with col_sim:
                             with st.container(border=True):
-                                st.markdown("<h4 style='text-align: center; color: #f59e0b;'>🟡 Caminho 'SIM' (Já assistiram)</h4>", unsafe_allow_html=True)
-                                st.metric("➡️ Escolheram 'Sim'", "414 leads", delta_color="off")
-                                st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                                st.metric("📸 Foram pro Instagram", "170 cliques", "41% (Para comentar)", delta_color="normal")
+                                st.markdown("<h4 style='text-align: center; color: #f59e0b;'>🟡 Caminho 'SIM'</h4>", unsafe_allow_html=True)
+                                st.metric("➡️ Escolheram 'Sim'", "414 leads", "Disseram que já assistiram", delta_color="off")
                                 
                         with col_nao:
                             with st.container(border=True):
-                                st.markdown("<h4 style='text-align: center; color: #8b5cf6;'>🟣 Caminho 'NÃO' (Atrasados)</h4>", unsafe_allow_html=True)
-                                st.metric("➡️ Escolheram 'Não'", "540 leads", delta_color="off")
+                                st.markdown("<h4 style='text-align: center; color: #8b5cf6;'>🟣 Caminho 'NÃO'</h4>", unsafe_allow_html=True)
+                                st.metric("➡️ Escolheram 'Não'", "540 leads", "Receberam o link da aula", delta_color="off")
                                 st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                                st.metric("▶️ Foram pra Aula", "477 cliques", "88% (Para assistir)", delta_color="normal")
+                                st.metric("▶️ Foram pra Aula", "477 cliques", "88% de Conversão", delta_color="normal")
 
-                        st.markdown("### 🧠 Diagnóstico Executivo da CPL 01")
+                        st.markdown("### 🧠 Resumo das Análises (O que aprendemos?)")
                         st.info(
-                            "A jornada da CPL 01 revelou uma base altamente quente e responsiva, porém freada por uma barreira técnica. "
-                            "Houve uma **fuga massiva de 2.000 leads** logo na largada devido ao 'pedágio' do template (o clique obrigatório em 'Receber Informação'). "
-                            "No entanto, os 1.022 leads que atravessaram esse gargalo provaram a genialidade da estratégia de automação desenhada.\n\n"
-                            "A **Bifurcação Inteligente** fez um trabalho impecável de segmentação: enviou a audiência adiantada para bombar o post do Instagram (**170 cliques**) "
-                            "e acolheu a audiência atrasada, alcançando assombrosos **88% de conversão (477 cliques)** em direção à aula. "
-                            "Para coroar, o **SDR Virtual** entrou em ação 2 horas depois, cobrando ativamente 376 pessoas de forma tão humanizada "
-                            "que **a taxa de rejeição (bloqueios) de todo o funil foi de irrelevantes 1,3%**. A automação não apenas filtrou, mas engajou e recuperou a base quente."
+                            "**1. O Pedágio do Template:** Perdemos 2.000 pessoas logo na primeira mensagem porque exigimos que elas clicassem em 'Receber Informação' antes de entregar o link da aula.\n\n"
+                            "**2. A Bifurcação (Sim/Não):** O robô separou muito bem quem já tinha assistido de quem estava atrasado. Para os atrasados (Caminho 'Não'), o envio do link resultou em incríveis 88% de cliques para a aula na hora.\n\n"
+                            "**3. O 'SDR' Virtual:** Cobrar o lead 2 horas depois funcionou perfeitamente. 376 pessoas receberam a cobrança automática e isso resgatou quem tinha esquecido de assistir.\n\n"
+                            "**4. Baixa Rejeição:** Mesmo com várias mensagens, apenas 42 pessoas (1,3%) bloquearam o contato. A base é excelente e quer receber o conteúdo."
                         )
                         
-                        st.markdown("### 🎯 Plano de Ação para o Próximo Lançamento")
-                        st.error('**1. Eliminar o Pedágio:** O botão "Receber Informação" provou ser fatal (perda de 2.000 leads). Para a próxima vez, o Template (HSM) deve ter o link da Aula direto no botão principal, ou pelo menos um Call to Action mais forte como "Liberar Minha Aula Agora". Menos cliques = Mais visualizações.')
-                        st.error('**2. Expandir o SDR Virtual:** O delay de 2 horas foi incrível. Podemos adicionar um gatilho extra: quem responder "Ainda não assisti" para o robô, entra em uma lista de remarketing no WhatsApp para ser cobrado no dia seguinte com urgência ("A aula sai do ar em breve").')
+                        st.markdown("### 🎯 Regra de Ouro para o Próximo Lançamento")
+                        st.error(
+                            "**Comunicação Direta (Foco na Conversão):** O perfil desse lead não gosta de ficar clicando em interações longas. "
+                            "O nosso objetivo final é **fazer ele assistir a aula sem sair do WhatsApp**. "
+                            "Para os próximos disparos, devemos entregar o link da aula **direto na primeira mensagem**, sem botões de 'Receber Informação'. "
+                            "Também devemos evitar mandar o lead para outras redes (como o Instagram) no meio do fluxo, pois isso tira o foco do objetivo principal."
+                        )
                     elif disparo_selecionado == "2️⃣ Engajamento":
                         st.markdown("### ✅ O Contraste Perfeito (Disparo 02)")
                         st.markdown("Análise do Disparo de Engajamento: 'Vou deixar o link do Instagram...'")
