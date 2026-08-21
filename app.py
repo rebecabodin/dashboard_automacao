@@ -1101,12 +1101,12 @@ if not df_captacao.empty:
         
         # Dados de CPLs atualizados (Com Custos do Manychat)
         df_cpl = pd.DataFrame({
-            "CPL": ["CPL 01", "CPL 02", "CPL 03", "CPL 04 (Aguardando)"],
-            "Data_Disparo": ["11/08/2026", "13/08/2026", "15/08/2026", "-"],
-            "Disparados": [3090, 896, 1334, 0],
-            "Entregues": [3050, 890, 1310, 0],
-            "Cliques": [979, 63, 89, 0],
-            "Custo_US": [33.22, 36.98, 49.27, 0.00]
+            "CPL": ["CPL 01", "CPL 02", "CPL 03", "CPL 04"],
+            "Data_Disparo": ["11/08/2026", "13/08/2026", "15/08/2026", "17/08/2026"],
+            "Disparados": [3090, 896, 1334, 4543],
+            "Entregues": [3050, 890, 1310, 4124],
+            "Cliques": [979, 63, 89, 89],
+            "Custo_US": [33.22, 36.98, 49.27, 45.00]
         })
         
         cpl_selecionado = st.selectbox("Selecione o CPL para análise detalhada:", ["Visão Geral"] + df_cpl['CPL'].tolist())
@@ -1480,6 +1480,55 @@ if not df_captacao.empty:
                         "**1. A Força da Imagem (Teste A/B/C):** O Disparo 1 provou que mandar o aviso da aula fazendo uma pergunta atrelada a uma imagem (Copy B) tem o melhor CTR (10%). O uso de mídias aumenta a atenção na caixa de entrada do WhatsApp em relação ao texto puro.\n\n"
                         "**2. A Transição para Vendas (Convite VIP):** O Disparo 2 focou em uma base micro (65 leads) e, apesar do erro tático de enviar o link dentro do texto e não em um botão (aumentando a fricção), ele engrenou muito bem para o 'Grupo de Super Interessados', alcançando um excelente CTR de 28,3%. Isso mostra que leads na fase final de CPL têm apetite por exclusividade.\n\n"
                         "**3. Punição Financeira Repetida:** O histórico mostra o mesmo padrão da CPL 02. O WhatsApp cobrou as mensagens em massa como 'Marketing', gerando um custo alto que esgotou a verba e travou os disparos. É urgente adaptar a copy (texto) para soar menos promocional ao algoritmo da Meta."
+                    )
+                elif cpl_selecionado == "CPL 04":
+                    st.markdown("### 📉 Performance da CPL 04 (Aula 4 Ao Vivo)")
+                    
+                    st.markdown("#### 🚨 O Retorno do 'Erro Fatal' (Botão de Consentimento)")
+                    st.markdown("Na reta final do lançamento, o disparo da CPL 04 repetiu **exatamente o mesmo gargalo da CPL 01**. Em vez de enviar o link direto para a aula, a automação obrigou a base fria a clicar em um botão de 'Receber Informação'. O resultado foi catastrófico para a tração.")
+                    
+                    col1, arr1, col2, arr2, col3, arr3, col4 = st.columns([2, 1, 2, 1, 2, 1, 2])
+                    with col1:
+                        with st.container(border=True):
+                            st.metric("1. Enviados", "4.543", "Base", delta_color="off")
+                    with arr1:
+                        st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
+                    with col2:
+                        with st.container(border=True):
+                            st.metric("2. Entregues", "4.124", "91% de Entrega", delta_color="normal")
+                    with arr2:
+                        st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
+                    with col3:
+                        with st.container(border=True):
+                            st.metric("3. 'Receber Info'", "159", "4% CTR", delta_color="inverse")
+                    with arr3:
+                        st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
+                    with col4:
+                        with st.container(border=True):
+                            st.metric("4. Assistiram", "89", "2,1% Real", delta_color="inverse")
+                    
+                    st.error('**⚠️ Fuga de 3.919 Leads (95% da base entregue):** Ao usar o botão de "Receber Informação", a imensa maioria dos leads ignorou a mensagem. Apenas 159 pediram o link. Desses 159, apenas 89 de fato clicaram na Aula 04. Em um universo de 4,5 mil envios, levar apenas 89 pessoas para a aula final é um desperdício enorme de potencial e de verba.')
+                    
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    st.markdown("#### 💎 A Luz no Fim do Túnel (Retenção no Grupo VIP)")
+                    st.markdown("Para os parcos 89 leads que passaram pelo funil e clicaram na aula, a automação fez um disparo de repescagem 2 horas depois, convidando-os para o **Grupo VIP de Super Interessados**.")
+                    
+                    c1, c2, c3 = st.columns(3)
+                    with c1:
+                        st.metric("Convites VIP Enviados", "81")
+                    with c2:
+                        st.metric("Visualizações da Mensagem", "59", "73% Open Rate")
+                    with c3:
+                        st.metric("Entraram no VIP", "13", "16% de Conversão (Altíssimo)")
+                    
+                    st.success("**🧠 Insight de Fechamento:** Aqueles que sobrevivem ao funil são extremamente engajados. Uma conversão de 16% direto para um Grupo VIP é fantástica. Se não houvesse o gargalo inicial do botão, teríamos centenas de pessoas a mais nesse grupo de fechamento.")
+                    
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    st.markdown("### 🧠 Diagnóstico Executivo (CPL 04)")
+                    st.warning(
+                        "**1. A Síndrome do Refil (Não Aprender com o Erro):** O funil da CPL 04 foi desenhado ignorando a principal métrica da CPL 01. O botão 'Receber Informação' atua como uma muralha, matando a escala do tráfego orgânico/pago e penalizando o engajamento da conta na Meta.\\n\\n"
+                        "**2. Taxa de Mortalidade Absurda:** De 4.124 mensagens entregues no WhatsApp da pessoa, extrair apenas 89 cliques reais na aula revela uma taxa de conversão real de 2,1%. Uma Copy de entrega direta de link traria entre 10% a 22% (provado nos disparos da CPL 02 e CPL 03).\\n\\n"
+                        "**3. Estratégia VIP Validada:** O atraso inteligente de 2 horas após o clique na aula para oferecer o Grupo VIP se provou excelente (16% de retenção). Esse fluxo secundário de 'Super Interessados' está totalmente validado e deve ser usado com força no pós-carrinho."
                     )
                 
                 else:
