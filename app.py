@@ -1472,56 +1472,33 @@ if not df_captacao.empty:
                     st.info("Para os 74 leads que clicaram para receber o link da aula, a automação inovou: aguardou 1 hora e fez uma verificação ativa ('Deu tempo de assistir à Aula 3?'). Isso é excelente para segmentar quem realmente consumiu o conteúdo na boca do funil.")
 
                     st.markdown("---")
-                    st.markdown("### 🛟 Disparo 2: O Resgate (Reprise)")
+                    st.markdown("### 🛟 Disparo 2: O Resgate Super Segmentado (Reprise)")
+                    st.markdown("Este disparo foi direcionado a um grupo hiper restrito, focado na transição para a oferta.")
                     
-                    st.markdown("#### 🚧 Fase 1: O Filtro Inicial (Gargalo Repetido)")
-                    col0, arr0, col1 = st.columns([3, 1, 3])
+                    col_path_1, col_path_2 = st.columns(2)
                     
-                    with col0:
+                    with col_path_1:
                         with st.container(border=True):
-                            st.metric("1. Público Total Selecionado", "4.542", "Pessoas com a tag", delta_color="off")
-                    with arr0:
-                        st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
-                    with col1:
-                        with st.container(border=True):
-                            st.metric("2. Passaram no Filtro Inicial", "900", "19,8% da base total", delta_color="normal")
-                            
-                    st.error('**🚨 Persistência do Bloqueio Financeiro:** Novamente, a automação deixou de enviar para **80% da base** pelo mesmo problema da CPL 02. O saldo da carteira esgotou porque as mensagens foram cobradas como Marketing em vez de Utility. Essa interrupção nos envios prejudicou drasticamente o alcance da última aula antes da abertura do carrinho.')
-                    
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    
-                    st.markdown("#### 🔀 Fase 2: O Desempenho dos 900 Leads")
-                    
-                    col_a, col_b, col_c = st.columns(3)
-                    
-                    with col_a:
-                        with st.container(border=True):
-                            st.markdown("<h4 style='text-align: center; color: #22c55e;'>🟢 'Assistir Agora'</h4>", unsafe_allow_html=True)
-                            st.metric("Clicaram no Botão", "111 leads", "12,6% da Base", delta_color="off")
+                            st.markdown("<h4 style='text-align: center; color: #94a3b8;'>📣 Aviso de Reprise</h4>", unsafe_allow_html=True)
+                            st.metric("Enviados", "65 leads", "Filtro altamente restrito", delta_color="off")
                             st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                            st.metric("Foram pra Aula 3", "74 cliques", "66,7% de Conversão", delta_color="normal")
+                            st.metric("Cliques no Link", "15 cliques", "CTR 23,4%", delta_color="normal")
+                            st.error("**⚠️ Erro de Conversão:** O link da aula foi enviado **embutido no texto** em vez de um botão clicável abaixo da mensagem. É fundamental **'colocar o botão'** sempre. Mensagens com botões reduzem a fricção visual e convertem drasticamente mais do que links perdidos no meio de um parágrafo longo.")
                             
-                    with col_b:
+                    with col_path_2:
                         with st.container(border=True):
-                            st.markdown("<h4 style='text-align: center; color: #f59e0b;'>🟡 'Ver Aulas Passadas'</h4>", unsafe_allow_html=True)
-                            st.metric("Clicaram no Botão", "89 leads", "9,8% da Base", delta_color="off")
+                            st.markdown("<h4 style='text-align: center; color: #22c55e;'>🔥 O Convite VIP</h4>", unsafe_allow_html=True)
+                            st.metric("Follow-up (2 Dias Depois)", "60 leads", "Convite Grupo VIP", delta_color="off")
                             st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                            st.metric("Foram pro Instagram", "22 cliques", "🚨 Desvio (Fuga de 75%)", delta_color="off")
-                            
-                    with col_c:
-                        with st.container(border=True):
-                            st.markdown("<h4 style='text-align: center; color: #ef4444;'>🔴 'Parar Mensagem'</h4>", unsafe_allow_html=True)
-                            st.metric("Clicaram no Botão", "6 leads", "0,7% da Base", delta_color="off")
-                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                            st.metric("Descadastrados", "6 pessoas", "Fim do Fluxo", delta_color="off")
+                            st.metric("Entraram no Grupo", "17 cliques", "CTR 28,3%", delta_color="normal")
+                            st.success("O engajamento subiu! O envio do convite para o 'Grupo de Super Interessados' funcionou muito bem, atraindo 28% daqueles que receberam a mensagem de transição de vendas.")
                             
                     st.markdown("---")
                     st.markdown("### 🧠 Diagnóstico Executivo (CPL 03)")
                     st.info(
                         "**1. A Força da Imagem (Teste A/B/C):** O Disparo 1 provou que mandar o aviso da aula fazendo uma pergunta atrelada a uma imagem (Copy B) tem o melhor CTR (10%). O uso de mídias aumenta a atenção na caixa de entrada do WhatsApp em relação ao texto puro.\n\n"
-                        "**2. A Lealdade da Base (Resgate):** Mesmo no último envio da campanha, 111 pessoas clicaram para assistir a aula imediatamente e a conversão final para o link foi de 66,7%. Quem quer o conteúdo, não hesita.\n\n"
-                        "**2. O Erro de Foco Persiste:** O fluxo redirecionou os leads que queriam 'Ver Aulas Passadas' para um labirinto focado no Instagram. Como resultado, de 89 pessoas que clicaram, só 22 chegaram ao final (fuga de 75%). O botão prometia aulas passadas, mas a automação entregou um pedido de comentário na rede social, quebrando a expectativa do lead.\n\n"
-                        "**3. Punição Financeira Repetida:** O histórico mostra o mesmo padrão da CPL 02. O WhatsApp cobrou **846 mensagens** como 'Marketing', gerando um custo de **US$ 49,27** que travou os disparos novamente. É urgente adaptar a copy (texto) dessas mensagens de CPL para que soem menos promocionais aos olhos do algoritmo do WhatsApp, evitando essas quedas de saldo e alcance."
+                        "**2. A Transição para Vendas (Convite VIP):** O Disparo 2 focou em uma base micro (65 leads) e, apesar do erro tático de enviar o link dentro do texto e não em um botão (aumentando a fricção), ele engrenou muito bem para o 'Grupo de Super Interessados', alcançando um excelente CTR de 28,3%. Isso mostra que leads na fase final de CPL têm apetite por exclusividade.\n\n"
+                        "**3. Punição Financeira Repetida:** O histórico mostra o mesmo padrão da CPL 02. O WhatsApp cobrou as mensagens em massa como 'Marketing', gerando um custo alto que esgotou a verba e travou os disparos. É urgente adaptar a copy (texto) para soar menos promocional ao algoritmo da Meta."
                     )
                 
                 else:
