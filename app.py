@@ -1402,6 +1402,58 @@ if not df_captacao.empty:
                         "**3. O Custo Oculto (Alerta Financeiro da API):** O template foi aprovado originalmente como 'Utility' (Utilitária), mas durante o disparo a Meta reclassificou **635 mensagens** para a categoria 'Marketing' (Marketing Lite). Essa mudança forçada gerou um custo inesperado de **US$ 36,98**. A inteligência artificial do WhatsApp pune copys que soam promocionais cobrando a tarifa mais cara, mesmo após a aprovação manual."
                     )
                 
+                elif cpl_selecionado == "CPL 03":
+                    st.markdown("### 📈 Performance da CPL 03 (Aula 3)")
+                    
+                    st.markdown("#### 🚧 Fase 1: O Filtro Inicial (Gargalo Repetido)")
+                    col0, arr0, col1 = st.columns([3, 1, 3])
+                    
+                    with col0:
+                        with st.container(border=True):
+                            st.metric("1. Público Total Selecionado", "4.542", "Pessoas com a tag", delta_color="off")
+                    with arr0:
+                        st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
+                    with col1:
+                        with st.container(border=True):
+                            st.metric("2. Passaram no Filtro Inicial", "900", "19,8% da base total", delta_color="normal")
+                            
+                    st.warning('**⚠️ Persistência do Gargalo:** Novamente, a automação bloqueou **80% da base** de receber o aviso da CPL 03. Se as pessoas estão perdendo as aulas anteriores, barrá-las de receber o link da Aula 3 diminui drasticamente as chances de recuperação na hora de abrir o carrinho de vendas.')
+                    
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    
+                    st.markdown("#### 🔀 Fase 2: O Desempenho dos 900 Leads")
+                    
+                    col_a, col_b, col_c = st.columns(3)
+                    
+                    with col_a:
+                        with st.container(border=True):
+                            st.markdown("<h4 style='text-align: center; color: #22c55e;'>🟢 'Assistir Agora'</h4>", unsafe_allow_html=True)
+                            st.metric("Clicaram no Botão", "111 leads", "12,6% da Base", delta_color="off")
+                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
+                            st.metric("Foram pra Aula 3", "74 cliques", "66,7% de Conversão", delta_color="normal")
+                            
+                    with col_b:
+                        with st.container(border=True):
+                            st.markdown("<h4 style='text-align: center; color: #f59e0b;'>🟡 'Ver Aulas Passadas'</h4>", unsafe_allow_html=True)
+                            st.metric("Clicaram no Botão", "89 leads", "9,8% da Base", delta_color="off")
+                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
+                            st.metric("Foram pro Instagram", "22 cliques", "🚨 Desvio (Fuga de 75%)", delta_color="off")
+                            
+                    with col_c:
+                        with st.container(border=True):
+                            st.markdown("<h4 style='text-align: center; color: #ef4444;'>🔴 'Parar Mensagem'</h4>", unsafe_allow_html=True)
+                            st.metric("Clicaram no Botão", "6 leads", "0,7% da Base", delta_color="off")
+                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
+                            st.metric("Descadastrados", "6 pessoas", "Fim do Fluxo", delta_color="off")
+                            
+                    st.markdown("---")
+                    st.markdown("### 🧠 Diagnóstico Executivo (CPL 03)")
+                    st.info(
+                        "**1. A Lealdade da Base:** Mesmo no terceiro envio da campanha, 111 pessoas clicaram para assistir a aula imediatamente e a conversão final para o link foi de 66,7%. Quem quer o conteúdo, não hesita.\n\n"
+                        "**2. O Erro de Foco Persiste:** O fluxo redirecionou os leads que queriam 'Ver Aulas Passadas' para um labirinto focado no Instagram. Como resultado, de 89 pessoas que clicaram, só 22 chegaram ao final (fuga de 75%). O botão prometia aulas passadas, mas a automação entregou um pedido de comentário na rede social, quebrando a expectativa do lead.\n\n"
+                        "**3. Punição Financeira Repetida:** O histórico de uso mostra o mesmo padrão da CPL 02. O WhatsApp reclassificou **846 mensagens** para a categoria 'Marketing' no disparo, gerando uma cobrança de **US$ 49,27**. O algoritmo continua identificando as mensagens de CPL como material promocional caro."
+                    )
+                
                 else:
                     dados_cpl = df_cpl[df_cpl['CPL'] == cpl_selecionado].iloc[0]
                     data_disp = dados_cpl.get('Data_Disparo', 'N/D')
