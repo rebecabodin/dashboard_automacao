@@ -245,7 +245,6 @@ if not df_captacao.empty:
             '🚨 Monitoramento Avançado', 
             '🧠 Plano de Ação', 
             '📊 Pesquisa (WordCloud)', 
-            '1️⃣ CPLs (Análise e Funil)',
             '2️⃣ Vendas e Carrinho',
             '5️⃣ E-mails'
         ]
@@ -256,11 +255,8 @@ if not df_captacao.empty:
     
     # Define o título dinamicamente com base na aba selecionada
     if menu_selecionado == '🎯 Raio-X Didático CPLs':
-        title_placeholder.title("🎯 Raio-X Didático das CPLs")
-        subtitle_placeholder.markdown("História dos dados explicada passo a passo — 100% auditada direto dos fluxos do Manychat.")
-    elif menu_selecionado == '1️⃣ CPLs (Análise e Funil)':
-        title_placeholder.title("📊 Dashboard Executivo (Tração, CPLs e Avisos)")
-        subtitle_placeholder.markdown("Acompanhamento em tempo real do funil de conversão, engajamento de aulas e perfil dos leads.")
+        title_placeholder.title("🎯 Raio-X Didático e Funil das CPLs")
+        subtitle_placeholder.markdown("Dashboard Executivo e Auditado Nó a Nó — Métricas reais de conversão, engajamento e custos Meta.")
     else:
         title_placeholder.title("📊 Dashboard de Lançamento e Boas-Vindas")
         subtitle_placeholder.markdown("Acompanhamento em tempo real de conversão e perfil dos leads capturados.")
@@ -1100,444 +1096,10 @@ if not df_captacao.empty:
             st.error(f"Erro ao processar a pesquisa: {e}")
             
     elif menu_selecionado == '🎯 Raio-X Didático CPLs':
-        st.header("🎯 Raio-X Didático das CPLs (Auditoria 100% Real)")
-        st.markdown("A história dos dados contada passo a passo — sem achismos, com dados extraídos direto das telas do Manychat.")
-        
-        # --- PAINEL FINANCEIRO DE INVESTIMENTOS META (10 - 16 AGOSTO) ---
-        st.markdown("### 💰 Custos Reais de Envio Meta / WhatsApp (10 a 16/08)")
-        f1, f2, f3, f4 = st.columns(4)
-        f1.metric("💵 Investimento Total", "US$ 155,18", "Periodo 10 a 16/08", delta_color="off")
-        f2.metric("💬 Msgs WhatsApp Utility", "4.283 msgs", "US$ 33,41 (US$ 0,0078/msg)", delta_color="normal")
-        f3.metric("🔥 Msgs Marketing Lite", "1.696 msgs", "US$ 121,77 (US$ 0,0718/msg)", delta_color="inverse")
-        f4.metric("📊 Taxa de Custo Extra", "9,2x mais caro", "Marketing vs Utility", delta_color="inverse")
+        st.header("🎯 Raio-X Didático e Funil das CPLs")
+        st.markdown("Dashboard Executivo e Auditado Nó a Nó — Métricas reais de conversão, engajamento e custos Meta.")
 
-        st.caption("💡 **Auditoria Financeira:** 78,5% de todo o custo de envio do lançamento veio dos 1.696 disparos de Marketing Lite, provando que a reclassificação de categoria pela Meta foi a causa do esgotamento de saldo e do travamento de envios.")
-        
-        st.markdown("<br>", unsafe_allow_html=True)
-
-        # --- PAINEL DE STATUS DA AUDITORIA ---
-        st.markdown("### 📋 Status da Auditoria por CPL")
-        s1, s2, s3, s4 = st.columns(4)
-        s1.success("🟢 **CPL 01**: 100% Auditado\n\n(3 Disparos | 9 Nós)")
-        s2.success("🟢 **CPL 02**: 100% Auditado\n\n(1 Disparo | 5 Nós)")
-        s3.success("🟢 **CPL 03**: 100% Auditado\n\n(2 Disparos | Teste A/B/C)")
-        s4.success("🟢 **CPL 04**: 100% Auditado\n\n(5 Nós Mapeados)")
-
-        st.markdown("---")
-
-        # =========================================================
-        # SEÇÃO 1: CPL 01 - DIDÁTICA E NARRATIVA
-        # =========================================================
-        st.subheader("1️⃣ CPL 01 — A Jornada Completa (10/08 a 12/08)")
-        st.markdown("A CPL 01 utilizou uma estratégia de **3 disparos encadeados** para alcançar, engajar e recuperar os leads.")
-
-        # KPIs Topo CPL 01
-        c1, c2, c3, c4 = st.columns(4)
-        c1.metric("📤 Base Impactada", "4.604 leads", "Disparo Principal")
-        c2.metric("✅ Entregues (Nó 1)", "4.294 leads", "93.3% Entrega", delta_color="normal")
-        c3.metric("📖 Aberturas (Nó 1)", "3.167 leads", "68.8% Open Rate", delta_color="normal")
-        c4.metric("👆 Cliques no Broadcast", "1.023 leads", "23.8% CTR Exclusivo", delta_color="normal")
-
-        st.markdown("<br>", unsafe_allow_html=True)
-
-        # CAPÍTULOS CPL 01
-        with st.container(border=True):
-            st.markdown("#### 🎬 Capítulo 1: O Disparo Principal (10/08 - 20h28)")
-            st.markdown("O broadcast inicial enviou o convite da Aula 1 para **4.604 pessoas**. **3.167 abriram (69%)** e a mensagem bifurcou os leads em dois caminhos:")
-
-            col_path_nao, col_path_sim = st.columns(2)
-
-            with col_path_nao:
-                st.markdown("""
-                <div style="background-color:#1a2b1a; border-left:4px solid #2ca02c; padding:15px; border-radius:8px;">
-                    <h5 style="color:#2ca02c; margin-0;">🟣 Caminho 'NÃO' (Ainda não assistiram)</h5>
-                    <p style="font-size:0.9rem; color:#ddd; margin-top:8px;">
-                        <b>540 leads</b> informaram que não tinham visto a aula.<br>
-                        • <b>Msg #5 (Link Direto):</b> 533 abriram e <b>477 clicaram (88% CTR)</b> para receber o link!<br>
-                        • <b>Msg #6 (Entrega da Aula):</b> 461 abriram e <b>376 clicaram p/ ASSISTIR (79% CTR)</b>.<br>
-                        • <b>SDR Virtual (Check-in 2h):</b> 370 receberam o lembrete e <b>145 confirmaram que assistiram (39% CTR)</b>.<br><br>
-                        <b style="color:#2ca02c;">⭐ Insight de Ouro:</b> Quando o link foi entregue de forma direta (sem pedágio de consentimento), <b>88% da base clicou na hora</b>.
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-
-            with col_path_sim:
-                st.markdown("""
-                <div style="background-color:#3b2b1a; border-left:4px solid #f39c12; padding:15px; border-radius:8px;">
-                    <h5 style="color:#f39c12; margin-0;">🟡 Caminho 'SIM' (Já assistiram)</h5>
-                    <p style="font-size:0.9rem; color:#ddd; margin-top:8px;">
-                        <b>414 leads</b> disseram que já tinham assistido à Aula 1.<br>
-                        • <b>Msg #3 (Convite p/ Comentário):</b> 219 toparam ir ao Instagram (53%).<br>
-                        • <b>Msg #4 (Link do Post IG):</b> 170 clicaram no link e saíram do WhatsApp (78%).<br>
-                        • <b>Comentaram no IG (DM Automática):</b> <b>Apenas 21 pessoas comentaram de fato (12%)</b>.<br><br>
-                        <b style="color:#e74c3c;">🚨 Fuga de Canal:</b> Tirar o lead do WhatsApp para comentar no Instagram gerou uma <b>fuga de 99.5% da base total</b>. Apenas 21 de 4.604 pessoas completaram a ação.
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-
-        with st.container(border=True):
-            st.markdown("#### 🎬 Capítulo 2: O Lembrete Direto para o Instagram (10/08)")
-            st.markdown(
-                "Um segundo disparo paralelo foi feito diretamente para **164 leads** com o link direto da postagem do Instagram.\n\n"
-                "• **164 Entregues (100%)** | **144 Abertos (87.8%)** | **36 Cliques no Link (22.0% CTR)**\n\n"
-                "**Conclusão:** O post do Instagram acumulou **129 comentários**, provando que o engajamento orgânico do próprio Instagram teve um papel relevante em conjunto com o tráfego do WhatsApp."
-            )
-
-        with st.container(border=True):
-            st.markdown("#### 🎬 Capítulo 3: Reprise + Aviso Ao Vivo Aula 2 (11/08 a 12/08)")
-            st.markdown("No dia seguinte (11/08 às 18h30), um fluxo retido em **Atraso Inteligente** preparou a base para a Aula 2:")
-
-            r1, r2, r3 = st.columns(3)
-            r1.metric("1️⃣ Reprise (11/08 18h30)", "878 Entregues", "137 Cliques (15.6% CTR)")
-            r2.metric("2️⃣ Pernoite (Atraso)", "893 Aprovados", "Aguardaram até 12/08 08h")
-            r3.metric("3️⃣ Ao Vivo Aula 2 (08h00)", "229 Entregues", "59 Cliques (25.8% CTR)")
-
-            st.warning(
-                "⚠️ **Gargalo Técnico Detectado:** Das 893 pessoas aprovadas no Atraso Inteligente para receber o aviso da Aula 2 às 08h00, apenas **230 receberam**.\n\n"
-                "**Motivo:** A mensagem foi enviada usando a regra de *'Janela de 24 horas'*. Como 663 pessoas não tinham interagido nas últimas 24h, a Meta barrou a entrega.\n\n"
-                "**Solução p/ LC8:** Utilizar um *Template Aprovado da Meta* nos avisos pontuais de aula para garantir 100% de entrega a todos os 893 leads."
-            )
-
-        st.markdown("---")
-
-        # =========================================================
-        # SEÇÃO 2: CPL 02 - DIDÁTICA E NARRATIVA
-        # =========================================================
-        st.subheader("2️⃣ CPL 02 — O Gargalo de Categoria na Meta (12/08)")
-        st.markdown("A CPL 02 ilustra o maior desafio de infraestrutura do lançamento: o bloqueio/reclassificação de disparo da Meta.")
-
-        # KPIs Topo CPL 02
-        cpl2_1, cpl2_2, cpl2_3, cpl2_4 = st.columns(4)
-        cpl2_1.metric("📤 Base Alvo Intentada", "4.568 leads", "Painel Manychat")
-        cpl2_2.metric("🚫 Enviados Reais (Nó 1)", "896 leads", "19.6% da base total", delta_color="inverse")
-        cpl2_3.metric("✅ Entregues Reais", "822 leads", "91.7% dos enviados", delta_color="normal")
-        cpl2_4.metric("📖 Open Rate (Nó 1)", "579 leads", "65.0% de Abertura", delta_color="normal")
-
-        st.markdown("<br>", unsafe_allow_html=True)
-
-        with st.container(border=True):
-            st.markdown("#### 🎬 A Jornada do Lead na CPL 02")
-            
-            cpl2_col_text, cpl2_col_alert = st.columns([1, 1])
-
-            with cpl2_col_text:
-                st.markdown("""
-                • <b>Broadcast Inicial:</b> 896 enviados ➔ 822 entregues ➔ <b>579 abriram (65%)</b>.<br>
-                • <b>94 pessoas únicas clicaram</b> em botões de ação (11.4% CTR).<br>
-                • <b>Path 'Assistir Agora':</b> 63 solicitaram a aula ➔ <b>55 clicaram p/ ABRIR A AULA (87.3% CTR)</b>.<br>
-                • <b>Path 'Já assisti':</b> 79 responderam ➔ 30 toparam ir ao IG (38%) ➔ <b>25 abriram o Instagram (83.3%)</b>.<br>
-                • <b>Automação IG (DM Pós-Comentário):</b> 16 pessoas comentaram no post ➔ <b>100% receberam a DM da Aula 3 e 12 abriram (75% Open Rate)</b>.<br>
-                • <b>Opt-out (Parar mensagens):</b> Apenas 7 solicitaram (0.85% da base) ➔ 0 reverteram.
-                """, unsafe_allow_html=True)
-
-            with cpl2_col_alert:
-                st.markdown("""
-                <div style="background-color:#3b1a1a; border-left:4px solid #e74c3c; padding:15px; border-radius:8px;">
-                    <h5 style="color:#e74c3c; margin-0;">🚨 O Aprendizado Crítico da CPL 02</h5>
-                    <p style="font-size:0.9rem; color:#ddd; margin-top:8px;">
-                        <b>Mais de 3.600 leads (80.4% da base)</b> foram impedidos de receber o aviso da Aula 2.<br><br>
-                        <b>Motivo:</b> A Meta reclassificou o template de <i>'Utility'</i> para <i>'Marketing'</i> durante a transmissão ou estourou o limite de orçamento/tier por disparo massivo.<br><br>
-                        <b>Solução p/ LC8:</b> Diversificar janelas de envio e manter saldo em carteira reservado para templates da categoria Marketing para evitar travamento da régua.
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-
-        st.markdown("---")
-
-        # =========================================================
-        # SEÇÃO 3: CPL 03 - DIDÁTICA E NARRATIVA
-        # =========================================================
-        st.subheader("3️⃣ CPL 03 — O Teste A/B/C e a Força do Grupo VIP (13/08 a 14/08)")
-        st.markdown("A CPL 03 testou cientificamente **3 variações de copy no envio inicial** e introduziu o convite para o **Grupo de Super Interessados**.")
-
-        # KPIs Topo CPL 03
-        cpl3_1, cpl3_2, cpl3_3, cpl3_4 = st.columns(4)
-        cpl3_1.metric("📤 Base Enviada Real", "1.314 leads", "Disparo 1 + Disparo 2")
-        cpl3_2.metric("✅ Entregues Reais", "1.197 leads", "91.1% de Entrega", delta_color="normal")
-        cpl3_3.metric("📖 Aberturas Totais", "786 leads", "65.7% Open Rate", delta_color="normal")
-        cpl3_4.metric("👆 Cliques Totais", "142 leads", "11.9% CTR Global", delta_color="normal")
-
-        st.markdown("<br>", unsafe_allow_html=True)
-
-        with st.container(border=True):
-            st.markdown("#### 🧪 O Resultado do Teste A/B/C (Disparo 1 - 1.249 Enviados)")
-            
-            t_a, t_b, t_c = st.columns(3)
-
-            with t_a:
-                st.markdown("""
-                <div style="background-color:#1a2536; border-left:4px solid #3498db; padding:12px; border-radius:8px;">
-                    <h5 style="color:#3498db; margin:0;">🅰️ Texto Padrão</h5>
-                    <p style="font-size:0.85rem; color:#ddd; margin-top:6px;">
-                        • <b>380 Entregues</b> (87.8%)<br>
-                        • 234 Abertos (61.5% Open Rate)<br>
-                        • <b>39 Cliques Únicos (10.3% CTR)</b> 🥇<br>
-                        <i>Maior conversão na ação do botão!</i>
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-
-            with t_b:
-                st.markdown("""
-                <div style="background-color:#1a3625; border-left:4px solid #2ecc71; padding:12px; border-radius:8px;">
-                    <h5 style="color:#2ecc71; margin:0;">🅱️ Com Imagem</h5>
-                    <p style="font-size:0.85rem; color:#ddd; margin-top:6px;">
-                        • <b>369 Entregues</b> (90.2%)<br>
-                        • <b>247 Abertos (66.9% Open Rate)</b> 🥇<br>
-                        • 35 Cliques Únicos (9.5% CTR)<br>
-                        <i>Maior atratividade na lista do WhatsApp!</i>
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-
-            with t_c:
-                st.markdown("""
-                <div style="background-color:#2e2a1a; border-left:4px solid #f1c40f; padding:12px; border-radius:8px;">
-                    <h5 style="color:#f1c40f; margin:0;">Ⓒ Texto V2</h5>
-                    <p style="font-size:0.85rem; color:#ddd; margin-top:6px;">
-                        • <b>384 Entregues</b> (94.3%)<br>
-                        • 249 Abertos (64.8% Open Rate)<br>
-                        • 36 Cliques Únicos (9.4% CTR)<br>
-                        <i>Desempenho estável e equilibrado.</i>
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-
-        with st.container(border=True):
-            st.markdown("#### 🎬 Disparo 2: O Perto-e-Manhã (Reprise & Grupo de Super Interessados)")
-            st.markdown(
-                "• **Reprise (13/08 20h37):** 64 Entregues ➔ 56 Abertos (86.2%) ➔ **15 Cliques no Link da Reprise (23.4% CTR)**.<br>"
-                "• **Pernoite no Atraso:** 948 contatos retidos da noite até 14/08 às 08h00.<br>"
-                "• **Convite Grupo VIP (14/08 08h00):** 60 Entregues ➔ 52 Abertos (86.7%) ➔ **17 pessoas entraram no Grupo de Super Interessados (28.3% CTR)** ⭐"
-            )
-
-        st.markdown("---")
-        st.subheader("4️⃣ CPL 04 — O Impacto do 'Botão de Consentimento' (16/08)")
-        
-        col_cpl4_funil, col_cpl4_text = st.columns([1, 1])
-
-        with col_cpl4_funil:
-            with st.container(border=True):
-                st.markdown("#### 📉 Funil Auditado CPL 04")
-                fig_cpl4 = go.Figure(go.Funnel(
-                    y=["1. Disparados", "2. Entregues (90.9%)", "3. Abertos (56.9%)", "4. Cliques (5.0%)"],
-                    x=[4543, 4129, 2348, 208],
-                    textinfo="value+percent initial",
-                    marker={"color": ["#4B8BBE", "#28a745", "#ff7f0e", "#dc3545"]}
-                ))
-                fig_cpl4.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=260, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
-                st.plotly_chart(fig_cpl4, use_container_width=True)
-
-        with col_cpl4_text:
-            st.markdown("""
-            <div style="background-color:#2b1a1a; border-left:4px solid #dc3545; padding:15px; border-radius:8px;">
-                <h5 style="color:#dc3545; margin-0;">🚨 O Erro do Pedágio em Números</h5>
-                <p style="font-size:0.9rem; color:#ddd; margin-top:8px;">
-                    • <b>2.348 pessoas abriram</b> a mensagem (57% Open Rate — excelente!).<br>
-                    • Porém, a mensagem exigia clicar em <i>'Receber Informações'</i> antes de liberar o link.<br>
-                    • Apenas <b>208 pessoas clicaram em algum botão</b> (8.9% dos que abriram).<br>
-                    • <b>Fuga de 95%:</b> 2.140 pessoas leram a mensagem e fecharam o WhatsApp sem interagir.<br><br>
-                    <b>Conclusão:</b> O público técnico quer o conteúdo direto. Intermediários matam a conversão.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-
-        st.markdown("---")
-
-        # =========================================================
-        # SEÇÃO 3: RECOMENDAÇÕES EXECUTIVAS PARA O LC8
-        # =========================================================
-        st.subheader("💡 Plano de Ação Estratégico para o Lançamento LC8")
-
-        p1, p2, p3 = st.columns(3)
-
-        with p1:
-            st.success(
-                "#### 🟢 1. Link Direto sem Pedágio\n\n"
-                "**Ação:** A primeira mensagem de cada CPL deve conter o link da aula diretamente no botão ('Assistir Aula 1 Agora').\n\n"
-                "**Impacto Esperado:** Subir o CTR de 5% para 25%+ (baseado na prova da CPL 01 Msg #5)."
-            )
-
-        with p2:
-            st.warning(
-                "#### 🟡 2. Retenção Total no WhatsApp\n\n"
-                "**Ação:** Não direcionar o lead para comentar no Instagram durante a maratona de aulas.\n\n"
-                "**Impacto Esperado:** Manter 100% da audiência engajada no canal oficial de vendas (WhatsApp)."
-            )
-
-        with p3:
-            st.info(
-                "#### 🔵 3. Templates Pagos nas Aulas\n\n"
-                "**Ação:** Usar Templates Aprovados da Meta nos disparos das 08h00 do dia da aula.\n\n"
-                "**Impacto Esperado:** Destravar os 74% de leads barrados pela regra da Janela de 24h."
-            )
-
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("---")
-
-        # =========================================================
-        # SEÇÃO 4: MATRIZ CRÍTICA DE DECISÃO E ANÁLISE DE COPY/CTAs
-        # =========================================================
-        st.subheader("🧠 Autópsia Crítica do Fluxo: O que Manter, Melhorar, Eliminar e Testar")
-        st.markdown("Uma avaliação rigorosa de Copy, CTAs, Reprises e Canais para maximizar a conversão de vendas no LC8.")
-
-        m_elim, m_mant, m_melh, m_test = st.tabs([
-            "🛑 1. O que ELIMINAR",
-            "🟢 2. O que MANTER",
-            "🟡 3. O que MELHORAR (Copy & CTAs)",
-            "🧪 4. O que TESTAR no LC8"
-        ])
-
-        with m_elim:
-            st.markdown("""
-            #### 🛑 1. O que ELIMINAR urgentemente:
-            * **Botão de Consentimento ('Receber Informações'):** 
-              - *Por que tirar:* Na CPL 04, causou a fuga de **95% da base** (2.140 leram e saíram). Exigir duplo opt-in para quem já é lead gera atrito extremo no perfil técnico.
-              - *Punição oculta:* A Meta enxerga mensagens sem interação como SPAM, rebaixando a nota de qualidade (Quality Rating) do número do WhatsApp.
-            * **Fluxo Automatizado WhatsApp ➔ Instagram:**
-              - *Por que tirar:* Na CPL 01 e CPL 02, de 4.604 disparados, **apenas 16 a 21 pessoas completaram o ciclo até o comentário** (0.35% a 0.45% de conversão final).
-              - *Perda de Foco:* Retirar o lead da rede oficial de conversão durante o lançamento rasga a atenção do comprador.
-            """)
-
-        with m_mant:
-            st.markdown("""
-            #### 🟢 2. O que MANTER (Padrão Ouro):
-            * **Envio de Link Direto com Botão Único ('▶️ Assistir Aula 1 Agora'):**
-              - *Comprovação em Dados:* Sempre que o link foi entregue sem intermediários (CPL 01 Msg 5, CPL 02 Msg 10, CPL 03 Msg 10), a taxa de cliques ficou em incríveis **87% a 88%**.
-            * **Atrasos Inteligentes de Pernoite:**
-              - Retiveram centenas de leads com 100% de precisão operacional durante a noite (893 na CPL 01, 948 na CPL 03).
-            * **Convite para o Grupo VIP / Super Interessados:**
-              - *Comprovação em Dados:* O envio do convite no disparo matinal da CPL 03 gerou **28.3% de CTR**, a maior taxa de conversão direta para grupos de todo o evento.
-            """)
-
-        with m_melh:
-            st.markdown("""
-            #### 🟡 3. O que MELHORAR (Crítica de Copy, CTAs e Reprises):
-            * **Faz sentido ter Reprise?**
-              - **SIM, mas com Copy reformulada.** Nas CPLs 01 e 03, as reprises geraram de **15.6% a 23.4% CTR**.
-              - *Crítica de Copy:* As mensagens atuais são transacionais genéricas (*'Passando para avisar que já está liberado...'*).
-              - *Como melhorar:* Mudar para **Escassez Real e Recorte de Aprendizado** (*'Perdeu o diagnóstico de baterias ensinado ontem? A gravação sai do ar em 24h. Assista o trecho crítico aqui 👇'*).
-            * **Crítica de CTAs:**
-              - CTAs genéricos como *'Assistir Aula'* ou *'Receber Informação'* competem com a preguiça mental.
-              - *CTAs recomendados:* **'▶️ Liberar Aula 1 Agora'**, **'🔓 Acessar Aula Gratuita'**, **'👥 Entrar no Grupo VIP'**.
-            * **Disparos Matinais das 08h00:**
-              - *O Problema:* Usar a regra *'Dentro da Janela de 24h'* bloqueou **74% a 80% dos leads** nos avisos matinais.
-              - *Como melhorar:* Configurar como **Template Pago da Meta** para garantir entrega para 100% dos leads retidos.
-            """)
-
-        with m_test:
-            st.markdown("""
-            #### 🧪 4. O que TESTAR no LC8:
-            * **Vídeo-Notes Curtos (10s) do Taffarell no WhatsApp:**
-              - O Teste A/B/C da CPL 03 provou que conteúdos visuais geram **+5.4% de abertura**. Testar um vídeo rápido no lugar de imagens estáticas.
-            * **Pesquisa de 1 Clique no WhatsApp (Quick Replies):**
-              - Em vez de mandar o lead pro Instagram, perguntar no WPP: *'Qual seu maior obstáculo hoje? [A] Diagnóstico [B] Ferramentas [C] Clientes'*. Captura inteligência de vendas com 40%+ de resposta direta.
-            """)
-
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("---")
-
-        # =========================================================
-        # SEÇÃO 5: GUIA TÉCNICO META API - UTILITY VS MARKETING
-        # =========================================================
-        st.subheader("📜 Guia Técnico Meta API: Por que a Reclassificação Aconteceu e Como Blindar a Copy")
-        st.markdown("Uma análise das regras oficiais de engenharia de mensagens da Meta para evitar estouro de custos e bloqueios diários.")
-
-        with st.expander("📘 Entenda a Engenharia da Meta API: Utility vs. Marketing (Clique para Expandir)", expanded=True):
-            meta_col1, meta_col2 = st.columns(2)
-
-            with meta_col1:
-                st.markdown("""
-                #### 🤖 Como a IA da Meta reclassifica os Templates?
-                A Meta utiliza um modelo de IA de NLP (Processamento de Linguagem Natural) que lê o conteúdo aprovado tanto no momento do envio quanto nas verificações periódicas pós-aprovação.<br><br>
-                <b>Gatilhos que fazem a IA converter Utility ➔ Marketing Lite (9.2x mais caro):</b>
-                1. <b>Adjetivos de Escassez/Urgência:</b> Termos como <i>'Liberado'</i>, <i>'Última chance'</i>, <i>'Oportunidade única'</i> ou <i>'Ao vivo agora'</i>.
-                2. <b>Excesso de Emojis Promocionais:</b> 🚨, 💥, 💣, 🔥, ⚡, 🎁.
-                3. <b>Links Externos Não Operacionais:</b> Direcionar para o Instagram, YouTube ou pesquisas fora da transação imediata.
-                4. <b>Convocação Genérica:</b> Avisar sobre um evento sem citar os dados explícitos de cadastro transacional do usuário.
-                """)
-
-            with meta_col2:
-                st.markdown("""
-                #### ⚡ Por que a entrega de Marketing falha mais que Utility?
-                Além da diferença de custo (US$ 0,0718 vs US$ 0,0078), a Meta aplica 2 travas severas em mensagens da categoria Marketing:
-                
-                1. <b>Frequency Cap (Limite de Frequência de Marketing por Usuário):</b> A Meta impõe um limite máximo de mensagens de Marketing que um usuário pode receber no WhatsApp por dia de <i>qualquer empresa</i>. Se o lead já recebeu Marketing de outras contas no dia, a Meta <b>simplesmente não entrega a sua mensagem</b> para proteger o usuário de spam!
-                2. <b>Quality Rating Throttling:</b> Quando um disparo de Marketing em massa tem baixos cliques ou bloqueios (como o botão de consentimento na CPL 04), a Meta reduz o ritmo de entrega por hora do número (Throttling).
-                """)
-
-            st.markdown("---")
-            st.markdown("#### 🛠️ O Script da Copy 'Blindada' (Como manter o aviso 100% em Utility):")
-
-            col_copy_ruim, col_copy_boa = st.columns(2)
-
-            with col_copy_ruim:
-                st.error("""
-                ❌ **COPY RECLASSIFICADA PARA MARKETING (Não usar):**
-                
-                "Olá, {{1}}! 🚨 A aula {{2}} da Jornada já está LIBERADA! 🔥 Não perca essa oportunidade incrível de dominar o mercado. Clica no botão abaixo para assistir agora! 👇"
-                
-                *Por que virou Marketing:* Adjetivos promocionais ('LIBERADA', 'incrível'), emojis de urgência (🚨, 🔥) e tom publicitário.
-                """)
-
-            with col_copy_boa:
-                st.success("""
-                ✅ **COPY BLINDADA PARA UTILITY (Aprovada e Mantida):**
-                
-                "Atualização da sua inscrição: A transmissão agendada do módulo {{1}} está disponível para acesso. Link oficial de transmissão: {{2}}. Suporte técnico: [URL]."
-                
-                *Por que se mantém em Utility:* Texto 100% transacional, focado estritamente na confirmação de entrega do serviço no qual o lead se cadastrou.
-                """)
-
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("---")
-
-        # =========================================================
-        # SEÇÃO 6: O PERIGO DO SILÊNCIO ENTRE LANÇAMENTOS (PARA LEIGOS)
-        # =========================================================
-        st.subheader("⚠️ O Perigo do 'Efeito Sanfona' no WhatsApp entre Lançamentos")
-        st.markdown("Entenda o que acontece quando o WhatsApp dispara mil mensagens no lançamento e depois fica semanas em silêncio.")
-
-        w_col1, w_col2, w_col3 = st.columns(3)
-
-        with w_col1:
-            st.markdown("""
-            <div style="background-color:#3b1a1a; border-left:4px solid #e74c3c; padding:15px; border-radius:8px;">
-                <h5 style="color:#e74c3c; margin:0;">📉 1. O Risco da Inatividade</h5>
-                <p style="font-size:0.85rem; color:#ddd; margin-top:8px;">
-                    Se o seu WhatsApp dispara 5.000 mensagens no lançamento e depois fica <b>30 dias parado sem enviar nada</b>, a Meta 'esquece' seu número.<br><br>
-                    <b>O Castigo:</b> A Meta reduz seu limite diário (ex: de 10.000 mensagens/dia para apenas 1.000/dia), travando o envio da CPL 01 do próximo lançamento!
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-
-        with w_col2:
-            st.markdown("""
-            <div style="background-color:#3b2b1a; border-left:4px solid #f39c12; padding:15px; border-radius:8px;">
-                <h5 style="color:#f39c12; margin:0;">⚡ 2. O Alerta Antispam</h5>
-                <p style="font-size:0.85rem; color:#ddd; margin-top:8px;">
-                    Quando um número parado dispara milhares de mensagens de repente em 1 hora, a robô da Meta acha que o número foi <b>hackeado ou é SPAM</b>.<br><br>
-                    Se poucas pessoas denunciarem no 1º dia, a entrega cai e a Meta deixa o número em 'ritmo lento' (Throttling).
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-
-        with w_col3:
-            st.markdown("""
-            <div style="background-color:#1a3b2b; border-left:4px solid #2ecc71; padding:15px; border-radius:8px;">
-                <h5 style="color:#2ecc71; margin:0;">🛡️ 3. A Solução Fácil p/ o LC8</h5>
-                <p style="font-size:0.85rem; color:#ddd; margin-top:8px;">
-                    <b>• Manter o número 'acordado':</b> Mande 50 a 100 mensagens por semana (suporte, dicas rápidas ou onboarding) para o número não 'dormir'.<br><br>
-                    <b>• Aquecer 7 dias antes:</b> Antes da CPL 01, comece disparando para 500 pessoas, depois 2.000, até chegar na base inteira.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-
-    elif menu_selecionado == '1️⃣ CPLs (Análise e Funil)':
-        st.header("1️⃣ Dashboard de Tração e CPLs")
-        st.markdown("Análise de conversão do funil de avisos: Disparos ➔ Entrega ➔ Clique.")
-        
-        # Dados de CPLs — Auditados nó a nó via fluxos Manychat (24/08/2026)
+        # --- DADOS DE CPLS AUDITADOS NÓ A NÓ VIA MANYCHAT ---
         # Custos Reais da Meta/Manychat (10 - 16 de Agosto): Total US$ 155,18
         #   - 4.283 msgs WhatsApp Utility: US$ 33,41 (~US$ 0,0078 / msg)
         #   - 1.696 msgs WhatsApp Marketing Lite: US$ 121,77 (~US$ 0,0718 / msg - 9.2x mais caro!)
@@ -1549,12 +1111,29 @@ if not df_captacao.empty:
             "Cliques":    [1023,    94,  142,  208],
             "Custo_US":   [33.41,  45.00, 36.77, 40.00] # Totaliza os US$ 155,18 do periodo
         })
-        
-        cpl_selecionado = st.selectbox("Selecione o CPL para análise detalhada:", ["Visão Geral"] + df_cpl['CPL'].tolist())
-        
-        st.markdown("<br>", unsafe_allow_html=True)
-        
-        if cpl_selecionado == "Visão Geral":
+
+        # --- TRÊS ABAS SUPERIORES PARA NAVEGAÇÃO ORGANIZADA ---
+        tab_funil_geral, tab_raiox_nos, tab_estrategia = st.tabs([
+            "📊 1. Funil Consolidado & Tabela de CPLs",
+            "🎬 2. Raio-X Auditado Nó a Nó (CPLs 01 a 04)",
+            "🧠 3. Plano Estratégico & Guia Meta API (LC8)"
+        ])
+
+        # =========================================================
+        # TAB 1: FUNIL CONSOLIDADO, KPIs GLOBAIS E TABELA INTERATIVA
+        # =========================================================
+        with tab_funil_geral:
+            # --- PAINEL FINANCEIRO DE INVESTIMENTOS META (10 - 16 AGOSTO) ---
+            st.markdown("### 💰 Custos Reais de Envio Meta / WhatsApp (10 a 16/08)")
+            f1, f2, f3, f4 = st.columns(4)
+            f1.metric("💵 Investimento Total", "US$ 155,18", "Periodo 10 a 16/08", delta_color="off")
+            f2.metric("💬 Msgs WhatsApp Utility", "4.283 msgs", "US$ 33,41 (US$ 0,0078/msg)", delta_color="normal")
+            f3.metric("🔥 Msgs Marketing Lite", "1.696 msgs", "US$ 121,77 (US$ 0,0718/msg)", delta_color="inverse")
+            f4.metric("📊 Taxa de Custo Extra", "9,2x mais caro", "Marketing vs Utility", delta_color="inverse")
+
+            st.caption("💡 **Auditoria Financeira:** 78,5% de todo o custo de envio do lançamento veio dos 1.696 disparos de Marketing Lite, provando que a reclassificação de categoria pela Meta foi a causa do esgotamento de saldo e do travamento de envios.")
+            
+            st.markdown("<br>", unsafe_allow_html=True)
 
             # --- KPIs GLOBAIS ---
             total_disp = df_cpl['Disparados'].sum()
@@ -1567,7 +1146,7 @@ if not df_captacao.empty:
             k1.metric("📤 Total Disparado",  f"{total_disp:,}".replace(',','.'))
             k2.metric("✅ Total Entregue",   f"{total_ent:,}".replace(',','.'),  f"{taxa_ent:.1f}% de entrega",  delta_color="normal")
             k3.metric("👆 Total de Cliques", f"{total_cli:,}".replace(',','.'),  f"{taxa_cli:.1f}% CTR global",  delta_color="normal")
-            k4.metric("📅 CPLs Realizadas",  "4",  "11/08 a 17/08/2026", delta_color="off")
+            k4.metric("📅 CPLs Realizadas",  "4",  "10/08 a 16/08/2026", delta_color="off")
 
             st.markdown("<br>", unsafe_allow_html=True)
 
@@ -1576,7 +1155,7 @@ if not df_captacao.empty:
 
             with col_funil:
                 with st.container(border=True):
-                    st.markdown("#### 📊 Funil Consolidado")
+                    st.markdown("#### 📊 Funil Consolidado (Todas as CPLs)")
                     fig_funnel = go.Figure(go.Funnel(
                         y=["Disparados", "Entregues", "Cliques"],
                         x=[total_disp, total_ent, total_cli],
@@ -1594,13 +1173,13 @@ if not df_captacao.empty:
                     st.caption(f"De **{total_disp:,}** disparados, **{total_cli:,}** interagiram ({taxa_cli:.1f}% CTR)".replace(',','.'))
 
             with col_cards:
-                st.markdown("#### 🗂️ Resumo por CPL")
+                st.markdown("#### 🗂️ Resumo Auditado por CPL")
 
                 anotacoes = {
                     "CPL 01": ("🟢", "#1a3a1a", "#2ca02c", "Auditado: 4.604 disp. | 4.294 ent. (93,3%) | 1.023 cliques (23.8% CTR)<br>Pico de 88% CTR quando o link foi enviado sem fricção."),
-                    "CPL 02": ("🔴", "#3a1a1a", "#e74c3c", "Template 'Utility' reclassificado para 'Marketing'<br>Verba esgotada — 80% da base não recebeu."),
-                    "CPL 03": ("🟡", "#2a2a10", "#c9a800", "Teste A/B/C realizado<br>Imagem + Pergunta teve melhor CTR (10%)."),
-                    "CPL 04": ("🔴", "#3a1a1a", "#e74c3c", "Botão de consentimento causou fuga de 95%<br>Apenas 208 de 4.543 interagiram."),
+                    "CPL 02": ("🟢", "#1a3a1a", "#2ca02c", "Auditado: 896 disp. | 822 ent. (91,7%) | 94 cliques (11.4% CTR)<br>80,4% da base barrada na Meta (reclassificação de categoria)."),
+                    "CPL 03": ("🟢", "#1a3a1a", "#2ca02c", "Auditado: 1.314 disp. | 1.197 ent. (91,1%) | 142 cliques (11.9% CTR)<br>Teste A/B/C: Imagem venceu em Abertura. Grupo VIP = 28.3% CTR."),
+                    "CPL 04": ("🟢", "#1a3a1a", "#2ca02c", "Auditado: 4.543 disp. | 4.129 ent. (90,9%) | 208 cliques (5.0% CTR)<br>Botão de consentimento causou fuga de 95%."),
                 }
 
                 for _, row in df_cpl.iterrows():
@@ -1626,422 +1205,34 @@ if not df_captacao.empty:
                                     padding-top:6px; margin-top:4px;">{nota}</div>
                     </div>
                     """.replace(',', '.'), unsafe_allow_html=True)
+            st.markdown("#### 📋 Tabela Comparativa & Filtro Detalhado por CPL")
+            
+            cpl_selecionado = st.selectbox("Selecione uma CPL para ver métricas e ROI de clique:", ["Visão Geral"] + df_cpl['CPL'].tolist())
 
-            # --- AUTÓPSIA EM EXPANDER (COLAPSADO) ---
-            st.markdown("<br>", unsafe_allow_html=True)
-            with st.expander("📚 Ver Autópsia Completa e Regras de Ouro (Próximo Lançamento)"):
-                st.markdown("### ⚠️ O Perigo do 'Botão de Consentimento' (CPL 1 e CPL 4)")
-                st.error("**O Erro:** Exigir que o lead clique em 'Receber Informação' na primeira mensagem antes de entregar o link. Isso causou uma **fuga de 68% na CPL 01 e de assustadores 95% na CPL 04**.")
-                st.warning("**A Punição da Meta:** Quando você dispara para milhares de pessoas e a grande maioria não interage, a Meta enxerga **Baixo Engajamento**. O algoritmo de Qualidade da Conta (Quality Rating) cai para Amarelo ou Vermelho. Trabalhar com a base inteira sem engajamento faz a Meta limitar os envios diários (Tier Limits) e derrubar a sua taxa de entrega de forma generalizada, interpretando a automação como SPAM.")
-                st.success("**A Solução:** Comunicação direta. A primeira mensagem já deve entregar o valor real (o link da aula) com um botão claro ('Assistir Agora'). A fricção deve ser zero para consumir o evento.")
-                st.markdown("---")
-                st.markdown("### 💸 A Armadilha da 'Copy Promocional' (CPL 2 e 3)")
-                st.error("**O Erro:** Usar textos que soam muito comerciais. A Meta reclassificou templates 'Utility' para 'Marketing' de surpresa. Isso esgotou a verba da carteira em segundos e bloqueou os disparos, **barrando 80% da base** de receber os avisos das CPLs 02 e 03.")
-                st.success("**A Solução:** Blindar a Copy. Reduza gatilhos de escassez agressivos (ex: 'Liberado', 'Última Chance', Emojis de 🚨) nos avisos de aula gratuitos. Torne o texto puramente transacional e educacional para o crivo da IA do WhatsApp.")
-                st.markdown("---")
-                st.markdown("### 🧭 O Labirinto de Canais")
-                st.error("**O Erro:** Pegar o lead altamente engajado e forçá-lo a sair do WhatsApp para comentar em um post do Instagram. Isso causou **66% a 75% de fuga** nas interações.")
-                st.success("**A Solução:** Retenção absoluta. O WhatsApp é o ambiente de conversão. Se o lead engaja, ofereça um PDF nativo ou convide-o para o 'Grupo VIP' (como feito com sucesso na Reprise da CPL 3, convertendo 28%).")
-                st.markdown("---")
-                st.markdown("### 🧪 A Força do Visual (UX no WhatsApp)")
-                st.success("**O Acerto:** O Teste A/B/C da CPL 03 provou que o template com **Imagem + Pergunta** (Copy B) teve o maior CTR (10%). **Regra Máxima:** Use imagens para fisgar a atenção e SEMPRE utilize 'Botões' de ação claros no lugar de links no meio do texto.")
+            if cpl_selecionado == "Visão Geral":
+                st.dataframe(df_cpl, use_container_width=True, hide_index=True)
+            else:
+                dados_cpl = df_cpl[df_cpl['CPL'] == cpl_selecionado].iloc[0]
+                disp = dados_cpl['Disparados']
+                ent = dados_cpl['Entregues']
+                cli = dados_cpl['Cliques']
+                custo = dados_cpl['Custo_US']
+                cpc = custo / cli if cli > 0 else 0
 
-        else:
-            # Visão Individual por CPL
-            with st.container(border=True):
-                if cpl_selecionado == "CPL 01":
-                    st.markdown("### 📈 Performance da CPL 01 (Visão Detalhada)")
-                    
-                    disparo_selecionado = st.radio(
-                        "Filtre por Disparo (CPL 01):", 
-                        ["📦 Visão Consolidada", "1️⃣ Disparo Principal", "2️⃣ Engajamento", "3️⃣ Reprise e Ao Vivo"],
-                        horizontal=True
-                    )
-                    
-                    if disparo_selecionado == "📦 Visão Consolidada":
-                        st.subheader("📦 Visão Consolidada: A Estratégia de 3 Passos")
-                        st.markdown("Para garantir que a base assistisse à CPL 01, não enviamos apenas uma mensagem solta. O fluxo foi dividido em 3 etapas estratégicas para 'cercar' o lead:")
-                        
-                        st.info(
-                            "**1. Disparo Principal (Em Massa):** O convite oficial enviado para toda a base ativa.\n\n"
-                            "**2. Aviso Direto:** Uma mensagem curta enviada logo depois, apenas para 'cutucar' quem precisava de um empurrãozinho extra.\n\n"
-                            "**3. Repescagem (Dia Seguinte):** Um lembrete com a gravação da aula, aproveitando para já fisgar a pessoa para o 'Ao Vivo' da aula seguinte."
-                        )
-                        
-                        df_cpl1_disparos = pd.DataFrame({
-                            "Etapa da Estratégia": ["1. Disparo Principal (Massa)", "2. Aviso Direto (Engajamento)", "3. Repescagem (Reprise/Ao Vivo)"],
-                            "Data/Hora": ["10 Ago, 20:25", "10 Ago, 20:33", "11 Ago, 18:30"],
-                            "Volume de Pessoas": ["4.604 leads", "164 leads", "887 leads"],
-                            "Taxa de Abertura": ["68,0%", "87,8%", "80,9%"]
-                        })
-                        st.dataframe(df_cpl1_disparos, use_container_width=True, hide_index=True)
+                c1_d, c2_d, c3_d, c4_d = st.columns(4)
+                c1_d.metric("Disparados", f"{disp:,}".replace(',','.'))
+                c2_d.metric("Entregues", f"{ent:,}".replace(',','.'), f"{(ent/disp)*100:.1f}% Entrega", delta_color="normal")
+                c3_d.metric("Cliques", f"{cli:,}".replace(',','.'), f"{(cli/ent)*100:.1f}% CTR", delta_color="normal")
+                c4_d.metric("Custo por Clique (CPC)", f"US$ {cpc:.2f}", f"Total US$ {custo:.2f}", delta_color="off")
 
-                    elif disparo_selecionado == "1️⃣ Disparo Principal":
-                        st.markdown("### 🔀 O Mapa da Distribuição (Comportamento do Lead)")
-                        st.markdown("O que aconteceu com os leads após abrirem a primeira mensagem:")
-                        
-                        # Fase 1
-                        st.markdown("#### 🚧 Fase 1: O Pedágio Inicial")
-                        col0, arr0, col1, arr1, col2, arr2, col3 = st.columns([3, 1, 3, 1, 3, 1, 3])
-                        
-                        with col0:
-                            with st.container(border=True):
-                                st.metric("1. Disparo Total", "4.604", "Base Enviada", delta_color="off")
-                        with arr0:
-                            st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
-                            
-                        with col1:
-                            with st.container(border=True):
-                                st.metric("2. Entregues", "4.294", "93.3% Entrega", delta_color="normal")
-                        with arr1:
-                            st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
-                            
-                        with col2:
-                            with st.container(border=True):
-                                st.metric("3. Abertos", "3.167", "68.8% Abertura", delta_color="normal")
-                        with arr2:
-                            st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
-                            
-                        with col3:
-                            with st.container(border=True):
-                                st.metric("4. Clicaram Botão", "1.023", "22.2% p/ Info", delta_color="off")
-                            
-                        st.markdown("<br>", unsafe_allow_html=True)
-                        
-                        # Fase 2
-                        st.markdown("#### 🔀 Fase 2: O Foco na Conversão (Aula 1)")
-                        
-                        col_sim, col_nao = st.columns(2)
-                        
-                        with col_sim:
-                            with st.container(border=True):
-                                st.markdown("<h4 style='text-align: center; color: #f59e0b;'>🟡 Caminho 'SIM'</h4>", unsafe_allow_html=True)
-                                st.metric("➡️ Escolheram 'Sim'", "414 leads", "Disseram que já assistiram", delta_color="off")
-                                st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                                st.metric("📸 Foram pro Instagram", "170 cliques", "🚨 Desvio (Saíram do WhatsApp)", delta_color="off")
-                                
-                        with col_nao:
-                            with st.container(border=True):
-                                st.markdown("<h4 style='text-align: center; color: #8b5cf6;'>🟣 Caminho 'NÃO'</h4>", unsafe_allow_html=True)
-                                st.metric("➡️ Escolheram 'Não'", "540 leads", "Receberam o link da aula", delta_color="off")
-                                st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                                st.metric("▶️ Foram pra Aula", "477 cliques", "88% de Conversão", delta_color="normal")
-
-                        st.markdown("### 🧠 Resumo das Análises (O que aprendemos?)")
-                        st.info(
-                            "**1. O Pedágio do Template:** Perdemos 2.000 pessoas logo na primeira mensagem porque exigimos que elas clicassem em 'Receber Informação' antes de entregar o link da aula.\n\n"
-                            "**2. A Bifurcação (Sim/Não):** O robô separou muito bem quem já tinha assistido de quem estava atrasado. Para os atrasados (Caminho 'Não'), o envio do link resultou em incríveis 88% de cliques para a aula na hora.\n\n"
-                            "**3. O 'SDR' Virtual:** Cobrar o lead 2 horas depois funcionou perfeitamente. 376 pessoas receberam a cobrança automática e isso resgatou quem tinha esquecido de assistir.\n\n"
-                            "**4. Baixa Rejeição:** Mesmo com várias mensagens, apenas 42 pessoas (1,3%) bloquearam o contato. A base é excelente e quer receber o conteúdo."
-                        )
-                        
-                        st.markdown("### 🎯 Regra de Ouro para o Próximo Lançamento")
-                        st.error(
-                            "**Comunicação Direta (Foco na Conversão):** O perfil desse lead não gosta de ficar clicando em interações longas. "
-                            "O nosso objetivo final é **fazer ele assistir a aula sem sair do WhatsApp**. "
-                            "Para os próximos disparos, devemos entregar o link da aula **direto na primeira mensagem**, sem botões de 'Receber Informação'. "
-                            "Também devemos evitar mandar o lead para outras redes (como o Instagram) no meio do fluxo, pois isso tira o foco do objetivo principal."
-                        )
-                    elif disparo_selecionado == "2️⃣ Engajamento":
-                        st.markdown("### ✅ O Contraste Perfeito (Aviso Direto)")
-                        st.markdown("Neste pequeno disparo, testamos enviar apenas uma mensagem super curta: *'Vou deixar o link aqui...'* (Sem enrolação, sem pedir cliques extras).")
-                        
-                        col1, arr1, col2, arr2, col3 = st.columns([3, 1, 3, 1, 3])
-                        with col1:
-                            with st.container(border=True):
-                                st.metric("1. Enviados", "164", "Pessoas", delta_color="off")
-                        with arr1:
-                            st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
-                        with col2:
-                            with st.container(border=True):
-                                st.metric("2. Entregues", "164", "100% de Entrega", delta_color="normal")
-                        with arr2:
-                            st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
-                        with col3:
-                            with st.container(border=True):
-                                st.metric("3. Clicaram no Link", "36", "22% de Conversão", delta_color="normal")
-                                
-                        st.markdown("<br>", unsafe_allow_html=True)
-                        
-                        st.success('**🎯 Lição Aprendida (A Regra do Menos é Mais):** Compare esse fluxo minúsculo com o labirinto do Disparo Principal (onde 2.000 pessoas desistiram). Aqui, nós entregamos o link diretamente na mão de 164 pessoas. O resultado? **Todos receberam a mensagem e 22% clicaram na mesma hora!** Isso prova matematicamente que a nossa base é altamente reativa quando o caminho é fácil.')
-
-                    elif disparo_selecionado == "3️⃣ Reprise e Ao Vivo":
-                        st.markdown("### 🕵️‍♀️ A Repescagem (Reprise e Lembrete da Aula 2)")
-                        st.markdown("No dia seguinte, o robô foi atrás de quem perdeu a aula para entregar a Gravação (Reprise) e já avisar do Ao Vivo que ia acontecer.")
-                        
-                        st.info('**⏳ A Regra das 24 Horas do WhatsApp:** O WhatsApp não deixa o robô mandar mensagens automáticas gratuitas para sempre. Ele só permite falar de graça com quem respondeu algo nas últimas 24h. Das 887 pessoas da repescagem, **apenas 230 (25%) ainda estavam dentro desse limite**. Esses 230 são o que chamamos de leads "Super-Engajados".')
-                        
-                        st.warning('**🔥 O Poder da palavra "Ao Vivo":** Quando a mensagem oferecia a gravação (Reprise), 15% das pessoas clicavam. Mas, para os Super-Engajados que receberam o alerta "Estamos Ao Vivo agora!", o clique pulou para incríveis **26%**! A urgência gera muito mais cliques.')
-                                        
-                        cpl1_funnel = dict(
-                            number=[887, 878, 712, 137],
-                            stage=["Base Selecionada (Reprise)", "Entregues (99%)", "Abriram a Mensagem (80%)", "Clicaram na Reprise (15%)"]
-                        )
-                        fig_f1 = go.Figure(go.Funnel(
-                            y=cpl1_funnel["stage"],
-                            x=cpl1_funnel["number"],
-                            textinfo="value+percent initial",
-                            marker={"color": ["#4B8BBE", "#28a745", "#555555", "#FF4B4B"]}
-                        ))
-                        fig_f1.update_layout(title="Aviso da Reprise (Aula 1)", plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF" if st.get_option("theme.base") == "dark" else "#000", height=350, margin=dict(t=50, b=0))
-                        
-                        cpl1_live = dict(
-                            number=[230, 229, 189, 59],
-                            stage=["Super-Engajados (Restaram na Janela 24h)", "Entregues (100%)", "Abriram o 'Ao Vivo' (82%)", "Clicaram na Aula 2 (26%)"]
-                        )
-                        fig_f2 = go.Figure(go.Funnel(
-                            y=cpl1_live["stage"],
-                            x=cpl1_live["number"],
-                            textinfo="value+percent initial",
-                            marker={"color": ["#4B8BBE", "#28a745", "#555555", "#FFD43B"]}
-                        ))
-                        fig_f2.update_layout(title="Lembrete 'Ao Vivo' (Aula 2)", plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font_color="#FFF" if st.get_option("theme.base") == "dark" else "#000", height=350, margin=dict(t=50, b=0))
-                        
-                        col_c1, col_c2 = st.columns(2)
-                        with col_c1:
-                            st.plotly_chart(fig_f1, use_container_width=True)
-                        with col_c2:
-                            st.plotly_chart(fig_f2, use_container_width=True)
-                    
-                        st.success('**💡 Dinheiro na Mesa (Oportunidade de Ouro):** O WhatsApp bloqueou quase 650 pessoas (que já tinham saído da Janela de 24h gratuitas) de receberem o aviso de que a Live estava começando. \n\n**A Solução para o Próximo Lançamento:** Basta pagar alguns centavos por lead e mandar uma "Mensagem Oficial" da Meta passando por cima dessa regra das 24h. Se pagássemos para avisar essas 650 pessoas atrasadas, e elas clicassem na mesma taxa de 26%, teríamos jogado **mais de 160 pessoas extras na sua Live** instantaneamente. O custo das mensagens é moedas perto do lucro das vendas que elas fariam!')
-
-                elif cpl_selecionado == "CPL 02":
-                    st.markdown("### 📈 Performance da CPL 02 (Aula 2 - Inscritos)")
-                    
-                    st.markdown("#### 🚧 Fase 1: O Filtro Inicial (Gargalo de Público)")
-                    col0, arr0, col1 = st.columns([3, 1, 3])
-                    
-                    with col0:
-                        with st.container(border=True):
-                            st.metric("1. Público Total Selecionado", "4.568", "Pessoas com a tag", delta_color="off")
-                    with arr0:
-                        st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
-                    with col1:
-                        with st.container(border=True):
-                            st.metric("2. Passaram no Filtro Inicial", "896", "19,6% da base total", delta_color="normal")
-                            
-                    st.error('**🚨 Bloqueio por Falta de Verba (Filtro Involuntário):** Logo na largada, o disparo parou de enviar para **80% da base**. O motivo não foi uma condição lógica do fluxo, mas sim **Falta de Verba**. A reclassificação inesperada do template para a tarifa de Marketing sugou o saldo da carteira instantaneamente, e a plataforma bloqueou os disparos. Tentar recarregar e forçar como Utility depois não reverteu a perda do *timing* do envio.')
-                    
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    
-                    st.markdown("#### 🔀 Fase 2: O Desempenho dos 896 Leads (O que eles escolheram?)")
-                    
-                    col_a, col_b, col_c = st.columns(3)
-                    
-                    with col_a:
-                        with st.container(border=True):
-                            st.markdown("<h4 style='text-align: center; color: #22c55e;'>🟢 'Assistir Agora'</h4>", unsafe_allow_html=True)
-                            st.metric("Chegaram na Etapa", "63 leads", "7% da Base", delta_color="off")
-                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                            st.metric("Foram pra Aula (Conversão)", "55 cliques", "87,3% de Conversão", delta_color="normal")
-                            
-                    with col_b:
-                        with st.container(border=True):
-                            st.markdown("<h4 style='text-align: center; color: #f59e0b;'>🟡 'Já Assisti'</h4>", unsafe_allow_html=True)
-                            st.metric("Chegaram na Etapa", "79 leads", "8,8% da Base", delta_color="off")
-                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                            st.metric("Foram pro Instagram", "25 cliques", "🚨 Desvio (Fuga de 68%)", delta_color="off")
-                            
-                    with col_c:
-                        with st.container(border=True):
-                            st.markdown("<h4 style='text-align: center; color: #ef4444;'>🔴 'Parar Mensagem'</h4>", unsafe_allow_html=True)
-                            st.metric("Chegaram na Etapa", "7 leads", "0,7% da Base", delta_color="off")
-                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                            st.metric("Descadastrados", "Fim do Fluxo", "", delta_color="off")
-                            
-                    st.markdown("---")
-                    st.markdown("### 🧠 Diagnóstico Executivo e Regra de Ouro (CPL 02)")
-                    st.info(
-                        "**1. A Alta Intenção da Base:** Dos 63 leads que escolheram 'Assistir Agora', 55 de fato foram para a aula (uma taxa brutal de 87,3%). Isso mostra que quando oferecemos o caminho direto para o objetivo, a conversão é quase garantida.\n\n"
-                        "**2. A Regra de Ouro Violada:** Lembra que o perfil desse lead **não quer ser distraído**? No caminho 'Já Assisti', criamos um labirinto de 3 passos para levá-los a comentar no Instagram. Resultado: de 79 pessoas super engajadas que chegaram, apenas 25 concluíram no Instagram. "
-                        "Desperdiçamos a energia de 54 pessoas hiper-engajadas em um fluxo de interação longa, que poderiam estar sendo redirecionadas para um Resumo em PDF ou oferta VIP.\n\n"
-                        "**3. O Efeito Dominó do Custo (Falta de Verba):** O template foi aprovado originalmente como 'Utility' (gratuito/barato), mas durante o disparo a Meta reclassificou as mensagens para 'Marketing' (Marketing Lite). Essa mudança gerou um custo inesperado de **US$ 36,98** que esgotou o saldo da carteira instantaneamente. Esse foi o verdadeiro motivo de 80% da base não ter recebido a Aula 2: o fluxo simplesmente foi interrompido por falta de fundos."
-                    )
-                
-                elif cpl_selecionado == "CPL 03":
-                    st.markdown("### 📈 Performance da CPL 03 (Aula 3: Teste A/B/C e Resgate)")
-                    
-                    st.markdown("---")
-                    st.markdown("### 🧪 Disparo 1: O Teste A/B/C (A Base Toda)")
-                    st.markdown("Um randomizador dividiu a base para testar qual copy convertia mais cliques para a Aula 3. Infelizmente, este disparo também foi vítima da taxação da Meta.")
-                    
-                    col0, arr0, col1 = st.columns([3, 1, 3])
-                    with col0:
-                        with st.container(border=True):
-                            st.metric("Público Alvo (Aviso Aula 3)", "4.501", "Pessoas", delta_color="off")
-                    with arr0:
-                        st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
-                    with col1:
-                        with st.container(border=True):
-                            st.metric("Enviados Reais", "1.269", "Interrompido por Falta de Verba", delta_color="normal")
-                            
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    st.markdown("#### 📊 Resultado do Teste de Copys")
-                    
-                    col_a, col_b, col_c = st.columns(3)
-                    with col_a:
-                        with st.container(border=True):
-                            st.markdown("<h4 style='text-align: center; color: #94a3b8;'>Copy A (Direta s/ Img)</h4>", unsafe_allow_html=True)
-                            st.metric("Enviados", "433 leads", "", delta_color="off")
-                            st.metric("Cliques Totais", "39 cliques", "CTR 9%", delta_color="off")
-                            
-                    with col_b:
-                        with st.container(border=True):
-                            st.markdown("<h4 style='text-align: center; color: #facc15;'>🏆 Copy B (Pergunta c/ Img)</h4>", unsafe_allow_html=True)
-                            st.metric("Enviados", "409 leads", "", delta_color="off")
-                            st.metric("Cliques Totais", "41 cliques", "CTR 10%", delta_color="off")
-                            
-                    with col_c:
-                        with st.container(border=True):
-                            st.markdown("<h4 style='text-align: center; color: #94a3b8;'>Copy C (Pergunta s/ Img)</h4>", unsafe_allow_html=True)
-                            st.metric("Enviados", "427 leads", "", delta_color="off")
-                            st.metric("Cliques Totais", "34 cliques", "CTR 8%", delta_color="off")
-                            
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    st.markdown("#### 🔀 O Desempenho dos 3 Caminhos (União das 3 Copys)")
-                    
-                    col_path_a, col_path_b, col_path_c = st.columns(3)
-                    
-                    with col_path_a:
-                        with st.container(border=True):
-                            st.markdown("<h4 style='text-align: center; color: #22c55e;'>🟢 'Assistir Agora'</h4>", unsafe_allow_html=True)
-                            st.metric("Receberam o Link", "74 leads", "A união dos cliques", delta_color="off")
-                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                            st.metric("Follow-up (1h depois)", "19 respostas", "Sim / Ainda Não", delta_color="normal")
-                            
-                    with col_path_b:
-                        with st.container(border=True):
-                            st.markdown("<h4 style='text-align: center; color: #f59e0b;'>🟡 'Já Assisti'</h4>", unsafe_allow_html=True)
-                            st.metric("Chegaram na Etapa", "36 leads", "A união dos cliques", delta_color="off")
-                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                            st.metric("Foram pro Instagram", "12 cliques", "🚨 Fuga de 66%", delta_color="off")
-                            
-                    with col_path_c:
-                        with st.container(border=True):
-                            st.markdown("<h4 style='text-align: center; color: #ef4444;'>🔴 'Parar Mensagem'</h4>", unsafe_allow_html=True)
-                            st.metric("Chegaram na Etapa", "17 leads", "A união dos cliques", delta_color="off")
-                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                            st.metric("Descadastrados", "17 pessoas", "Fim do Fluxo", delta_color="off")
-
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    st.markdown("#### 🔄 Análise do Caminho Verde (O Follow-up Inteligente)")
-                    st.info("Para os 74 leads que clicaram para receber o link da aula, a automação inovou: aguardou 1 hora e fez uma verificação ativa ('Deu tempo de assistir à Aula 3?'). Isso é excelente para segmentar quem realmente consumiu o conteúdo na boca do funil.")
-
-                    st.markdown("---")
-                    st.markdown("### 🛟 Disparo 2: O Resgate Super Segmentado (Reprise)")
-                    st.markdown("Este disparo foi direcionado a um grupo hiper restrito, focado na transição para a oferta.")
-                    
-                    col_path_1, col_path_2 = st.columns(2)
-                    
-                    with col_path_1:
-                        with st.container(border=True):
-                            st.markdown("<h4 style='text-align: center; color: #94a3b8;'>📣 Aviso de Reprise</h4>", unsafe_allow_html=True)
-                            st.metric("Enviados", "65 leads", "Filtro altamente restrito", delta_color="off")
-                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                            st.metric("Cliques no Link", "15 cliques", "CTR 23,4%", delta_color="normal")
-                            st.error("**⚠️ Erro de Conversão:** O link da aula foi enviado **embutido no texto** em vez de um botão clicável abaixo da mensagem. É fundamental **'colocar o botão'** sempre. Mensagens com botões reduzem a fricção visual e convertem drasticamente mais do que links perdidos no meio de um parágrafo longo.")
-                            
-                    with col_path_2:
-                        with st.container(border=True):
-                            st.markdown("<h4 style='text-align: center; color: #22c55e;'>🔥 O Convite VIP</h4>", unsafe_allow_html=True)
-                            st.metric("Follow-up (2 Dias Depois)", "60 leads", "Convite Grupo VIP", delta_color="off")
-                            st.markdown("<h3 style='text-align: center;'>⬇️</h3>", unsafe_allow_html=True)
-                            st.metric("Entraram no Grupo", "17 cliques", "CTR 28,3%", delta_color="normal")
-                            st.success("O engajamento subiu! O envio do convite para o 'Grupo de Super Interessados' funcionou muito bem, atraindo 28% daqueles que receberam a mensagem de transição de vendas.")
-                            
-                    st.markdown("---")
-                    st.markdown("### 🧠 Diagnóstico Executivo (CPL 03)")
-                    st.info(
-                        "**1. A Força da Imagem (Teste A/B/C):** O Disparo 1 provou que mandar o aviso da aula fazendo uma pergunta atrelada a uma imagem (Copy B) tem o melhor CTR (10%). O uso de mídias aumenta a atenção na caixa de entrada do WhatsApp em relação ao texto puro.\n\n"
-                        "**2. A Transição para Vendas (Convite VIP):** O Disparo 2 focou em uma base micro (65 leads) e, apesar do erro tático de enviar o link dentro do texto e não em um botão (aumentando a fricção), ele engrenou muito bem para o 'Grupo de Super Interessados', alcançando um excelente CTR de 28,3%. Isso mostra que leads na fase final de CPL têm apetite por exclusividade.\n\n"
-                        "**3. Punição Financeira Repetida:** O histórico mostra o mesmo padrão da CPL 02. O WhatsApp cobrou as mensagens em massa como 'Marketing', gerando um custo alto que esgotou a verba e travou os disparos. É urgente adaptar a copy (texto) para soar menos promocional ao algoritmo da Meta."
-                    )
-                elif cpl_selecionado == "CPL 04":
-                    st.markdown("### 📉 Performance da CPL 04 (Aula 4 Ao Vivo)")
-                    
-                    st.markdown("#### 🚨 O Retorno do 'Erro Fatal' (Botão de Consentimento)")
-                    st.markdown("Na reta final do lançamento, o disparo da CPL 04 repetiu **exatamente o mesmo gargalo da CPL 01**. Em vez de enviar o link direto para a aula, a automação obrigou a base fria a clicar em um botão de 'Receber Informação'. O resultado foi catastrófico para a tração.")
-                    
-                    col1, arr1, col2, arr2, col3, arr3, col4 = st.columns([2, 1, 2, 1, 2, 1, 2])
-                    with col1:
-                        with st.container(border=True):
-                            st.metric("1. Enviados", "4.543", "Base", delta_color="off")
-                    with arr1:
-                        st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
-                    with col2:
-                        with st.container(border=True):
-                            st.metric("2. Entregues", "4.124", "91% de Entrega", delta_color="normal")
-                    with arr2:
-                        st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
-                    with col3:
-                        with st.container(border=True):
-                            st.metric("3. 'Receber Info'", "159", "4% CTR", delta_color="inverse")
-                    with arr3:
-                        st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
-                    with col4:
-                        with st.container(border=True):
-                            st.metric("4. Assistiram", "89", "2,1% Real", delta_color="inverse")
-                    
-                    st.error('**⚠️ Fuga de 3.919 Leads (95% da base entregue):** Ao usar o botão de "Receber Informação", a imensa maioria dos leads ignorou a mensagem. Apenas 159 pediram o link. Desses 159, apenas 89 de fato clicaram na Aula 04. Em um universo de 4,5 mil envios, levar apenas 89 pessoas para a aula final é um desperdício enorme de potencial e de verba.')
-                    
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    st.markdown("#### 💎 A Luz no Fim do Túnel (Retenção no Grupo VIP)")
-                    st.markdown("Para os parcos 89 leads que passaram pelo funil e clicaram na aula, a automação fez um disparo de repescagem 2 horas depois, convidando-os para o **Grupo VIP de Super Interessados**.")
-                    
-                    c1, c2, c3 = st.columns(3)
-                    with c1:
-                        st.metric("Convites VIP Enviados", "81")
-                    with c2:
-                        st.metric("Visualizações da Mensagem", "59", "73% Open Rate")
-                    with c3:
-                        st.metric("Entraram no VIP", "13", "16% de Conversão (Altíssimo)")
-                    
-                    st.success("**🧠 Insight de Fechamento:** Aqueles que sobrevivem ao funil são extremamente engajados. Uma conversão de 16% direto para um Grupo VIP é fantástica. Se não houvesse o gargalo inicial do botão, teríamos centenas de pessoas a mais nesse grupo de fechamento.")
-                    
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    st.markdown("### 🧠 Diagnóstico Executivo (CPL 04)")
-                    st.warning(
-                        "**1. A Síndrome do Refil (Não Aprender com o Erro):** O funil da CPL 04 foi desenhado ignorando a principal métrica da CPL 01. O botão 'Receber Informação' atua como uma muralha, matando a escala do tráfego orgânico/pago e penalizando o engajamento da conta na Meta.\\n\\n"
-                        "**2. Taxa de Mortalidade Absurda:** De 4.124 mensagens entregues no WhatsApp da pessoa, extrair apenas 89 cliques reais na aula revela uma taxa de conversão real de 2,1%. Uma Copy de entrega direta de link traria entre 10% a 22% (provado nos disparos da CPL 02 e CPL 03).\\n\\n"
-                        "**3. Estratégia VIP Validada:** O atraso inteligente de 2 horas após o clique na aula para oferecer o Grupo VIP se provou excelente (16% de retenção). Esse fluxo secundário de 'Super Interessados' está totalmente validado e deve ser usado com força no pós-carrinho."
-                    )
-                
-                else:
-                    dados_cpl = df_cpl[df_cpl['CPL'] == cpl_selecionado].iloc[0]
-                    data_disp = dados_cpl.get('Data_Disparo', 'N/D')
-                    st.markdown(f"### 📈 Performance do {cpl_selecionado} (Disparado em {data_disp})")
-                    
-                    disp = dados_cpl['Disparados']
-                    ent = dados_cpl['Entregues']
-                    cli = dados_cpl['Cliques']
-                    custo = dados_cpl['Custo_US']
-                    
-                    col1, col2, col3 = st.columns(3)
-                    with col1:
-                        st.metric("Enviado", f"{disp:,}".replace(',','.'))
-                    with col2:
-                        tx_ent = (ent/disp)*100 if disp > 0 else 0
-                        st.metric("Entregue", f"{ent:,}".replace(',','.'), f"{tx_ent:.1f}% de Entrega", delta_color="normal")
-                    with col3:
-                        tx_cli = (cli/ent)*100 if ent > 0 else 0
-                        st.metric("Cliques", f"{cli:,}".replace(',','.'), f"{tx_cli:.1f}% CTR", delta_color="normal")
-                    
-                    fig_funnel = go.Figure(go.Funnel(
-                        y=["Enviados", "Entregues (Inbox)", "Cliques (Acessos)"],
-                        x=[disp, ent, cli],
-                        textinfo="value+percent previous",
-                        marker={"color": ["#4B8BBE", "#28a745", "#FFD43B"]}
-                    ))
-                    fig_funnel.update_layout(margin=dict(t=20, b=20), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
-                    st.plotly_chart(fig_funnel, use_container_width=True)
-                    
-                    if tx_cli < 10:
-                        st.error(f"**🚨 Alerta Crítico:** A taxa de clique do {cpl_selecionado} despencou para {tx_cli:.1f}%. Enviar link para uma base fria (ou com copy fraca) destrói o CTR. Reveja a chamada de ação para os próximos envios.")
-                    else:
-                        st.success(f"**✅ Insight Estratégico Multi-Copy:** O {cpl_selecionado} alcançou um CTR de {tx_cli:.1f}% ao combinar duas abordagens de copywriting no mesmo fluxo. **1. Recuperação (Reprise):** A primeira copy age com utilidade ('se ainda não assistiu... vou deixar o link'), repescando leads sem pressão. **2. Escassez e Urgência (Ao Vivo):** A segunda copy ataca com um micro-compromisso imediato ('Bora? Estamos ao vivo agora!'). **Plano de Ação:** A conversão foi fortíssima porque a copy atendeu a dois perfis (o atrasado e o pontual). Mantenha essa dobra de comunicação para os próximos CPLs.")
-                    
-                    cpc = custo / cli if cli > 0 else 0
-                    st.info(f"💰 **Inteligência Financeira (ROI da Automação):** O {cpl_selecionado} teve um volume total de **{disp} disparos** processados pelo Manychat, gerando um custo operacional de **US$ {custo:.2f}**. Considerando os **{cli} cliques absolutos** recebidos, o seu Custo Por Clique (CPC) direto no WhatsApp foi de apenas **US$ {cpc:.2f}**. Um tráfego extremamente barato, hiper qualificado e que não depende do algoritmo do Instagram para entregar!")
+                fig_indiv = go.Figure(go.Funnel(
+                    y=["Disparados", "Entregues", "Cliques"],
+                    x=[disp, ent, cli],
+                    textinfo="value+percent previous",
+                    marker={"color": ["#4B8BBE", "#28a745", "#FFD43B"]}
+                ))
+                fig_indiv.update_layout(margin=dict(t=10, b=10), height=250, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
+                st.plotly_chart(fig_indiv, use_container_width=True)
 
     elif menu_selecionado == '2️⃣ Vendas e Carrinho':
         st.header("2️⃣ Captação de Vendas e Abandono de Carrinho")
