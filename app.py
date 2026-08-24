@@ -1108,7 +1108,7 @@ if not df_captacao.empty:
         s1, s2, s3, s4 = st.columns(4)
         s1.success("🟢 **CPL 01**: 100% Auditado\n\n(3 Disparos | 9 Nós)")
         s2.success("🟢 **CPL 02**: 100% Auditado\n\n(1 Disparo | 5 Nós)")
-        s3.warning("⏳ **CPL 03**: Pendente\n\n(Aguardando prints)")
+        s3.success("🟢 **CPL 03**: 100% Auditado\n\n(2 Disparos | Teste A/B/C)")
         s4.success("🟢 **CPL 04**: 100% Auditado\n\n(5 Nós Mapeados)")
 
         st.markdown("---")
@@ -1230,9 +1230,76 @@ if not df_captacao.empty:
                 </div>
                 """, unsafe_allow_html=True)
 
+        st.markdown("---")
+
         # =========================================================
-        # SEÇÃO 2: CPL 04 - DIDÁTICA E APRENDIZADO
+        # SEÇÃO 3: CPL 03 - DIDÁTICA E NARRATIVA
         # =========================================================
+        st.subheader("3️⃣ CPL 03 — O Teste A/B/C e a Força do Grupo VIP (13/08 a 14/08)")
+        st.markdown("A CPL 03 testou cientificamente **3 variações de copy no envio inicial** e introduziu o convite para o **Grupo de Super Interessados**.")
+
+        # KPIs Topo CPL 03
+        cpl3_1, cpl3_2, cpl3_3, cpl3_4 = st.columns(4)
+        cpl3_1.metric("📤 Base Enviada Real", "1.314 leads", "Disparo 1 + Disparo 2")
+        cpl3_2.metric("✅ Entregues Reais", "1.197 leads", "91.1% de Entrega", delta_color="normal")
+        cpl3_3.metric("📖 Aberturas Totais", "786 leads", "65.7% Open Rate", delta_color="normal")
+        cpl3_4.metric("👆 Cliques Totais", "142 leads", "11.9% CTR Global", delta_color="normal")
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("#### 🧪 O Resultado do Teste A/B/C (Disparo 1 - 1.249 Enviados)")
+            
+            t_a, t_b, t_c = st.columns(3)
+
+            with t_a:
+                st.markdown("""
+                <div style="background-color:#1a2536; border-left:4px solid #3498db; padding:12px; border-radius:8px;">
+                    <h5 style="color:#3498db; margin:0;">🅰️ Texto Padrão</h5>
+                    <p style="font-size:0.85rem; color:#ddd; margin-top:6px;">
+                        • <b>380 Entregues</b> (87.8%)<br>
+                        • 234 Abertos (61.5% Open Rate)<br>
+                        • <b>39 Cliques Únicos (10.3% CTR)</b> 🥇<br>
+                        <i>Maior conversão na ação do botão!</i>
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with t_b:
+                st.markdown("""
+                <div style="background-color:#1a3625; border-left:4px solid #2ecc71; padding:12px; border-radius:8px;">
+                    <h5 style="color:#2ecc71; margin:0;">🅱️ Com Imagem</h5>
+                    <p style="font-size:0.85rem; color:#ddd; margin-top:6px;">
+                        • <b>369 Entregues</b> (90.2%)<br>
+                        • <b>247 Abertos (66.9% Open Rate)</b> 🥇<br>
+                        • 35 Cliques Únicos (9.5% CTR)<br>
+                        <i>Maior atratividade na lista do WhatsApp!</i>
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with t_c:
+                st.markdown("""
+                <div style="background-color:#2e2a1a; border-left:4px solid #f1c40f; padding:12px; border-radius:8px;">
+                    <h5 style="color:#f1c40f; margin:0;">Ⓒ Texto V2</h5>
+                    <p style="font-size:0.85rem; color:#ddd; margin-top:6px;">
+                        • <b>384 Entregues</b> (94.3%)<br>
+                        • 249 Abertos (64.8% Open Rate)<br>
+                        • 36 Cliques Únicos (9.4% CTR)<br>
+                        <i>Desempenho estável e equilibrado.</i>
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("#### 🎬 Disparo 2: O Perto-e-Manhã (Reprise & Grupo de Super Interessados)")
+            st.markdown(
+                "• **Reprise (13/08 20h37):** 64 Entregues ➔ 56 Abertos (86.2%) ➔ **15 Cliques no Link da Reprise (23.4% CTR)**.<br>"
+                "• **Pernoite no Atraso:** 948 contatos retidos da noite até 14/08 às 08h00.<br>"
+                "• **Convite Grupo VIP (14/08 08h00):** 60 Entregues ➔ 52 Abertos (86.7%) ➔ **17 pessoas entraram no Grupo de Super Interessados (28.3% CTR)** ⭐"
+            )
+
+        st.markdown("---")
         st.subheader("4️⃣ CPL 04 — O Impacto do 'Botão de Consentimento' (17/08)")
         
         col_cpl4_funil, col_cpl4_text = st.columns([1, 1])
@@ -1300,14 +1367,15 @@ if not df_captacao.empty:
         # Dados de CPLs — Auditados nó a nó via fluxos Manychat (24/08/2026)
         # CPL 01: Auditado fluxo por fluxo (4.604 disp | 4.294 ent | 1.023 cliques)
         # CPL 02: Auditado nó a nó (896 disp | 822 ent [91.7%] | 579 abertos [65.0%] | 94 cliques unicos [11.4%])
-        #   80% da base barrada na Meta (4.568 alvos intentados vs 896 enviados)
+        # CPL 03: Auditado nó a nó (1.314 disp | 1.197 ent [91.1%] | 786 abertos [65.7%] | 142 cliques unicos [11.9%])
+        #   Teste A/B/C: Imagem venceu em Abertura (66.9%) | Convite Grupo VIP gerou 28.3% CTR
         # CPL 04: Auditado nó a nó (4.543 disp | 4.129 ent | 208 cliques)
         df_cpl = pd.DataFrame({
             "CPL": ["CPL 01", "CPL 02", "CPL 03", "CPL 04"],
-            "Data_Disparo": ["10/08/2026", "12/08/2026", "15/08/2026", "17/08/2026"],
-            "Disparados": [4604,   896, 1334, 4543],
-            "Entregues":  [4294,   822, 1310, 4129],
-            "Cliques":    [1023,    94,   89,  208],
+            "Data_Disparo": ["10/08/2026", "12/08/2026", "13/08/2026", "17/08/2026"],
+            "Disparados": [4604,   896, 1314, 4543],
+            "Entregues":  [4294,   822, 1197, 4129],
+            "Cliques":    [1023,    94,  142,  208],
             "Custo_US":   [33.22, 36.98, 49.27, 45.00]
         })
         
