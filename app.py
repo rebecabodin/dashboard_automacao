@@ -1434,6 +1434,61 @@ if not df_captacao.empty:
               - Em vez de mandar o lead pro Instagram, perguntar no WPP: *'Qual seu maior obstáculo hoje? [A] Diagnóstico [B] Ferramentas [C] Clientes'*. Captura inteligência de vendas com 40%+ de resposta direta.
             """)
 
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("---")
+
+        # =========================================================
+        # SEÇÃO 5: GUIA TÉCNICO META API - UTILITY VS MARKETING
+        # =========================================================
+        st.subheader("📜 Guia Técnico Meta API: Por que a Reclassificação Aconteceu e Como Blindar a Copy")
+        st.markdown("Uma análise das regras oficiais de engenharia de mensagens da Meta para evitar estouro de custos e bloqueios diários.")
+
+        with st.expander("📘 Entenda a Engenharia da Meta API: Utility vs. Marketing (Clique para Expandir)", expanded=True):
+            meta_col1, meta_col2 = st.columns(2)
+
+            with meta_col1:
+                st.markdown("""
+                #### 🤖 Como a IA da Meta reclassifica os Templates?
+                A Meta utiliza um modelo de IA de NLP (Processamento de Linguagem Natural) que lê o conteúdo aprovado tanto no momento do envio quanto nas verificações periódicas pós-aprovação.<br><br>
+                <b>Gatilhos que fazem a IA converter Utility ➔ Marketing Lite (9.2x mais caro):</b>
+                1. <b>Adjetivos de Escassez/Urgência:</b> Termos como <i>'Liberado'</i>, <i>'Última chance'</i>, <i>'Oportunidade única'</i> ou <i>'Ao vivo agora'</i>.
+                2. <b>Excesso de Emojis Promocionais:</b> 🚨, 💥, 💣, 🔥, ⚡, 🎁.
+                3. <b>Links Externos Não Operacionais:</b> Direcionar para o Instagram, YouTube ou pesquisas fora da transação imediata.
+                4. <b>Convocação Genérica:</b> Avisar sobre um evento sem citar os dados explícitos de cadastro transacional do usuário.
+                """)
+
+            with meta_col2:
+                st.markdown("""
+                #### ⚡ Por que a entrega de Marketing falha mais que Utility?
+                Além da diferença de custo (US$ 0,0718 vs US$ 0,0078), a Meta aplica 2 travas severas em mensagens da categoria Marketing:
+                
+                1. <b>Frequency Cap (Limite de Frequência de Marketing por Usuário):</b> A Meta impõe um limite máximo de mensagens de Marketing que um usuário pode receber no WhatsApp por dia de <i>qualquer empresa</i>. Se o lead já recebeu Marketing de outras contas no dia, a Meta <b>simplesmente não entrega a sua mensagem</b> para proteger o usuário de spam!
+                2. <b>Quality Rating Throttling:</b> Quando um disparo de Marketing em massa tem baixos cliques ou bloqueios (como o botão de consentimento na CPL 04), a Meta reduz o ritmo de entrega por hora do número (Throttling).
+                """)
+
+            st.markdown("---")
+            st.markdown("#### 🛠️ O Script da Copy 'Blindada' (Como manter o aviso 100% em Utility):")
+
+            col_copy_ruim, col_copy_boa = st.columns(2)
+
+            with col_copy_ruim:
+                st.error("""
+                ❌ **COPY RECLASSIFICADA PARA MARKETING (Não usar):**
+                
+                "Olá, {{1}}! 🚨 A aula {{2}} da Jornada já está LIBERADA! 🔥 Não perca essa oportunidade incrível de dominar o mercado. Clica no botão abaixo para assistir agora! 👇"
+                
+                *Por que virou Marketing:* Adjetivos promocionais ('LIBERADA', 'incrível'), emojis de urgência (🚨, 🔥) e tom publicitário.
+                """)
+
+            with col_copy_boa:
+                st.success("""
+                ✅ **COPY BLINDADA PARA UTILITY (Aprovada e Mantida):**
+                
+                "Atualização da sua inscrição: A transmissão agendada do módulo {{1}} está disponível para acesso. Link oficial de transmissão: {{2}}. Suporte técnico: [URL]."
+                
+                *Por que se mantém em Utility:* Texto 100% transacional, focado estritamente na confirmação de entrega do serviço no qual o lead se cadastrou.
+                """)
+
     elif menu_selecionado == '1️⃣ CPLs (Análise e Funil)':
         st.header("1️⃣ Dashboard de Tração e CPLs")
         st.markdown("Análise de conversão do funil de avisos: Disparos ➔ Entrega ➔ Clique.")
