@@ -1360,6 +1360,68 @@ if not df_captacao.empty:
                 "**Impacto Esperado:** Destravar os 74% de leads barrados pela regra da Janela de 24h."
             )
 
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("---")
+
+        # =========================================================
+        # SEÇÃO 4: MATRIZ CRÍTICA DE DECISÃO E ANÁLISE DE COPY/CTAs
+        # =========================================================
+        st.subheader("🧠 Autópsia Crítica do Fluxo: O que Manter, Melhorar, Eliminar e Testar")
+        st.markdown("Uma avaliação rigorosa de Copy, CTAs, Reprises e Canais para maximizar a conversão de vendas no LC8.")
+
+        m_elim, m_mant, m_melh, m_test = st.tabs([
+            "🛑 1. O que ELIMINAR",
+            "🟢 2. O que MANTER",
+            "🟡 3. O que MELHORAR (Copy & CTAs)",
+            "🧪 4. O que TESTAR no LC8"
+        ])
+
+        with m_elim:
+            st.markdown("""
+            #### 🛑 1. O que ELIMINAR urgentemente:
+            * **Botão de Consentimento ('Receber Informações'):** 
+              - *Por que tirar:* Na CPL 04, causou a fuga de **95% da base** (2.140 leram e saíram). Exigir duplo opt-in para quem já é lead gera atrito extremo no perfil técnico.
+              - *Punição oculta:* A Meta enxerga mensagens sem interação como SPAM, rebaixando a nota de qualidade (Quality Rating) do número do WhatsApp.
+            * **Fluxo Automatizado WhatsApp ➔ Instagram:**
+              - *Por que tirar:* Na CPL 01 e CPL 02, de 4.604 disparados, **apenas 16 a 21 pessoas completaram o ciclo até o comentário** (0.35% a 0.45% de conversão final).
+              - *Perda de Foco:* Retirar o lead da rede oficial de conversão durante o lançamento rasga a atenção do comprador.
+            """)
+
+        with m_mant:
+            st.markdown("""
+            #### 🟢 2. O que MANTER (Padrão Ouro):
+            * **Envio de Link Direto com Botão Único ('▶️ Assistir Aula 1 Agora'):**
+              - *Comprovação em Dados:* Sempre que o link foi entregue sem intermediários (CPL 01 Msg 5, CPL 02 Msg 10, CPL 03 Msg 10), a taxa de cliques ficou em incríveis **87% a 88%**.
+            * **Atrasos Inteligentes de Pernoite:**
+              - Retiveram centenas de leads com 100% de precisão operacional durante a noite (893 na CPL 01, 948 na CPL 03).
+            * **Convite para o Grupo VIP / Super Interessados:**
+              - *Comprovação em Dados:* O envio do convite no disparo matinal da CPL 03 gerou **28.3% de CTR**, a maior taxa de conversão direta para grupos de todo o evento.
+            """)
+
+        with m_melh:
+            st.markdown("""
+            #### 🟡 3. O que MELHORAR (Crítica de Copy, CTAs e Reprises):
+            * **Faz sentido ter Reprise?**
+              - **SIM, mas com Copy reformulada.** Nas CPLs 01 e 03, as reprises geraram de **15.6% a 23.4% CTR**.
+              - *Crítica de Copy:* As mensagens atuais são transacionais genéricas (*'Passando para avisar que já está liberado...'*).
+              - *Como melhorar:* Mudar para **Escassez Real e Recorte de Aprendizado** (*'Perdeu o diagnóstico de baterias ensinado ontem? A gravação sai do ar em 24h. Assista o trecho crítico aqui 👇'*).
+            * **Crítica de CTAs:**
+              - CTAs genéricos como *'Assistir Aula'* ou *'Receber Informação'* competem com a preguiça mental.
+              - *CTAs recomendados:* **'▶️ Liberar Aula 1 Agora'**, **'🔓 Acessar Aula Gratuita'**, **'👥 Entrar no Grupo VIP'**.
+            * **Disparos Matinais das 08h00:**
+              - *O Problema:* Usar a regra *'Dentro da Janela de 24h'* bloqueou **74% a 80% dos leads** nos avisos matinais.
+              - *Como melhorar:* Configurar como **Template Pago da Meta** para garantir entrega para 100% dos leads retidos.
+            """)
+
+        with m_test:
+            st.markdown("""
+            #### 🧪 4. O que TESTAR no LC8:
+            * **Vídeo-Notes Curtos (10s) do Taffarell no WhatsApp:**
+              - O Teste A/B/C da CPL 03 provou que conteúdos visuais geram **+5.4% de abertura**. Testar um vídeo rápido no lugar de imagens estáticas.
+            * **Pesquisa de 1 Clique no WhatsApp (Quick Replies):**
+              - Em vez de mandar o lead pro Instagram, perguntar no WPP: *'Qual seu maior obstáculo hoje? [A] Diagnóstico [B] Ferramentas [C] Clientes'*. Captura inteligência de vendas com 40%+ de resposta direta.
+            """)
+
     elif menu_selecionado == '1️⃣ CPLs (Análise e Funil)':
         st.header("1️⃣ Dashboard de Tração e CPLs")
         st.markdown("Análise de conversão do funil de avisos: Disparos ➔ Entrega ➔ Clique.")
