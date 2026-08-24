@@ -1214,6 +1214,7 @@ if not df_captacao.empty:
                 • <b>94 pessoas únicas clicaram</b> em botões de ação (11.4% CTR).<br>
                 • <b>Path 'Assistir Agora':</b> 63 solicitaram a aula ➔ <b>55 clicaram p/ ABRIR A AULA (87.3% CTR)</b>.<br>
                 • <b>Path 'Já assisti':</b> 79 responderam ➔ 30 toparam ir ao IG (38%) ➔ <b>25 abriram o Instagram (83.3%)</b>.<br>
+                • <b>Automação IG (DM Pós-Comentário):</b> 16 pessoas comentaram no post ➔ <b>100% receberam a DM da Aula 3 e 12 abriram (75% Open Rate)</b>.<br>
                 • <b>Opt-out (Parar mensagens):</b> Apenas 7 solicitaram (0.85% da base) ➔ 0 reverteram.
                 """, unsafe_allow_html=True)
 
