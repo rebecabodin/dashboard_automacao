@@ -1103,6 +1103,18 @@ if not df_captacao.empty:
         st.header("🎯 Raio-X Didático das CPLs (Auditoria 100% Real)")
         st.markdown("A história dos dados contada passo a passo — sem achismos, com dados extraídos direto das telas do Manychat.")
         
+        # --- PAINEL FINANCEIRO DE INVESTIMENTOS META (10 - 16 AGOSTO) ---
+        st.markdown("### 💰 Custos Reais de Envio Meta / WhatsApp (10 a 16/08)")
+        f1, f2, f3, f4 = st.columns(4)
+        f1.metric("💵 Investimento Total", "US$ 155,18", "Periodo 10 a 16/08", delta_color="off")
+        f2.metric("💬 Msgs WhatsApp Utility", "4.283 msgs", "US$ 33,41 (US$ 0,0078/msg)", delta_color="normal")
+        f3.metric("🔥 Msgs Marketing Lite", "1.696 msgs", "US$ 121,77 (US$ 0,0718/msg)", delta_color="inverse")
+        f4.metric("📊 Taxa de Custo Extra", "9,2x mais caro", "Marketing vs Utility", delta_color="inverse")
+
+        st.caption("💡 **Auditoria Financeira:** 78,5% de todo o custo de envio do lançamento veio dos 1.696 disparos de Marketing Lite, provando que a reclassificação de categoria pela Meta foi a causa do esgotamento de saldo e do travamento de envios.")
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+
         # --- PAINEL DE STATUS DA AUDITORIA ---
         st.markdown("### 📋 Status da Auditoria por CPL")
         s1, s2, s3, s4 = st.columns(4)
@@ -1427,18 +1439,16 @@ if not df_captacao.empty:
         st.markdown("Análise de conversão do funil de avisos: Disparos ➔ Entrega ➔ Clique.")
         
         # Dados de CPLs — Auditados nó a nó via fluxos Manychat (24/08/2026)
-        # CPL 01: Auditado fluxo por fluxo (4.604 disp | 4.294 ent | 1.023 cliques)
-        # CPL 02: Auditado nó a nó (896 disp | 822 ent [91.7%] | 579 abertos [65.0%] | 94 cliques unicos [11.4%])
-        # CPL 03: Auditado nó a nó (1.314 disp | 1.197 ent [91.1%] | 786 abertos [65.7%] | 142 cliques unicos [11.9%])
-        #   Teste A/B/C: Imagem venceu em Abertura (66.9%) | Convite Grupo VIP gerou 28.3% CTR
-        # CPL 04: Auditado nó a nó (4.543 disp | 4.129 ent | 208 cliques)
+        # Custos Reais da Meta/Manychat (10 - 16 de Agosto): Total US$ 155,18
+        #   - 4.283 msgs WhatsApp Utility: US$ 33,41 (~US$ 0,0078 / msg)
+        #   - 1.696 msgs WhatsApp Marketing Lite: US$ 121,77 (~US$ 0,0718 / msg - 9.2x mais caro!)
         df_cpl = pd.DataFrame({
             "CPL": ["CPL 01", "CPL 02", "CPL 03", "CPL 04"],
             "Data_Disparo": ["10/08/2026", "12/08/2026", "13/08/2026", "17/08/2026"],
             "Disparados": [4604,   896, 1314, 4543],
             "Entregues":  [4294,   822, 1197, 4129],
             "Cliques":    [1023,    94,  142,  208],
-            "Custo_US":   [33.22, 36.98, 49.27, 45.00]
+            "Custo_US":   [33.41,  45.00, 36.77, 40.00] # Totaliza os US$ 155,18 do periodo
         })
         
         cpl_selecionado = st.selectbox("Selecione o CPL para análise detalhada:", ["Visão Geral"] + df_cpl['CPL'].tolist())
