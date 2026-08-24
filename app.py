@@ -1312,7 +1312,7 @@ if not df_captacao.empty:
             )
 
         st.markdown("---")
-        st.subheader("4️⃣ CPL 04 — O Impacto do 'Botão de Consentimento' (17/08)")
+        st.subheader("4️⃣ CPL 04 — O Impacto do 'Botão de Consentimento' (16/08)")
         
         col_cpl4_funil, col_cpl4_text = st.columns([1, 1])
 
@@ -1444,7 +1444,7 @@ if not df_captacao.empty:
         #   - 1.696 msgs WhatsApp Marketing Lite: US$ 121,77 (~US$ 0,0718 / msg - 9.2x mais caro!)
         df_cpl = pd.DataFrame({
             "CPL": ["CPL 01", "CPL 02", "CPL 03", "CPL 04"],
-            "Data_Disparo": ["10/08/2026", "12/08/2026", "13/08/2026", "17/08/2026"],
+            "Data_Disparo": ["10/08/2026", "12/08/2026", "13/08/2026", "16/08/2026"],
             "Disparados": [4604,   896, 1314, 4543],
             "Entregues":  [4294,   822, 1197, 4129],
             "Cliques":    [1023,    94,  142,  208],
