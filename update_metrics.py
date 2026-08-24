@@ -1,53 +1,70 @@
 import re
 
-with open("app.py", "r") as f:
+with open('app.py', 'r', encoding='utf-8') as f:
     content = f.read()
 
-# 1. Create get_duplicados function
-func_get = """def get_duplicados(df_captacao):
-    import pandas as pd
-    df_dupe = df_captacao.copy()
-    df_dupe.columns = df_dupe.columns.str.strip().str.lower()
-    mask_email = pd.Series(False, index=df_dupe.index)
-    mask_tel = pd.Series(False, index=df_dupe.index)
-    if 'email' in df_dupe.columns:
-        df_dupe['email_limpo'] = df_dupe['email'].astype(str).str.lower().str.strip()
-        df_valid_email = df_dupe[df_dupe['email_limpo'].str.len() > 3]
-        dup_emails = df_valid_email[df_valid_email.duplicated(subset=['email_limpo'], keep=False)]['email_limpo']
-        mask_email = df_dupe['email_limpo'].isin(dup_emails)
-    if 'telefone' in df_dupe.columns:
-        df_dupe['tel_limpo'] = df_dupe['telefone'].astype(str).str.replace(r'\\D', '', regex=True)
-        df_valid_tel = df_dupe[df_dupe['tel_limpo'].str.len() > 8]
-        dup_tels = df_valid_tel[df_valid_tel.duplicated(subset=['tel_limpo'], keep=False)]['tel_limpo']
-        mask_tel = df_dupe['tel_limpo'].isin(dup_tels)
-    return df_dupe[mask_email | mask_tel].copy()
+# 1. Update Fase 1 Metrics
+content = re.sub(r'st\.metric\("Total de Envios", "1478"', 'st.metric("Total de Envios", "2126"', content)
+content = re.sub(r'help="Total de pessoas que entraram no fluxo \(V1\+V2\+V3\)"\)', 'help="Total de pessoas que entraram no fluxo (V1+V2+V3)")', content)
 
-def render_alert_duplicados(df_captacao):"""
+content = re.sub(r'st\.metric\("Taxa de Entrega", "95\.1\%"', 'st.metric("Taxa de Entrega", "95.5%"', content)
+content = re.sub(r'help="Leads que efetivamente receberam a mensagem \(1405/1478\)"', 'help="Leads que efetivamente receberam a mensagem (2030/2126)"', content)
 
-content = content.replace("def render_alert_duplicados(df_captacao):", func_get)
+content = re.sub(r'st\.metric\("Taxa de Clique \(CTR\)", "58\.6\%"', 'st.metric("Taxa de Clique (CTR)", "56.5%"', content)
+content = re.sub(r'help="824 cliques de interesse em 1405 entregas"', 'help="1147 cliques de interesse em 2030 entregas"', content)
 
-# 2. Refactor render_alert_duplicados to use get_duplicados
-regex_render = r'        df_dupe = df_captacao.*?duplicados_geral = df_dupe\[mask_email \| mask_tel\]\.copy\(\)'
-content = re.sub(regex_render, "        duplicados_geral = get_duplicados(df_captacao)", content, flags=re.DOTALL)
+content = re.sub(r'st\.metric\("Opt-out \(Rejeição\)", "2\.4\%"', 'st.metric("Opt-out (Rejeição)", "1.6%"', content)
+content = re.sub(r'help="O Manychat cravou 35 descadastros \(2\.4\%\)\."', 'help="O Manychat cravou 34 descadastros (1.6%)."', content)
 
-# 3. Update top metrics
-search_metrics = """        col1, col2, col3, col4, col5 = st.columns(5)
-        col1.metric("Leads Capturados", f"{total_capturados}", help="Volume bruto de cadastros registrados na base principal (Landing Page).")
-        col2.metric("Processados no WPP", f"{total_automação}", help="Volume de leads submetidos à esteira de automação e processamento via WhatsApp.")
-        col3.metric("Mensagens Entregues", f"{sucesso_envio}", f"{taxa_entrega:.1f}%", help="Volume absoluto e percentual de leads que receberam a mensagem com sucesso (Taxa de Entrega).")
-        col4.metric("Custo Estimado", f"US$ {custo_total:.2f}", f"US$ {custo_por_mensagem:.2f} / msg", delta_color="off", help="Projeção de custo operacional de disparo via API Oficial do WhatsApp Meta.")
-        col5.metric("Erros de Envio", f"{erros}", delta_color="inverse", help="Volume de falhas de entrega (Motivos: números inválidos, fixos, sem conta no app ou restrições da Meta).")"""
+# 2. Update Visão Macro (Sankey/Funnel)
+content = re.sub(
+    r'x=\[1478, 1405, 824, 746, 729, 370, 202\]',
+    'x=[2126, 2030, 1147, 1067, 1042, 528, 288]',
+    content
+)
 
-replace_metrics = """        total_duplicados = len(get_duplicados(df_captacao))
-        col1, col2, col3, col4, col5, col6 = st.columns(6)
-        col1.metric("Leads Capturados", f"{total_capturados}", help="Volume bruto de cadastros registrados na base principal (Landing Page).")
-        col2.metric("Duplicados", f"{total_duplicados}", delta_color="inverse", help="Cadastros suspeitos de repetição (mesmo e-mail ou telefone).")
-        col3.metric("Processados no WPP", f"{total_automação}", help="Volume de leads submetidos à esteira de automação e processamento via WhatsApp.")
-        col4.metric("Entregues", f"{sucesso_envio}", f"{taxa_entrega:.1f}%", help="Volume absoluto e percentual de leads que receberam a mensagem com sucesso (Taxa de Entrega).")
-        col5.metric("Custo Meta", f"US$ {custo_total:.2f}", delta_color="off", help="Projeção de custo operacional (API Oficial).")
-        col6.metric("Erros Envio", f"{erros}", delta_color="inverse", help="Volume de falhas de entrega (Motivos técnicos).")"""
+# 3. Update Público Atraído (Pie chart)
+content = re.sub(
+    r"df_pie = pd\.DataFrame\(\{'Perfil': \['Técnicos', 'Empreendedores'\], 'Qtd': \[598, 148\]\}\)",
+    "df_pie = pd.DataFrame({'Perfil': ['Técnicos', 'Empreendedores'], 'Qtd': [865, 202]})",
+    content
+)
 
-content = content.replace(search_metrics, replace_metrics)
+# 4. Update Comparativo de Copys
+content = re.sub(
+    r'maior volume de Engajamento \(321 cliques\)',
+    'maior volume de Engajamento (447 cliques)',
+    content
+)
+content = re.sub(
+    r'fig\.add_trace\(go\.Funnel\(name=\'V1 \(Direta\)\', y=\["Interesse na Copy", "Escolheu Perfil \(Téc/Emp\)"\], x=\[321, 321\]',
+    'fig.add_trace(go.Funnel(name=\'V1 (Direta)\', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[447, 447]',
+    content
+)
+content = re.sub(
+    r'fig\.add_trace\(go\.Funnel\(name=\'V2 \(1 Nó Extra\)\', y=\["Interesse na Copy", "Escolheu Perfil \(Téc/Emp\)"\], x=\[299, 253\]',
+    'fig.add_trace(go.Funnel(name=\'V2 (1 Nó Extra)\', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[421, 375]',
+    content
+)
+content = re.sub(
+    r'fig\.add_trace\(go\.Funnel\(name=\'V3 \(1 Nó Extra\)\', y=\["Interesse na Copy", "Escolheu Perfil \(Téc/Emp\)"\], x=\[204, 172\]',
+    'fig.add_trace(go.Funnel(name=\'V3 (1 Nó Extra)\', y=["Interesse na Copy", "Escolheu Perfil (Téc/Emp)"], x=[275, 245]',
+    content
+)
 
-with open("app.py", "w") as f:
+# 5. Update Comparativo de Perfis (Técnico / Empreendedor Funnels)
+content = re.sub(
+    r'fig_tec = go\.Figure\(go\.Funnel\(y=\["Escolheu Técnico", "Assistiu Vídeo Téc", "Entrou Grupo Téc"\], x=\[598, 584, 397\]',
+    'fig_tec = go.Figure(go.Funnel(y=["Escolheu Técnico", "Assistiu Vídeo Téc", "Entrou Grupo Téc"], x=[865, 845, 591]',
+    content
+)
+content = re.sub(
+    r'fig_emp = go\.Figure\(go\.Funnel\(y=\["Escolheu Empreendedor", "Assistiu Vídeo Emp", "Entrou Grupo Emp"\], x=\[148, 145, 91\]',
+    'fig_emp = go.Figure(go.Funnel(y=["Escolheu Empreendedor", "Assistiu Vídeo Emp", "Entrou Grupo Emp"], x=[202, 198, 125]',
+    content
+)
+
+with open('app.py', 'w', encoding='utf-8') as f:
     f.write(content)
+
+print("Update successfully applied.")

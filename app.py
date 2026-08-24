@@ -240,6 +240,7 @@ if not df_captacao.empty:
     if is_admin:
         opcoes_menu = [
             '📊 Visão Principal', 
+            '🎯 Raio-X Didático CPLs',
             '🕸️ Funil Manychat (WPP)', 
             '🚨 Monitoramento Avançado', 
             '🧠 Plano de Ação', 
@@ -249,12 +250,15 @@ if not df_captacao.empty:
             '5️⃣ E-mails'
         ]
     else:
-        opcoes_menu = ['📊 Visão Principal', '🕸️ Funil Manychat (WPP)']
+        opcoes_menu = ['📊 Visão Principal', '🎯 Raio-X Didático CPLs', '🕸️ Funil Manychat (WPP)']
         
     menu_selecionado = st.sidebar.radio("Ir para:", opcoes_menu, label_visibility="collapsed")
     
     # Define o título dinamicamente com base na aba selecionada
-    if menu_selecionado == '1️⃣ CPLs (Análise e Funil)':
+    if menu_selecionado == '🎯 Raio-X Didático CPLs':
+        title_placeholder.title("🎯 Raio-X Didático das CPLs")
+        subtitle_placeholder.markdown("História dos dados explicada passo a passo — 100% auditada direto dos fluxos do Manychat.")
+    elif menu_selecionado == '1️⃣ CPLs (Análise e Funil)':
         title_placeholder.title("📊 Dashboard Executivo (Tração, CPLs e Avisos)")
         subtitle_placeholder.markdown("Acompanhamento em tempo real do funil de conversão, engajamento de aulas e perfil dos leads.")
     else:
@@ -1095,18 +1099,176 @@ if not df_captacao.empty:
         except Exception as e:
             st.error(f"Erro ao processar a pesquisa: {e}")
             
+    elif menu_selecionado == '🎯 Raio-X Didático CPLs':
+        st.header("🎯 Raio-X Didático das CPLs (Auditoria 100% Real)")
+        st.markdown("A história dos dados contada passo a passo — sem achismos, com dados extraídos direto das telas do Manychat.")
+        
+        # --- PAINEL DE STATUS DA AUDITORIA ---
+        st.markdown("### 📋 Status da Auditoria por CPL")
+        s1, s2, s3, s4 = st.columns(4)
+        s1.success("🟢 **CPL 01**: 100% Auditado\n\n(3 Disparos | 9 Nós)")
+        s2.warning("⏳ **CPL 02**: Pendente\n\n(Aguardando prints)")
+        s3.warning("⏳ **CPL 03**: Pendente\n\n(Aguardando prints)")
+        s4.success("🟢 **CPL 04**: 100% Auditado\n\n(5 Nós Mapeados)")
+
+        st.markdown("---")
+
+        # =========================================================
+        # SEÇÃO 1: CPL 01 - DIDÁTICA E NARRATIVA
+        # =========================================================
+        st.subheader("1️⃣ CPL 01 — A Jornada Completa (10/08 a 12/08)")
+        st.markdown("A CPL 01 utilizou uma estratégia de **3 disparos encadeados** para alcançar, engajar e recuperar os leads.")
+
+        # KPIs Topo CPL 01
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("📤 Base Impactada", "4.604 leads", "Disparo Principal")
+        c2.metric("✅ Entregues (Nó 1)", "4.294 leads", "93.3% Entrega", delta_color="normal")
+        c3.metric("📖 Aberturas (Nó 1)", "3.167 leads", "68.8% Open Rate", delta_color="normal")
+        c4.metric("👆 Cliques no Broadcast", "1.023 leads", "23.8% CTR Exclusivo", delta_color="normal")
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        # CAPÍTULOS CPL 01
+        with st.container(border=True):
+            st.markdown("#### 🎬 Capítulo 1: O Disparo Principal (10/08 - 20h28)")
+            st.markdown("O broadcast inicial enviou o convite da Aula 1 para **4.604 pessoas**. **3.167 abriram (69%)** e a mensagem bifurcou os leads em dois caminhos:")
+
+            col_path_nao, col_path_sim = st.columns(2)
+
+            with col_path_nao:
+                st.markdown("""
+                <div style="background-color:#1a2b1a; border-left:4px solid #2ca02c; padding:15px; border-radius:8px;">
+                    <h5 style="color:#2ca02c; margin-0;">🟣 Caminho 'NÃO' (Ainda não assistiram)</h5>
+                    <p style="font-size:0.9rem; color:#ddd; margin-top:8px;">
+                        <b>540 leads</b> informaram que não tinham visto a aula.<br>
+                        • <b>Msg #5 (Link Direto):</b> 533 abriram e <b>477 clicaram (88% CTR)</b> para receber o link!<br>
+                        • <b>Msg #6 (Entrega da Aula):</b> 461 abriram e <b>376 clicaram p/ ASSISTIR (79% CTR)</b>.<br>
+                        • <b>SDR Virtual (Check-in 2h):</b> 370 receberam o lembrete e <b>145 confirmaram que assistiram (39% CTR)</b>.<br><br>
+                        <b style="color:#2ca02c;">⭐ Insight de Ouro:</b> Quando o link foi entregue de forma direta (sem pedágio de consentimento), <b>88% da base clicou na hora</b>.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with col_path_sim:
+                st.markdown("""
+                <div style="background-color:#3b2b1a; border-left:4px solid #f39c12; padding:15px; border-radius:8px;">
+                    <h5 style="color:#f39c12; margin-0;">🟡 Caminho 'SIM' (Já assistiram)</h5>
+                    <p style="font-size:0.9rem; color:#ddd; margin-top:8px;">
+                        <b>414 leads</b> disseram que já tinham assistido à Aula 1.<br>
+                        • <b>Msg #3 (Convite p/ Comentário):</b> 219 toparam ir ao Instagram (53%).<br>
+                        • <b>Msg #4 (Link do Post IG):</b> 170 clicaram no link e saíram do WhatsApp (78%).<br>
+                        • <b>Comentaram no IG (DM Automática):</b> <b>Apenas 21 pessoas comentaram de fato (12%)</b>.<br><br>
+                        <b style="color:#e74c3c;">🚨 Fuga de Canal:</b> Tirar o lead do WhatsApp para comentar no Instagram gerou uma <b>fuga de 99.5% da base total</b>. Apenas 21 de 4.604 pessoas completaram a ação.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("#### 🎬 Capítulo 2: O Lembrete Direto para o Instagram (10/08)")
+            st.markdown(
+                "Um segundo disparo paralelo foi feito diretamente para **164 leads** com o link direto da postagem do Instagram.\n\n"
+                "• **164 Entregues (100%)** | **144 Abertos (87.8%)** | **36 Cliques no Link (22.0% CTR)**\n\n"
+                "**Conclusão:** O post do Instagram acumulou **129 comentários**, provando que o engajamento orgânico do próprio Instagram teve um papel relevante em conjunto com o tráfego do WhatsApp."
+            )
+
+        with st.container(border=True):
+            st.markdown("#### 🎬 Capítulo 3: Reprise + Aviso Ao Vivo Aula 2 (11/08 a 12/08)")
+            st.markdown("No dia seguinte (11/08 às 18h30), um fluxo retido em **Atraso Inteligente** preparou a base para a Aula 2:")
+
+            r1, r2, r3 = st.columns(3)
+            r1.metric("1️⃣ Reprise (11/08 18h30)", "878 Entregues", "137 Cliques (15.6% CTR)")
+            r2.metric("2️⃣ Pernoite (Atraso)", "893 Aprovados", "Aguardaram até 12/08 08h")
+            r3.metric("3️⃣ Ao Vivo Aula 2 (08h00)", "229 Entregues", "59 Cliques (25.8% CTR)")
+
+            st.warning(
+                "⚠️ **Gargalo Técnico Detectado:** Das 893 pessoas aprovadas no Atraso Inteligente para receber o aviso da Aula 2 às 08h00, apenas **230 receberam**.\n\n"
+                "**Motivo:** A mensagem foi enviada usando a regra de *'Janela de 24 horas'*. Como 663 pessoas não tinham interagido nas últimas 24h, a Meta barrou a entrega.\n\n"
+                "**Solução p/ LC8:** Utilizar um *Template Aprovado da Meta* nos avisos pontuais de aula para garantir 100% de entrega a todos os 893 leads."
+            )
+
+        st.markdown("---")
+
+        # =========================================================
+        # SEÇÃO 2: CPL 04 - DIDÁTICA E APRENDIZADO
+        # =========================================================
+        st.subheader("4️⃣ CPL 04 — O Impacto do 'Botão de Consentimento' (17/08)")
+        
+        col_cpl4_funil, col_cpl4_text = st.columns([1, 1])
+
+        with col_cpl4_funil:
+            with st.container(border=True):
+                st.markdown("#### 📉 Funil Auditado CPL 04")
+                fig_cpl4 = go.Figure(go.Funnel(
+                    y=["1. Disparados", "2. Entregues (90.9%)", "3. Abertos (56.9%)", "4. Cliques (5.0%)"],
+                    x=[4543, 4129, 2348, 208],
+                    textinfo="value+percent initial",
+                    marker={"color": ["#4B8BBE", "#28a745", "#ff7f0e", "#dc3545"]}
+                ))
+                fig_cpl4.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=260, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
+                st.plotly_chart(fig_cpl4, use_container_width=True)
+
+        with col_cpl4_text:
+            st.markdown("""
+            <div style="background-color:#2b1a1a; border-left:4px solid #dc3545; padding:15px; border-radius:8px;">
+                <h5 style="color:#dc3545; margin-0;">🚨 O Erro do Pedágio em Números</h5>
+                <p style="font-size:0.9rem; color:#ddd; margin-top:8px;">
+                    • <b>2.348 pessoas abriram</b> a mensagem (57% Open Rate — excelente!).<br>
+                    • Porém, a mensagem exigia clicar em <i>'Receber Informações'</i> antes de liberar o link.<br>
+                    • Apenas <b>208 pessoas clicaram em algum botão</b> (8.9% dos que abriram).<br>
+                    • <b>Fuga de 95%:</b> 2.140 pessoas leram a mensagem e fecharam o WhatsApp sem interagir.<br><br>
+                    <b>Conclusão:</b> O público técnico quer o conteúdo direto. Intermediários matam a conversão.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("---")
+
+        # =========================================================
+        # SEÇÃO 3: RECOMENDAÇÕES EXECUTIVAS PARA O LC8
+        # =========================================================
+        st.subheader("💡 Plano de Ação Estratégico para o Lançamento LC8")
+
+        p1, p2, p3 = st.columns(3)
+
+        with p1:
+            st.success(
+                "#### 🟢 1. Link Direto sem Pedágio\n\n"
+                "**Ação:** A primeira mensagem de cada CPL deve conter o link da aula diretamente no botão ('Assistir Aula 1 Agora').\n\n"
+                "**Impacto Esperado:** Subir o CTR de 5% para 25%+ (baseado na prova da CPL 01 Msg #5)."
+            )
+
+        with p2:
+            st.warning(
+                "#### 🟡 2. Retenção Total no WhatsApp\n\n"
+                "**Ação:** Não direcionar o lead para comentar no Instagram durante a maratona de aulas.\n\n"
+                "**Impacto Esperado:** Manter 100% da audiência engajada no canal oficial de vendas (WhatsApp)."
+            )
+
+        with p3:
+            st.info(
+                "#### 🔵 3. Templates Pagos nas Aulas\n\n"
+                "**Ação:** Usar Templates Aprovados da Meta nos disparos das 08h00 do dia da aula.\n\n"
+                "**Impacto Esperado:** Destravar os 74% de leads barrados pela regra da Janela de 24h."
+            )
+
     elif menu_selecionado == '1️⃣ CPLs (Análise e Funil)':
         st.header("1️⃣ Dashboard de Tração e CPLs")
         st.markdown("Análise de conversão do funil de avisos: Disparos ➔ Entrega ➔ Clique.")
         
-        # Dados de CPLs atualizados (Com Custos do Manychat)
+        # Dados de CPLs — Auditados nó a nó via fluxos Manychat (24/08/2026)
+        # CPL 01: Auditado fluxo por fluxo
+        #   Disparo 1 (Inscritos): 4.604 env | 4.294 ent (93,3%) | 3.167 abertos (68,8%) | 1.023 cliques unicos (22,2%)
+        #   Disparo 2 (Aviso IG): 164 env | 164 ent (100%) | 144 abertos (87,8%) | 36 cliques (22,0%)
+        #   Disparo 3 (Reprise/Ao Vivo): 887 env | 878 ent (98,9%) | 712 abertos (80,2%) | 137 cliques reprise (15,6%) + 59 cliques ao vivo (25,8%)
+        # CPL 04: Auditado nó a nó
+        #   Nó 01: 4.543 env | 4.129 ent | 2.348 abertos | 208 cliques (162 Receber Info + 48 Bloquear)
         df_cpl = pd.DataFrame({
             "CPL": ["CPL 01", "CPL 02", "CPL 03", "CPL 04"],
-            "Data_Disparo": ["11/08/2026", "13/08/2026", "15/08/2026", "17/08/2026"],
-            "Disparados": [3090, 896, 1334, 4543],
-            "Entregues": [3050, 890, 1310, 4124],
-            "Cliques": [979, 63, 89, 89],
-            "Custo_US": [33.22, 36.98, 49.27, 45.00]
+            "Data_Disparo": ["10/08/2026", "13/08/2026", "15/08/2026", "17/08/2026"],
+            "Disparados": [4604,  896, 1334, 4543],
+            "Entregues":  [4294,  890, 1310, 4129],
+            "Cliques":    [1023,   63,   89,  208],
+            "Custo_US":   [33.22, 36.98, 49.27, 45.00]
         })
         
         cpl_selecionado = st.selectbox("Selecione o CPL para análise detalhada:", ["Visão Geral"] + df_cpl['CPL'].tolist())
@@ -1114,63 +1276,97 @@ if not df_captacao.empty:
         st.markdown("<br>", unsafe_allow_html=True)
         
         if cpl_selecionado == "Visão Geral":
-            with st.container(border=True):
-                st.markdown("### 📊 Funil Consolidado (Todos os CPLs)")
-                
-                # Somatórias Globais
-                total_disp = df_cpl['Disparados'].sum()
-                total_ent = df_cpl['Entregues'].sum()
-                total_cli = df_cpl['Cliques'].sum()
-                
-                # Métricas em Cards
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    st.metric("Total Enviado", f"{total_disp:,}".replace(',','.'))
-                with col2:
-                    taxa_ent = (total_ent / total_disp) * 100 if total_disp > 0 else 0
-                    st.metric("Total Entregue", f"{total_ent:,}".replace(',','.'), f"{taxa_ent:.1f}% de Entrega", delta_color="normal")
-                with col3:
-                    taxa_cli = (total_cli / total_ent) * 100 if total_ent > 0 else 0
-                    st.metric("Total de Cliques", f"{total_cli:,}".replace(',','.'), f"{taxa_cli:.1f}% CTR", delta_color="normal")
-                
-                # Gráfico de Funil
-                fig_funnel = go.Figure(go.Funnel(
-                    y=["Enviados", "Entregues (Inbox)", "Cliques (Acessos)"],
-                    x=[total_disp, total_ent, total_cli],
-                    textinfo="value+percent initial",
-                    marker={"color": ["#4B8BBE", "#28a745", "#FFD43B"]}
-                ))
-                fig_funnel.update_layout(margin=dict(t=20, b=20), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
-                st.plotly_chart(fig_funnel, use_container_width=True)
-                
-                st.warning(f"**🔍 Insight Global:** A taxa média de clique de toda a campanha de CPLs é de **{taxa_cli:.1f}%**. A quebra primária acontece entre a entrega e o clique. O WhatsApp entrega excelentemente, mas a Copy não está forçando o lead a agir.")
-                
-                st.markdown("---")
-                st.markdown("## 🧠 Autópsia Final e Regras de Ouro (Próximo Lançamento)")
-                st.markdown("Um compilado das grandes lições aprendidas nos disparos das CPLs, focadas em maximizar a entrega e evitar punições do WhatsApp.")
-                
+
+            # --- KPIs GLOBAIS ---
+            total_disp = df_cpl['Disparados'].sum()
+            total_ent  = df_cpl['Entregues'].sum()
+            total_cli  = df_cpl['Cliques'].sum()
+            taxa_ent   = (total_ent / total_disp) * 100 if total_disp > 0 else 0
+            taxa_cli   = (total_cli / total_ent)  * 100 if total_ent  > 0 else 0
+
+            k1, k2, k3, k4 = st.columns(4)
+            k1.metric("📤 Total Disparado",  f"{total_disp:,}".replace(',','.'))
+            k2.metric("✅ Total Entregue",   f"{total_ent:,}".replace(',','.'),  f"{taxa_ent:.1f}% de entrega",  delta_color="normal")
+            k3.metric("👆 Total de Cliques", f"{total_cli:,}".replace(',','.'),  f"{taxa_cli:.1f}% CTR global",  delta_color="normal")
+            k4.metric("📅 CPLs Realizadas",  "4",  "11/08 a 17/08/2026", delta_color="off")
+
+            st.markdown("<br>", unsafe_allow_html=True)
+
+            # --- FUNIL (esq) + CARDS CPL (dir) ---
+            col_funil, col_cards = st.columns([1, 1], gap="large")
+
+            with col_funil:
+                with st.container(border=True):
+                    st.markdown("#### 📊 Funil Consolidado")
+                    fig_funnel = go.Figure(go.Funnel(
+                        y=["Disparados", "Entregues", "Cliques"],
+                        x=[total_disp, total_ent, total_cli],
+                        textinfo="value+percent initial",
+                        textfont=dict(size=14),
+                        marker={"color": ["#4B8BBE", "#28a745", "#FFD43B"]}
+                    ))
+                    fig_funnel.update_layout(
+                        margin=dict(t=10, b=10, l=10, r=10),
+                        height=320,
+                        paper_bgcolor="rgba(0,0,0,0)",
+                        plot_bgcolor="rgba(0,0,0,0)"
+                    )
+                    st.plotly_chart(fig_funnel, use_container_width=True)
+                    st.caption(f"De **{total_disp:,}** disparados, **{total_cli:,}** interagiram ({taxa_cli:.1f}% CTR)".replace(',','.'))
+
+            with col_cards:
+                st.markdown("#### 🗂️ Resumo por CPL")
+
+                anotacoes = {
+                    "CPL 01": ("🟢", "#1a3a1a", "#2ca02c", "Auditado: 4.604 disp. | 4.294 ent. (93,3%) | 1.023 cliques (23.8% CTR)<br>Pico de 88% CTR quando o link foi enviado sem fricção."),
+                    "CPL 02": ("🔴", "#3a1a1a", "#e74c3c", "Template 'Utility' reclassificado para 'Marketing'<br>Verba esgotada — 80% da base não recebeu."),
+                    "CPL 03": ("🟡", "#2a2a10", "#c9a800", "Teste A/B/C realizado<br>Imagem + Pergunta teve melhor CTR (10%)."),
+                    "CPL 04": ("🔴", "#3a1a1a", "#e74c3c", "Botão de consentimento causou fuga de 95%<br>Apenas 208 de 4.543 interagiram."),
+                }
+
+                for _, row in df_cpl.iterrows():
+                    cpl = row['CPL']
+                    emoji, bg, cor, nota = anotacoes[cpl]
+                    ctr_card = (row['Cliques'] / row['Entregues'] * 100) if row['Entregues'] > 0 else 0
+                    tx_ent_card = (row['Entregues'] / row['Disparados'] * 100) if row['Disparados'] > 0 else 0
+                    st.markdown(f"""
+                    <div style="background:{bg}; border-left:4px solid {cor}; border-radius:8px;
+                                padding:12px 16px; margin-bottom:10px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-weight:700; font-size:1rem;">{emoji} {cpl}
+                                <span style="font-size:0.78rem; color:#aaa; font-weight:400; margin-left:8px;">{row['Data_Disparo']}</span>
+                            </span>
+                            <span style="font-size:0.9rem; color:{cor}; font-weight:700;">{ctr_card:.1f}% CTR</span>
+                        </div>
+                        <div style="display:flex; gap:16px; margin:6px 0 4px 0; font-size:0.82rem; color:#ccc;">
+                            <span>📤 {row['Disparados']:,} disp.</span>
+                            <span>✅ {row['Entregues']:,} ent. ({tx_ent_card:.0f}%)</span>
+                            <span>👆 {row['Cliques']:,} cliques</span>
+                        </div>
+                        <div style="font-size:0.8rem; color:#bbb; border-top:1px solid #333;
+                                    padding-top:6px; margin-top:4px;">{nota}</div>
+                    </div>
+                    """.replace(',', '.'), unsafe_allow_html=True)
+
+            # --- AUTÓPSIA EM EXPANDER (COLAPSADO) ---
+            st.markdown("<br>", unsafe_allow_html=True)
+            with st.expander("📚 Ver Autópsia Completa e Regras de Ouro (Próximo Lançamento)"):
                 st.markdown("### ⚠️ O Perigo do 'Botão de Consentimento' (CPL 1 e CPL 4)")
                 st.error("**O Erro:** Exigir que o lead clique em 'Receber Informação' na primeira mensagem antes de entregar o link. Isso causou uma **fuga de 68% na CPL 01 e de assustadores 95% na CPL 04**.")
                 st.warning("**A Punição da Meta:** Quando você dispara para milhares de pessoas e a grande maioria não interage, a Meta enxerga **Baixo Engajamento**. O algoritmo de Qualidade da Conta (Quality Rating) cai para Amarelo ou Vermelho. Trabalhar com a base inteira sem engajamento faz a Meta limitar os envios diários (Tier Limits) e derrubar a sua taxa de entrega de forma generalizada, interpretando a automação como SPAM.")
                 st.success("**A Solução:** Comunicação direta. A primeira mensagem já deve entregar o valor real (o link da aula) com um botão claro ('Assistir Agora'). A fricção deve ser zero para consumir o evento.")
-                
                 st.markdown("---")
-                
                 st.markdown("### 💸 A Armadilha da 'Copy Promocional' (CPL 2 e 3)")
                 st.error("**O Erro:** Usar textos que soam muito comerciais. A Meta reclassificou templates 'Utility' para 'Marketing' de surpresa. Isso esgotou a verba da carteira em segundos e bloqueou os disparos, **barrando 80% da base** de receber os avisos das CPLs 02 e 03.")
                 st.success("**A Solução:** Blindar a Copy. Reduza gatilhos de escassez agressivos (ex: 'Liberado', 'Última Chance', Emojis de 🚨) nos avisos de aula gratuitos. Torne o texto puramente transacional e educacional para o crivo da IA do WhatsApp.")
-                
                 st.markdown("---")
-                
                 st.markdown("### 🧭 O Labirinto de Canais")
-                st.error("**O Erro:** Pegar o lead altamente engajado (que já clicou em 'Já assisti' ou 'Aulas Passadas') e forçá-lo a sair do WhatsApp para ir comentar em um post do Instagram. Isso quebrou o fluxo e causou **66% a 75% de fuga** nas interações.")
+                st.error("**O Erro:** Pegar o lead altamente engajado e forçá-lo a sair do WhatsApp para comentar em um post do Instagram. Isso causou **66% a 75% de fuga** nas interações.")
                 st.success("**A Solução:** Retenção absoluta. O WhatsApp é o ambiente de conversão. Se o lead engaja, ofereça um PDF nativo ou convide-o para o 'Grupo VIP' (como feito com sucesso na Reprise da CPL 3, convertendo 28%).")
-                
                 st.markdown("---")
-                
                 st.markdown("### 🧪 A Força do Visual (UX no WhatsApp)")
-                st.success("**O Acerto:** O Teste A/B/C da CPL 03 provou que o template com **Imagem + Pergunta** (Copy B) teve o maior CTR (10%). Por outro lado, enviar o link escondido no meio de um texto longo (como na Reprise da CPL 3) dificulta a ação. **Regra Máxima:** Use imagens para fisgar a atenção e SEMPRE utilize 'Botões' de ação claros no lugar de links no meio do texto.")
-                
+                st.success("**O Acerto:** O Teste A/B/C da CPL 03 provou que o template com **Imagem + Pergunta** (Copy B) teve o maior CTR (10%). **Regra Máxima:** Use imagens para fisgar a atenção e SEMPRE utilize 'Botões' de ação claros no lugar de links no meio do texto.")
+
         else:
             # Visão Individual por CPL
             with st.container(border=True):
@@ -1211,25 +1407,25 @@ if not df_captacao.empty:
                         
                         with col0:
                             with st.container(border=True):
-                                st.metric("1. Disparo Total", "4.259", "Base Ativa", delta_color="off")
+                                st.metric("1. Disparo Total", "4.604", "Base Enviada", delta_color="off")
                         with arr0:
                             st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
                             
                         with col1:
                             with st.container(border=True):
-                                st.metric("2. Abriram", "3.153", "74% de Abertura", delta_color="normal")
+                                st.metric("2. Entregues", "4.294", "93.3% Entrega", delta_color="normal")
                         with arr1:
                             st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
                             
                         with col2:
                             with st.container(border=True):
-                                st.metric("3. Clicaram", "1.022", "32% p/ Info", delta_color="normal")
+                                st.metric("3. Abertos", "3.167", "68.8% Abertura", delta_color="normal")
                         with arr2:
                             st.markdown("<h2 style='text-align: center; margin-top: 15px;'>➔</h2>", unsafe_allow_html=True)
                             
                         with col3:
                             with st.container(border=True):
-                                st.metric("4. Interagiram", "791", "Passaram o Gargalo", delta_color="off")
+                                st.metric("4. Clicaram Botão", "1.023", "22.2% p/ Info", delta_color="off")
                             
                         st.markdown("<br>", unsafe_allow_html=True)
                         
