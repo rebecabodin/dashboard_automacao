@@ -1107,7 +1107,7 @@ if not df_captacao.empty:
         st.markdown("### 📋 Status da Auditoria por CPL")
         s1, s2, s3, s4 = st.columns(4)
         s1.success("🟢 **CPL 01**: 100% Auditado\n\n(3 Disparos | 9 Nós)")
-        s2.warning("⏳ **CPL 02**: Pendente\n\n(Aguardando prints)")
+        s2.success("🟢 **CPL 02**: 100% Auditado\n\n(1 Disparo | 5 Nós)")
         s3.warning("⏳ **CPL 03**: Pendente\n\n(Aguardando prints)")
         s4.success("🟢 **CPL 04**: 100% Auditado\n\n(5 Nós Mapeados)")
 
@@ -1189,6 +1189,47 @@ if not df_captacao.empty:
         st.markdown("---")
 
         # =========================================================
+        # SEÇÃO 2: CPL 02 - DIDÁTICA E NARRATIVA
+        # =========================================================
+        st.subheader("2️⃣ CPL 02 — O Gargalo de Categoria na Meta (12/08)")
+        st.markdown("A CPL 02 ilustra o maior desafio de infraestrutura do lançamento: o bloqueio/reclassificação de disparo da Meta.")
+
+        # KPIs Topo CPL 02
+        cpl2_1, cpl2_2, cpl2_3, cpl2_4 = st.columns(4)
+        cpl2_1.metric("📤 Base Alvo Intentada", "4.568 leads", "Painel Manychat")
+        cpl2_2.metric("🚫 Enviados Reais (Nó 1)", "896 leads", "19.6% da base total", delta_color="inverse")
+        cpl2_3.metric("✅ Entregues Reais", "822 leads", "91.7% dos enviados", delta_color="normal")
+        cpl2_4.metric("📖 Open Rate (Nó 1)", "579 leads", "65.0% de Abertura", delta_color="normal")
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("#### 🎬 A Jornada do Lead na CPL 02")
+            
+            cpl2_col_text, cpl2_col_alert = st.columns([1, 1])
+
+            with cpl2_col_text:
+                st.markdown("""
+                • <b>Broadcast Inicial:</b> 896 enviados ➔ 822 entregues ➔ <b>579 abriram (65%)</b>.<br>
+                • <b>94 pessoas únicas clicaram</b> em botões de ação (11.4% CTR).<br>
+                • <b>Path 'Assistir Agora':</b> 63 solicitaram a aula ➔ <b>55 clicaram p/ ABRIR A AULA (87.3% CTR)</b>.<br>
+                • <b>Path 'Já assisti':</b> 79 responderam ➔ 30 toparam ir ao IG (38%) ➔ <b>25 abriram o Instagram (83.3%)</b>.<br>
+                • <b>Opt-out (Parar mensagens):</b> Apenas 7 solicitaram (0.85% da base) ➔ 0 reverteram.
+                """, unsafe_allow_html=True)
+
+            with cpl2_col_alert:
+                st.markdown("""
+                <div style="background-color:#3b1a1a; border-left:4px solid #e74c3c; padding:15px; border-radius:8px;">
+                    <h5 style="color:#e74c3c; margin-0;">🚨 O Aprendizado Crítico da CPL 02</h5>
+                    <p style="font-size:0.9rem; color:#ddd; margin-top:8px;">
+                        <b>Mais de 3.600 leads (80.4% da base)</b> foram impedidos de receber o aviso da Aula 2.<br><br>
+                        <b>Motivo:</b> A Meta reclassificou o template de <i>'Utility'</i> para <i>'Marketing'</i> durante a transmissão ou estourou o limite de orçamento/tier por disparo massivo.<br><br>
+                        <b>Solução p/ LC8:</b> Diversificar janelas de envio e manter saldo em carteira reservado para templates da categoria Marketing para evitar travamento da régua.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
+        # =========================================================
         # SEÇÃO 2: CPL 04 - DIDÁTICA E APRENDIZADO
         # =========================================================
         st.subheader("4️⃣ CPL 04 — O Impacto do 'Botão de Consentimento' (17/08)")
@@ -1256,18 +1297,16 @@ if not df_captacao.empty:
         st.markdown("Análise de conversão do funil de avisos: Disparos ➔ Entrega ➔ Clique.")
         
         # Dados de CPLs — Auditados nó a nó via fluxos Manychat (24/08/2026)
-        # CPL 01: Auditado fluxo por fluxo
-        #   Disparo 1 (Inscritos): 4.604 env | 4.294 ent (93,3%) | 3.167 abertos (68,8%) | 1.023 cliques unicos (22,2%)
-        #   Disparo 2 (Aviso IG): 164 env | 164 ent (100%) | 144 abertos (87,8%) | 36 cliques (22,0%)
-        #   Disparo 3 (Reprise/Ao Vivo): 887 env | 878 ent (98,9%) | 712 abertos (80,2%) | 137 cliques reprise (15,6%) + 59 cliques ao vivo (25,8%)
-        # CPL 04: Auditado nó a nó
-        #   Nó 01: 4.543 env | 4.129 ent | 2.348 abertos | 208 cliques (162 Receber Info + 48 Bloquear)
+        # CPL 01: Auditado fluxo por fluxo (4.604 disp | 4.294 ent | 1.023 cliques)
+        # CPL 02: Auditado nó a nó (896 disp | 822 ent [91.7%] | 579 abertos [65.0%] | 94 cliques unicos [11.4%])
+        #   80% da base barrada na Meta (4.568 alvos intentados vs 896 enviados)
+        # CPL 04: Auditado nó a nó (4.543 disp | 4.129 ent | 208 cliques)
         df_cpl = pd.DataFrame({
             "CPL": ["CPL 01", "CPL 02", "CPL 03", "CPL 04"],
-            "Data_Disparo": ["10/08/2026", "13/08/2026", "15/08/2026", "17/08/2026"],
-            "Disparados": [4604,  896, 1334, 4543],
-            "Entregues":  [4294,  890, 1310, 4129],
-            "Cliques":    [1023,   63,   89,  208],
+            "Data_Disparo": ["10/08/2026", "12/08/2026", "15/08/2026", "17/08/2026"],
+            "Disparados": [4604,   896, 1334, 4543],
+            "Entregues":  [4294,   822, 1310, 4129],
+            "Cliques":    [1023,    94,   89,  208],
             "Custo_US":   [33.22, 36.98, 49.27, 45.00]
         })
         
