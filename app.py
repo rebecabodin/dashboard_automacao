@@ -1489,6 +1489,50 @@ if not df_captacao.empty:
                 *Por que se mantém em Utility:* Texto 100% transacional, focado estritamente na confirmação de entrega do serviço no qual o lead se cadastrou.
                 """)
 
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("---")
+
+        # =========================================================
+        # SEÇÃO 6: O PERIGO DO SILÊNCIO ENTRE LANÇAMENTOS (PARA LEIGOS)
+        # =========================================================
+        st.subheader("⚠️ O Perigo do 'Efeito Sanfona' no WhatsApp entre Lançamentos")
+        st.markdown("Entenda o que acontece quando o WhatsApp dispara mil mensagens no lançamento e depois fica semanas em silêncio.")
+
+        w_col1, w_col2, w_col3 = st.columns(3)
+
+        with w_col1:
+            st.markdown("""
+            <div style="background-color:#3b1a1a; border-left:4px solid #e74c3c; padding:15px; border-radius:8px;">
+                <h5 style="color:#e74c3c; margin:0;">📉 1. O Risco da Inatividade</h5>
+                <p style="font-size:0.85rem; color:#ddd; margin-top:8px;">
+                    Se o seu WhatsApp dispara 5.000 mensagens no lançamento e depois fica <b>30 dias parado sem enviar nada</b>, a Meta 'esquece' seu número.<br><br>
+                    <b>O Castigo:</b> A Meta reduz seu limite diário (ex: de 10.000 mensagens/dia para apenas 1.000/dia), travando o envio da CPL 01 do próximo lançamento!
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with w_col2:
+            st.markdown("""
+            <div style="background-color:#3b2b1a; border-left:4px solid #f39c12; padding:15px; border-radius:8px;">
+                <h5 style="color:#f39c12; margin:0;">⚡ 2. O Alerta Antispam</h5>
+                <p style="font-size:0.85rem; color:#ddd; margin-top:8px;">
+                    Quando um número parado dispara milhares de mensagens de repente em 1 hora, a robô da Meta acha que o número foi <b>hackeado ou é SPAM</b>.<br><br>
+                    Se poucas pessoas denunciarem no 1º dia, a entrega cai e a Meta deixa o número em 'ritmo lento' (Throttling).
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with w_col3:
+            st.markdown("""
+            <div style="background-color:#1a3b2b; border-left:4px solid #2ecc71; padding:15px; border-radius:8px;">
+                <h5 style="color:#2ecc71; margin:0;">🛡️ 3. A Solução Fácil p/ o LC8</h5>
+                <p style="font-size:0.85rem; color:#ddd; margin-top:8px;">
+                    <b>• Manter o número 'acordado':</b> Mande 50 a 100 mensagens por semana (suporte, dicas rápidas ou onboarding) para o número não 'dormir'.<br><br>
+                    <b>• Aquecer 7 dias antes:</b> Antes da CPL 01, comece disparando para 500 pessoas, depois 2.000, até chegar na base inteira.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
     elif menu_selecionado == '1️⃣ CPLs (Análise e Funil)':
         st.header("1️⃣ Dashboard de Tração e CPLs")
         st.markdown("Análise de conversão do funil de avisos: Disparos ➔ Entrega ➔ Clique.")
