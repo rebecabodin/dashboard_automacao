@@ -1078,53 +1078,51 @@ if not df_captacao.empty:
         _fat_gross_fmt        = f"{faturamento_lanc_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
         _ticket_medio_fmt     = f"{ticket_medio_lanc:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
 
-        st.markdown(f"""
-        <div style="background-color:#0f172a; border-left:5px solid #6366f1; padding:18px 22px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-            <h4 style="color:#ffffff; font-weight:700; margin:0 0 10px 0; text-align:left;">1. 📈 Visão Geral do Funil de Lançamento (Macro KPIs)</h4>
-            <p style="color:#cbd5e1; font-size:0.9rem; margin:0 0 12px 0; text-align:left; line-height:1.6;">
-                Tabela consolidada das métricas de topo ao final do funil de vendas (Auditado em Tempo Real).
-            </p>
-            <table style="width:100%; border-collapse:collapse; color:#ffffff; font-size:0.88rem; text-align:left;">
-                <tr style="background-color:#1e293b; border-bottom:2px solid #334155;">
-                    <th style="padding:10px;">Etapa do Funil</th>
-                    <th style="padding:10px;">Volume Absoluto</th>
-                    <th style="padding:10px;">Taxa de Conversão / Eficiência</th>
-                    <th style="padding:10px;">Diagnóstico da Engenharia</th>
-                </tr>
-                <tr style="border-bottom:1px solid #334155;">
-                    <td style="padding:10px;"><b>Leads Capturados (LP)</b></td>
-                    <td style="padding:10px;">{_total_cap_fmt} leads</td>
-                    <td style="padding:10px;">100,0%</td>
-                    <td style="padding:10px; color:#a7f3d0;">Base robusta capturada na Landing Page.</td>
-                </tr>
-                <tr style="border-bottom:1px solid #334155;">
-                    <td style="padding:10px;"><b>Entregues no WhatsApp (Boas-Vindas)</b></td>
-                    <td style="padding:10px;">{_sucesso_envio_fmt} leads</td>
-                    <td style="padding:10px; color:#34d399;"><b>{_taxa_entrega_fmt}%</b></td>
-                    <td style="padding:10px;">Ótima taxa de entrega inicial da API Oficial.</td>
-                </tr>
-
-                <tr style="border-bottom:1px solid #334155;">
-                    <td style="padding:10px;"><b>Participantes da Pesquisa</b></td>
-                    <td style="padding:10px;">4.096 respostas</td>
-                    <td style="padding:10px; color:#34d399;"><b>~73,1% da base</b></td>
-                    <td style="padding:10px;">Engajamento massivo na Pesquisa Check-In LC7 (base real pesquisa.csv).</td>
-                </tr>
-                <tr style="border-bottom:1px solid #334155;">
-                    <td style="padding:10px;"><b>Leads no Checkout (Carrinho)</b></td>
-                    <td style="padding:10px;">{_carrinho_leads_fmt} leads</td>
-                    <td style="padding:10px;">{_carrinho_taxa_fmt}% da base total</td>
-                    <td style="padding:10px;">62 via Pop-Up LP + 14 no Checkout Hotmart.</td>
-                </tr>
-                <tr>
-                    <td style="padding:10px;"><b>Vendas Aprovadas (Lançamento Pós 16/08)</b></td>
-                    <td style="padding:10px; color:#34d399;"><b>{vendas_lanc_qtd} vendas</b></td>
-                    <td style="padding:10px; color:#34d399;"><b>{_conv_checkout_fmt}% do checkout</b></td>
-                    <td style="padding:10px; color:#34d399;"><b>R$ {_fat_oferta_fmt} Base Ofertas</b> (Gross: R$ {_fat_gross_fmt} | Ticket Médio: R$ {_ticket_medio_fmt}).</td>
-                </tr>
-            </table>
-        </div>
-        """, unsafe_allow_html=True)
+        html_tabela_macro = f"""<div style="background-color:#0f172a; border-left:5px solid #6366f1; padding:18px 22px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+<h4 style="color:#ffffff; font-weight:700; margin:0 0 10px 0; text-align:left;">1. 📈 Visão Geral do Funil de Lançamento (Macro KPIs)</h4>
+<p style="color:#cbd5e1; font-size:0.9rem; margin:0 0 12px 0; text-align:left; line-height:1.6;">
+Tabela consolidada das métricas de topo ao final do funil de vendas (Auditado em Tempo Real).
+</p>
+<table style="width:100%; border-collapse:collapse; color:#ffffff; font-size:0.88rem; text-align:left;">
+<tr style="background-color:#1e293b; border-bottom:2px solid #334155;">
+<th style="padding:10px;">Etapa do Funil</th>
+<th style="padding:10px;">Volume Absoluto</th>
+<th style="padding:10px;">Taxa de Conversão / Eficiência</th>
+<th style="padding:10px;">Diagnóstico da Engenharia</th>
+</tr>
+<tr style="border-bottom:1px solid #334155;">
+<td style="padding:10px;"><b>Leads Capturados (LP)</b></td>
+<td style="padding:10px;">{_total_cap_fmt} leads</td>
+<td style="padding:10px;">100,0%</td>
+<td style="padding:10px; color:#a7f3d0;">Base robusta capturada na Landing Page.</td>
+</tr>
+<tr style="border-bottom:1px solid #334155;">
+<td style="padding:10px;"><b>Entregues no WhatsApp (Boas-Vindas)</b></td>
+<td style="padding:10px;">{_sucesso_envio_fmt} leads</td>
+<td style="padding:10px; color:#34d399;"><b>{_taxa_entrega_fmt}%</b></td>
+<td style="padding:10px;">Ótima taxa de entrega inicial da API Oficial.</td>
+</tr>
+<tr style="border-bottom:1px solid #334155;">
+<td style="padding:10px;"><b>Participantes da Pesquisa</b></td>
+<td style="padding:10px;">4.096 respostas</td>
+<td style="padding:10px; color:#34d399;"><b>~73,1% da base</b></td>
+<td style="padding:10px;">Engajamento massivo na Pesquisa Check-In LC7 (base real pesquisa.csv).</td>
+</tr>
+<tr style="border-bottom:1px solid #334155;">
+<td style="padding:10px;"><b>Leads no Checkout (Carrinho)</b></td>
+<td style="padding:10px;">{_carrinho_leads_fmt} leads</td>
+<td style="padding:10px;">{_carrinho_taxa_fmt}% da base total</td>
+<td style="padding:10px;">62 via Pop-Up LP + 14 no Checkout Hotmart.</td>
+</tr>
+<tr>
+<td style="padding:10px;"><b>Vendas Aprovadas (Lançamento Pós 16/08)</b></td>
+<td style="padding:10px; color:#34d399;"><b>{vendas_lanc_qtd} vendas</b></td>
+<td style="padding:10px; color:#34d399;"><b>{_conv_checkout_fmt}% do checkout</b></td>
+<td style="padding:10px; color:#34d399;"><b>R$ {_fat_oferta_fmt} Base Ofertas</b> (Gross: R$ {_fat_gross_fmt} | Ticket Médio: R$ {_ticket_medio_fmt}).</td>
+</tr>
+</table>
+</div>"""
+        st.markdown(html_tabela_macro, unsafe_allow_html=True)
 
         st.markdown("""
         <div style="background-color:#0f172a; border-left:5px solid #38bdf8; padding:18px 22px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
