@@ -240,11 +240,11 @@ if not df_captacao.empty:
     if is_admin:
         opcoes_menu = [
             '📊 Visão Principal', 
-            '🎯 Raio-X Didático CPLs',
             '🕸️ Funil Manychat (WPP)', 
             '🚨 Monitoramento Avançado', 
             '🧠 Plano de Ação', 
             '📊 Pesquisa (WordCloud)', 
+            '🎯 Raio-X Didático CPLs',
             '2️⃣ Vendas e Carrinho',
             '5️⃣ E-mails'
         ]
