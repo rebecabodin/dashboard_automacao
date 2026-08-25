@@ -945,7 +945,7 @@ if not df_captacao.empty:
             st.markdown("### 🚨 Diagnóstico de Perfis")
             st.warning("**Insight DBA:** O seu funil apresenta uma taxa alta de ação na pós-visualização do vídeo.\n\n**🎯 Destaque para a Repescagem:** A sua estratégia de perguntar 'Conseguiu entrar no grupo?' é fantástica! O lembrete secundário foi acionado para 213 Técnicos e 60 Empreendedores que clicaram em 'Não consegui'. Desse volume, o link bruto da repescagem conseguiu salvar e converter **181 Técnicos** (85.0%) e **55 Empreendedores** (91.7%). Sem esse nó inteligente, você teria perdido 236 leads extremamente qualificados e o seu CPL (Custo por Lead) teria disparado!")
         
-    elif menu_selecionado in ['📊 Pesquisa (WordCloud)', 'Pesquisa', '5️⃣ Pesquisa', '🧠 Pesquisa']:
+    elif menu_selecionado in ['🧠 Pesquisa & Raio-X da Audiência', '📊 Pesquisa (WordCloud)', 'Pesquisa', '5️⃣ Pesquisa', '🧠 Pesquisa']:
         # --- BANNER EXECUTIVO: INTELIGÊNCIA DE PESQUISA & ANÁLISE DE AUDIÊNCIA ---
         st.markdown("""
         <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-left: 6px solid #6366f1; padding: 24px 26px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
@@ -2966,7 +2966,7 @@ if not df_captacao.empty:
         except Exception as e:
             st.error(f"Erro ao processar dados de carrinho: {e}")
 
-    elif menu_selecionado in ['5️⃣ E-mails', '✉️ E-mails']:
+    elif menu_selecionado in ['✉️ Campanhas & Disparos de E-mail', '5️⃣ E-mails', '✉️ E-mails', 'E-mails']:
         # --- BANNER EXECUTIVO: INTELIGÊNCIA DE E-MAILS ---
         st.markdown("""
         <div style="background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border-left: 6px solid #6366f1; padding: 24px 26px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
