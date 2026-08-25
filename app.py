@@ -1122,132 +1122,76 @@ if not df_captacao.empty:
         # =========================================================
         # TAB 1: FUNIL CONSOLIDADO, KPIs GLOBAIS E TABELA INTERATIVA
         # =========================================================
+        # =========================================================
+        # TAB 1: FUNIL CONSOLIDADO, KPIs GLOBAIS E TABELA INTERATIVA (VISUAL CLEAN)
+        # =========================================================
         with tab_funil_geral:
-            # --- HEADER BANNER EXECUTIVO TAB 1 ---
-            st.markdown("""
-            <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-left: 6px solid #3b82f6; padding: 22px 24px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <div>
-                        <span style="background-color:#3b82f6; color:#ffffff; font-size:0.75rem; padding:4px 10px; border-radius:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Resumo Executivo Consolidado</span>
-                        <h2 style="color: #ffffff; font-weight: 800; margin: 8px 0 0 0; font-size: 1.5rem; letter-spacing: -0.5px;">📊 Performance Geral dos Disparos do LC7</h2>
-                    </div>
-                </div>
-                <p style="color: #94a3b8; margin-top: 10px; margin-bottom: 0; font-size: 0.93rem; line-height: 1.5;">
-                    Visão macro do funil de automação no WhatsApp (10/08 a 16/08/2026), consolidando taxas de entrega, engajamento e métricas chave por CPL.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
+            # --- TÍTULO NATIVO & CLEAN ---
+            st.markdown("### 📊 Performance Geral dos Disparos do LC7")
+            st.markdown("Visão macro do funil de automação no WhatsApp (10/08 a 16/08/2026), consolidando taxas de entrega, engajamento e métricas chave por CPL.")
 
-            # --- HERO METRIC CARDS GLOBAIS ---
+            st.markdown("<br>", unsafe_allow_html=True)
+
+            # --- METRICS NATIVAS DO STREAMLIT (VISUAL CLEAN) ---
             total_disp = df_cpl['Disparados'].sum()
             total_ent  = df_cpl['Entregues'].sum()
             total_cli  = df_cpl['Cliques'].sum()
             taxa_ent   = (total_ent / total_disp) * 100 if total_disp > 0 else 0
             taxa_cli   = (total_cli / total_ent)  * 100 if total_ent  > 0 else 0
 
-            c_k1, c_k2, c_k3, c_k4 = st.columns(4)
-
-            with c_k1:
-                st.markdown(f"""
-                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
-                    <span style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:600;">📤 Total Disparado</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{total_disp:,}</h3>
-                    <span style="font-size:0.78rem; color:#60a5fa;">Base Total Intentada</span>
-                </div>
-                """.replace(',', '.'), unsafe_allow_html=True)
-
-            with c_k2:
-                st.markdown(f"""
-                <div style="background-color:#0f172a; border-top:4px solid #10b981; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
-                    <span style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:600;">✅ Total Entregue</span>
-                    <h3 style="color:#4ade80; font-weight:800; margin:6px 0; font-size:1.5rem;">{total_ent:,}</h3>
-                    <span style="font-size:0.78rem; color:#34d399;">{taxa_ent:.1f}% de Entrega Real</span>
-                </div>
-                """.replace(',', '.'), unsafe_allow_html=True)
-
-            with c_k3:
-                st.markdown(f"""
-                <div style="background-color:#0f172a; border-top:4px solid #f59e0b; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
-                    <span style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:600;">👆 Total de Cliques</span>
-                    <h3 style="color:#fbbf24; font-weight:800; margin:6px 0; font-size:1.5rem;">{total_cli:,}</h3>
-                    <span style="font-size:0.78rem; color:#fbbf24;">{taxa_cli:.1f}% CTR Global</span>
-                </div>
-                """.replace(',', '.'), unsafe_allow_html=True)
-
-            with c_k4:
-                st.markdown("""
-                <div style="background-color:#0f172a; border-top:4px solid #8b5cf6; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
-                    <span style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:600;">📅 CPLs Realizadas</span>
-                    <h3 style="color:#c084fc; font-weight:800; margin:6px 0; font-size:1.5rem;">4 Eventos</h3>
-                    <span style="font-size:0.78rem; color:#c084fc;">10/08 a 16/08/2026</span>
-                </div>
-                """, unsafe_allow_html=True)
+            k1, k2, k3, k4 = st.columns(4)
+            k1.metric("📤 Total Disparado",  f"{total_disp:,}".replace(',','.'), "Base Total Intentada")
+            k2.metric("✅ Total Entregue",   f"{total_ent:,}".replace(',','.'),  f"{taxa_ent:.1f}% de Entrega Real",  delta_color="normal")
+            k3.metric("👆 Total de Cliques", f"{total_cli:,}".replace(',','.'),  f"{taxa_cli:.1f}% CTR Global",  delta_color="normal")
+            k4.metric("📅 CPLs Realizadas",  "4 Eventos",  "10/08 a 16/08/2026", delta_color="off")
 
             st.markdown("<br>", unsafe_allow_html=True)
 
             # --- FUNIL (esq) + CARDS CPL (dir) ---
-            col_funil, col_cards = st.columns([1, 1], gap="large")
+            col_funil, col_cards = st.columns([1.1, 1], gap="medium")
 
             with col_funil:
                 with st.container(border=True):
-                    st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:10px;'>📊 Funil Consolidado (Todas as CPLs)</h5>", unsafe_allow_html=True)
+                    st.markdown("#### 📊 Funil Consolidado (Todas as CPLs)")
                     fig_funnel = go.Figure(go.Funnel(
                         y=["Disparados", "Entregues", "Cliques"],
                         x=[total_disp, total_ent, total_cli],
                         textinfo="value+percent initial",
-                        textfont=dict(size=14, color="#ffffff"),
+                        textfont=dict(size=13),
                         marker={"color": ["#3b82f6", "#10b981", "#fbbf24"]}
                     ))
                     fig_funnel.update_layout(
                         margin=dict(t=20, b=20, l=10, r=10),
-                        height=420,
+                        height=380,
                         paper_bgcolor="rgba(0,0,0,0)",
-                        plot_bgcolor="rgba(0,0,0,0)",
-                        font=dict(color="#ffffff")
+                        plot_bgcolor="rgba(0,0,0,0)"
                     )
                     st.plotly_chart(fig_funnel, use_container_width=True)
                     
-                    st.markdown("""
-                    <div style="background:#1e293b; border-radius:8px; padding:12px 16px; margin-top:5px; border-left:4px solid #3b82f6; color:#ffffff;">
-                        <div style="font-size:0.88rem; color:#ffffff; line-height:1.5;">
-                            <b>💡 Resumo Global do Funil:</b> Dos <b style="color:#60a5fa;">11.357 disparos</b> realizados, <b style="color:#4ade80;">10.442 foram entregues (91.9%)</b> e <b style="color:#fbbf24;">1.467 responderam/clicaram</b> (CTR global de <b>14.0%</b>).
-                        </div>
-                    </div>
-                    """, unsafe_allow_html=True)
+                    st.info(f"**💡 Resumo Global do Funil:** Dos **{total_disp:,} disparos** realizados, **{total_ent:,} foram entregues ({taxa_ent:.1f}%)** e **{total_cli:,} responderam/clicaram** (CTR global de **{taxa_cli:.1f}%**).".replace(',','.'))
 
             with col_cards:
-                st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:12px;'>🗂️ Resumo Auditado por CPL</h5>", unsafe_allow_html=True)
+                st.markdown("#### 🗂️ Resumo Auditado por CPL")
 
                 anotacoes = {
-                    "CPL 01": ("🟢", "#064e3b", "#10b981", "⭐ 23.8% CTR", "Auditado: 4.604 disp. | 4.294 ent. (93,3%) | 1.023 cliques<br><b style='color:#4ade80;'>Pico de 88% CTR</b> quando o link foi enviado diretamente sem pedágio."),
-                    "CPL 02": ("🟡", "#451a03", "#f59e0b", "⚠️ 80.4% Barrados", "Auditado: 896 disp. | 822 ent. (91,7%) | 94 cliques<br><b style='color:#fbbf24;'>Gargalo de Categoria:</b> Meta reclassificou template p/ Marketing durante o envio."),
-                    "CPL 03": ("🟢", "#0f172a", "#3b82f6", "🧪 Teste A/B/C", "Auditado: 1.314 disp. | 1.197 ent. (91,1%) | 142 cliques<br>Imagem venceu em Abertura. <b style='color:#60a5fa;'>Grupo VIP = 28.3% CTR</b> (maior conversão)."),
-                    "CPL 04": ("🔴", "#2d1215", "#ef4444", "❌ Pedágio 95%", "Auditado: 4.543 disp. | 4.129 ent. (90,9%) | 208 cliques<br><b style='color:#f87171;'>Botão de consentimento:</b> causou fuga de 95% dos leitores."),
+                    "CPL 01": ("🟢", "⭐ 23.8% CTR", "Auditado: 4.604 disp. | 4.294 ent. (93,3%) | 1.023 cliques — Pico de 88% CTR quando o link foi enviado diretamente sem pedágio."),
+                    "CPL 02": ("🟡", "⚠️ 80.4% Barrados", "Auditado: 896 disp. | 822 ent. (91,7%) | 94 cliques — Meta reclassificou template p/ Marketing durante o envio."),
+                    "CPL 03": ("🟢", "🧪 Teste A/B/C", "Auditado: 1.314 disp. | 1.197 ent. (91,1%) | 142 cliques — Imagem venceu em Abertura. Grupo VIP = 28.3% CTR (maior conversão)."),
+                    "CPL 04": ("🔴", "❌ Pedágio 95%", "Auditado: 4.543 disp. | 4.129 ent. (90,9%) | 208 cliques — Botão de consentimento causou fuga de 95% dos leitores."),
                 }
 
                 for _, row in df_cpl.iterrows():
                     cpl = row['CPL']
-                    emoji, bg, cor, badge_tag, nota = anotacoes[cpl]
+                    emoji, badge_tag, nota = anotacoes[cpl]
                     ctr_card = (row['Cliques'] / row['Entregues'] * 100) if row['Entregues'] > 0 else 0
                     tx_ent_card = (row['Entregues'] / row['Disparados'] * 100) if row['Disparados'] > 0 else 0
-                    st.markdown(f"""
-                    <div style="background:{bg}; border-left:6px solid {cor}; border-radius:10px; padding:14px 16px; margin-bottom:12px; color:#ffffff;">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-weight:700; font-size:1rem; color:#ffffff;">{emoji} {cpl}
-                                <span style="font-size:0.78rem; color:#94a3b8; font-weight:400; margin-left:8px;">📅 {row['Data_Disparo']}</span>
-                            </span>
-                            <span style="background-color:{cor}; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">{badge_tag}</span>
-                        </div>
-                        <div style="display:flex; gap:16px; margin:8px 0 6px 0; font-size:0.85rem; color:#ffffff;">
-                            <span>📤 <b>{row['Disparados']:,}</b> disp.</span>
-                            <span>✅ <b>{row['Entregues']:,}</b> ent. ({tx_ent_card:.0f}%)</span>
-                            <span>👆 <b>{row['Cliques']:,}</b> cliques</span>
-                        </div>
-                        <div style="font-size:0.82rem; color:#ffffff; border-top:1px dashed rgba(255,255,255,0.2); padding-top:6px; margin-top:4px; line-height:1.4;">
-                            {nota}
-                        </div>
-                    </div>
-                    """.replace(',', '.'), unsafe_allow_html=True)
+                    
+                    with st.container(border=True):
+                        st.markdown(f"**{emoji} {cpl}** ({row['Data_Disparo']}) — `{badge_tag}`")
+                        st.caption(f"📤 **Disparados:** {row['Disparados']:,} | ✅ **Entregues:** {row['Entregues']:,} ({tx_ent_card:.0f}%) | 👆 **Cliques:** {row['Cliques']:,} ({ctr_card:.1f}% CTR)".replace(',', '.'))
+                        st.markdown(f"_{nota}_")
+
+            st.markdown("<br>", unsafe_allow_html=True)
 
         # =========================================================
         # TAB 2: RAIO-X AUDITADO NÓ A NÓ (CPLs 01 a 04)
