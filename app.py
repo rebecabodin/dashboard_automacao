@@ -2168,14 +2168,15 @@ if not df_captacao.empty:
             """, unsafe_allow_html=True)
 
             # =========================================================
-            # PASSO 2: FUNIL VISUAL, DIAGNÓSTICOS E STORYTELLING EM ABAS
+            # PASSO 2: CENTRAL DE INTELIGÊNCIA, DIAGNÓSTICO & KANBAN
             # =========================================================
-            st.subheader("📈 2. Análise Gráfica & Diagnóstico Operacional")
+            st.subheader("📈 2. Análise Gráfica, Diagnósticos & Atendimento Comercial")
 
-            tab_graficos, tab_timing, tab_storytelling = st.tabs([
+            tab_graficos, tab_timing, tab_storytelling, tab_kanban_gestao = st.tabs([
                 "📊 1. Funil & Distribuição de Leads", 
                 "⏳ 2. Diagnóstico de Timing & Operação", 
-                "🧠 3. Insights Chave de Vendas"
+                "🧠 3. Insights Chave de Vendas",
+                "📋 4. Fila Comercial & Quadro Kanban"
             ])
 
             # TAB 1: GRÁFICOS VISUAIS (FUNIL + PIE CHART)
@@ -2317,11 +2318,32 @@ if not df_captacao.empty:
                     </div>
                     """, unsafe_allow_html=True)
 
-            # =========================================================
-            # PASSO 3: QUADRO KANBAN & FILA UNIFICADA (76 LEADS)
-            # =========================================================
-            st.subheader("📋 3. Fila de Atendimento Comercial & Quadro Kanban")
-            st.caption("Acompanhe visualmente cada lead por estresse de conversão e acione a equipe comercial.")
+            # TAB 4: FILA DE ATENDIMENTO COMERCIAL & QUADRO KANBAN
+            with tab_kanban_gestao:
+                # Unificando os DataFrames de Pop-up e Recuperacao
+                cols_pop = ['DATA', 'NOME', 'EMAIL', 'TELEFONE', 'Origem', 'Mensagem Enviada', 'Comprou?']
+                df_v_sub = df_v[cols_pop].copy()
+
+                cols_rec = ['DATA', 'NOME', 'EMAIL', 'TELEFONE', 'Origem', 'Mensagem Enviada', 'Comprou?']
+                df_r_sub = df_r[cols_rec].copy()
+
+                df_unificado = pd.concat([df_v_sub, df_r_sub], ignore_index=True)
+
+                df_unificado['Status Category'] = df_unificado.apply(
+                    lambda x: "ALERTA" if (x['Mensagem Enviada'] == '' and x['Comprou?'] == 'Não')
+                    else ("PENDENTE" if (x['Mensagem Enviada'] != '' and x['Comprou?'] == 'Não')
+                    else ("COMPROU_WPP" if (x['Mensagem Enviada'] != '' and x['Comprou?'] == 'Sim')
+                    else "COMPROU_ORG")), axis=1
+                )
+
+                df_unificado['Status Global'] = df_unificado.apply(
+                    lambda x: "🔴 ALERTA: Erro de Envio (Ligar Urgente)" if (x['Mensagem Enviada'] == '' and x['Comprou?'] == 'Não')
+                    else ("🟡 Aguardando Resposta WPP (37 Leads)" if (x['Mensagem Enviada'] != '' and x['Comprou?'] == 'Não')
+                    else ("🟢 Comprou pós WPP (14 Vendas)" if (x['Mensagem Enviada'] != '' and x['Comprou?'] == 'Sim')
+                    else "🔵 Comprou Direto Checkout (20 Vendas)")), axis=1
+                )
+
+                tab_kanban, tab_tabela = st.tabs(["🗂️ 1. Visão Quadro Kanban", "📊 2. Visão Tabela Tradicional"])
 
             # Unificando os DataFrames de Pop-up e Recuperacao
             cols_pop = ['DATA', 'NOME', 'EMAIL', 'TELEFONE', 'Origem', 'Mensagem Enviada', 'Comprou?']
