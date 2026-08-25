@@ -327,82 +327,81 @@ if not df_captacao.empty:
         
         st.info(f"**💡 Taxa de Conversão Captação ➡️ WhatsApp:** {conversao_wpp:.1f}% dos leads receberam a mensagem com sucesso.")
 
-        st.divider()
+        st.markdown("<div style='margin-top:20px;'></div>", unsafe_allow_html=True)
 
         col_charts1, col_charts2 = st.columns(2)
     
         with col_charts1:
-            with st.container(border=True):
-                st.subheader("Funil de Engajamento")
-                fig_funnel = go.Figure(go.Funnel(
-                    y=['Capturados (Form)', 'Enviados p/ Automação', 'Mensagem Entregue'],
-                    x=[total_capturados, total_automação, sucesso_envio],
-                    textinfo="value+percent initial",
-                    marker={"color": ["#1f77b4", "#ff7f0e", "#2ca02c"]}
-                ))
-                fig_funnel.update_layout(margin=dict(l=20, r=20, t=20, b=20), height=380)
-                st.plotly_chart(fig_funnel, use_container_width=True)
+            st.markdown(f"""
+            <div style="background-color:#0f172a; border-left:5px solid #3b82f6; padding:18px 20px; border-radius:12px; color:#ffffff; min-height:450px; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <h5 style="color:#ffffff; font-weight:700; margin:0 0 14px 0; text-align:left;">Funil de Engajamento de Cadastros</h5>
+            </div>
+            """, unsafe_allow_html=True)
+            fig_funnel = go.Figure(go.Funnel(
+                y=['Capturados (Form)', 'Enviados p/ Automação', 'Mensagem Entregue'],
+                x=[total_capturados, total_automação, sucesso_envio],
+                textinfo="value+percent initial",
+                marker={"color": ["#1f77b4", "#ff7f0e", "#2ca02c"]}
+            ))
+            fig_funnel.update_layout(margin=dict(l=20, r=20, t=10, b=20), height=380, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="#ffffff"))
+            st.plotly_chart(fig_funnel, use_container_width=True)
 
         with col_charts2:
-            with st.container(border=True):
-                st.subheader("Distribuição de Perfil", help="Métrica computada em tempo real via webhook a partir das interações ativas dos usuários no fluxo de conversação (Manychat).")
-            
-                if 'perfil' in df_boasvindas.columns:
-                    # Limpar e formatar o texto
-                    df_perfil_clean = df_boasvindas[df_boasvindas['perfil'].notna()].copy()
-                    df_perfil_clean['perfil'] = df_perfil_clean['perfil'].astype(str).str.strip().str.capitalize()
-                    
-                    df_perfil = df_perfil_clean['perfil'].value_counts().reset_index()
-                    df_perfil.columns = ['Perfil', 'Quantidade']
-                    
-                    total_perfis = df_perfil['Quantidade'].sum()
-                    
-                    # Extraindo os valores para as métricas isoladas
-                    tec_count = df_perfil[df_perfil['Perfil'].str.contains('Tecnico|Técnico', case=False, na=False)]['Quantidade'].sum()
-                    emp_count = df_perfil[df_perfil['Perfil'].str.contains('Empreendedor', case=False, na=False)]['Quantidade'].sum()
-                    
-                    # Mapeamento estrito de cores
-                    cores_map = {
-                        'Tecnico': '#FF9800',      # Laranja
-                        'Técnico': '#FF9800',      # Laranja (com acento, por segurança)
-                        'Empreendedor': '#9b59b6'  # Roxo
-                    }
-                    cores_lista = [cores_map.get(str(p), '#bdc3c7') for p in df_perfil['Perfil']]
-                    
-                    fig_pie = go.Figure(go.Pie(
-                        labels=df_perfil['Perfil'],
-                        values=df_perfil['Quantidade'],
-                        hole=0.65,
-                        textinfo='percent',
-                        textposition='inside',
-                        insidetextfont=dict(size=16, color='white'),
-                        insidetextorientation='horizontal',
-                        marker=dict(colors=cores_lista)
-                    ))
-                    fig_pie.update_layout(
-                        margin=dict(l=10, r=10, t=10, b=30), 
-                        height=280, 
-                        showlegend=True,
-                        legend=dict(orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5),
-                        annotations=[dict(text=f'<b>{total_perfis}</b><br>Total', x=0.5, y=0.5, font_size=20, showarrow=False)]
-                    )
-                    st.plotly_chart(fig_pie, use_container_width=True)
+            st.markdown(f"""
+            <div style="background-color:#0f172a; border-left:5px solid #9b59b6; padding:18px 20px; border-radius:12px; color:#ffffff; min-height:450px; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <h5 style="color:#ffffff; font-weight:700; margin:0 0 14px 0; text-align:left;">Distribuição do Perfil do Aluno</h5>
+            </div>
+            """, unsafe_allow_html=True)
+            if 'perfil' in df_boasvindas.columns:
+                df_perfil_clean = df_boasvindas[df_boasvindas['perfil'].notna()].copy()
+                df_perfil_clean['perfil'] = df_perfil_clean['perfil'].astype(str).str.strip().str.capitalize()
+                
+                df_perfil = df_perfil_clean['perfil'].value_counts().reset_index()
+                df_perfil.columns = ['Perfil', 'Quantidade']
+                
+                total_perfis = df_perfil['Quantidade'].sum()
+                
+                tec_count = df_perfil[df_perfil['Perfil'].str.contains('Tecnico|Técnico', case=False, na=False)]['Quantidade'].sum()
+                emp_count = df_perfil[df_perfil['Perfil'].str.contains('Empreendedor', case=False, na=False)]['Quantidade'].sum()
+                
+                cores_map = {
+                    'Tecnico': '#FF9800',
+                    'Técnico': '#FF9800',
+                    'Empreendedor': '#9b59b6'
+                }
+                cores_lista = [cores_map.get(str(p), '#bdc3c7') for p in df_perfil['Perfil']]
+                
+                fig_pie = go.Figure(go.Pie(
+                    labels=df_perfil['Perfil'],
+                    values=df_perfil['Quantidade'],
+                    hole=0.65,
+                    textinfo='percent',
+                    textposition='inside',
+                    insidetextfont=dict(size=16, color='white'),
+                    insidetextorientation='horizontal',
+                    marker=dict(colors=cores_lista)
+                ))
+                fig_pie.update_layout(
+                    margin=dict(l=10, r=10, t=10, b=30), 
+                    height=280, 
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    font=dict(color="#ffffff"),
+                    showlegend=True,
+                    legend=dict(orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5),
+                    annotations=[dict(text=f'<b>{total_perfis}</b><br>Total', x=0.5, y=0.5, font_size=20, showarrow=False)]
+                )
+                st.plotly_chart(fig_pie, use_container_width=True)
 
-                    # --- UX: Métricas no rodapé do cartão atuando como âncora de peso visual ---
-                    st.write("") # Espaçamento
-                    cp1, cp2, cp3 = st.columns(3)
-                    cp1.metric("Respostas", total_perfis)
-                    cp2.metric("Técnicos", tec_count)
-                    cp3.metric("Empreendedores", emp_count)
-                else:
-                    st.warning("Coluna 'perfil' não encontrada na planilha de Boas-vindas.")
-            
-
+                cp1, cp2, cp3 = st.columns(3)
+                cp1.metric("Respostas", total_perfis)
+                cp2.metric("Técnicos", tec_count)
+                cp3.metric("Empreendedores", emp_count)
+            else:
+                st.warning("Coluna 'perfil' não encontrada na planilha de Boas-vindas.")
 
         # --- GRUPOS DE WHATSAPP ---
-        st.divider()
-        st.header("👥 Funil de Grupos do WhatsApp")
-        st.markdown("Acompanhe o fluxo de pessoas nos seus grupos. O **Total de Registros** mostra todas as movimentações (exatamente as linhas da sua planilha). A partir disso, separamos quem **Entrou**, quem **Saiu**, e qual é o **Total Final** (pessoas ativas agora).")
+        st.markdown("<h3 style='text-align:left; font-weight:800; margin-top:30px; color:#ffffff;'>👥 Funil de Grupos do WhatsApp</h3>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align:left; color:#c7d2fe; font-size:0.92rem; line-height:1.6;'>Acompanhe o fluxo de pessoas nos seus grupos. O <b>Total de Registros</b> mostra todas as movimentações. Separamos quem <b>Entrou</b>, quem <b>Saiu</b>, e qual é o <b>Total Final</b> (pessoas ativas agora).</p>", unsafe_allow_html=True)
     
         # Função auxiliar para calcular métricas de grupo com o total de registros
         def calcular_metricas_grupo(df):
@@ -2216,55 +2215,53 @@ if not df_captacao.empty:
                 col_cp1, col_cp2 = st.columns([1.2, 1])
 
                 with col_cp1:
-                    with st.container(border=True):
-                        st.markdown("<h5 style='margin:0 0 10px 0; font-weight:700;'>Evolução Diária de Vendas Aprovadas</h5>", unsafe_allow_html=True)
-                        df_diario = df_active.groupby('DATA_DIA').size().reset_index(name='Vendas')
-                        df_diario['DATA_DT'] = pd.to_datetime(df_diario['DATA_DIA'], format='%d/%m/%Y')
-                        df_diario = df_diario.sort_values('DATA_DT')
+                    st.markdown("<h5 style='margin:0 0 12px 0; font-weight:700; text-align:left; color:#ffffff;'>Evolução Diária de Vendas Aprovadas</h5>", unsafe_allow_html=True)
+                    df_diario = df_active.groupby('DATA_DIA').size().reset_index(name='Vendas')
+                    df_diario['DATA_DT'] = pd.to_datetime(df_diario['DATA_DIA'], format='%d/%m/%Y')
+                    df_diario = df_diario.sort_values('DATA_DT')
 
-                        fig_diario = px.bar(
-                            df_diario, 
-                            x='DATA_DIA', 
-                            y='Vendas', 
-                            text='Vendas',
-                            color_discrete_sequence=['#10b981']
-                        )
-                        fig_diario.update_layout(
-                            height=330, 
-                            margin=dict(l=10, r=10, t=10, b=10),
-                            paper_bgcolor="rgba(0,0,0,0)",
-                            plot_bgcolor="rgba(0,0,0,0)",
-                            font=dict(color="#ffffff"),
-                            xaxis_title="Data da Venda",
-                            yaxis_title="Quantidade de Vendas"
-                        )
-                        st.plotly_chart(fig_diario, use_container_width=True)
+                    fig_diario = px.bar(
+                        df_diario, 
+                        x='DATA_DIA', 
+                        y='Vendas', 
+                        text='Vendas',
+                        color_discrete_sequence=['#10b981']
+                    )
+                    fig_diario.update_layout(
+                        height=350, 
+                        margin=dict(l=10, r=10, t=10, b=10),
+                        paper_bgcolor="rgba(0,0,0,0)",
+                        plot_bgcolor="rgba(0,0,0,0)",
+                        font=dict(color="#ffffff"),
+                        xaxis_title="Data da Venda",
+                        yaxis_title="Quantidade de Vendas"
+                    )
+                    st.plotly_chart(fig_diario, use_container_width=True)
 
                 with col_cp2:
-                    with st.container(border=True):
-                        st.markdown("<h5 style='margin:0 0 10px 0; font-weight:700;'>Origem do Aluno (Tracking SCK)</h5>", unsafe_allow_html=True)
-                        df_sck = df_active['SCK'].value_counts().reset_index()
-                        df_sck.columns = ['Origem', 'Quantidade']
+                    st.markdown("<h5 style='margin:0 0 12px 0; font-weight:700; text-align:left; color:#ffffff;'>Origem do Aluno (Tracking SCK)</h5>", unsafe_allow_html=True)
+                    df_sck = df_active['SCK'].value_counts().reset_index()
+                    df_sck.columns = ['Origem', 'Quantidade']
 
-                        fig_sck = px.pie(
-                            df_sck, 
-                            names='Origem', 
-                            values='Quantidade', 
-                            hole=0.4,
-                            color_discrete_sequence=['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6']
-                        )
-                        fig_sck.update_layout(
-                            height=330, 
-                            margin=dict(l=10, r=10, t=10, b=10),
-                            paper_bgcolor="rgba(0,0,0,0)",
-                            font=dict(color="#ffffff")
-                        )
-                        st.plotly_chart(fig_sck, use_container_width=True)
+                    fig_sck = px.pie(
+                        df_sck, 
+                        names='Origem', 
+                        values='Quantidade', 
+                        hole=0.4,
+                        color_discrete_sequence=['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6']
+                    )
+                    fig_sck.update_layout(
+                        height=350, 
+                        margin=dict(l=10, r=10, t=10, b=10),
+                        paper_bgcolor="rgba(0,0,0,0)",
+                        font=dict(color="#ffffff")
+                    )
+                    st.plotly_chart(fig_sck, use_container_width=True)
 
                 st.markdown(f"""
-                <div style="background-color:#0f172a; border-left:4px solid #38bdf8; padding:14px 20px; border-radius:10px; margin-top:16px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                    <h5 style="color:#ffffff; font-weight:700; margin:0;">🎉 Auditoria de Onboarding & Boas-Vindas Pós-Venda (ManyChat)</h5>
-                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                <div style="background-color:#0f172a; border-left:4px solid #38bdf8; padding:16px 20px; border-radius:10px; margin-top:16px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <h5 style="color:#ffffff; font-weight:700; margin:0; text-align:left;">🎉 Auditoria de Onboarding & Boas-Vindas Pós-Venda (ManyChat)</h5>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.6; text-align:left;">
                         • <b>{wpp_enviado_qtd} Alunos Receberam Boas-Vindas no WhatsApp:</b> Representa uma cobertura de <b style="color:#38bdf8;">{perc_wpp_enviado:.1f}% de todos os compradores</b> via fluxo automático Onboarding (56 execuções LIVE no ManyChat).<br>
                         • <b>{vendas_qtd - wpp_enviado_qtd} Alunos Pendentes de Boas-Vindas:</b> Recomenda-se envio manual pelo suporte para garantir 100% de onboarding na área de membros.
                     </p>
@@ -2602,45 +2599,44 @@ if not df_captacao.empty:
                 col_funil_c, col_donut_c = st.columns([1.1, 1], gap="medium")
 
                 with col_funil_c:
-                    with st.container(border=True):
-                        st.markdown("<h5 style='margin:0 0 10px 0; font-weight:700;'>Funil Consolidado de Checkout</h5>", unsafe_allow_html=True)
-                        fig_funnel_sales = go.Figure(go.Funnel(
-                            y=["Intenção Checkout", "Disparados WPP", "Vendas via WPP", "Vendas Aprovadas"],
-                            x=[total_unificado_leads, total_disparados_wpp, vendas_wpp_total, vendas_globais],
-                            textinfo="value+percent initial",
-                            textfont=dict(size=12),
-                            marker={"color": ["#3b82f6", "#f59e0b", "#10b981", "#059669"]}
-                        ))
-                        fig_funnel_sales.update_layout(
-                            margin=dict(t=10, b=10, l=10, r=10),
-                            height=320,
-                            paper_bgcolor="rgba(0,0,0,0)",
-                            plot_bgcolor="rgba(0,0,0,0)"
-                        )
-                        st.plotly_chart(fig_funnel_sales, use_container_width=True)
+                    st.markdown("<h5 style='margin:0 0 12px 0; font-weight:700; text-align:left; color:#ffffff;'>Funil Consolidado de Checkout</h5>", unsafe_allow_html=True)
+                    fig_funnel_sales = go.Figure(go.Funnel(
+                        y=["Intenção Checkout", "Disparados WPP", "Vendas via WPP", "Vendas Aprovadas"],
+                        x=[total_unificado_leads, total_disparados_wpp, vendas_wpp_total, vendas_globais],
+                        textinfo="value+percent initial",
+                        textfont=dict(size=12),
+                        marker={"color": ["#3b82f6", "#f59e0b", "#10b981", "#059669"]}
+                    ))
+                    fig_funnel_sales.update_layout(
+                        margin=dict(t=10, b=10, l=10, r=10),
+                        height=350,
+                        paper_bgcolor="rgba(0,0,0,0)",
+                        plot_bgcolor="rgba(0,0,0,0)",
+                        font=dict(color="#ffffff")
+                    )
+                    st.plotly_chart(fig_funnel_sales, use_container_width=True)
 
                 with col_donut_c:
-                    with st.container(border=True):
-                        st.markdown("<h5 style='margin:0 0 10px 0; font-weight:700;'>Distribuição do Resultado dos Leads</h5>", unsafe_allow_html=True)
-                        fig_donut_c = go.Figure(data=[go.Pie(
-                            labels=[
-                                f'🟢 Venda WPP ({vendas_wpp_total})', 
-                                f'🔵 Venda Orgânica ({vendas_org_total})', 
-                                f'🟡 Carrinho Aberto ({abertos_wpp_total})', 
-                                f'🔴 Sem Envio/Falha ({falha_total})'
-                            ],
-                            values=[vendas_wpp_total, vendas_org_total, abertos_wpp_total, falha_total],
-                            hole=.4,
-                            marker=dict(colors=['#10b981', '#3b82f6', '#f59e0b', '#ef4444'])
-                        )])
-                        fig_donut_c.update_layout(
-                            height=320,
-                            margin=dict(l=10, r=10, t=10, b=10),
-                            paper_bgcolor="rgba(0,0,0,0)",
-                            font=dict(color="#ffffff"),
-                            showlegend=True
-                        )
-                        st.plotly_chart(fig_donut_c, use_container_width=True)
+                    st.markdown("<h5 style='margin:0 0 12px 0; font-weight:700; text-align:left; color:#ffffff;'>Distribuição do Resultado dos Leads</h5>", unsafe_allow_html=True)
+                    fig_donut_c = go.Figure(data=[go.Pie(
+                        labels=[
+                            f'🟢 Venda WPP ({vendas_wpp_total})', 
+                            f'🔵 Venda Orgânica ({vendas_org_total})', 
+                            f'🟡 Carrinho Aberto ({abertos_wpp_total})', 
+                            f'🔴 Sem Envio/Falha ({falha_total})'
+                        ],
+                        values=[vendas_wpp_total, vendas_org_total, abertos_wpp_total, falha_total],
+                        hole=.4,
+                        marker=dict(colors=['#10b981', '#3b82f6', '#f59e0b', '#ef4444'])
+                    )])
+                    fig_donut_c.update_layout(
+                        height=350,
+                        margin=dict(l=10, r=10, t=10, b=10),
+                        paper_bgcolor="rgba(0,0,0,0)",
+                        font=dict(color="#ffffff"),
+                        showlegend=True
+                    )
+                    st.plotly_chart(fig_donut_c, use_container_width=True)
 
             # TAB 2: DIAGNÓSTICO DE TIMING & MANYCHAT
             with tab_timing:
