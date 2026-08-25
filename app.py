@@ -1199,27 +1199,80 @@ if not df_captacao.empty:
                     """.replace(',', '.'), unsafe_allow_html=True)
 
         with tab_raiox_nos:
-            st.markdown("### 📋 Status da Auditoria por CPL")
-            s1, s2, s3, s4 = st.columns(4)
-            s1.success("🟢 **CPL 01**: 100% Auditado\n\n(3 Disparos | 9 Nós)")
-            s2.success("🟢 **CPL 02**: 100% Auditado\n\n(1 Disparo | 5 Nós)")
-            s3.success("🟢 **CPL 03**: 100% Auditado\n\n(2 Disparos | Teste A/B/C)")
-            s4.success("🟢 **CPL 04**: 100% Auditado\n\n(5 Nós Mapeados)")
+            st.markdown("### 📋 Status da Auditoria por CPL (Clique no card para abrir o Raio-X)")
+
+            if 'cpl_aba2_selected' not in st.session_state:
+                st.session_state['cpl_aba2_selected'] = "1️⃣ CPL 01"
+
+            col1, col2, col3, col4 = st.columns(4)
+
+            with col1:
+                is_sel1 = "1️⃣ CPL 01" in st.session_state['cpl_aba2_selected']
+                border_c1 = "#10b981" if is_sel1 else "#334155"
+                bg_c1 = "#064e3b" if is_sel1 else "#1e293b"
+                st.markdown(f"""
+                <div style="border: 2px solid {border_c1}; background-color: {bg_c1}; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 8px;">
+                    <div style="font-size: 0.88rem; color: #4ade80; font-weight: bold;">🟢 CPL 01: 100% Auditado</div>
+                    <div style="font-size: 0.9rem; color: #ffffff; font-weight: bold; margin-top: 4px;">1️⃣ A Jornada Completa</div>
+                    <div style="font-size: 0.8rem; color: #fbbf24; margin-top: 2px;">📅 10/08 a 12/08</div>
+                    <div style="font-size: 0.78rem; color: #cbd5e1; margin-top: 4px;">(3 Disparos | 9 Nós)</div>
+                </div>
+                """, unsafe_allow_html=True)
+                if st.button("Ver Raio-X CPL 01", key="btn_cpl1", use_container_width=True, type="primary" if is_sel1 else "secondary"):
+                    st.session_state['cpl_aba2_selected'] = "1️⃣ CPL 01"
+                    st.rerun()
+
+            with col2:
+                is_sel2 = "2️⃣ CPL 02" in st.session_state['cpl_aba2_selected']
+                border_c2 = "#10b981" if is_sel2 else "#334155"
+                bg_c2 = "#064e3b" if is_sel2 else "#1e293b"
+                st.markdown(f"""
+                <div style="border: 2px solid {border_c2}; background-color: {bg_c2}; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 8px;">
+                    <div style="font-size: 0.88rem; color: #4ade80; font-weight: bold;">🟢 CPL 02: 100% Auditado</div>
+                    <div style="font-size: 0.9rem; color: #ffffff; font-weight: bold; margin-top: 4px;">2️⃣ Gargalo de Categoria</div>
+                    <div style="font-size: 0.8rem; color: #fbbf24; margin-top: 2px;">📅 12/08</div>
+                    <div style="font-size: 0.78rem; color: #cbd5e1; margin-top: 4px;">(1 Disparo | 5 Nós)</div>
+                </div>
+                """, unsafe_allow_html=True)
+                if st.button("Ver Raio-X CPL 02", key="btn_cpl2", use_container_width=True, type="primary" if is_sel2 else "secondary"):
+                    st.session_state['cpl_aba2_selected'] = "2️⃣ CPL 02"
+                    st.rerun()
+
+            with col3:
+                is_sel3 = "3️⃣ CPL 03" in st.session_state['cpl_aba2_selected']
+                border_c3 = "#10b981" if is_sel3 else "#334155"
+                bg_c3 = "#064e3b" if is_sel3 else "#1e293b"
+                st.markdown(f"""
+                <div style="border: 2px solid {border_c3}; background-color: {bg_c3}; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 8px;">
+                    <div style="font-size: 0.88rem; color: #4ade80; font-weight: bold;">🟢 CPL 03: 100% Auditado</div>
+                    <div style="font-size: 0.9rem; color: #ffffff; font-weight: bold; margin-top: 4px;">3️⃣ Teste A/B/C & Grupo VIP</div>
+                    <div style="font-size: 0.8rem; color: #fbbf24; margin-top: 2px;">📅 13/08 a 14/08</div>
+                    <div style="font-size: 0.78rem; color: #cbd5e1; margin-top: 4px;">(2 Disparos | Teste A/B/C)</div>
+                </div>
+                """, unsafe_allow_html=True)
+                if st.button("Ver Raio-X CPL 03", key="btn_cpl3", use_container_width=True, type="primary" if is_sel3 else "secondary"):
+                    st.session_state['cpl_aba2_selected'] = "3️⃣ CPL 03"
+                    st.rerun()
+
+            with col4:
+                is_sel4 = "4️⃣ CPL 04" in st.session_state['cpl_aba2_selected']
+                border_c4 = "#10b981" if is_sel4 else "#334155"
+                bg_c4 = "#064e3b" if is_sel4 else "#1e293b"
+                st.markdown(f"""
+                <div style="border: 2px solid {border_c4}; background-color: {bg_c4}; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 8px;">
+                    <div style="font-size: 0.88rem; color: #4ade80; font-weight: bold;">🟢 CPL 04: 100% Auditado</div>
+                    <div style="font-size: 0.9rem; color: #ffffff; font-weight: bold; margin-top: 4px;">4️⃣ Botão de Consentimento</div>
+                    <div style="font-size: 0.8rem; color: #fbbf24; margin-top: 2px;">📅 16/08</div>
+                    <div style="font-size: 0.78rem; color: #cbd5e1; margin-top: 4px;">(5 Nós Mapeados)</div>
+                </div>
+                """, unsafe_allow_html=True)
+                if st.button("Ver Raio-X CPL 04", key="btn_cpl4", use_container_width=True, type="primary" if is_sel4 else "secondary"):
+                    st.session_state['cpl_aba2_selected'] = "4️⃣ CPL 04"
+                    st.rerun()
+
+            cpl_auditoria_selecionada = st.session_state['cpl_aba2_selected']
 
             st.markdown("---")
-
-            # --- SELEÇÃO DINÂMICA DA CPL PARA EXPOSIÇÃO DIDÁTICA (RADIO HORIZONTAL) ---
-            cpl_auditoria_selecionada = st.radio(
-                "🔍 **Selecione a CPL para abrir o Raio-X Detalhado Nó a Nó:**",
-                [
-                    "1️⃣ CPL 01 — A Jornada Completa (10/08 a 12/08)",
-                    "2️⃣ CPL 02 — O Gargalo de Categoria na Meta (12/08)",
-                    "3️⃣ CPL 03 — O Teste A/B/C e a Força do Grupo VIP (13/08 a 14/08)",
-                    "4️⃣ CPL 04 — O Impacto do 'Botão de Consentimento' (16/08)"
-                ],
-                horizontal=True
-            )
-
             st.markdown("<br>", unsafe_allow_html=True)
 
             # ==========================================
