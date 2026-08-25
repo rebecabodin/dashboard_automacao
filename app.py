@@ -1120,10 +1120,11 @@ if not df_captacao.empty:
 
                 st.markdown(f"""
                 <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-left: 5px solid #f59e0b; padding: 18px 22px; border-radius: 12px; margin-top: 16px; color:#ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
-                    <h5 style="color:#ffffff; font-weight:700; margin:0 0 8px 0; text-align:left;">💰 Insight Financeiro & Precificação de Oferta</h5>
+                    <h5 style="color:#ffffff; font-weight:700; margin:0 0 8px 0; text-align:left;">💰 Insight Financeiro & Precificação de Oferta (Pix, Cartão & Híbrido)</h5>
                     <p style="color:#e2e8f0; font-size:0.88rem; margin:0; line-height:1.6; text-align:left;">
-                        • <b>Adesão a Crédito:</b> <b>{perc_cartao:.1f}%</b> possuem cartão de crédito. No entanto, a renda predominante é de <b>{renda_comum}</b>.<br>
-                        • <b>Estratégia de Pitch:</b> O lead possui limite, mas tem orçamento mensal justo. Ancorar o preço no valor da parcela (ex: <b>"por menos de R$ 4/dia"</b> ou <b>"12x de R$ 149"</b>) será o maior impulsionador de conversão.
+                        • <b>Adesão a Crédito vs Renda Real:</b> <b>{perc_cartao:.1f}%</b> possuem cartão de crédito, mas a renda predominante é de <b>{renda_comum}</b>. O lead possui cartão, mas tem orçamento mensal justo e limite único restrito.<br>
+                        • <b>Âncora no Valor da Parcela:</b> O foco absoluto do pitch deve ser a parcela diária/mensal (ex: <i>"menos de R$ 5/dia"</i> ou <i>"12x de R$ 149"</i>) para evitar travamento pelo preço cheio.<br>
+                        • <b>Modalidades Híbridas & Boleto:</b> Oferecer <b>Híbrido (Pix + Cartão)</b>, <b>Dois Cartões</b> e <b>Boleto Parcelado</b> é a chave para resgatar quem tem limite parcial ou quem não possui cartão (27,6%).
                     </p>
                 </div>
                 """, unsafe_allow_html=True)
@@ -1162,11 +1163,15 @@ if not df_captacao.empty:
                     
                     st.markdown("<div style='margin-top:20px;'></div>", unsafe_allow_html=True)
                     
-                    wordcloud = WordCloud(width=800, height=360, background_color='#0f172a', stopwords=stop_words, colormap='Wistia').generate(textos)
-                    fig_wc, ax = plt.subplots(figsize=(10, 4.5), facecolor='#0f172a')
-                    ax.imshow(wordcloud, interpolation='bilinear')
-                    ax.axis("off")
-                    st.pyplot(fig_wc)
+                    # Renderização Compacta e Centralizada da Nuvem de Palavras
+                    st.markdown("<h5 style='text-align:left; font-weight:700; margin-bottom:8px; color:#ffffff;'>☁️ Nuvem de Palavras (Foco em Frequência)</h5>", unsafe_allow_html=True)
+                    col_wc_pad1, col_wc_center, col_wc_pad2 = st.columns([1, 2.2, 1])
+                    with col_wc_center:
+                        wordcloud = WordCloud(width=600, height=220, max_words=45, background_color='#0f172a', stopwords=stop_words, colormap='Wistia').generate(textos)
+                        fig_wc, ax = plt.subplots(figsize=(6, 2.2), facecolor='#0f172a')
+                        ax.imshow(wordcloud, interpolation='bilinear')
+                        ax.axis("off")
+                        st.pyplot(fig_wc)
                     
                     termos_top = [p.title() for p, c in top_5]
                     st.markdown(f"""
