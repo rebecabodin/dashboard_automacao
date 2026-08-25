@@ -957,18 +957,23 @@ if not df_captacao.empty:
                     df_ca['GROSS_PRICE_NUM'] = df_ca['GROSS PRICE'].apply(_clean_c)
                 else:
                     df_ca['GROSS_PRICE_NUM'] = 0.0
+                if 'Valor oferta' in df_ca.columns:
+                    df_ca['VALOR_OFERTA_NUM'] = df_ca['Valor oferta'].apply(_clean_c)
+                else:
+                    df_ca['VALOR_OFERTA_NUM'] = 0.0
             if 'SCK' not in df_ca.columns:
                 df_ca['SCK'] = 'Orgânico / Direto'
 
             df_ca_lancamento = df_ca[df_ca['DATA_DT'] >= pd.Timestamp(2026, 8, 16)].copy()
 
-            vendas_lanc_qtd        = len(df_ca_lancamento)
-            faturamento_lanc_total = df_ca_lancamento['GROSS_PRICE_NUM'].sum()
-            ticket_medio_lanc      = faturamento_lanc_total / vendas_lanc_qtd if vendas_lanc_qtd > 0 else 0.0
+            vendas_lanc_qtd         = len(df_ca_lancamento)
+            faturamento_lanc_total  = df_ca_lancamento['GROSS_PRICE_NUM'].sum()
+            faturamento_oferta_lanc = df_ca_lancamento['VALOR_OFERTA_NUM'].sum()
+            ticket_medio_lanc       = faturamento_oferta_lanc / vendas_lanc_qtd if vendas_lanc_qtd > 0 else 0.0
 
-            vendas_base_qtd        = len(df_ca)
-            faturamento_base_total = df_ca['GROSS_PRICE_NUM'].sum()
-            ticket_medio_base      = faturamento_base_total / vendas_base_qtd if vendas_base_qtd > 0 else 0.0
+            vendas_base_qtd         = len(df_ca)
+            faturamento_base_total  = df_ca['GROSS_PRICE_NUM'].sum()
+            ticket_medio_base       = faturamento_base_total / vendas_base_qtd if vendas_base_qtd > 0 else 0.0
 
             gabriela_lanc = len(df_ca_lancamento[
                 df_ca_lancamento['SCK'].astype(str).str.contains('GABRIELA', case=False, na=False)
@@ -976,14 +981,15 @@ if not df_captacao.empty:
             perc_gabriela = (gabriela_lanc / vendas_lanc_qtd * 100) if vendas_lanc_qtd > 0 else 0.0
         else:
             # Fallback caso o Google Sheets esteja inacessível
-            vendas_lanc_qtd        = 68
-            faturamento_lanc_total = 95632.71
-            ticket_medio_lanc      = round(95632.71 / 68, 2)
-            vendas_base_qtd        = 75
-            faturamento_base_total = 103850.00
-            ticket_medio_base      = round(103850.00 / 75, 2)
-            gabriela_lanc          = 46
-            perc_gabriela          = round(46 / 68 * 100, 1)
+            vendas_lanc_qtd         = 69
+            faturamento_lanc_total  = 97490.55
+            faturamento_oferta_lanc = 83314.40
+            ticket_medio_lanc       = round(83314.40 / 69, 2)
+            vendas_base_qtd         = 76
+            faturamento_base_total  = 103850.00
+            ticket_medio_base       = round(103850.00 / 76, 2)
+            gabriela_lanc           = 46
+            perc_gabriela           = round(46 / 69 * 100, 1)
             df_ca          = pd.DataFrame()
             df_ca_lancamento = pd.DataFrame()
 
@@ -1012,7 +1018,7 @@ if not df_captacao.empty:
                 </div>
             </div>
             <p style="color: #c7d2fe; margin-top: 10px; margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
-                Cruzamento profundo de dados auditados em tempo real: <b>Captação ({total_capturados:,} Leads)</b>, <b>Carrinho Aberto ({carrinho_leads_qtd} Intenções)</b>, <b>Vendas Aprovadas no Lançamento ({vendas_lanc_qtd} Vendas / R$ {faturamento_lanc_total:,.2f})</b> e <b>Base Total ({vendas_base_qtd} Vendas / R$ {faturamento_base_total:,.2f})</b>.
+                Cruzamento profundo de dados auditados em tempo real: <b>Captação ({total_capturados:,} Leads)</b>, <b>Carrinho Aberto ({carrinho_leads_qtd} Intenções)</b>, <b>Vendas Aprovadas no Lançamento ({vendas_lanc_qtd} Vendas / Base Oferta: R$ {faturamento_oferta_lanc:,.2f})</b> e <b>Base Total ({vendas_base_qtd} Vendas / Total Gross: R$ {faturamento_base_total:,.2f})</b>.
             </p>
         </div>
         """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
@@ -1047,24 +1053,24 @@ if not df_captacao.empty:
         with sr2:
             st.markdown(f"""
             <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                <span style="font-size:0.7rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🏆 Vendas Aprovadas (Base Total)</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">{vendas_base_qtd} Vendas</h3>
-                <span style="font-size:0.68rem; color:#34d399;">{vendas_lanc_qtd} no Lançamento (Pós 16/08)</span>
+                <span style="font-size:0.7rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🏆 Vendas Realizadas (Lançamento)</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">{vendas_lanc_qtd} Vendas</h3>
+                <span style="font-size:0.68rem; color:#34d399;">Pós 16/08 (Lançamento Oficial)</span>
             </div>
             """, unsafe_allow_html=True)
         with sr3:
             st.markdown(f"""
             <div style="background-color:#065f46; border-top:4px solid #34d399; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                <span style="font-size:0.7rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">💰 Faturamento Total Aprovado</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">R$ {faturamento_base_total:,.2f}</h3>
-                <span style="font-size:0.68rem; color:#a7f3d0;">Lançamento: R$ {faturamento_lanc_total:,.2f}</span>
+                <span style="font-size:0.7rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">💰 Total Transacionado (Lançamento)</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">R$ {faturamento_lanc_total:,.2f}</h3>
+                <span style="font-size:0.68rem; color:#a7f3d0;">Base Ofertas: R$ {faturamento_oferta_lanc:,.2f}</span>
             </div>
             """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
         with sr4:
             st.markdown(f"""
             <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                <span style="font-size:0.7rem; color:#fde68a; text-transform:uppercase; font-weight:700;">💳 Ticket Médio (Base Total)</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">R$ {ticket_medio_base:,.2f}</h3>
+                <span style="font-size:0.7rem; color:#fde68a; text-transform:uppercase; font-weight:700;">💳 Ticket Médio (Base Oferta)</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">R$ {ticket_medio_lanc:,.2f}</h3>
                 <span style="font-size:0.68rem; color:#fbbf24;">{perc_gabriela:.1f}% via Atendimento 1x1</span>
             </div>
             """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
@@ -1120,7 +1126,7 @@ if not df_captacao.empty:
                     <td style="padding:10px;"><b>Vendas Aprovadas (Lançamento Pós 16/08)</b></td>
                     <td style="padding:10px; color:#34d399;"><b>{vendas_lanc_qtd} vendas</b></td>
                     <td style="padding:10px; color:#34d399;"><b>{conv_checkout_perc:.1f}% do checkout</b></td>
-                    <td style="padding:10px; color:#34d399;"><b>R$ {faturamento_lanc_total:,.2f}</b> (Ticket Médio: R$ {ticket_medio_lanc:,.2f}).</td>
+                    <td style="padding:10px; color:#34d399;"><b>R$ {faturamento_oferta_lanc:,.2f} Base Ofertas</b> (Gross: R$ {faturamento_lanc_total:,.2f} | Ticket Médio: R$ {ticket_medio_lanc:,.2f}).</td>
                 </tr>
                 <tr>
                     <td style="padding:10px;"><b>Vendas Aprovadas (Base Total Acumulada)</b></td>
