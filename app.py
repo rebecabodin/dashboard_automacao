@@ -1513,17 +1513,20 @@ if not df_captacao.empty:
         # =========================================================
         # TAB 3: PLANO ESTRATÉGICO & GUIA META API (LC8)
         # =========================================================
+        # =========================================================
+        # TAB 3: PLANO ESTRATÉGICO & GUIA META API (LC8)
+        # =========================================================
         with tab_estrategia:
-            st.markdown("## 🎯 Plano Estratégico LC8 & Engenharia de Envio Meta API")
-            st.markdown("Uma narrativa didática unindo a auditoria financeira do LC7, o plano de ação prático em 3 pilares, a autópsia crítica de performance e o guia de blindagem técnica para o próximo lançamento.")
+            st.markdown("## 🎯 Storytelling BI: Diagnóstico Executivo LC7 & Plano Estratégico LC8")
+            st.markdown("Uma análise orientada por dados conectando os investimentos do LC7, a causa raiz dos gargalos na Meta API e o plano de ação de conversão para o LC8.")
 
             st.markdown("<br>", unsafe_allow_html=True)
 
             # ---------------------------------------------------------
-            # ACTO 1: O DIAGNÓSTICO FINANCEIRO (A VERDADE DOS DADOS)
+            # ETAPA 1: DIAGNÓSTICO FINANCEIRO & IMPACTO REAIS (SCQA - SITUAÇÃO)
             # ---------------------------------------------------------
-            st.subheader("💵 Ato 1: O Diagnóstico Financeiro & Gargalos de Infraestrutura (LC7)")
-            st.markdown("Antes de desenhar o futuro, compreenda onde o investimento do LC7 foi consumido e por que a régua de envios sofreu travamentos:")
+            st.subheader("📊 1. Diagnóstico Executivo de Custos: De Onde Veio o Impacto Financeiro?")
+            st.markdown("A auditoria financeira revelou que **US$ 155,18** foram consumidos no envio de WhatsApp da maratona. Veja a distribuição exata do investimento:")
 
             f1, f2, f3, f4 = st.columns(4)
             f1.metric("💵 Investimento Total", "US$ 155,18", "Periodo 10 a 16/08", delta_color="off")
@@ -1531,47 +1534,15 @@ if not df_captacao.empty:
             f3.metric("🔥 Msgs Marketing Lite", "1.696 msgs", "US$ 121,77 (US$ 0,0718/msg)", delta_color="inverse")
             f4.metric("📊 Taxa de Custo Extra", "9,2x mais caro", "Marketing vs Utility", delta_color="inverse")
 
-            st.caption("💡 **Auditoria Financeira:** 78,5% de todo o custo de envio do lançamento veio dos 1.696 disparos de Marketing Lite, provando que a reclassificação de categoria pela Meta foi a causa do esgotamento de saldo e do travamento de envios.")
+            st.caption("💡 **Insight de BI:** 78,5% de todo o custo de envio do evento veio dos 1.696 disparos que a Meta reclassificou como Marketing Lite (9,2x mais caro que Utility). Essa reclassificação esgotou os créditos em carteira e causou travamentos na entrega dos lembretes.")
             st.markdown("<br>", unsafe_allow_html=True)
             st.markdown("---")
 
             # ---------------------------------------------------------
-            # ACTO 2: OS 3 PILARES DA VIRADA PARA O LC8 (A SOLUÇÃO)
+            # ETAPA 2: ENGENHARIA DA META API & CAUSA RAIZ (COMPLICAÇÃO & DIAGNÓSTICO)
             # ---------------------------------------------------------
-            st.subheader("💡 Ato 2: Os 3 Pilares da Virada Estratégica para o LC8")
-            st.markdown("A partir dos dados reais auditados nas CPLs 01 a 04, estabelecemos 3 diretrizes inegociáveis para o próximo lançamento:")
-
-            p1, p2, p3 = st.columns(3)
-
-            with p1:
-                st.success(
-                    "#### 🟢 1. Link Direto sem Pedágio\n\n"
-                    "**Ação:** A primeira mensagem de cada CPL deve conter o link da aula diretamente no botão ('Assistir Aula 1 Agora').\n\n"
-                    "**Impacto Esperado:** Subir o CTR de 5% para 25%+ (baseado na prova da CPL 01 Msg #5 com 88% de cliques)."
-                )
-
-            with p2:
-                st.warning(
-                    "#### 🟡 2. Retenção Total no WhatsApp\n\n"
-                    "**Ação:** Não direcionar o lead para comentar no Instagram durante a maratona de aulas.\n\n"
-                    "**Impacto Esperado:** Eliminar a fuga de 99,5% e manter 100% da audiência engajada no canal oficial de vendas (WhatsApp)."
-                )
-
-            with p3:
-                st.info(
-                    "#### 🔵 3. Templates Pagos nas Aulas\n\n"
-                    "**Ação:** Usar Templates Aprovados da Meta nos disparos das 08h00 do dia da aula.\n\n"
-                    "**Impacto Esperado:** Destravar os 74% a 80% de leads barrados pela regra da Janela de 24h."
-                )
-
-            st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown("---")
-
-            # ---------------------------------------------------------
-            # ACTO 3: BLINDAGEM TÉCNICA META API & AQUECIMENTO
-            # ---------------------------------------------------------
-            st.subheader("📜 Ato 3: Blindagem Técnica Meta API & Engenharia da Meta")
-            st.markdown("Como funciona o algoritmo de análise de mensagens da Meta e como proteger a infraestrutura para não estourar custos nem sofrer bloqueios no LC8:")
+            st.subheader("🤖 2. Causa Raiz & Engenharia Meta API: Como Evitar a Reclassificação")
+            st.markdown("Para impedir estouros de orçamento no LC8, analisamos como o modelo de IA da Meta lê o conteúdo das mensagens:")
 
             with st.expander("📘 Entenda a Engenharia da Meta API: Utility vs. Marketing (Clique para Expandir)", expanded=True):
                 meta_col1, meta_col2 = st.columns(2)
@@ -1629,9 +1600,11 @@ if not df_captacao.empty:
             st.markdown("<br>", unsafe_allow_html=True)
             st.markdown("---")
 
-            # SEÇÃO: INATIVIDADE (O PERIGO DO EFEITO SANFONA)
-            st.subheader("⚠️ O Perigo do 'Efeito Sanfona' no WhatsApp entre Lançamentos")
-            st.markdown("Entenda o que acontece quando o WhatsApp dispara mil mensagens no lançamento e depois fica semanas em silêncio.")
+            # ---------------------------------------------------------
+            # ETAPA 3: GESTÃO DE ATIVOS & AQUECIMENTO DE NÚMERO
+            # ---------------------------------------------------------
+            st.subheader("⚠️ 3. Gestão de Ativos: O Perigo do 'Efeito Sanfona' entre Lançamentos")
+            st.markdown("Compreenda como a inatividade de longo prazo entre lançamentos afeta a nota de reputação do número do WhatsApp:")
 
             w_col1, w_col2, w_col3 = st.columns(3)
 
@@ -1672,9 +1645,38 @@ if not df_captacao.empty:
             st.markdown("---")
 
             # ---------------------------------------------------------
-            # ACTO 4: AUTÓPSIA CRÍTICA DE PERFORMANCE (POSICIONADO APÓS EFEITO SANFONA)
+            # ETAPA 4: PLANO ESTRATÉGICO LC8 & MATRIZ DE DECISÃO (SOLUÇÃO FINAL)
             # ---------------------------------------------------------
-            st.subheader("🧠 Ato 4: Autópsia Crítica de Performance (Eliminar, Manter, Melhorar e Testar)")
+            st.subheader("💡 4. Plano Estratégico LC8: Os 3 Pilares da Virada & Matriz de Decisão")
+            st.markdown("A partir da comprovação empírica dos dados do LC7, estabelecemos 3 pilares práticos e a matriz de decisão tática:")
+
+            p1, p2, p3 = st.columns(3)
+
+            with p1:
+                st.success(
+                    "#### 🟢 1. Link Direto sem Pedágio\n\n"
+                    "**Ação:** A primeira mensagem de cada CPL deve conter o link da aula diretamente no botão ('Assistir Aula 1 Agora').\n\n"
+                    "**Impacto Esperado:** Subir o CTR de 5% para 25%+ (baseado na prova da CPL 01 Msg #5 com 88% de cliques)."
+                )
+
+            with p2:
+                st.warning(
+                    "#### 🟡 2. Retenção Total no WhatsApp\n\n"
+                    "**Ação:** Não direcionar o lead para comentar no Instagram durante a maratona de aulas.\n\n"
+                    "**Impacto Esperado:** Eliminar a fuga de 99,5% e manter 100% da audiência engajada no canal oficial de vendas (WhatsApp)."
+                )
+
+            with p3:
+                st.info(
+                    "#### 🔵 3. Templates Pagos nas Aulas\n\n"
+                    "**Ação:** Usar Templates Aprovados da Meta nos disparos das 08h00 do dia da aula.\n\n"
+                    "**Impacto Esperado:** Destravar os 74% a 80% de leads barrados pela regra da Janela de 24h."
+                )
+
+            st.markdown("<br>", unsafe_allow_html=True)
+
+            # MATRIZ CRÍTICA
+            st.markdown("#### 🧠 Matriz de Autópsia de Performance (Decisão Tática de Canal e Copy)")
             st.markdown("Uma avaliação rigorosa de Copy, CTAs, Reprises e Canais estruturada em cards de decisão estratégica:")
 
             m_elim, m_mant, m_melh, m_test = st.tabs([
