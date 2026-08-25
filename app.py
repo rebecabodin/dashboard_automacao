@@ -3113,8 +3113,6 @@ if not df_captacao.empty:
 
         # TAB 3: TABELA BRUTA DE CAMPANHAS
         with tab_em_raw:
-            st.markdown("<h5 style='text-align:left; font-weight:700; margin-bottom:16px; color:#ffffff;'>📋 Relatório Consolidado de Campanhas Hotmart Send</h5>", unsafe_allow_html=True)
-            
             df_camp_display = df_camp[['name', 'data_comunicação', 'total_sent', 'open_rate_percent', 'ctor_percent']].copy()
             df_camp_display.columns = ['Campanha / Assunto', 'Data Disparo', 'Total Disparados', 'Abertura (%)', 'CTOR (%)']
             
