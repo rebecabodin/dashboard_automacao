@@ -950,14 +950,24 @@ if not df_captacao.empty:
             st.warning("**Insight DBA:** O seu funil apresenta uma taxa alta de ação na pós-visualização do vídeo.\n\n**🎯 Destaque para a Repescagem:** A sua estratégia de perguntar 'Conseguiu entrar no grupo?' é fantástica! O lembrete secundário foi acionado para 213 Técnicos e 60 Empreendedores que clicaram em 'Não consegui'. Desse volume, o link bruto da repescagem conseguiu salvar e converter **181 Técnicos** (85.0%) e **55 Empreendedores** (91.7%). Sem esse nó inteligente, você teria perdido 236 leads extremamente qualificados e o seu CPL (Custo por Lead) teria disparado!")
         
     elif menu_selecionado == '📊 Pesquisa (WordCloud)':
-        st.markdown("<h1 style='text-align: left; color: #4B8BBE; font-size: 3rem;'>🧠 Raio-X da Audiência</h1>", unsafe_allow_html=True)
-        st.markdown("<h3 style='text-align: left; color: #AAAAAA; font-weight: 300;'>Decodificando os desejos, dores e o poder de compra do seu cliente.</h3>", unsafe_allow_html=True)
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.info("Mais do que números, a pesquisa de check-in revela a **alma** do lançamento. Aqui, saímos do 'achismo' e ouvimos a voz da audiência para escrever copys cirúrgicas que quebram objeções antes mesmo de o carrinho abrir.")
+        # --- BANNER EXECUTIVO: INTELIGÊNCIA DE PESQUISA & ANÁLISE DE AUDIÊNCIA ---
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-left: 6px solid #6366f1; padding: 24px 26px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <span style="background-color:#6366f1; color:#ffffff; font-size:0.75rem; padding:4px 12px; border-radius:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Inteligência de Audiência & Check-In</span>
+                    <h2 style="color: #ffffff; font-weight: 800; margin: 8px 0 0 0; font-size: 1.6rem; letter-spacing: -0.5px;">🧠 Raio-X da Audiência & Pesquisa de Perfil</h2>
+                </div>
+            </div>
+            <p style="color: #c7d2fe; margin-top: 10px; margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
+                Decodificando os desejos, dores, nível técnico e o poder de compra da base de leads — dados auditados da pesquisa de check-in para embasamento de copy, ofertas e quebra de objeções no lançamento.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
         
         try:
             df_pesq = pd.read_csv("pesquisa.csv")
-            # Renomeando as colunas difíceis
+            # Renomeando colunas
             df_pesq = df_pesq.rename(columns={
                 "Qual a sua idade?": "Idade",
                 "Qual dessas opções mais representa você hoje?\\n": "Perfil_Inicial",
@@ -971,83 +981,155 @@ if not df_captacao.empty:
             })
             
             import numpy as np
-            # Filtra erros da planilha (como #ERROR!) usando np.nan para evitar erro de JSON do Plotly
             df_pesq = df_pesq.replace('#ERROR!', np.nan)
-            
-            # Conta totais reais
             total_respostas = len(df_pesq)
             
-            st.markdown("<h2 style='color: #4B8BBE;'>1. Demografia e Perfil Técnico</h2>", unsafe_allow_html=True)
-            st.metric(label="Total de Respostas Analisadas", value=total_respostas, help="Volume total de leads que completaram o formulário de Check-in.")
-            st.markdown("<br>", unsafe_allow_html=True)
-            
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                with st.container(border=True):
+            tecnico_counts = df_pesq['Nivel_Tecnico'].value_counts(normalize=True) * 100
+            perc_leigo = tecnico_counts[tecnico_counts.index.str.contains('Nenhum|Básico', case=False, na=False)].sum()
+            perc_cartao = (df_pesq['Cartao'].value_counts(normalize=True).get('Sim', 0) * 100)
+            idade_comum = df_pesq['Idade'].mode()[0] if not df_pesq['Idade'].empty else "N/A"
+            renda_comum = df_pesq['Renda'].mode()[0].split('(')[0].strip() if not df_pesq['Renda'].empty else "N/A"
+
+            # --- SCORECARDS DE TOPO ---
+            m1, m2, m3, m4, m5 = st.columns(5)
+
+            with m1:
+                st.markdown(f"""
+                <div style="background-color:#0f172a; border-top:4px solid #6366f1; padding:18px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.7rem; color:#c7d2fe; text-transform:uppercase; font-weight:700;">📋 Respostas Analisadas</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.35rem;">{total_respostas} Leads</h3>
+                    <span style="font-size:0.68rem; color:#818cf8;">Pesquisa Check-In LC7</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with m2:
+                st.markdown(f"""
+                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:18px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.7rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">💳 Possuem Cartão</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.35rem;">{perc_cartao:.1f}%</h3>
+                    <span style="font-size:0.68rem; color:#34d399;">Limite de Crédito Ativo</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with m3:
+                st.markdown(f"""
+                <div style="background-color:#0284c7; border-top:4px solid #38bdf8; padding:18px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.7rem; color:#bae6fd; text-transform:uppercase; font-weight:700;">🎓 Nível Leigo / Básico</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.35rem;">{perc_leigo:.1f}%</h3>
+                    <span style="font-size:0.68rem; color:#7dd3fc;">Necessitam Conteúdo "Do Zero"</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with m4:
+                st.markdown(f"""
+                <div style="background-color:#4c1d95; border-top:4px solid #a855f7; padding:18px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.7rem; color:#e9d5ff; text-transform:uppercase; font-weight:700;">👤 Faixa Etária Principal</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.25rem;">{idade_comum}</h3>
+                    <span style="font-size:0.68rem; color:#c084fc;">Público Maduro</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with m5:
+                st.markdown(f"""
+                <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:18px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.7rem; color:#fde68a; text-transform:uppercase; font-weight:700;">💵 Renda Predominante</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.15rem;">{renda_comum}</h3>
+                    <span style="font-size:0.68rem; color:#fbbf24;">Sensível a Parcelamento</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            st.markdown("<div style='margin-top:24px;'></div>", unsafe_allow_html=True)
+
+            # --- ABAS DE ANÁLISE DA PESQUISA ---
+            tab_p1, tab_p2, tab_p3 = st.tabs([
+                "📊 1. Demografia & Perfil Técnico",
+                "💰 2. Poder de Compra & Cartão",
+                "🧠 3. Nuvem de Palavras & Dores Latentes"
+            ])
+
+            # TAB 1: DEMOGRAFIA & PERFIL TÉCNICO
+            with tab_p1:
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    st.markdown("""
+                    <div style="background-color:#0f172a; border-left:5px solid #6366f1; padding:18px 20px; border-radius:12px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0 0 12px 0; text-align:left;">Distribuição por Faixa Etária</h5>
+                    </div>
+                    """, unsafe_allow_html=True)
                     df_idade = df_pesq['Idade'].value_counts().reset_index()
                     df_idade.columns = ['Idade', 'Quantidade']
                     df_idade = df_idade.sort_values(by='Idade')
-                    fig_idade = px.bar(df_idade, x='Idade', y='Quantidade', title='Faixa Etária', text_auto=True, color='Idade', color_discrete_sequence=px.colors.qualitative.Pastel)
-                    fig_idade.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", showlegend=False, xaxis_title=None, yaxis_title=None)
+                    fig_idade = px.bar(df_idade, x='Idade', y='Quantidade', text_auto=True, color_discrete_sequence=['#6366f1'])
+                    fig_idade.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#ffffff"), height=340, xaxis_title=None, yaxis_title=None)
                     st.plotly_chart(fig_idade, use_container_width=True)
-                    
-            with col2:
-                with st.container(border=True):
+                        
+                with col2:
+                    st.markdown("""
+                    <div style="background-color:#0f172a; border-left:5px solid #38bdf8; padding:18px 20px; border-radius:12px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0 0 12px 0; text-align:left;">Nível de Conhecimento Técnico</h5>
+                    </div>
+                    """, unsafe_allow_html=True)
                     df_tec = df_pesq['Nivel_Tecnico'].value_counts().reset_index()
                     df_tec.columns = ['Nivel_Tecnico', 'Quantidade']
                     df_tec['Nivel_Curto'] = df_tec['Nivel_Tecnico'].apply(lambda x: str(x).split('.')[0] if pd.notnull(x) else 'Não Informado')
-                    fig_tec = px.bar(df_tec, x='Nivel_Curto', y='Quantidade', title='Nível de Conhecimento Técnico', text_auto=True, color='Nivel_Curto', color_discrete_sequence=px.colors.qualitative.Set1)
-                    fig_tec.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", showlegend=False, xaxis_title=None, yaxis_title=None)
+                    fig_tec = px.bar(df_tec, x='Nivel_Curto', y='Quantidade', text_auto=True, color_discrete_sequence=['#38bdf8'])
+                    fig_tec.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#ffffff"), height=340, xaxis_title=None, yaxis_title=None)
                     st.plotly_chart(fig_tec, use_container_width=True)
+
+                st.markdown(f"""
+                <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-left: 5px solid #10b981; padding: 18px 22px; border-radius: 12px; margin-top: 16px; color:#ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                    <h5 style="color:#ffffff; font-weight:700; margin:0 0 8px 0; text-align:left;">🎯 Insight Demográfico & Estratégia de Copy</h5>
+                    <p style="color:#e2e8f0; font-size:0.88rem; margin:0; line-height:1.6; text-align:left;">
+                        • <b>Perfil da Audiência:</b> <b>{perc_leigo:.1f}%</b> da base é leiga ou possui conhecimento básico, concentrada na faixa de <b>{idade_comum}</b>.<br>
+                        • <b>Estratégia de Copy:</b> Remova termos técnicos complexos das CPLs. Foque na promessa de <b>"método simples do zero"</b>, <b>"passo a passo seguro"</b> e <b>"nova fonte de renda"</b> para eliminar a insegurança técnica.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # TAB 2: PODER DE COMPRA & CARTÃO
+            with tab_p2:
+                col3, col4 = st.columns(2)
                 
-            try:
-                idade_comum = df_pesq['Idade'].mode()[0] if not df_pesq['Idade'].empty else "Não informada"
-                tecnico_counts = df_pesq['Nivel_Tecnico'].value_counts(normalize=True) * 100
-                perc_leigo = tecnico_counts[tecnico_counts.index.str.contains('Nenhum|Básico', case=False, na=False)].sum()
-                
-                st.info(f"**🎯 Insight Demográfico (Aprofundado):** A grande maioria do público ({perc_leigo:.1f}%) é de iniciantes ('Nenhum' ou 'Básico'), com a faixa etária principal concentrada em **{idade_comum}**. \n\n**O que isso significa na prática?** Essa audiência madura busca transição de carreira ou uma nova fonte de renda segura, mas sente profunda insegurança técnica (medo de não conseguir aprender ou de estragar um equipamento). \n\n**Estratégia de Copy e Conteúdo:** Remova completamente jargões complexos das aulas gratuitas (CPLs). Foque nos termos 'passo a passo', 'do zero', 'qualquer um consegue' e 'método à prova de falhas'. A promessa principal deve girar em torno da *segurança financeira* e *facilidade de implementação*, reduzindo a fricção e o medo da complexidade elétrica.")
-            except:
-                st.info("**🎯 Insight Demográfico:** O público é predominantemente leigo ('Nenhum' ou 'Básico') e concentrado em faixas etárias maduras (35-54 anos). Isso exige uma copy didática, sem jargões complexos, focada em segurança e passo-a-passo estruturado.")
-            st.markdown("<hr style='border: 1px solid #d3d3d3; margin: 50px 0;'>", unsafe_allow_html=True)
-            st.markdown("<h2 style='color: #4B8BBE;'>2. Poder de Compra (Renda vs Cartão)</h2>", unsafe_allow_html=True)
-            
-            col3, col4 = st.columns(2)
-            
-            with col3:
-                with st.container(border=True):
+                with col3:
+                    st.markdown("""
+                    <div style="background-color:#0f172a; border-left:5px solid #f59e0b; padding:18px 20px; border-radius:12px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0 0 12px 0; text-align:left;">Distribuição de Renda Mensal</h5>
+                    </div>
+                    """, unsafe_allow_html=True)
                     df_renda = df_pesq['Renda'].dropna().value_counts().reset_index()
                     df_renda.columns = ['Renda', 'Quantidade']
-                    
-                    # Limpar rótulos longos e ordenar do menor para o maior
                     df_renda['Renda'] = df_renda['Renda'].apply(lambda x: str(x).split('(')[0].strip())
                     ordem_renda = ["Nenhuma renda", "Até 1 salário mínimo", "De 1 a 3 salários mínimos", "De 3 a 5 salários mínimos", "Mais de 5 salários mínimos"]
                     df_renda['Renda'] = pd.Categorical(df_renda['Renda'], categories=ordem_renda, ordered=True)
                     df_renda = df_renda.sort_values('Renda', ascending=False)
                     
-                    fig_renda = px.bar(df_renda, y='Renda', x='Quantidade', orientation='h', title='Distribuição de Renda', color='Renda', color_discrete_sequence=px.colors.qualitative.Pastel, text_auto=True)
-                    fig_renda.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", xaxis_title="Quantidade", yaxis_title=None, showlegend=False)
+                    fig_renda = px.bar(df_renda, y='Renda', x='Quantidade', orientation='h', color_discrete_sequence=['#f59e0b'], text_auto=True)
+                    fig_renda.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#ffffff"), height=340, xaxis_title=None, yaxis_title=None)
                     st.plotly_chart(fig_renda, use_container_width=True)
-                    
-            with col4:
-                with st.container(border=True):
-                    fig_cartao = px.pie(df_pesq.dropna(subset=['Cartao']), names='Cartao', title='Possui Cartão de Crédito?', color_discrete_sequence=px.colors.qualitative.Set3)
-                    fig_cartao.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
+                        
+                with col4:
+                    st.markdown("""
+                    <div style="background-color:#0f172a; border-left:5px solid #10b981; padding:18px 20px; border-radius:12px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0 0 12px 0; text-align:left;">Possui Cartão de Crédito?</h5>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    fig_cartao = px.pie(df_pesq.dropna(subset=['Cartao']), names='Cartao', hole=0.4, color_discrete_sequence=['#10b981', '#ef4444'])
+                    fig_cartao.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#ffffff"), height=340)
                     st.plotly_chart(fig_cartao, use_container_width=True)
-                
-            try:
-                perc_cartao = (df_pesq['Cartao'].value_counts(normalize=True).get('Sim', 0) * 100)
-                renda_comum = df_pesq['Renda'].mode()[0] if not df_pesq['Renda'].empty else "Não informada"
-                
-                st.info(f"**💰 Insight Financeiro (Aprofundado):** Uma enorme parcela da sua base ({perc_cartao:.1f}%) afirma possuir Cartão de Crédito. No entanto, a renda predominante detectada nos gráficos se concentra na faixa de **{renda_comum}**. \n\n**O que isso significa na prática?** O lead *tem o limite no cartão*, mas o orçamento mensal dele é extremamente restrito. \n\n**Estratégia de Vendas (Copy):** A ancoragem do preço cheio (ex: R$ 997) pode gerar susto e abandono de carrinho. O foco absoluto do seu pitch e da página de vendas deve ser o valor da parcela ('Por menos de X reais por dia' ou '12x de Y'). Além disso, oferecer modalidades híbridas (Pix + Cartão) ou Boleto Parcelado será o grande diferencial para contornar o bloqueio de limite único.")
-            except:
-                st.info("**💰 Insight Financeiro:** A base apresenta alta adesão a cartão de crédito, mas a renda predominante sugere cautela na ancoragem do ticket. Ofertas com parcelamento estendido terão altíssima conversão.")
-            st.markdown("<hr style='border: 1px solid #d3d3d3; margin: 50px 0;'>", unsafe_allow_html=True)
-            st.markdown("<h2 style='color: #F97316;'>3. Nuvem de Palavras (Desejos Latentes)</h2>", unsafe_allow_html=True)
-            st.markdown("O que a audiência respondeu quando perguntada sobre suas expectativas.")
-            
-            with st.container(border=True):
-                # Wordcloud
+
+                st.markdown(f"""
+                <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-left: 5px solid #f59e0b; padding: 18px 22px; border-radius: 12px; margin-top: 16px; color:#ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                    <h5 style="color:#ffffff; font-weight:700; margin:0 0 8px 0; text-align:left;">💰 Insight Financeiro & Precificação de Oferta</h5>
+                    <p style="color:#e2e8f0; font-size:0.88rem; margin:0; line-height:1.6; text-align:left;">
+                        • <b>Adesão a Crédito:</b> <b>{perc_cartao:.1f}%</b> possuem cartão de crédito. No entanto, a renda predominante é de <b>{renda_comum}</b>.<br>
+                        • <b>Estratégia de Pitch:</b> O lead possui limite, mas tem orçamento mensal justo. Ancorar o preço no valor da parcela (ex: <b>"por menos de R$ 4/dia"</b> ou <b>"12x de R$ 149"</b>) será o maior impulsionador de conversão.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # TAB 3: NUVEM DE PALAVRAS & DORES
+            with tab_p3:
                 try:
                     import matplotlib.pyplot as plt
                     from wordcloud import WordCloud, STOPWORDS
@@ -1055,8 +1137,6 @@ if not df_captacao.empty:
                     import re
                     
                     textos = " ".join(df_pesq['Expectativa'].dropna().astype(str).tolist())
-                    
-                    # Limpeza para contagem correta
                     texto_limpo = re.sub(r'[^\w\s]', '', textos.lower())
                     palavras = texto_limpo.split()
                     
@@ -1064,33 +1144,43 @@ if not df_captacao.empty:
                     pt_stops = ["o", "a", "os", "as", "um", "uma", "uns", "umas", "de", "do", "da", "dos", "das", "em", "no", "na", "nos", "nas", "para", "pra", "com", "que", "se", "por", "como", "mais", "mas", "eu", "ele", "ela", "eles", "elas", "me", "te", "se", "nos", "vos", "e", "ou", "tudo", "muito", "sobre", "ser", "ter", "aprender", "fazer", "saber", "isso", "aquilo", "estou", "quero", "vou", "nao", "não", "sim", "sou", "q", "ja", "já", "meu", "minha", "vem", "tem", "até", "dos", "das"]
                     stop_words.update(pt_stops)
                     
-                    # Top 5 Métricas
                     palavras_filtradas = [p for p in palavras if p not in stop_words and len(p) > 2]
                     contagem = Counter(palavras_filtradas)
                     top_5 = contagem.most_common(5)
                     
-                    st.markdown("##### 🏆 Top 5 Temas Mais Citados")
+                    st.markdown("<h5 style='text-align:left; font-weight:700; margin-bottom:12px; color:#ffffff;'>🏆 Top 5 Temas Mais Citados nas Expectativas</h5>", unsafe_allow_html=True)
                     cols_top = st.columns(5)
                     for i, (palavra, freq) in enumerate(top_5):
                         with cols_top[i]:
-                            st.metric(label=f"#{i+1} Tema", value=palavra.title(), delta=f"{freq} citações", delta_color="off")
+                            st.markdown(f"""
+                            <div style="background-color:#0f172a; border-top:3px solid #6366f1; padding:12px 8px; border-radius:8px; text-align:center;">
+                                <span style="font-size:0.7rem; color:#c7d2fe; text-transform:uppercase;">#{i+1} Tema</span>
+                                <h4 style="color:#ffffff; font-weight:800; margin:4px 0;">{palavra.title()}</h4>
+                                <span style="font-size:0.68rem; color:#818cf8;">{freq} citações</span>
+                            </div>
+                            """, unsafe_allow_html=True)
                     
-                    st.markdown("<br>", unsafe_allow_html=True)
+                    st.markdown("<div style='margin-top:20px;'></div>", unsafe_allow_html=True)
                     
-                    # Renderização Wordcloud
-                    wordcloud = WordCloud(width=800, height=400, background_color='#1E1E1E', stopwords=stop_words, colormap='Wistia').generate(textos)
-                    
-                    fig_wc, ax = plt.subplots(figsize=(10, 5), facecolor='#1E1E1E')
+                    wordcloud = WordCloud(width=800, height=360, background_color='#0f172a', stopwords=stop_words, colormap='Wistia').generate(textos)
+                    fig_wc, ax = plt.subplots(figsize=(10, 4.5), facecolor='#0f172a')
                     ax.imshow(wordcloud, interpolation='bilinear')
                     ax.axis("off")
                     st.pyplot(fig_wc)
                     
-                    # Insight Comportamental
                     termos_top = [p.title() for p, c in top_5]
-                    st.info(f"**🧠 Insight Comportamental (Dores e Desejos):** As 5 palavras que mais ecoam na mente do seu lead são: **{', '.join(termos_top)}**. \n\n**O que isso revela?** Estes termos representam as maiores 'dores latentes' ou ambições do cliente. A copy de abertura do CPL e dos anúncios de remarketing deve utilizar exatamente este vocabulário para gerar ancoragem e conexão instantânea (ex: 'Eu sei que o que você mais quer agora é [Tema #1] e [Tema #2]').")
+                    st.markdown(f"""
+                    <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-left: 5px solid #a855f7; padding: 18px 22px; border-radius: 12px; margin-top: 16px; color:#ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0 0 8px 0; text-align:left;">🧠 Vocabulário de Conexão com o Lead</h5>
+                        <p style="color:#e2e8f0; font-size:0.88rem; margin:0; line-height:1.6; text-align:left;">
+                            • <b>Palavras de Poder:</b> Os 5 temas com maior peso emocional na mente do lead são: <b>{', '.join(termos_top)}</b>.<br>
+                            • <b>Aplicação Prática:</b> Use esses exatos termos nas aberturas dos CPLs e anúncios de remarketing para gerar identificação instantânea.
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
                     
                 except ImportError:
-                    st.error("As bibliotecas 'wordcloud' ou 'matplotlib' não estão instaladas neste ambiente da nuvem.")
+                    st.error("As bibliotecas 'wordcloud' ou 'matplotlib' não estão instaladas neste ambiente.")
             
         except Exception as e:
             st.error(f"Erro ao processar a pesquisa: {e}")
