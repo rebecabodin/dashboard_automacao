@@ -1114,11 +1114,11 @@ Tabela consolidada das métricas de topo ao final do funil de vendas (Auditado e
 
         st.markdown("""
         <div style="background-color:#0f172a; border-left:5px solid #38bdf8; padding:18px 22px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-            <h4 style="color:#ffffff; font-weight:700; margin:0 0 10px 0; text-align:left;">2. 🧠 Análise Cruzada de Perfil da Audiência & Comportamento (Pesquisa)</h4>
+            <h4 style="color:#ffffff; font-weight:700; margin:0 0 10px 0; text-align:left;">2. 🧠 Análise Cruzada de Perfil da Audiência &amp; Comportamento (Pesquisa)</h4>
             <div style="line-height:1.6; color:#e2e8f0; font-size:0.9rem; text-align:left;">
-                <p>• <b>Cruzamento Renda vs Cartão de Crédito:</b> <b>72,4% dos leads</b> declararam ter cartão de crédito ativo. Porém, a renda mensal de <b>60%+ da base</b> se concentra na faixa de <b>1 a 3 salários mínimos</b> (R$ 1.412 a R$ 4.236).</p>
-                <p>• <b>Diagnóstico de Precificação:</b> O lead <i>tem o cartão</i>, mas possui orçamento mensal restrito e limite único limitado. Exigir o valor cheio de R$ 1.497 de uma só vez gera susto e abandono de carrinho. A ancoragem do pitch precisa ser o valor da parcela mensal (ex: <i>"menos de R$ 5/dia"</i> ou <i>"12x de R$ 149"</i>), sendo vital oferecer <b>Pagamento Híbrido (Pix + Cartão)</b> e <b>Dois Cartões</b> no checkout.</p>
-                <p>• <b>Nível Técnico & Didática:</b> <b>88,2% da base é leiga ou iniciante</b> (concentrada na faixa de 35 a 54 anos). É necessário eliminar termos elétricos complexos e focar nas promessas <i>"passo a passo seguro do zero"</i> e <i>"método à prova de falhas"</i>.</p>
+                <p>• <b>Cruzamento Renda vs Cartão de Crédito:</b> <b>33,6% dos leads</b> declararam ter cartão de crédito ativo (1.378 leads). A renda de <b>73,8% da base</b> se concentra em até 3 salários mínimos (39,9% de 1 a 3 salários, 33,9% até 1 salário e 16,1% sem renda).</p>
+                <p>• <b>Diagnóstico de Precificação:</b> Com 66,4% dos leads sem cartão e orçamento mensal restrito, a ancoragem do pitch precisa ser o valor da parcela mensal (ex: <i>"menos de R$ 5/dia"</i> ou <i>"12x de R$ 149"</i>), sendo vital oferecer <b>Pagamento Híbrido (Pix + Cartão)</b>, <b>Pix Parcelado</b> e <b>Dois Cartões</b> no checkout.</p>
+                <p>• <b>Nível Técnico &amp; Didática:</b> <b>90,6% da base é leiga ou iniciante</b> (76,0% nunca consertou e 14,6% domina apenas mecânica básica, concentrada na faixa de 35 a 54 anos). É necessário eliminar termos elétricos complexos e focar nas promessas <i>"passo a passo seguro do zero"</i> e <i>"método à prova de falhas"</i>.</p>
                 <p>• <b>Top 5 Dores Latentes (WordCloud):</b> 1º <i>Manutenção</i> (771), 2º <i>Conhecimento</i> (495), 3º <i>Elétrica</i> (350), 4º <i>Scooter</i> (238), 5º <i>Consertar</i> (207).</p>
             </div>
         </div>
