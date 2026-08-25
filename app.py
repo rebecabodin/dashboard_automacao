@@ -2260,15 +2260,45 @@ if not df_captacao.empty:
 
             st.markdown("<br>", unsafe_allow_html=True)
 
-            # --- PAINEL DIAGNÓSTICO DE DUPLICIDADES E VULNERABILIDADE DE FORMULÁRIO ---
+            # --- PAINEL DIAGNÓSTICO DE OPERAÇÃO, TIMING E FORMULÁRIO ---
             st.markdown("""
-            <div style="background-color:#2d1215; border-left:6px solid #ef4444; padding:18px; border-radius:12px; color:#ffffff; margin-bottom:20px;">
-                <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1.05rem;">🚨 Diagnóstico de Engenharia: Duplicidades & Trava de Formulário</h5>
-                <p style="font-size:0.9rem; color:#ffffff; margin-top:8px; line-height:1.6;">
-                    • <b>Exclusão Auditada de Testes & Internos:</b> Todos os registros de teste (<code>Teste Novo</code>, <code>321teste</code>, <code>teste@teste.com</code>) e da equipe de automação (<code>Rebeca Bodin</code> / <code>automacoesa@gmail.com</code> / <code>automacoesaa@gmail.com</code>) foram <b>desconsiderados e purgados do dashboard</b> para não inflar as métricas reais.<br>
-                    • <b>Sinalização de Duplicidade:</b> Identificamos o cadastro duplicado do lead <b>Alvaro Honda</b> (registrado com e-mail <code>.com</code> e <code>.com.ar</code>). Apenas 1 registro foi mantido auditado para garantir total fidelidade (14 leads reais na Hotmart).<br>
-                    • <b>⚠️ Vulnerabilidade no Formulário da Landing Page:</b> O formulário do Pop-up da LP possui trava de campo obrigatório <b>APENAS para o E-mail</b>. Não há validação de obrigatoriedade nem máscara para Nome ou Telefone! Isso permitiu cadastros sem Nome e telefones sem DDD (ex: <i>Mikael Paz</i> - cadastrou sem o DDD 55), o que gerou recusa na API do WhatsApp.<br>
-                    &nbsp;&nbsp;&nbsp;👉 <b>Recomendação de Correção:</b> Aplicar a propriedade <code>required</code> e máscara visual de DDD <code>+55 (XX) XXXXX-XXXX</code> no formulário da LP.
+            <div style="background-color:#0f172a; border-left:6px solid #f59e0b; padding:22px 24px; border-radius:12px; margin-bottom:20px; box-shadow:0 4px 20px rgba(0,0,0,0.35); color:#ffffff;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                    <div>
+                        <span style="background-color:#f59e0b; color:#0f172a; font-size:0.75rem; padding:4px 12px; border-radius:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;">Análise Crítica de Operação & Timing</span>
+                        <h4 style="color:#ffffff; font-weight:800; margin:8px 0 0 0; font-size:1.35rem;">⏳ Diagnóstico: Liberação Tardia da Régua de Carrinho (Atraso de 20h)</h4>
+                    </div>
+                    <div style="background-color:#451a03; border:2px solid #f59e0b; padding:8px 16px; border-radius:10px; text-align:center;">
+                        <span style="font-size:0.72rem; color:#fde68a; text-transform:uppercase; font-weight:700;">Data/Hora da Liberação</span>
+                        <div style="font-size:1.2rem; font-weight:800; color:#fbbf24; margin-top:2px;">17/08 às 16:07</div>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap:16px; margin:18px 0 16px 0;">
+                    <div style="background-color:#1e293b; border-top:4px solid #f59e0b; padding:14px; border-radius:10px; color:#ffffff;">
+                        <span style="font-size:0.75rem; color:#fde68a; font-weight:700; text-transform:uppercase;">🛒 Flow: Carrinho (ManyChat)</span>
+                        <div style="font-size:1.35rem; font-weight:800; color:#ffffff; margin:4px 0;">42 Execuções</div>
+                        <span style="font-size:0.72rem; color:#94a3b8;">Status: STOPPED (45 tags atribuídas)</span>
+                    </div>
+
+                    <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:14px; border-radius:10px; color:#ffffff;">
+                        <span style="font-size:0.75rem; color:#a7f3d0; font-weight:700; text-transform:uppercase;">🎉 Flow: Onboarding (Boas-Vindas)</span>
+                        <div style="font-size:1.35rem; font-weight:800; color:#ffffff; margin:4px 0;">56 Execuções</div>
+                        <span style="font-size:0.72rem; color:#4ade80;">Status: LIVE (60 tags de boas-vindas)</span>
+                    </div>
+
+                    <div style="background-color:#451a03; border-top:4px solid #ef4444; padding:14px; border-radius:10px; color:#ffffff;">
+                        <span style="font-size:0.75rem; color:#fca5a5; font-weight:700; text-transform:uppercase;">⚡ Disparo Emergencial Meta API</span>
+                        <div style="font-size:1.35rem; font-weight:800; color:#ffffff; margin:4px 0;">7 Leads Disparados</div>
+                        <span style="font-size:0.72rem; color:#fbbf24;">100% Entregue | 85,7% Lido (6) | 14,3% Clique</span>
+                    </div>
+                </div>
+
+                <p style="font-size:0.9rem; color:#ffffff; margin:0; line-height:1.6;">
+                    • <b>Análise de Causa Raiz & Decision-Making Delay:</b> A abertura oficial de vendas ocorreu no CPL 4 ao vivo no domingo (16/08 às 20h). Porém, a tomada de decisão e autorização para liberar o fluxo automático de recuperação no WhatsApp <b>ocorreu apenas no dia seguinte (17/08 às 16h07) — quase 20 horas depois e já no final da tarde</b>.<br>
+                    • <b>Comprovação de Eficiência da Mensagem:</b> No lote emergencial liberado às 16:07 para <b>7 leads</b>, a taxa de abertura foi de <b>85,7% (6 de 7 leram na hora)</b>. Isso comprova que se a régua estivesse ativa de forma imediata no pós-live (domingo à noite), o resgate de vendas teria sido significativamente maior!<br>
+                    • <b>⚠️ Diagnóstico Técnico de Formulário & Duplicidades:</b> Excluímos todos os testes internos (<i>Teste Novo, 321teste, Rebeca Bodin/Automações</i>) e deduplicamos o lead <i>Alvaro Honda</i> (cadastrado 2x com .com e .com.ar). Além disso, identificamos que o formulário da LP exigia obrigatoriedade <b>apenas no E-mail</b> (sem trava para Telefone/DDD), gerando falha no envio para cadastros incompletos (ex: <i>Mikael Paz</i> sem DDD).<br>
+                    👉 <b>Recomendação Executiva p/ Próximo Lançamento:</b> Deixar os fluxos de carrinho pré-aprovados para disparar no máximo <b>15 minutos após a live</b> e aplicar a trava <code>required</code> com máscara de DDD no formulário.
                 </p>
             </div>
             """, unsafe_allow_html=True)
