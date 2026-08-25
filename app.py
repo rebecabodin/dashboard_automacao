@@ -1206,35 +1206,7 @@ if not df_captacao.empty:
                     </div>
                     """.replace(',', '.'), unsafe_allow_html=True)
 
-            st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown("#### 📋 Tabela Comparativa & Filtro Detalhado por CPL")
-            
-            cpl_selecionado = st.selectbox("Selecione uma CPL para ver métricas e ROI de clique:", ["Visão Geral"] + df_cpl['CPL'].tolist())
 
-            if cpl_selecionado == "Visão Geral":
-                st.dataframe(df_cpl, use_container_width=True, hide_index=True)
-            else:
-                dados_cpl = df_cpl[df_cpl['CPL'] == cpl_selecionado].iloc[0]
-                disp = dados_cpl['Disparados']
-                ent = dados_cpl['Entregues']
-                cli = dados_cpl['Cliques']
-                custo = dados_cpl['Custo_US']
-                cpc = custo / cli if cli > 0 else 0
-
-                c1_d, c2_d, c3_d, c4_d = st.columns(4)
-                c1_d.metric("Disparados", f"{disp:,}".replace(',','.'))
-                c2_d.metric("Entregues", f"{ent:,}".replace(',','.'), f"{(ent/disp)*100:.1f}% Entrega", delta_color="normal")
-                c3_d.metric("Cliques", f"{cli:,}".replace(',','.'), f"{(cli/ent)*100:.1f}% CTR", delta_color="normal")
-                c4_d.metric("Custo por Clique (CPC)", f"US$ {cpc:.2f}", f"Total US$ {custo:.2f}", delta_color="off")
-
-                fig_indiv = go.Figure(go.Funnel(
-                    y=["Disparados", "Entregues", "Cliques"],
-                    x=[disp, ent, cli],
-                    textinfo="value+percent previous",
-                    marker={"color": ["#4B8BBE", "#28a745", "#FFD43B"]}
-                ))
-                fig_indiv.update_layout(margin=dict(t=10, b=10), height=250, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
-                st.plotly_chart(fig_indiv, use_container_width=True)
 
         # =========================================================
         # TAB 2: RAIO-X AUDITADO NÓ A NÓ (CAPÍTULOS 1 A 4)
