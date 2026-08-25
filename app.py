@@ -236,6 +236,10 @@ if not df_captacao.empty:
     
     st.sidebar.markdown("---")
     st.sidebar.markdown("### 🧭 NAVEGAÇÃO DO LANÇAMENTO")
+    if st.sidebar.button("🔄 Sincronizar Dados em Tempo Real", use_container_width=True, help="Força a busca imediata dos novos compradores e cadastros direto no Google Sheets"):
+        st.cache_data.clear()
+        st.rerun()
+    st.sidebar.markdown("<div style='margin-bottom:10px;'></div>", unsafe_allow_html=True)
     
     if is_admin:
         opcoes_menu = [
@@ -2122,8 +2126,9 @@ if not df_captacao.empty:
         """, unsafe_allow_html=True)
 
         try:
-            # Lendo direto da Planilha no Google Sheets (aba Compra Aprovada em tempo real)
-            url_compra_aprovada = "https://docs.google.com/spreadsheets/d/1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs/gviz/tq?tqx=out:csv&sheet=%F0%9F%93%88%20Compra%20Aprovada"
+            # Lendo direto da Planilha no Google Sheets (aba Compra Aprovada em tempo real com timestamping)
+            timestamp_vendas = int(time.time())
+            url_compra_aprovada = f"https://docs.google.com/spreadsheets/d/1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs/gviz/tq?tqx=out:csv&sheet=%F0%9F%93%88%20Compra%20Aprovada&_t={timestamp_vendas}"
             df_ca_raw = pd.read_csv(url_compra_aprovada)
             
             # Limpeza das colunas
@@ -2547,8 +2552,9 @@ if not df_captacao.empty:
         """, unsafe_allow_html=True)
 
         try:
-            url_vendas = "https://docs.google.com/spreadsheets/d/1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs/gviz/tq?tqx=out:csv&sheet=%5Bpop-up%5D%20Vendas"
-            url_recuperacao = "https://docs.google.com/spreadsheets/d/1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs/gviz/tq?tqx=out:csv&sheet=%F0%9F%93%88%20Recupera%C3%A7%C3%A3o%20de%20Vendas"
+            timestamp_carrinho = int(time.time())
+            url_vendas = f"https://docs.google.com/spreadsheets/d/1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs/gviz/tq?tqx=out:csv&sheet=%5Bpop-up%5D%20Vendas&_t={timestamp_carrinho}"
+            url_recuperacao = f"https://docs.google.com/spreadsheets/d/1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs/gviz/tq?tqx=out:csv&sheet=%F0%9F%93%88%20Recupera%C3%A7%C3%A3o%20de%20Vendas&_t={timestamp_carrinho}"
 
             df_vendas = pd.read_csv(url_vendas)
             df_recuperacao = pd.read_csv(url_recuperacao)
