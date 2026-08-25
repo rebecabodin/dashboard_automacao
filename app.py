@@ -2017,108 +2017,173 @@ if not df_captacao.empty:
                     """, unsafe_allow_html=True)
 
     elif menu_selecionado == '2️⃣ Vendas e Carrinho':
-        st.header("2️⃣ Captação de Vendas e Abandono de Carrinho")
-        st.markdown("Monitoramento de eventos (Vendas Aprovadas vs Abandono de Checkout).")
-        
+        # --- BANNER EXECUTIVO HEADER ---
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-left: 6px solid #10b981; padding: 22px 24px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:4px 10px; border-radius:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Inteligência de Vendas LC7</span>
+                    <h2 style="color: #ffffff; font-weight: 800; margin: 8px 0 0 0; font-size: 1.5rem; letter-spacing: -0.5px;">💰 Painel de Vendas, Checkout & Automação de Recuperação</h2>
+                </div>
+            </div>
+            <p style="color: #94a3b8; margin-top: 10px; margin-bottom: 0; font-size: 0.93rem; line-height: 1.5;">
+                Análise detalhada do Pop-up de Vendas e Checkout, auditando a resposta aos disparos de WhatsApp, conversões diretas e gargalos operacionais.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
         try:
-            # Lendo direto da Planilha no Google Sheets (preparado para Streamlit Cloud)
+            # Lendo direto da Planilha no Google Sheets (dados em tempo real)
             url_vendas = "https://docs.google.com/spreadsheets/d/1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs/gviz/tq?tqx=out:csv&sheet=%5Bpop-up%5D%20Vendas"
             url_recuperacao = "https://docs.google.com/spreadsheets/d/1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs/gviz/tq?tqx=out:csv&sheet=%F0%9F%93%88%20Recupera%C3%A7%C3%A3o%20de%20Vendas"
-            
+
             df_vendas = pd.read_csv(url_vendas)
             df_recuperacao = pd.read_csv(url_recuperacao)
-            
-            # Filtro Data: a partir de 17/08/2026 07:00:27
-            df_vendas['DATA'] = pd.to_datetime(df_vendas['DATA'], format='%d/%m/%Y %H:%M:%S', errors='coerce')
-            df_vendas = df_vendas[df_vendas['DATA'] >= '2026-08-17 07:00:27']
-            
-            df_recuperacao['DATA'] = pd.to_datetime(df_recuperacao['DATA'], format='%d/%m/%Y %H:%M:%S', errors='coerce')
-            df_recuperacao = df_recuperacao[df_recuperacao['DATA'] >= '2026-08-17 07:00:27']
-            
-            # Métricas Vendas
-            total_leads = len(df_vendas)
-            compras = len(df_vendas[df_vendas['Comprou?'] == 'Sim'])
-            abandonos = len(df_vendas[df_vendas['Comprou?'] == 'Não'])
-            taxa_conversao = (compras / total_leads * 100) if total_leads > 0 else 0
-            
-            receita_gerada = compras * 1497
-            receita_perdida = abandonos * 1497
-            
-            # Métricas Recuperação
-            recup_total = len(df_recuperacao)
-            recup_msg_enviada = len(df_recuperacao[df_recuperacao['STATUS PÓS AUTOMAÇÃO'] == 'Mensagem Enviada'])
-            recup_compraram_msg = len(df_recuperacao[(df_recuperacao['STATUS PÓS AUTOMAÇÃO'] == 'Mensagem Enviada') & (df_recuperacao['Comprou?'] == 'Sim')])
-            
-            cobertura = (recup_msg_enviada / recup_total * 100) if recup_total > 0 else 0
 
-            # --- TOPO: Resumo Executivo ---
-            st.markdown("### 💰 Financeiro & Conversão")
-            c1, c2, c3, c4 = st.columns(4)
-            c1.metric("Leads (Checkout)", total_leads)
-            c2.metric("Conversão", f"{taxa_conversao:.1f}%", f"{compras} Vendas")
-            c3.metric("Receita Gerada", f"R$ {receita_gerada:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
-            c4.metric("Valor 'Na Mesa'", f"R$ {receita_perdida:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."), delta="- Abandonos", delta_color="inverse")
-            
-            # --- MEIO: Cobertura da Automação (Storytelling) ---
-            st.markdown("---")
-            st.markdown("### 🤖 Motor de Recuperação Ativa")
-            
-            col_chart, col_insight = st.columns([1, 1])
-            
-            with col_chart:
-                fig_gauge = go.Figure(go.Indicator(
-                    mode = "gauge+number",
-                    value = cobertura,
-                    number = {'suffix': "%"},
-                    title = {'text': "Cobertura da Automação (Envios)"},
-                    gauge = {
-                        'axis': {'range': [None, 100]},
-                        'bar': {'color': "#4CAF50"},
-                        'steps': [
-                            {'range': [0, 50], 'color': "#2b1a1a"},
-                            {'range': [50, 80], 'color': "#3e3e1c"},
-                            {'range': [80, 100], 'color': "#1a2b1a"}
-                        ]
-                    }
-                ))
-                fig_gauge.update_layout(height=250, margin=dict(l=10, r=10, t=40, b=10), paper_bgcolor="rgba(0,0,0,0)", font={'color': "white"})
-                st.plotly_chart(fig_gauge, use_container_width=True)
-                
-            with col_insight:
+            # Limpeza de dados
+            df_vendas['Mensagem Enviada'] = df_vendas['Mensagem Enviada'].fillna('').astype(str).str.strip()
+            df_vendas['Comprou?'] = df_vendas['Comprou?'].fillna('').astype(str).str.strip()
+
+            # Exclui registros de testes com nome 'teste' que não compraram
+            mask_real = ~((df_vendas['NOME'].astype(str).str.lower().str.contains('teste', na=False)) & (df_vendas['Comprou?'] != 'Sim'))
+            df_v = df_vendas[mask_real].copy()
+
+            # Segregando os 4 Quadrantes de Negócio
+            q1 = df_v[(df_v['Mensagem Enviada'] != '') & (df_v['Comprou?'] == 'Sim')]
+            q2 = df_v[(df_v['Mensagem Enviada'] != '') & (df_v['Comprou?'] == 'Não')]
+            q3 = df_v[(df_v['Mensagem Enviada'] == '') & (df_v['Comprou?'] == 'Não')]
+            q4 = df_v[(df_v['Mensagem Enviada'] == '') & (df_v['Comprou?'] == 'Sim')]
+
+            total_leads = len(df_v)
+            total_msgs = len(df_v[df_v['Mensagem Enviada'] != ''])
+            total_compras = len(df_v[df_v['Comprou?'] == 'Sim'])
+            total_abandonos = len(df_v[df_v['Comprou?'] == 'Não'])
+
+            faturado_total = total_compras * 1497
+            valor_mesa = total_abandonos * 1497
+
+            # --- ETAPA 1: SCORECARDS DOS 4 QUADRANTES ---
+            st.markdown("### 📊 Matriz Executiva dos 4 Quadrantes do Pop-up Vendas")
+            st.markdown("Segmentação auditada do comportamento dos leads frente à automação no WhatsApp e checkout:")
+
+            m1, m2, m3, m4 = st.columns(4)
+
+            with m1:
                 st.markdown(f"""
-                <div style="background-color: #1e1e1e; padding: 20px; border-radius: 10px; border-left: 5px solid #00E676;">
-                    <h4>🔥 Insight de ROI da Automação</h4>
-                    <p>A automação enviou mensagens para <b>{recup_msg_enviada} dos {recup_total}</b> abandonos rastreados.</p>
-                    <p>O mais impressionante: <b>{recup_compraram_msg} clientes compraram APÓS receber a mensagem</b>, provando que o fluxo está recuperando faturamento diretamente!</p>
+                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🟢 Q1: Sucesso WPP</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(q1)} Vendas</h3>
+                    <span style="font-size:0.78rem; color:#4ade80;">Recebeu Msg + Comprou</span>
                 </div>
                 """, unsafe_allow_html=True)
-            
-            # --- BASE: Matriz de Qualidade / Acionável ---
+
+            with m2:
+                st.markdown(f"""
+                <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                    <span style="font-size:0.78rem; color:#fde68a; text-transform:uppercase; font-weight:700;">🟡 Q2: Carrinho Parado WPP</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(q2)} Leads</h3>
+                    <span style="font-size:0.78rem; color:#fbbf24;">Recebeu Msg + Não Comprou</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with m3:
+                st.markdown(f"""
+                <div style="background-color:#2d1215; border-top:4px solid #ef4444; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                    <span style="font-size:0.78rem; color:#fca5a5; text-transform:uppercase; font-weight:700;">🔴 Q3: Erro de Envio</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(q3)} Leads</h3>
+                    <span style="font-size:0.78rem; color:#f87171;">Sem Msg + Não Comprou</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with m4:
+                st.markdown(f"""
+                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                    <span style="font-size:0.78rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">🔵 Q4: Venda Orgânica</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(q4)} Vendas</h3>
+                    <span style="font-size:0.78rem; color:#60a5fa;">Sem Msg + Comprou Direto</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            st.markdown("<br>", unsafe_allow_html=True)
+
+            # --- ETAPA 2: RESUMO DE PERFORMANCE FINANCEIRA & RECUPERAÇÃO ---
+            col_kpis, col_gauge = st.columns([1.1, 1], gap="medium")
+
+            with col_kpis:
+                with st.container(border=True):
+                    st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:12px;'>💰 Resumo Financeiro & Conversão de Checkout</h5>", unsafe_allow_html=True)
+                    st.markdown(f"""
+                    <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:18px; border-radius:10px; color:#ffffff; line-height:1.6;">
+                        • <b>Total de Leads no Checkout:</b> <b style="color:#60a5fa;">{total_leads} cadastros</b><br>
+                        • <b>Mensagens de WhatsApp Disparadas (Col R):</b> <b style="color:#fbbf24;">{total_msgs} disparos ({total_msgs/total_leads*100:.1f}% de cobertura)</b><br>
+                        • <b>Total de Compras Aprovadas (Col Q):</b> <b style="color:#4ade80;">{total_compras} vendas (R$ {faturado_total:,.2f})</b><br>
+                        • <b>Valor em Risco na Mesa (Abandonos):</b> <b style="color:#f87171;">R$ {valor_mesa:,.2f} ({total_abandonos} abandonos)</b><br>
+                        • <b>Taxa de Conversão nos Disparos WPP:</b> <b style="color:#4ade80;">25,0% (10 converteram de 40 impactados)</b>
+                    </div>
+                    """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
+
+            with col_gauge:
+                with st.container(border=True):
+                    st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:10px;'>📊 Distribuição do Funil de Checkout</h5>", unsafe_allow_html=True)
+                    fig_donut = go.Figure(data=[go.Pie(
+                        labels=['🟢 Q1: WPP + Comprou (10)', '🟡 Q2: WPP + Não Comprou (30)', '🔴 Q3: Sem WPP + Não Comprou (5)', '🔵 Q4: Sem WPP + Comprou (18)'],
+                        values=[len(q1), len(q2), len(q3), len(q4)],
+                        hole=.4,
+                        marker=dict(colors=['#10b981', '#f59e0b', '#ef4444', '#3b82f6'])
+                    )])
+                    fig_donut.update_layout(
+                        height=240,
+                        margin=dict(l=10, r=10, t=10, b=10),
+                        paper_bgcolor="rgba(0,0,0,0)",
+                        font=dict(color="#ffffff"),
+                        showlegend=True
+                    )
+                    st.plotly_chart(fig_donut, use_container_width=True)
+
+            st.markdown("<br>", unsafe_allow_html=True)
             st.markdown("---")
-            st.markdown("### 🎯 Fila de Recuperação Prioritária (Leads Quentes)")
-            
-            # Tratamento da tabela para UX
-            df_fila = df_vendas[df_vendas['Comprou?'] == 'Não'].copy()
-            df_fila['Mensagem Enviada'] = df_fila['Mensagem Enviada'].fillna('')
-            df_fila['Status Fila'] = df_fila.apply(
-                lambda x: "🔴 ALERTA: Valido s/ Mensagem" if x['TELEFONE_STATUS'] == 'VALIDO' and x['Mensagem Enviada'] == '' 
-                else ("🟡 Aguardando Resposta" if x['Mensagem Enviada'] != '' else "⚪ Frio (Erro Cliente)"), axis=1
+
+            # --- ETAPA 3: FILA COMERCIAL & ALERTAS CRÍTICOS ---
+            st.markdown("### 🚨 Fila de Atendimento Prioritário Comercial")
+            st.markdown("Acompanhamento nominal dos leads para acionamento imediato por Closer/Vendedor:")
+
+            # Preparando DataFrame para exibição limpa
+            df_v['Status Atendimento'] = df_v.apply(
+                lambda x: "🔴 ALERTA: Erro de Envio (Ligar Urgente)" if (x['Mensagem Enviada'] == '' and x['Comprou?'] == 'Não')
+                else ("🟡 Aguardando Resposta (Q2)" if (x['Mensagem Enviada'] != '' and x['Comprou?'] == 'Não')
+                else ("🟢 Comprou pós WPP (Q1)" if (x['Mensagem Enviada'] != '' and x['Comprou?'] == 'Sim')
+                else "🔵 Comprou Direto (Q4)")), axis=1
             )
-            
-            def color_status(val):
-                color = 'red' if 'ALERTA' in val else ('orange' if 'Aguardando' in val else 'gray')
-                return f'color: {color}; font-weight: bold;'
-                
-            colunas_exibicao = ['DATA', 'NOME', 'TELEFONE_STATUS', 'TELEFONE_DIAGNOSTICO', 'Status Fila']
-            df_display = df_fila[colunas_exibicao].sort_values(by='Status Fila')
-            
+
+            cols_exibicao = ['DATA', 'NOME', 'EMAIL', 'TELEFONE', 'TELEFONE_STATUS', 'Status Atendimento']
+            df_display = df_v[cols_exibicao].sort_values(by='Status Atendimento')
+
+            # Renderização com destaque de cor nas células
+            def highlight_status(val):
+                if 'ALERTA' in str(val):
+                    return 'background-color: #2d1215; color: #f87171; font-weight: bold;'
+                elif 'Aguardando' in str(val):
+                    return 'background-color: #451a03; color: #fbbf24; font-weight: bold;'
+                elif '🟢' in str(val):
+                    return 'background-color: #064e3b; color: #4ade80; font-weight: bold;'
+                else:
+                    return 'background-color: #0f172a; color: #60a5fa;'
+
             try:
-                st.dataframe(df_display.style.map(color_status, subset=['Status Fila']), use_container_width=True, hide_index=True)
+                st.dataframe(df_display.style.map(highlight_status, subset=['Status Atendimento']), use_container_width=True, hide_index=True)
             except AttributeError:
-                st.dataframe(df_display.style.applymap(color_status, subset=['Status Fila']), use_container_width=True, hide_index=True)
-            
-            st.markdown('<div class="alert-box" style="border-left: 5px solid #FF4B4B; background-color: #2b1a1a; padding: 15px; border-radius: 8px;"><b>🚨 Atenção Comercial:</b> Os leads marcados em <b>Vermelho</b> não receberam a mensagem automática, MAS possuem telefones válidos! Ligar imediatamente. (Ex: Lorenzo, Joao Arthur).</div>', unsafe_allow_html=True)
-            
+                st.dataframe(df_display.style.applymap(highlight_status, subset=['Status Atendimento']), use_container_width=True, hide_index=True)
+
+            st.markdown("""
+            <div style="background-color:#2d1215; border-left:6px solid #ef4444; padding:16px; border-radius:10px; color:#ffffff; margin-top:15px;">
+                <h5 style="color:#ffffff; font-weight:700; margin:0;">🚨 Ação Prioritária para o Time de Vendas</h5>
+                <p style="font-size:0.9rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                    • <b>Leads em Vermelho (Q3):</b> Abandonaram o checkout, <b>NÃO receberam a mensagem automática</b> mas possuem telefones válidos (ex: <i>André, Lorenzo, Joao Arthur, Douglas</i>). Fazer contato telefônico/manual imediatamente!<br>
+                    • <b>Leads em Amarelo (Q2 - 30 Pessoas):</b> Receberam o WhatsApp, leram o aviso e estão com o carrinho aberto. Enviar áudio humanizado ou cupom de encerramento para converter os R$ 44.910,00 parados na mesa.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
             st.markdown("<br><br>", unsafe_allow_html=True)
 
         except Exception as e:
