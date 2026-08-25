@@ -2938,7 +2938,7 @@ if not df_captacao.empty:
         str_disp_total = f"{total_disparados_campanhas:,.0f}".replace(',', '.')
 
         # --- SCORECARDS DE TOPO (FOCADOS 100% NA BASE REAL) ---
-        st.markdown("<h4 style='text-align:center; font-weight:800; margin-bottom:20px; color:#ffffff;'>📊 Métricas Consolidadas sobre a Base Real do LC7 (Hotmart Send)</h4>", unsafe_allow_html=True)
+        st.subheader("📊 Métricas Consolidadas sobre a Base Real do LC7 (Hotmart Send)")
         
         m1, m2, m3, m4, m5 = st.columns(5)
 
@@ -2990,11 +2990,10 @@ if not df_captacao.empty:
         st.markdown("<div style='margin-top:24px;'></div>", unsafe_allow_html=True)
 
         # --- ABAS DE ANÁLISE DE E-MAILS ---
-        tab_em_camp, tab_em_aut, tab_em_ctrl, tab_em_raw = st.tabs([
+        tab_em_camp, tab_em_aut, tab_em_raw = st.tabs([
             "📊 1. Performance por Campanha",
             "⚡ 2. Automação de Entrada & Boas-Vindas",
-            "📅 3. Cronograma de Controle (E-mail & WPP)",
-            "📋 4. Tabela Completa de Campanhas"
+            "📋 3. Tabela Completa de Campanhas"
         ])
 
         # TAB 1: PERFORMANCE POR CAMPANHA
@@ -3079,7 +3078,7 @@ if not df_captacao.empty:
 
         # TAB 2: AUTOMAÇÃO DE ENTRADA & BOAS-VINDAS (EXCLUSIVO LC7_MDE_AGO26)
         with tab_em_aut:
-            col_ea1, col_ea2 = st.columns([1.3, 1])
+            col_ea1, col_ea2 = st.columns([1.35, 1])
 
             with col_ea1:
                 st.markdown(f"""<div style="background-color:#1e1b4b; border-left:6px solid #6366f1; padding:22px 24px; border-radius:12px; color:#ffffff; min-height:270px; box-shadow:0 4px 15px rgba(0,0,0,0.25); display:flex; flex-direction:column; justify-content:center;">
@@ -3102,7 +3101,6 @@ if not df_captacao.empty:
 <b style="color:#38bdf8; font-size:1.2rem;">{cliques_onboarding_reais} Leads no WhatsApp</b>
 </div>
 </div>""", unsafe_allow_html=True)
-
             with col_ea2:
                 st.markdown(f"""<div style="background-color:#0f172a; border-left:5px solid #10b981; padding:22px 24px; border-radius:12px; color:#ffffff; min-height:270px; box-shadow:0 4px 15px rgba(0,0,0,0.25); display:flex; flex-direction:column; justify-content:center;">
 <h5 style="color:#ffffff; font-weight:700; margin:0 0 14px 0; text-align:center;">💡 Análise do Fluxo de Cadastro LC7 (Base Real)</h5>
@@ -3113,52 +3111,9 @@ if not df_captacao.empty:
 </p>
 </div>""", unsafe_allow_html=True)
 
-            with col_ea2:
-                st.markdown(f"""<div style="background-color:#0f172a; border-left:5px solid #10b981; padding:24px; border-radius:12px; color:#ffffff; min-height:230px; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-<h5 style="color:#ffffff; font-weight:700; margin:0 0 14px 0; text-align:center;">💡 Análise do Fluxo de Cadastro LC7 (Base Real)</h5>
-<p style="font-size:0.9rem; color:#ffffff; margin:0; line-height:1.6;">
-• <b>Tamanho Real da Lista:</b> {str_base_real} leads limpos e deduplicados compõem a base ativa de e-mails do lançamento <b>LC7_MDE_AGO26</b>.<br><br>
-• <b>Engajamento no Onboarding:</b> {aberturas_onboarding_reais} pessoas (14%) abriram a mensagem de boas-vindas.<br><br>
-• <b>Retenção para WhatsApp:</b> {cliques_onboarding_reais} leads (22% CTOR) clicaram na chamada do e-mail para ingressar nos grupos oficiais do WhatsApp.
-</p>
-</div>""", unsafe_allow_html=True)
-
-        # TAB 3: CRONOGRAMA DE CONTROLE (E-MAIL & WPP)
-        with tab_em_ctrl:
-            st.markdown("<h5 style='text-align:center; font-weight:700; margin-bottom:16px; color:#ffffff;'>📅 Cronograma de Disparos Auditado (Hotmart Send & Grupos WhatsApp)</h5>", unsafe_allow_html=True)
-            
-            try:
-                df_ctrl = pd.read_csv(f_ctrl_email)
-                df_ctrl_clean = df_ctrl.dropna(how='all').copy()
-                cols_present = [c for c in ['STATUS', 'DOC 📄', 'NOME', 'ETAPA', 'DATA DO ENVIO', 'HORA DO ENVIO', 'PÚBLICO'] if c in df_ctrl_clean.columns]
-                
-                def style_ctrl_status(val):
-                    if 'ENVIADO' in str(val):
-                        return 'background-color: #064e3b; color: #4ade80; font-weight: bold;'
-                    elif 'REVISADO' in str(val):
-                        return 'background-color: #451a03; color: #fbbf24; font-weight: bold;'
-                    elif 'NÃO' in str(val):
-                        return 'background-color: #2d1215; color: #f87171;'
-                    else:
-                        return ''
-                        
-                st.dataframe(df_ctrl_clean[cols_present].style.map(style_ctrl_status, subset=['STATUS']), use_container_width=True, hide_index=True)
-            except Exception as e:
-                st.info("Cronograma de controle exibido via tabela padrão de disparo.")
-
-        # TAB 4: TABELA BRUTA DE CAMPANHAS
+        # TAB 3: TABELA BRUTA DE CAMPANHAS
         with tab_em_raw:
-            st.markdown("<h5 style='text-align:center; font-weight:700; margin-bottom:16px; color:#ffffff;'>📋 Relatório Consolidado de Campanhas Hotmart Send</h5>", unsafe_allow_html=True)
-            
-            df_camp_display = df_camp[['name', 'data_comunicação', 'total_sent', 'open_rate_percent', 'ctor_percent']].copy()
-            df_camp_display.columns = ['Campanha / Assunto', 'Data Disparo', 'Total Disparados', 'Abertura (%)', 'CTOR (%)']
-            
-            def style_camp_row(val):
-                if isinstance(val, (int, float)) and val >= 4:
-                    return 'background-color: #064e3b; color: #4ade80; font-weight: bold;'
-                return ''
-                
-            st.dataframe(df_camp_display.style.map(style_camp_row, subset=['Abertura (%)']), use_container_width=True, hide_index=True)
+            st.markdown("<h5 style='text-align:left; font-weight:700; margin-bottom:16px; color:#ffffff;'>📋 Relatório Consolidado de Campanhas Hotmart Send</h5>", unsafe_allow_html=True)
             
             df_camp_display = df_camp[['name', 'data_comunicação', 'total_sent', 'open_rate_percent', 'ctor_percent']].copy()
             df_camp_display.columns = ['Campanha / Assunto', 'Data Disparo', 'Total Disparados', 'Abertura (%)', 'CTOR (%)']
