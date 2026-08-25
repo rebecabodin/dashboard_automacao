@@ -1014,6 +1014,19 @@ if not df_captacao.empty:
             </div>
         </div>
         """, unsafe_allow_html=True)
+
+        # SEÇÃO 6: CAPTAÇÃO ORGÂNICA IG & LEAD INBOUND
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-left:5px solid #ec4899; padding:20px 24px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+            <h4 style="color:#ffffff; font-weight:700; margin:0 0 12px 0; text-align:left;">📸 6. Estratégia de Captação Orgânica no Instagram & Mensagens Receptivas (Lead Inbound)</h4>
+            <div style="line-height:1.7; color:#e2e8f0; font-size:0.9rem; text-align:left;">
+                <p>• <b>Proteção & Qualificação da Meta API (Lead Inbound):</b> Fazer o lead enviar a primeira mensagem no WhatsApp em vez de receber um disparo inicial reduz a tarifa da Meta API em até 60%, zera riscos de bloqueio/spam e eleva o Quality Rating da conta para o nível máximo (Verde).</p>
+                <p>• <b>Engajamento Orgânico no Instagram (Sem Perder Alcance):</b> Evitar colocar links externos no perfil ou nos stories (o que derruba o alcance do algoritmo). Utilizar chamadas nos posts/reels como <i>"Comente 'SCOOTER' abaixo"</i>. O ManyChat Instagram envia uma DM automática com o material e o botão para o WhatsApp.</p>
+                <p>• <b>Efeito Viralizador do Algoritmo:</b> Quando dezenas de leads comentam a palavra-chave na publicação, o algoritmo do Instagram entende o post como relevante e expande a distribuição orgânica para não-seguidores gratuitamente.</p>
+                <p>• <b>Landing Page de Suporte & Dúvida Direta:</b> Adicionar na LP um botão flutuante de dúvidas pré-configurado com a tag de origem: <code>https://wa.me/55...text=Vim_pela_LP_e_quero_ajuda</code>. Leads receptivos no WhatsApp fecham até 50% mais com a atendente Gabriela.</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
             
             
     elif menu_selecionado in ['🕸️ Funil WhatsApp & ManyChat', '🕸️ Funil Manychat (WPP)', 'Funil Manychat (WPP)']:
