@@ -1096,9 +1096,6 @@ if not df_captacao.empty:
             st.error(f"Erro ao processar a pesquisa: {e}")
             
     elif menu_selecionado == '🎯 Raio-X Didático CPLs':
-        st.header("🎯 Raio-X Didático e Funil das CPLs")
-        st.markdown("Dashboard Executivo e Auditado Nó a Nó — Métricas reais de conversão, engajamento e custos Meta.")
-
         # --- DADOS DE CPLS AUDITADOS NÓ A NÓ VIA MANYCHAT ---
         # Custos Reais da Meta/Manychat (10 - 16 de Agosto): Total US$ 155,18
         #   - 4.283 msgs WhatsApp Utility: US$ 33,41 (~US$ 0,0078 / msg)
