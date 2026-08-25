@@ -179,33 +179,31 @@ def calcular_leads_perdidos_20m(df_cap, df_bv):
 def carregar_dados():
     try:
         import urllib.parse
-        
+
         sheet_id = "1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs"
-        
-        aba_captacao = urllib.parse.quote("📈 Captação")
-        aba_boasvindas = urllib.parse.quote("Boas-vindas")
-        aba_grupo_tec = urllib.parse.quote("📈 Grupos - Técnico")
-        aba_grupo_emp = urllib.parse.quote(" 📈 Grupos - Empreendedores")
-        aba_pagina32 = urllib.parse.quote("Página32")
-        
-        # O "&_t=..." força o Google Sheets a entregar a versão mais nova ignorando o próprio cache
+
+        aba_captacao       = urllib.parse.quote("📈 Captação")
+        aba_boasvindas     = urllib.parse.quote("Boas-vindas")
+        aba_grupo_tec      = urllib.parse.quote("📈 Grupos - Técnico")
+        aba_grupo_emp      = urllib.parse.quote(" 📈 Grupos - Empreendedores")
+        aba_pagina32       = urllib.parse.quote("Página32")
+        aba_compra_aprov   = urllib.parse.quote("📈 Compra Aprovada")
+
+        # &_t=... força o Google Sheets a entregar a versão mais nova ignorando cache
         timestamp = int(time.time())
-        url_captacao = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={aba_captacao}&_t={timestamp}"
-        url_boasvindas = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={aba_boasvindas}&_t={timestamp}"
-        url_grupo_tec = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={aba_grupo_tec}&_t={timestamp}"
-        url_grupo_emp = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={aba_grupo_emp}&_t={timestamp}"
-        url_pagina32 = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={aba_pagina32}&_t={timestamp}"
-        
-        df_captacao = pd.read_csv(url_captacao)
-        df_boasvindas = pd.read_csv(url_boasvindas)
-        df_grupo_tec = pd.read_csv(url_grupo_tec)
-        df_grupo_emp = pd.read_csv(url_grupo_emp)
-        df_pagina32 = pd.read_csv(url_pagina32, on_bad_lines="skip")
-        
-        return df_captacao, df_boasvindas, df_grupo_tec, df_grupo_emp, df_pagina32
+        base = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv"
+
+        df_captacao     = pd.read_csv(f"{base}&sheet={aba_captacao}&_t={timestamp}")
+        df_boasvindas   = pd.read_csv(f"{base}&sheet={aba_boasvindas}&_t={timestamp}")
+        df_grupo_tec    = pd.read_csv(f"{base}&sheet={aba_grupo_tec}&_t={timestamp}")
+        df_grupo_emp    = pd.read_csv(f"{base}&sheet={aba_grupo_emp}&_t={timestamp}")
+        df_pagina32     = pd.read_csv(f"{base}&sheet={aba_pagina32}&_t={timestamp}", on_bad_lines="skip")
+        df_compra_aprov = pd.read_csv(f"{base}&sheet={aba_compra_aprov}&_t={timestamp}")
+
+        return df_captacao, df_boasvindas, df_grupo_tec, df_grupo_emp, df_pagina32, df_compra_aprov
     except Exception as e:
         st.error(f"Erro ao ler o Google Sheets: {e}")
-        return pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
+        return pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
 
 
 @st.cache_data(ttl=10)
@@ -245,7 +243,7 @@ def carregar_compra_aprovada():
         return pd.DataFrame()
 
 
-df_captacao, df_boasvindas, df_grupo_tec, df_grupo_emp, df_pagina32 = carregar_dados()
+df_captacao, df_boasvindas, df_grupo_tec, df_grupo_emp, df_pagina32, df_compra_aprovada_raw = carregar_dados()
 
 # --- CONSOLIDAÇÃO DE DISPAROS DE BOAS-VINDAS ---
 if not df_boasvindas.empty:
@@ -1130,24 +1128,13 @@ if not df_captacao.empty:
         </div>
         """, unsafe_allow_html=True)
 
-        st.markdown("""
-        <div style="background-color:#0f172a; border-left:5px solid #f59e0b; padding:18px 22px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-            <h4 style="color:#ffffff; font-weight:700; margin:0 0 10px 0; text-align:left;">3. 🔥 Auditoria de Canais: WhatsApp vs E-mail Marketing</h4>
-            <div style="line-height:1.6; color:#e2e8f0; font-size:0.9rem; text-align:left;">
-                <p>• <b>WhatsApp (Canal Campeão):</b> 4.283 mensagens Utility disparadas durante a Maratona (Custo Meta US$ 33,41). Apresentou taxa de engajamento de <b>45,2% a 54,8% de cliques reais</b> nos lembretes de aula ao vivo.</p>
-                <p>• <b>Repescagem Inteligente:</b> A pergunta <i>"Conseguiu entrar no grupo?"</i> com link secundário salvou <b>181 Técnicos (85,0%)</b> e <b>55 Empreendedores (91,7%)</b>, resgatando 236 leads altamente qualificados.</p>
-                <p>• <b>E-mail Marketing (Gargalo de Performance):</b> Apresentou Open Rate médio de apenas <b>2,5%</b> (110 a 220 leituras por e-mail) e Click Rate de <b>2 a 13 cliques reais</b> por disparo (0,05% a 0,2%).</p>
-                <p>• <b>Conclusão BI:</b> <b>Não invista tempo escrevendo copys longas de e-mail</b>. Use o e-mail 100% automatizado apenas para direcionar o lead para o WhatsApp no cadastro e entregar acessos institucionais da Hotmart.</p>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+
 
         st.markdown(f"""
         <div style="background-color:#0f172a; border-left:5px solid #a855f7; padding:18px 22px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-            <h4 style="color:#ffffff; font-weight:700; margin:0 0 10px 0; text-align:left;">4. 🛒 Análise de Carrinho Aberto, Recuperação & Atendimento 1x1 (Gabriela)</h4>
+            <h4 style="color:#ffffff; font-weight:700; margin:0 0 10px 0; text-align:left;">3. 🛒 Análise de Carrinho Aberto, Recuperação &amp; Atendimento 1x1 (Gabriela)</h4>
             <div style="line-height:1.6; color:#e2e8f0; font-size:0.9rem; text-align:left;">
-                <p>• <b>Recuperação de Carrinho:</b> Dos {carrinho_leads_qtd} leads que entraram no checkout, a automação + atendimento resgataram <b>26 vendas (R$ 20.958,00 recuperados)</b>.</p>
-                <p>• <b>Oportunidade na Mesa:</b> Existem <b>50 leads que não converteram</b>, representando <b>R$ 55.389,00 parados na mesa</b>.</p>
+                <p>• <b>Leads no Checkout:</b> {carrinho_leads_qtd} leads abriram o carrinho durante o lançamento (intenções de compra registradas).</p>
                 <p>• <b>Destaque de Vendas 1x1 (Gabriela):</b> Das {vendas_lanc_qtd} vendas auditadas no lançamento, <b>{gabriela_lanc} vendas ({perc_gabriela:.1f}% do faturamento)</b> vieram com o rastreamento <code>GABRIELA</code> (WhatsApp 1x1).</p>
                 <p>• <b>Conclusão Comercial:</b> O atendimento humano e ativo da Gabriela no WhatsApp 1x1 foi o <b>maior motor de faturamento do lançamento</b>.</p>
             </div>
@@ -1156,13 +1143,13 @@ if not df_captacao.empty:
 
         st.markdown("""
         <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-left:5px solid #10b981; padding:20px 24px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
-            <h4 style="color:#ffffff; font-weight:700; margin:0 0 12px 0; text-align:left;">🚀 5. Plano Recomendado em 5 Pilares (Ações Estratégicas)</h4>
+            <h4 style="color:#ffffff; font-weight:700; margin:0 0 12px 0; text-align:left;">🚀 4. Plano Recomendado em 5 Pilares (Ações Estratégicas)</h4>
             <div style="line-height:1.7; color:#e2e8f0; font-size:0.9rem; text-align:left;">
                 <p>1. <b>Foco Massivo no WhatsApp (85% do Esforço):</b> Manter o WhatsApp como canal número 1 de transmissão, avisos e fechamento de vendas.</p>
-                <p>2. <b>Atendimento Ativo 1x1 no Carrinho (Gabriela):</b> Focar a abordagem individual nos 50 leads que estão com carrinho aberto (R$ 55 mil parados) com oferta de parcelamento e suporte a dúvidas.</p>
+                <p>2. <b>Atendimento Ativo 1x1 no Carrinho (Gabriela):</b> Focar a abordagem individual nos leads com carrinho aberto com oferta de parcelamento e suporte a dúvidas.</p>
                 <p>3. <b>Implementação Rígida de Rastreio (<code>?sck=</code>):</b> Padronizar todos os links de checkout e anúncios com o parâmetro <code>?sck=nome_da_campanha</code> para garantir 100% de rastreabilidade do ROI dos anúncios Meta Ads.</p>
                 <p>4. <b>Oferta Híbrida e Parcelamento Facilitado:</b> Destacar o valor em 12x na oferta e promover abertamente o pagamento em <b>2 Cartões</b> e <b>Pix + Cartão</b>.</p>
-                <p>5. <b>Automatização Enxuta de E-mail:</b> Manter a esteira de e-mail automatizada e sem retrabalho manual, focando o tempo da equipe na criação de anúncios e mensagens diretas para o WhatsApp.</p>
+                <p>5. <b>Automatização Enxuta de E-mail:</b> Manter apenas e-mails transacionais automatizados (acesso Hotmart). Concentrar o esforço da equipe no WhatsApp.</p>
             </div>
         </div>
         """, unsafe_allow_html=True)
