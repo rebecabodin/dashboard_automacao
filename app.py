@@ -2040,29 +2040,37 @@ if not df_captacao.empty:
             df_vendas = pd.read_csv(url_vendas)
             df_recuperacao = pd.read_csv(url_recuperacao)
 
-            # --- LIMPEZA E UNIFICAÇÃO DA ABA 1: POP-UP VENDAS (62 LEADS) ---
+            # --- LIMPEZA E UNIFICAÇÃO RIGOROSA DA ABA 1: POP-UP VENDAS (EXCLUI TESTES E INTERNOS) ---
             df_vendas['Mensagem Enviada'] = df_vendas['Mensagem Enviada'].fillna('').astype(str).str.strip()
             df_vendas['Comprou?'] = df_vendas['Comprou?'].fillna('').astype(str).str.strip()
-            mask_v_real = ~((df_vendas['NOME'].astype(str).str.lower().str.contains('teste', na=False)) & (df_vendas['Comprou?'] != 'Sim'))
+            df_vendas['NOME'] = df_vendas['NOME'].fillna('').astype(str).str.strip()
+            df_vendas['EMAIL'] = df_vendas['EMAIL'].fillna('').astype(str).str.strip().str.lower()
+
+            mask_v_real = ~(
+                (df_vendas['NOME'].str.contains('teste|rebeca|bodin', na=False)) |
+                (df_vendas['EMAIL'].str.contains('teste|rebeca|bodin|automacoes|automacoesa|321teste', na=False))
+            )
             df_v = df_vendas[mask_v_real].copy()
             df_v['Origem'] = 'Pop-Up LP'
 
-            # --- LIMPEZA E UNIFICAÇÃO DA ABA 2: RECUPERAÇÃO DE VENDAS (14 LEADS) ---
+            # --- LIMPEZA E UNIFICAÇÃO RIGOROSA DA ABA 2: RECUPERAÇÃO DE VENDAS (CHECKOUT HOTMART) ---
             df_recuperacao['STATUS PÓS AUTOMAÇÃO'] = df_recuperacao['STATUS PÓS AUTOMAÇÃO'].fillna('').astype(str).str.strip()
             df_recuperacao['Comprou?'] = df_recuperacao['Comprou?'].fillna('').astype(str).str.strip()
             df_recuperacao['NOME'] = df_recuperacao['NOME'].fillna('').astype(str).str.strip()
             df_recuperacao['EMAIL'] = df_recuperacao['EMAIL'].fillna('').astype(str).str.strip().str.lower()
             
             mask_r = ~(
-                (df_recuperacao['NOME'].str.lower().str.contains('rebeca', na=False)) | 
-                (df_recuperacao['EMAIL'].str.contains('automacoesa@gmail.com', na=False))
+                (df_recuperacao['NOME'].str.contains('teste|rebeca|bodin', na=False)) | 
+                (df_recuperacao['EMAIL'].str.contains('teste|rebeca|bodin|automacoes|automacoesa', na=False))
             )
             df_r = df_recuperacao[mask_r].copy()
+            
+            # Sinalização de Duplicidade: Alvaro Honda cadastrou-se 2x (com .com e .com.ar) -> Mantém apenas o 1º registro auditado
             df_r = df_r.drop_duplicates(subset=['NOME'], keep='first')
             df_r['Origem'] = 'Checkout Hotmart'
             df_r['Mensagem Enviada'] = df_r['STATUS PÓS AUTOMAÇÃO']
 
-            # --- MÉTRICAS CONSOLIDADAS GLOBAIS (76 LEADS) ---
+            # --- MÉTRICAS CONSOLIDADAS GLOBAIS (76 LEADS AUDITADOS REAIS) ---
             v_wpp_sim = df_v[(df_v['Mensagem Enviada'] != '') & (df_v['Comprou?'] == 'Sim')]
             r_wpp_sim = df_r[(df_r['Mensagem Enviada'] == 'Mensagem Enviada') & (df_r['Comprou?'] == 'Sim')]
             vendas_wpp_total = len(v_wpp_sim) + len(r_wpp_sim) # 10 + 4 = 14 Vendas WPP
@@ -2079,9 +2087,9 @@ if not df_captacao.empty:
 
             v_sem_nao = df_v[(df_v['Mensagem Enviada'] == '') & (df_v['Comprou?'] == 'Não')]
             r_sem_nao = df_r[(df_r['Mensagem Enviada'] != 'Mensagem Enviada') & (df_r['Comprou?'] == 'Não')]
-            falha_total = len(v_sem_nao) + len(r_sem_nao) # 5 + 1 = 6 Leads Falha/Sem Envio
+            falha_total = len(v_sem_nao) + len(r_sem_nao) # 5 + 0 = 5 Leads Falha/Sem Envio
 
-            total_unificado_leads = len(df_v) + len(df_r) # 62 + 14 = 76 Leads
+            total_unificado_leads = len(df_v) + len(df_r) # 62 + 14 = 76 Leads Reais
             total_disparados_wpp = len(df_v[df_v['Mensagem Enviada'] != '']) + len(r_wpp_sim) + len(r_wpp_nao) # 40 + 11 = 51 Disparos
 
             faturamento_global = vendas_globais * 1497
@@ -2194,6 +2202,21 @@ if not df_captacao.empty:
                     st.plotly_chart(fig_donut_c, use_container_width=True)
 
             st.markdown("<br>", unsafe_allow_html=True)
+
+            # --- PAINEL DIAGNÓSTICO DE DUPLICIDADES E VULNERABILIDADE DE FORMULÁRIO ---
+            st.markdown("""
+            <div style="background-color:#2d1215; border-left:6px solid #ef4444; padding:18px; border-radius:12px; color:#ffffff; margin-bottom:20px;">
+                <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1.05rem;">🚨 Diagnóstico de Engenharia: Duplicidades & Trava de Formulário</h5>
+                <p style="font-size:0.9rem; color:#ffffff; margin-top:8px; line-height:1.6;">
+                    • <b>Exclusão Auditada de Testes & Internos:</b> Todos os registros de teste (<code>Teste Novo</code>, <code>321teste</code>, <code>teste@teste.com</code>) e da equipe de automação (<code>Rebeca Bodin</code> / <code>automacoesa@gmail.com</code> / <code>automacoesaa@gmail.com</code>) foram <b>desconsiderados e purgados do dashboard</b> para não inflar as métricas reais.<br>
+                    • <b>Sinalização de Duplicidade:</b> Identificamos o cadastro duplicado do lead <b>Alvaro Honda</b> (registrado com e-mail <code>.com</code> e <code>.com.ar</code>). Apenas 1 registro foi mantido auditado para garantir total fidelidade (14 leads reais na Hotmart).<br>
+                    • <b>⚠️ Vulnerabilidade no Formulário da Landing Page:</b> O formulário do Pop-up da LP possui trava de campo obrigatório <b>APENAS para o E-mail</b>. Não há validação de obrigatoriedade nem máscara para Nome ou Telefone! Isso permitiu cadastros sem Nome e telefones sem DDD (ex: <i>Mikael Paz</i> - cadastrou sem o DDD 55), o que gerou recusa na API do WhatsApp.<br>
+                    &nbsp;&nbsp;&nbsp;👉 <b>Recomendação de Correção:</b> Aplicar a propriedade <code>required</code> e máscara visual de DDD <code>+55 (XX) XXXXX-XXXX</code> no formulário da LP.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("---")
             st.markdown("---")
 
             # =========================================================
