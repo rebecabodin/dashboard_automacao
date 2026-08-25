@@ -2987,7 +2987,23 @@ if not df_captacao.empty:
             </div>
             """, unsafe_allow_html=True)
 
-        st.markdown("<div style='margin-top:24px;'></div>", unsafe_allow_html=True)
+        st.markdown(f"""
+        <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-left: 5px solid #10b981; padding: 18px 22px; border-radius: 12px; margin-top: 18px; margin-bottom: 22px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom: 10px;">
+                <span style="font-size: 1.25rem;">💡</span>
+                <h4 style="color:#ffffff; font-weight:800; margin:0; font-size:1.05rem;">Vale a pena investir tempo nos e-mails? (Diagnóstico de Engenharia de Dados)</h4>
+            </div>
+            <p style="color:#e2e8f0; font-size:0.88rem; margin:0 0 8px 0; line-height:1.6;">
+                • <b>Resposta Direta (NÃO para Vendas Diretas / Copy Longa):</b> Da base limpa de {str_base_real} leads, <b>97,5% sequer abrem o e-mail</b> (média de 2,5% de abertura = apenas 110 a 220 pessoas lendo por disparo e 2 a 13 cliques).
+            </p>
+            <p style="color:#e2e8f0; font-size:0.88rem; margin:0 0 8px 0; line-height:1.6;">
+                • <b>Função Correta do E-mail (15% do esforço):</b> Manter automações curtas e 100% padronizadas com 1 único objetivo: <b>direcionar o lead para o WhatsApp no Onboarding</b> e entregar acessos institucionais.
+            </p>
+            <p style="color:#e2e8f0; font-size:0.88rem; margin:0; line-height:1.6;">
+                • <b>Onde focar 85% do tempo do time:</b> No <b>WhatsApp (Grupos VIP e Comunidade)</b> com 70% a 90% de abertura, mais o acompanhamento 1 a 1 no Direct e carrinho abandonado.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
         # --- ABAS DE ANÁLISE DE E-MAILS ---
         tab_em_camp, tab_em_aut, tab_em_raw = st.tabs([
