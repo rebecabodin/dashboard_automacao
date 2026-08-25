@@ -1201,22 +1201,23 @@ if not df_captacao.empty:
         with tab_raiox_nos:
             st.markdown("### 📋 Status da Auditoria por CPL")
             s1, s2, s3, s4 = st.columns(4)
-            s1.success("🟢 **CPL 01**: 100% Auditado")
-            s2.success("🟢 **CPL 02**: 100% Auditado")
-            s3.success("🟢 **CPL 03**: 100% Auditado")
-            s4.success("🟢 **CPL 04**: 100% Auditado")
+            s1.success("🟢 **CPL 01**: 100% Auditado\n\n(3 Disparos | 9 Nós)")
+            s2.success("🟢 **CPL 02**: 100% Auditado\n\n(1 Disparo | 5 Nós)")
+            s3.success("🟢 **CPL 03**: 100% Auditado\n\n(2 Disparos | Teste A/B/C)")
+            s4.success("🟢 **CPL 04**: 100% Auditado\n\n(5 Nós Mapeados)")
 
             st.markdown("---")
 
-            # --- SELEÇÃO DINÂMICA DA CPL PARA EXPOSIÇÃO DIDÁTICA ---
-            cpl_auditoria_selecionada = st.selectbox(
+            # --- SELEÇÃO DINÂMICA DA CPL PARA EXPOSIÇÃO DIDÁTICA (RADIO HORIZONTAL) ---
+            cpl_auditoria_selecionada = st.radio(
                 "🔍 **Selecione a CPL para abrir o Raio-X Detalhado Nó a Nó:**",
                 [
                     "1️⃣ CPL 01 — A Jornada Completa (10/08 a 12/08)",
                     "2️⃣ CPL 02 — O Gargalo de Categoria na Meta (12/08)",
                     "3️⃣ CPL 03 — O Teste A/B/C e a Força do Grupo VIP (13/08 a 14/08)",
                     "4️⃣ CPL 04 — O Impacto do 'Botão de Consentimento' (16/08)"
-                ]
+                ],
+                horizontal=True
             )
 
             st.markdown("<br>", unsafe_allow_html=True)
@@ -1433,8 +1434,10 @@ if not df_captacao.empty:
                     </div>
                     """, unsafe_allow_html=True)
 
-            st.markdown("---")
-
+        # =========================================================
+        # TAB 3: PLANO ESTRATÉGICO & GUIA META API (LC8)
+        # =========================================================
+        with tab_estrategia:
             # --- PAINEL FINANCEIRO DE INVESTIMENTOS META (10 - 16 AGOSTO) ---
             st.subheader("💰 Balanço Financeiro Auditado: Custos Reais Meta / WhatsApp (10 a 16/08)")
             st.markdown("Após entender o comportamento do lead e as mecânicas de envio de cada CPL, veja o impacto financeiro real gerado pela infraestrutura da Meta:")
