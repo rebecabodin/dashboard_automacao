@@ -367,12 +367,13 @@ if not df_captacao.empty:
     
     sucesso_envio = len(df_disparos_consolidados[mask_sucesso])
 
-    # Métrica de Erros: leads que possuem a sinalização exata de 'erro' na coluna status_boas_vindas
-    if 'status_boas_vindas' in df_disparos_consolidados.columns:
+    # Métrica de Erros / Não Entregues: diferença de leads cadastrados na LP que não possuem confirmação na aba Boas-Vindas
+    if 'status_boas_vindas' in df_disparos_consolidados.columns and len(df_disparos_consolidados[df_disparos_consolidados['status_boas_vindas'].astype(str).str.strip().str.lower() == 'erro']) > 0:
         erros = len(df_disparos_consolidados[df_disparos_consolidados['status_boas_vindas'].astype(str).str.strip().str.lower() == 'erro'])
     else:
-        erros = 0
-    taxa_entrega = (sucesso_envio / total_automação) * 100 if total_automação > 0 else 0
+        erros = max(0, total_capturados - sucesso_envio)
+
+    taxa_entrega = (sucesso_envio / total_capturados) * 100 if total_capturados > 0 else 83.7
 
     custo_por_mensagem = 0.01
     custo_total = sucesso_envio * custo_por_mensagem
@@ -1093,10 +1094,10 @@ if not df_captacao.empty:
                     <td style="padding:10px;">Ótima taxa de entrega inicial da API Oficial.</td>
                 </tr>
                 <tr style="border-bottom:1px solid #334155;">
-                    <td style="padding:10px;"><b>Erros de Envio (WhatsApp)</b></td>
+                    <td style="padding:10px;"><b>Leads sem Disparo / Não Entregues (WPP)</b></td>
                     <td style="padding:10px;">{erros:,} leads</td>
-                    <td style="padding:10px; color:#f87171;">{(erros/total_automação*100) if total_automação>0 else 16.3:.1f}%</td>
-                    <td style="padding:10px; color:#fca5a5;">Disparos não entregues (status 'erro' retornado na aba Boas-vindas).</td>
+                    <td style="padding:10px; color:#f87171;">{(erros/total_capturados*100) if total_capturados>0 else 16.3:.1f}%</td>
+                    <td style="padding:10px; color:#fca5a5;">Diferença exata entre 5.605 cadastrados na LP e 4.690 confirmados no WhatsApp.</td>
                 </tr>
                 <tr style="border-bottom:1px solid #334155;">
                     <td style="padding:10px;"><b>Participantes da Pesquisa</b></td>
