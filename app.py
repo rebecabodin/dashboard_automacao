@@ -2510,7 +2510,32 @@ if not df_captacao.empty:
                 </div>
                 """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
 
-            st.markdown("<div style='margin-top:20px;'></div>", unsafe_allow_html=True)
+            # --- RESUMO FINANCEIRO DE DISPAROS DE CARRINHO ---
+            custo_wpp_usd = 49.11
+            custo_wpp_brl = custo_wpp_usd * 5.60
+            lucro_liquido_wpp = roi_resgatado_wpp - custo_wpp_brl
+            roi_multiplicador = roi_resgatado_wpp / custo_wpp_brl if custo_wpp_brl > 0 else 0
+
+            val_brl_str = f"{custo_wpp_brl:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+            val_resg_str = f"{roi_resgatado_wpp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+            val_lucro_str = f"{lucro_liquido_wpp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+            val_roi_perc = f"{roi_multiplicador*100:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+
+            st.markdown(f"""
+            <div style="background-color:#0f172a; border-left:4px solid #10b981; padding:14px 20px; border-radius:10px; margin-top:16px; margin-bottom:28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <div>
+                    <span style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; font-weight:700;">💵 Balanço de Custos & Retorno do Disparo de Carrinho (WhatsApp)</span>
+                    <div style="font-size:0.95rem; font-weight:600; color:#ffffff; margin-top:2px;">
+                        Custo Disparo Carrinho: <b style="color:#60a5fa;">US$ {custo_wpp_usd:.2f} (~R$ {val_brl_str})</b> &nbsp;|&nbsp; 
+                        Resgatado WPP: <b style="color:#34d399;">R$ {val_resg_str}</b> &nbsp;|&nbsp; 
+                        Lucro Líquido: <b style="color:#a7f3d0;">R$ {val_lucro_str}</b>
+                    </div>
+                </div>
+                <div style="background-color:#064e3b; border:1px solid #10b981; padding:6px 14px; border-radius:8px;">
+                    <span style="font-size:0.95rem; font-weight:800; color:#34d399;">⚡ {roi_multiplicador:.1f}x Retorno <span style="font-size:0.75rem; color:#a7f3d0;">(ROI {val_roi_perc}%)</span></span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
             # --- CENTRAL DE INTELIGÊNCIA & DIAGNÓSTICOS EM 4 ABAS ---
             st.subheader("📈 Análise Gráfica, Diagnósticos & Atendimento Comercial")
