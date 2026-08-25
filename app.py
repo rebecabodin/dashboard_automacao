@@ -1100,9 +1100,9 @@ if not df_captacao.empty:
                 </tr>
                 <tr style="border-bottom:1px solid #334155;">
                     <td style="padding:10px;"><b>Participantes da Pesquisa</b></td>
-                    <td style="padding:10px;">556 a 600 respostas</td>
-                    <td style="padding:10px;">~10,7% da base</td>
-                    <td style="padding:10px;">Amostra altamente representativa (erro estatístico &lt; 4%).</td>
+                    <td style="padding:10px;">4.096 respostas</td>
+                    <td style="padding:10px; color:#34d399;"><b>~73,1% da base</b></td>
+                    <td style="padding:10px;">Engajamento massivo na Pesquisa Check-In LC7 (base real pesquisa.csv).</td>
                 </tr>
                 <tr style="border-bottom:1px solid #334155;">
                     <td style="padding:10px;"><b>Leads no Checkout (Carrinho)</b></td>
