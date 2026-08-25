@@ -2140,14 +2140,45 @@ if not df_captacao.empty:
                 </div>
                 """, unsafe_allow_html=True)
 
-            st.markdown("<div style='margin-top:20px;'></div>", unsafe_allow_html=True)
+            # --- RESUMO FINANCEIRO HORIZONTAL COM HISTÓRICO DE USO OFICIAL MANYCHAT ---
+            custo_utility_usd = 122.36
+            custo_mkt_usd = 138.50
+            custo_total_usd = 260.86
+            
+            taxa_usd_brl = 5.60
+            custo_wpp_brl = custo_total_usd * taxa_usd_brl
+            receita_resgatada_wpp = 14 * 1497 # R$ 20.958,00
+            lucro_liquido_wpp = receita_resgatada_wpp - custo_wpp_brl
+            roi_multiplicador = receita_resgatada_wpp / custo_wpp_brl if custo_wpp_brl > 0 else 0
+
+            val_brl_str = f"{custo_wpp_brl:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+            val_resg_str = f"{receita_resgatada_wpp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+            val_lucro_str = f"{lucro_liquido_wpp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+            val_roi_perc = f"{roi_multiplicador*100:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+
+            st.markdown(f"""
+            <div style="background-color:#0f172a; border-left:4px solid #10b981; padding:14px 20px; border-radius:10px; margin-top:16px; margin-bottom:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <div>
+                    <span style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; font-weight:700;">💵 DRE & Balanço Financeiro de Disparos WhatsApp (Histórico Oficial ManyChat 27/07 a 24/08)</span>
+                    <div style="font-size:0.92rem; font-weight:600; color:#ffffff; margin-top:4px;">
+                        Custo Total Meta API: <b style="color:#60a5fa;">US$ {custo_total_usd:.2f} (~R$ {val_brl_str})</b> <span style="font-size:0.78rem; color:#94a3b8;">(15.687 Utility: US$ 122,36 + 1.929 Marketing Lite: US$ 138,50)</span> &nbsp;|&nbsp; 
+                        Resgatado WPP: <b style="color:#34d399;">R$ {val_resg_str}</b> &nbsp;|&nbsp; 
+                        Lucro Líquido: <b style="color:#a7f3d0;">R$ {val_lucro_str}</b>
+                    </div>
+                </div>
+                <div style="background-color:#064e3b; border:1px solid #10b981; padding:6px 14px; border-radius:8px;">
+                    <span style="font-size:0.95rem; font-weight:800; color:#34d399;">⚡ {roi_multiplicador:.1f}x Retorno <span style="font-size:0.75rem; color:#a7f3d0;">(ROI {val_roi_perc}%)</span></span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
             # --- ABAS DE ANÁLISE DE VENDAS ---
-            tab_perf, tab_geo, tab_pag, tab_lista = st.tabs([
+            tab_perf, tab_geo, tab_pag, tab_dre_custos, tab_lista = st.tabs([
                 "📊 1. Curva Diária & Atribuição SCK",
                 "📍 2. Inteligência Geográfica (UF)",
                 "💳 3. Meios de Pagamento & Parcelas",
-                "📋 4. Tabela Completa de Compradores"
+                "💵 4. DRE & Custos Meta WhatsApp",
+                "📋 5. Tabela Completa de Compradores"
             ])
 
             # TAB 1: CURVA DIÁRIA & TRACKING SCK
@@ -2293,7 +2324,53 @@ if not df_captacao.empty:
                         )
                         st.plotly_chart(fig_parc, use_container_width=True)
 
-            # TAB 4: TABELA COMPLETA AUDITADA
+            # TAB 4: DRE & CUSTOS META WHATSAPP
+            with tab_dre_custos:
+                col_d1, col_d2 = st.columns([1.2, 1])
+
+                with col_d1:
+                    st.markdown("""
+                    <div style="background-color:#0f172a; padding:18px; border-radius:10px; color:#ffffff; border-left:4px solid #10b981;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0;">📊 DRE Consolidada da Operação WhatsApp (Meta API)</h5>
+                        <table style="width:100%; margin-top:14px; border-collapse:collapse; color:#ffffff; font-size:0.9rem;">
+                            <tr style="border-bottom:1px solid #334155; height:36px;">
+                                <td><b>(+) Faturamento Resgatado via WhatsApp (14 Vendas):</b></td>
+                                <td style="text-align:right; color:#34d399; font-weight:bold;">R$ 20.958,00</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #334155; height:36px;">
+                                <td><b>(-) Custo Disparos Utility (15.687 envios - US$ 122,36):</b></td>
+                                <td style="text-align:right; color:#f87171;">R$ 685,22</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #334155; height:36px;">
+                                <td><b>(-) Custo Disparos Marketing Lite (1.929 envios - US$ 138,50):</b></td>
+                                <td style="text-align:right; color:#f87171;">R$ 775,60</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #334155; height:36px;">
+                                <td><b>(=) Custo Total Infraestrutura Meta API (US$ 260,86):</b></td>
+                                <td style="text-align:right; color:#f87171; font-weight:bold;">R$ 1.460,82</td>
+                            </tr>
+                            <tr style="height:40px;">
+                                <td><b style="font-size:1rem; color:#a7f3d0;">(=) Lucro Líquido Real do WhatsApp:</b></td>
+                                <td style="text-align:right; color:#a7f3d0; font-weight:bold; font-size:1.1rem;">R$ 19.497,18</td>
+                            </tr>
+                        </table>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with col_d2:
+                    st.markdown("""
+                    <div style="background-color:#0f172a; border-left:4px solid #3b82f6; padding:18px; border-radius:10px; color:#ffffff; height:100%;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0;">💡 Auditoria de Custos Meta / ManyChat</h5>
+                        <p style="font-size:0.88rem; color:#ffffff; margin-top:12px; line-height:1.6;">
+                            • <b>Período da Fatura Meta:</b> 27 de julho a 24 de agosto de 2026.<br><br>
+                            • <b>Retorno Absurdo (ROI 14,3x):</b> Para resgatar R$ 20.958,00 em vendas ativas pelo WhatsApp, o investimento total foi de apenas <b style="color:#34d399;">US$ 260,86 (R$ 1.460,82)</b>.<br><br>
+                            • <b>Eficiência de Infraestrutura:</b> O custo de WhatsApp representou <b style="color:#3b82f6;">apenas 1.5% do Faturamento Bruto do Lançamento (R$ 95.808,00)</b>.<br><br>
+                            👉 <b>Conclusão BI:</b> O canal WhatsApp é o canal de maior margem líquida do lançamento.
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+            # TAB 5: TABELA COMPLETA AUDITADA
             with tab_lista:
                 st.markdown("##### 👥 Base Auditada de Compradores (Aba Compra Aprovada)")
                 
@@ -2433,36 +2510,7 @@ if not df_captacao.empty:
                 </div>
                 """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
 
-            # --- RESUMO FINANCEIRO HORIZONTAL CLEAN COM HISTÓRICO DE USO OFICIAL MANYCHAT ---
-            custo_utility_usd = 122.36
-            custo_mkt_usd = 138.50
-            custo_total_usd = 260.86
-            
-            taxa_usd_brl = 5.60
-            custo_wpp_brl = custo_total_usd * taxa_usd_brl
-            lucro_liquido_wpp = roi_resgatado_wpp - custo_wpp_brl
-            roi_multiplicador = roi_resgatado_wpp / custo_wpp_brl if custo_wpp_brl > 0 else 0
-
-            val_brl_str = f"{custo_wpp_brl:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
-            val_resg_str = f"{roi_resgatado_wpp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
-            val_lucro_str = f"{lucro_liquido_wpp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
-            val_roi_perc = f"{roi_multiplicador*100:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.')
-
-            st.markdown(f"""
-            <div style="background-color:#0f172a; border-left:4px solid #10b981; padding:14px 20px; border-radius:10px; margin-top:16px; margin-bottom:28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                <div>
-                    <span style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; font-weight:700;">💵 Balanço Financeiro de Disparos WhatsApp (Histórico Oficial ManyChat 27/07 a 24/08)</span>
-                    <div style="font-size:0.92rem; font-weight:600; color:#ffffff; margin-top:4px;">
-                        Custo Disparos Meta: <b style="color:#60a5fa;">US$ {custo_total_usd:.2f} (~R$ {val_brl_str})</b> <span style="font-size:0.78rem; color:#94a3b8;">(15.687 Utility: US$ 122,36 + 1.929 Marketing: US$ 138,50)</span> &nbsp;|&nbsp; 
-                        Resgatado WPP: <b style="color:#34d399;">R$ {val_resg_str}</b> &nbsp;|&nbsp; 
-                        Lucro Líquido: <b style="color:#a7f3d0;">R$ {val_lucro_str}</b>
-                    </div>
-                </div>
-                <div style="background-color:#064e3b; border:1px solid #10b981; padding:6px 14px; border-radius:8px;">
-                    <span style="font-size:0.95rem; font-weight:800; color:#34d399;">⚡ {roi_multiplicador:.1f}x Retorno <span style="font-size:0.75rem; color:#a7f3d0;">(ROI {val_roi_perc}%)</span></span>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown("<div style='margin-top:20px;'></div>", unsafe_allow_html=True)
 
             # --- CENTRAL DE INTELIGÊNCIA & DIAGNÓSTICOS EM 4 ABAS ---
             st.subheader("📈 Análise Gráfica, Diagnósticos & Atendimento Comercial")
