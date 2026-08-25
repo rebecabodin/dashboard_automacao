@@ -2143,9 +2143,62 @@ if not df_captacao.empty:
                 </div>
                 """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
 
+            # --- DRE & ROI DO INVESTIMENTO EM DISPAROS DE WHATSAPP (17 A 24 DE AGOSTO) ---
+            custo_wpp_usd = 49.11
+            custo_wpp_brl = custo_wpp_usd * 5.60 # Câmbio estimado de R$ 5,60/USD (~R$ 275,00)
+            lucro_liquido_wpp = roi_resgatado_wpp - custo_wpp_brl
+            roi_multiplicador = roi_resgatado_wpp / custo_wpp_brl if custo_wpp_brl > 0 else 0
+
+            val_brl_str = f"{custo_wpp_brl:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+            val_resg_str = f"{roi_resgatado_wpp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+            val_lucro_str = f"{lucro_liquido_wpp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+            val_roi_perc = f"{roi_multiplicador*100:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+
+            st.markdown(f"""
+            <div style="background-color:#0f172a; border-left:6px solid #10b981; padding:20px 24px; border-radius:12px; margin-bottom:16px; box-shadow:0 4px 20px rgba(0,0,0,0.35); color:#ffffff;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                    <div>
+                        <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:4px 12px; border-radius:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Inteligência Financeira de Canais</span>
+                        <h3 style="color:#ffffff; font-weight:800; margin:8px 0 0 0; font-size:1.4rem;">💵 Demonstrativo Financeiro & ROI do WhatsApp (17 a 24/08)</h3>
+                    </div>
+                    <div style="background-color:#064e3b; border:2px solid #10b981; padding:10px 18px; border-radius:10px; text-align:center;">
+                        <span style="font-size:0.72rem; color:#a7f3d0; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">Multiplicador de Retorno</span>
+                        <div style="font-size:1.45rem; font-weight:800; color:#34d399; margin-top:2px;">{roi_multiplicador:.1f}x Retorno <span style="font-size:0.85rem; color:#a7f3d0;">(ROI {val_roi_perc}%)</span></div>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            dre_col1, dre_col2, dre_col3 = st.columns(3)
+
+            with dre_col1:
+                st.markdown(f"""
+                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:18px; border-radius:10px; text-align:center; color:#ffffff; min-height:140px;">
+                    <span style="font-size:0.78rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">💳 Custo Total Disparos API</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0; font-size:1.4rem;">US$ {custo_wpp_usd:.2f} <span style="font-size:0.85rem; color:#94a3b8;">(~R$ {val_brl_str})</span></h3>
+                    <span style="font-size:0.75rem; color:#60a5fa;">4.161 Utility + 232 Marketing Msgs</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with dre_col2:
+                st.markdown(f"""
+                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:18px; border-radius:10px; text-align:center; color:#ffffff; min-height:140px;">
+                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">📈 Faturamento Resgatado WPP</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0; font-size:1.4rem;">R$ {val_resg_str}</h3>
+                    <span style="font-size:0.75rem; color:#4ade80;">14 Vendas Aprovadas pós WPP</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with dre_col3:
+                st.markdown(f"""
+                <div style="background-color:#065f46; border-top:4px solid #34d399; padding:18px; border-radius:10px; text-align:center; color:#ffffff; min-height:140px;">
+                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">💰 Lucro Líquido do Canal</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0; font-size:1.4rem;">R$ {val_lucro_str}</h3>
+                    <span style="font-size:0.75rem; color:#34d399;">Faturamento - Custo de Disparos</span>
+                </div>
+                """, unsafe_allow_html=True)
+
             st.markdown("<br>", unsafe_allow_html=True)
-
-
 
             # =========================================================
             # PASSO 2: VISUAL STORYTELLING & FUNIL INTERATIVO
