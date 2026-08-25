@@ -1149,13 +1149,20 @@ if not df_captacao.empty:
                         marker={"color": ["#4B8BBE", "#28a745", "#FFD43B"]}
                     ))
                     fig_funnel.update_layout(
-                        margin=dict(t=10, b=10, l=10, r=10),
-                        height=320,
+                        margin=dict(t=20, b=20, l=10, r=10),
+                        height=440,
                         paper_bgcolor="rgba(0,0,0,0)",
                         plot_bgcolor="rgba(0,0,0,0)"
                     )
                     st.plotly_chart(fig_funnel, use_container_width=True)
-                    st.caption(f"De **{total_disp:,}** disparados, **{total_cli:,}** interagiram ({taxa_cli:.1f}% CTR)".replace(',','.'))
+                    
+                    st.markdown("""
+                    <div style="background:#1e293b; border-radius:6px; padding:10px 14px; margin-top:5px; border-left:4px solid #3b82f6;">
+                        <div style="font-size:0.85rem; color:#cbd5e1;">
+                            <b>💡 Resumo Global do Funil:</b> Dos <b>11.357 disparos</b> realizados, <b>10.442 foram entregues (91.9%)</b> e <b>1.467 responderam/clicaram</b> (CTR global de <b>14.0%</b>).
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             with col_cards:
                 st.markdown("#### 🗂️ Resumo Auditado por CPL")
