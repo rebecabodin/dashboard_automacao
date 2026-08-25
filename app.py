@@ -2902,9 +2902,10 @@ if not df_captacao.empty:
         f_aut = os.path.join(folder_emails, "Estatísticas Hotmart Send - Últimas automações - 20_08_2026.csv")
         f_ctrl_email = os.path.join(folder_emails, "Controle de Notificações e Disparos  - LC7_MDE_AGO26.xlsx - 02. E-MAIL.csv")
 
-        # 1. Carregar Campanhas Hotmart Send
+        # 1. Carregar Campanhas Hotmart Send (Filtradas estritamente para LC7_MDE_AGO26)
         try:
             df_camp = pd.read_csv(f_camp, sep=';', encoding='utf-8')
+            df_camp = df_camp[df_camp['name'].astype(str).str.contains('LC7_MDE_AGO26', case=False, na=False)].copy()
         except:
             df_camp = pd.DataFrame([
                 {'name': 'LC7_MDE_AGO26 - [CARRINHO] - E-MAIL 5 - INSCRIÇÕES ABERTAS', 'data_comunicação': '2026-08-19', 'total_sent': 5541, 'open_rate_percent': 2, 'ctor_percent': 3},
@@ -2924,13 +2925,13 @@ if not df_captacao.empty:
                 {'name': 'LC7_MDE_AGO26 - [CPL] - E-MAIL 12 - AULA 3 + SORTEIO', 'data_comunicação': '2026-08-14', 'total_sent': 5580, 'open_rate_percent': 3, 'ctor_percent': 5}
             ])
 
-        # 2. Carregar Automação Hotmart Send
+        # 2. Carregar Automação Hotmart Send (Filtrada exclusivamente para LC7_MDE_AGO26)
         try:
             df_aut = pd.read_csv(f_aut, sep=';', encoding='utf-8')
+            df_aut = df_aut[df_aut['name'].astype(str).str.contains('LC7_MDE_AGO26', case=False, na=False)].copy()
         except:
             df_aut = pd.DataFrame([
-                {'name': 'OBRIGADO_LC7_MDE_AGO26', 'data_comunicação': '2026-07-23', 'total_sent': 17082, 'open_rate_percent': 14, 'ctor_percent': 22},
-                {'name': 'Compra Aprovada - Imersão', 'data_comunicação': '2026-05-10', 'total_sent': 816, 'open_rate_percent': 26, 'ctor_percent': 48}
+                {'name': 'OBRIGADO_LC7_MDE_AGO26', 'data_comunicação': '2026-07-23', 'total_sent': 17082, 'open_rate_percent': 14, 'ctor_percent': 22}
             ])
 
         # Cálculo das métricas gerais
@@ -3052,55 +3053,43 @@ if not df_captacao.empty:
                 </div>
                 """, unsafe_allow_html=True)
 
-        # TAB 2: AUTOMAÇÃO DE ENTRADA & BOAS-VINDAS
+        # TAB 2: AUTOMAÇÃO DE ENTRADA & BOAS-VINDAS (EXCLUSIVO LC7_MDE_AGO26)
         with tab_em_aut:
-            col_ea1, col_ea2 = st.columns(2)
+            col_ea1, col_ea2 = st.columns([1.3, 1])
 
             with col_ea1:
                 st.markdown("""
-                <div style="background-color:#1e1b4b; border-left:4px solid #6366f1; padding:20px; border-radius:12px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                    <span style="background-color:#6366f1; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:10px; font-weight:bold;">AUTOMAÇÃO DE ENTRADA</span>
-                    <h4 style="color:#ffffff; font-weight:800; margin:8px 0 4px 0;">OBRIGADO_LC7_MDE_AGO26</h4>
-                    <span style="font-size:0.8rem; color:#c7d2fe;">Data: 23/07/2026</span>
+                <div style="background-color:#1e1b4b; border-left:6px solid #6366f1; padding:22px; border-radius:12px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="background-color:#6366f1; color:#ffffff; font-size:0.75rem; padding:4px 10px; border-radius:10px; font-weight:bold; text-transform:uppercase;">🚀 Automação Oficial LC7_MDE_AGO26</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:10px 0 4px 0;">OBRIGADO_LC7_MDE_AGO26</h3>
+                    <span style="font-size:0.85rem; color:#c7d2fe;">Início da Comunicação: 23/07/2026</span>
                     
-                    <hr style="border-color:rgba(255,255,255,0.15); margin:14px 0;">
+                    <hr style="border-color:rgba(255,255,255,0.15); margin:16px 0;">
                     
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                        <span>Total de Leads Cadastrados:</span>
-                        <b style="color:#6366f1; font-size:1.1rem;">17.082 Leads</b>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <span style="font-size:0.95rem;">Total de Leads Inscritos no Lançamento:</span>
+                        <b style="color:#818cf8; font-size:1.25rem;">17.082 Leads</b>
                     </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                        <span>Taxa de Abertura (Open Rate):</span>
-                        <b style="color:#4ade80; font-size:1.1rem;">14,0% (~2.391 Aberturas)</b>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <span style="font-size:0.95rem;">Taxa de Abertura (Open Rate):</span>
+                        <b style="color:#4ade80; font-size:1.25rem;">14,0% (~2.391 Aberturas)</b>
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span>CTOR (Cliques / Aberturas):</span>
-                        <b style="color:#38bdf8; font-size:1.1rem;">22,0% (~526 Cliques)</b>
+                        <span style="font-size:0.95rem;">CTOR (Cliques sobre Aberturas):</span>
+                        <b style="color:#38bdf8; font-size:1.25rem;">22,0% (~526 Cliques)</b>
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
 
             with col_ea2:
                 st.markdown("""
-                <div style="background-color:#064e3b; border-left:4px solid #10b981; padding:20px; border-radius:12px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                    <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:10px; font-weight:bold;">AUTOMAÇÃO DE COMPRA</span>
-                    <h4 style="color:#ffffff; font-weight:800; margin:8px 0 4px 0;">Compra Aprovada - Imersão</h4>
-                    <span style="font-size:0.8rem; color:#a7f3d0;">Data: 10/05/2026</span>
-                    
-                    <hr style="border-color:rgba(255,255,255,0.15); margin:14px 0;">
-                    
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                        <span>Total Enviados:</span>
-                        <b style="color:#a7f3d0; font-size:1.1rem;">816 Compradores</b>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                        <span>Taxa de Abertura (Open Rate):</span>
-                        <b style="color:#4ade80; font-size:1.1rem;">26,0% (212 Aberturas)</b>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span>CTOR (Cliques / Aberturas):</span>
-                        <b style="color:#34d399; font-size:1.1rem;">48,0% (101 Cliques)</b>
-                    </div>
+                <div style="background-color:#0f172a; border-left:4px solid #10b981; padding:22px; border-radius:12px; color:#ffffff; height:100%; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <h5 style="color:#ffffff; font-weight:700; margin:0;">💡 Análise do Fluxo de Cadastro LC7</h5>
+                    <p style="font-size:0.9rem; color:#ffffff; margin-top:12px; line-height:1.6;">
+                        • <b>Captura de Leads:</b> 17.082 leads entraram na lista oficial do projeto <b>LC7_MDE_AGO26</b>.<br><br>
+                        • <b>Engajamento no Onboarding:</b> 2.391 pessoas (14%) abriram a confirmação de inscrição, demonstrando a recepção da mensagem de boas-vindas.<br><br>
+                        • <b>Retenção para WhatsApp:</b> 526 leads (22% CTOR) clicaram na chamada do e-mail para ingressar nos grupos oficiais do WhatsApp.
+                    </p>
                 </div>
                 """, unsafe_allow_html=True)
 
