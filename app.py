@@ -1578,23 +1578,30 @@ if not df_captacao.empty:
 
                 with meta_col1:
                     st.markdown("""
-                    #### 🤖 Como a IA da Meta reclassifica os Templates?
-                    A Meta utiliza um modelo de IA de NLP (Processamento de Linguagem Natural) que lê o conteúdo aprovado tanto no momento do envio quanto nas verificações periódicas pós-aprovação.<br><br>
-                    <b>Gatilhos que fazem a IA converter Utility ➔ Marketing Lite (9.2x mais caro):</b>
-                    1. <b>Adjetivos de Escassez/Urgência:</b> Termos como <i>'Liberado'</i>, <i>'Última chance'</i>, <i>'Oportunidade única'</i> ou <i>'Ao vivo agora'</i>.
-                    2. <b>Excesso de Emojis Promocionais:</b> 🚨, 💥, 💣, 🔥, ⚡, 🎁.
-                    3. <b>Links Externos Não Operacionais:</b> Direcionar para o Instagram, YouTube ou pesquisas fora da transação imediata.
-                    4. <b>Convocação Genérica:</b> Avisar sobre um evento sem citar os dados explícitos de cadastro transacional do usuário.
-                    """)
+                    <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:18px; border-radius:10px; min-height:240px; color:#ffffff;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1rem;">🤖 Como a IA da Meta reclassifica os Templates?</h5>
+                        <p style="font-size:0.88rem; color:#ffffff; margin-top:10px; line-height:1.5;">
+                            A Meta utiliza um modelo de IA de NLP (Processamento de Linguagem Natural) que lê o conteúdo aprovado tanto no envio quanto pós-aprovação.<br><br>
+                            <b style="color:#fbbf24;">Gatilhos que convertem Utility ➔ Marketing Lite (9.2x mais caro):</b><br>
+                            1. <b>Adjetivos de Escassez/Urgência:</b> Termos como <i>'Liberado'</i>, <i>'Última chance'</i>, <i>'Oportunidade única'</i>.<br>
+                            2. <b>Excesso de Emojis Promocionais:</b> 🚨, 💥, 💣, 🔥, ⚡, 🎁.<br>
+                            3. <b>Links Externos Não Operacionais:</b> Direcionar para Instagram, YouTube ou pesquisas fora da transação.<br>
+                            4. <b>Convocação Genérica:</b> Avisar sobre evento sem dados explícitos de cadastro transacional.
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
 
                 with meta_col2:
                     st.markdown("""
-                    #### ⚡ Por que a entrega de Marketing falha mais que Utility?
-                    Além da diferença de custo (US$ 0,0718 vs US$ 0,0078), a Meta aplica 2 travas severas em mensagens da categoria Marketing:
-                    
-                    1. <b>Frequency Cap (Limite de Frequência de Marketing por Usuário):</b> A Meta impõe um limite máximo de mensagens de Marketing que um usuário pode receber no WhatsApp por dia de <i>qualquer empresa</i>. Se o lead já recebeu Marketing de outras contas no dia, a Meta <b>simplesmente não entrega a sua mensagem</b> para proteger o usuário de spam!
-                    2. <b>Quality Rating Throttling:</b> Quando um disparo de Marketing em massa tem baixos cliques ou bloqueios (como o botão de consentimento na CPL 04), a Meta reduz o ritmo de entrega por hora do número (Throttling).
-                    """)
+                    <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:18px; border-radius:10px; min-height:240px; color:#ffffff;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1rem;">⚡ Por que Marketing falha mais que Utility?</h5>
+                        <p style="font-size:0.88rem; color:#ffffff; margin-top:10px; line-height:1.5;">
+                            Além do custo 9,2x maior, a Meta aplica 2 travas severas em mensagens de Marketing:<br><br>
+                            1. <b>Frequency Cap (Limite por Usuário):</b> Limite máximo de msgs de Marketing que um usuário pode receber no dia de <i>qualquer empresa</i>. Se o lead já recebeu Marketing de outras contas, a Meta <b style="color:#f87171;">simplesmente não entrega a sua mensagem</b>!<br><br>
+                            2. <b>Quality Rating Throttling:</b> Disparos em massa com baixos cliques ou bloqueios fazem a Meta reduzir o ritmo de entrega do número (Throttling).
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
 
                 st.markdown("---")
                 st.markdown("#### 🛠️ O Script da Copy 'Blindada' (Como manter o aviso 100% em Utility):")
