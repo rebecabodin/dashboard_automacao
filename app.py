@@ -2027,7 +2027,7 @@ if not df_captacao.empty:
                 </div>
             </div>
             <p style="color: #94a3b8; margin-top: 10px; margin-bottom: 0; font-size: 0.93rem; line-height: 1.5;">
-                Análise detalhada do Pop-up de Vendas e Checkout, auditando a resposta aos disparos de WhatsApp, conversões diretas e gargalos operacionais.
+                Análise detalhada e auditada do Pop-up de Vendas (LP) e da Esteira de Recuperação de Vendas (Checkout Hotmart).
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -2040,151 +2040,286 @@ if not df_captacao.empty:
             df_vendas = pd.read_csv(url_vendas)
             df_recuperacao = pd.read_csv(url_recuperacao)
 
-            # Limpeza de dados
-            df_vendas['Mensagem Enviada'] = df_vendas['Mensagem Enviada'].fillna('').astype(str).str.strip()
-            df_vendas['Comprou?'] = df_vendas['Comprou?'].fillna('').astype(str).str.strip()
+            tab_popup, tab_recup = st.tabs(["🛒 1. Pop-Up Vendas (LP)", "📈 2. Recuperação de Vendas (Checkout Hotmart)"])
 
-            # Exclui registros de testes com nome 'teste' que não compraram
-            mask_real = ~((df_vendas['NOME'].astype(str).str.lower().str.contains('teste', na=False)) & (df_vendas['Comprou?'] != 'Sim'))
-            df_v = df_vendas[mask_real].copy()
+            # =========================================================
+            # SUB-ABA 1: POP-UP VENDAS (LP) - 62 LEADS
+            # =========================================================
+            with tab_popup:
+                df_vendas['Mensagem Enviada'] = df_vendas['Mensagem Enviada'].fillna('').astype(str).str.strip()
+                df_vendas['Comprou?'] = df_vendas['Comprou?'].fillna('').astype(str).str.strip()
 
-            # Segregando os 4 Quadrantes de Negócio
-            q1 = df_v[(df_v['Mensagem Enviada'] != '') & (df_v['Comprou?'] == 'Sim')]
-            q2 = df_v[(df_v['Mensagem Enviada'] != '') & (df_v['Comprou?'] == 'Não')]
-            q3 = df_v[(df_v['Mensagem Enviada'] == '') & (df_v['Comprou?'] == 'Não')]
-            q4 = df_v[(df_v['Mensagem Enviada'] == '') & (df_v['Comprou?'] == 'Sim')]
+                # Exclui registros de testes com nome 'teste' que não compraram
+                mask_real = ~((df_vendas['NOME'].astype(str).str.lower().str.contains('teste', na=False)) & (df_vendas['Comprou?'] != 'Sim'))
+                df_v = df_vendas[mask_real].copy()
 
-            total_leads = len(df_v)
-            total_msgs = len(df_v[df_v['Mensagem Enviada'] != ''])
-            total_compras = len(df_v[df_v['Comprou?'] == 'Sim'])
-            total_abandonos = len(df_v[df_v['Comprou?'] == 'Não'])
+                # Segregando os 4 Quadrantes de Negócio
+                q1 = df_v[(df_v['Mensagem Enviada'] != '') & (df_v['Comprou?'] == 'Sim')]
+                q2 = df_v[(df_v['Mensagem Enviada'] != '') & (df_v['Comprou?'] == 'Não')]
+                q3 = df_v[(df_v['Mensagem Enviada'] == '') & (df_v['Comprou?'] == 'Não')]
+                q4 = df_v[(df_v['Mensagem Enviada'] == '') & (df_v['Comprou?'] == 'Sim')]
 
-            faturado_total = total_compras * 1497
-            valor_mesa = total_abandonos * 1497
+                total_leads = len(df_v)
+                total_msgs = len(df_v[df_v['Mensagem Enviada'] != ''])
+                total_compras = len(df_v[df_v['Comprou?'] == 'Sim'])
+                total_abandonos = len(df_v[df_v['Comprou?'] == 'Não'])
 
-            # --- ETAPA 1: SCORECARDS DOS 4 QUADRANTES ---
-            st.markdown("### 📊 Matriz Executiva dos 4 Quadrantes do Pop-up Vendas")
-            st.markdown("Segmentação auditada do comportamento dos leads frente à automação no WhatsApp e checkout:")
+                faturado_total = total_compras * 1497
+                valor_mesa = total_abandonos * 1497
 
-            m1, m2, m3, m4 = st.columns(4)
+                st.markdown("### 📊 Matriz Executiva dos 4 Quadrantes do Pop-up Vendas")
+                st.markdown("Segmentação auditada do comportamento dos leads no Pop-Up da Landing Page:")
 
-            with m1:
-                st.markdown(f"""
-                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
-                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🟢 Q1: Sucesso WPP</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(q1)} Vendas</h3>
-                    <span style="font-size:0.78rem; color:#4ade80;">Recebeu Msg + Comprou</span>
-                </div>
-                """, unsafe_allow_html=True)
+                m1, m2, m3, m4 = st.columns(4)
 
-            with m2:
-                st.markdown(f"""
-                <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
-                    <span style="font-size:0.78rem; color:#fde68a; text-transform:uppercase; font-weight:700;">🟡 Q2: Carrinho Parado WPP</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(q2)} Leads</h3>
-                    <span style="font-size:0.78rem; color:#fbbf24;">Recebeu Msg + Não Comprou</span>
-                </div>
-                """, unsafe_allow_html=True)
-
-            with m3:
-                st.markdown(f"""
-                <div style="background-color:#2d1215; border-top:4px solid #ef4444; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
-                    <span style="font-size:0.78rem; color:#fca5a5; text-transform:uppercase; font-weight:700;">🔴 Q3: Falha de Envio</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(q3)} Leads</h3>
-                    <span style="font-size:0.75rem; color:#f87171;">Sem Msg (2 Incorretos / 3 Válidos)</span>
-                </div>
-                """, unsafe_allow_html=True)
-
-            with m4:
-                st.markdown(f"""
-                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
-                    <span style="font-size:0.78rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">🔵 Q4: Venda Orgânica</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(q4)} Vendas</h3>
-                    <span style="font-size:0.78rem; color:#60a5fa;">Sem Msg + Comprou Direto</span>
-                </div>
-                """, unsafe_allow_html=True)
-
-            st.markdown("<br>", unsafe_allow_html=True)
-
-            # --- ETAPA 2: RESUMO DE PERFORMANCE FINANCEIRA & RECUPERAÇÃO ---
-            col_kpis, col_gauge = st.columns([1.1, 1], gap="medium")
-
-            with col_kpis:
-                with st.container(border=True):
-                    st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:12px;'>💰 Resumo Financeiro & Conversão de Checkout</h5>", unsafe_allow_html=True)
+                with m1:
                     st.markdown(f"""
-                    <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:18px; border-radius:10px; color:#ffffff; line-height:1.6;">
-                        • <b>Total de Leads no Checkout:</b> <b style="color:#60a5fa;">{total_leads} cadastros</b><br>
-                        • <b>Mensagens de WhatsApp Disparadas (Col R):</b> <b style="color:#fbbf24;">{total_msgs} disparos ({total_msgs/total_leads*100:.1f}% de cobertura)</b><br>
-                        • <b>Total de Compras Aprovadas (Col Q):</b> <b style="color:#4ade80;">{total_compras} vendas (R$ {faturado_total:,.2f})</b><br>
-                        • <b>Valor em Risco na Mesa (Abandonos):</b> <b style="color:#f87171;">R$ {valor_mesa:,.2f} ({total_abandonos} abandonos)</b><br>
-                        • <b>Taxa de Conversão nos Disparos WPP:</b> <b style="color:#4ade80;">25,0% (10 converteram de 40 impactados)</b>
+                    <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                        <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🟢 Q1: Sucesso WPP</span>
+                        <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(q1)} Vendas</h3>
+                        <span style="font-size:0.78rem; color:#4ade80;">Recebeu Msg + Comprou</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with m2:
+                    st.markdown(f"""
+                    <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                        <span style="font-size:0.78rem; color:#fde68a; text-transform:uppercase; font-weight:700;">🟡 Q2: Carrinho Parado WPP</span>
+                        <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(q2)} Leads</h3>
+                        <span style="font-size:0.78rem; color:#fbbf24;">Recebeu Msg + Não Comprou</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with m3:
+                    st.markdown(f"""
+                    <div style="background-color:#2d1215; border-top:4px solid #ef4444; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                        <span style="font-size:0.78rem; color:#fca5a5; text-transform:uppercase; font-weight:700;">🔴 Q3: Falha de Envio</span>
+                        <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(q3)} Leads</h3>
+                        <span style="font-size:0.75rem; color:#f87171;">Sem Msg (2 Incorretos / 3 Válidos)</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with m4:
+                    st.markdown(f"""
+                    <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                        <span style="font-size:0.78rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">🔵 Q4: Venda Orgânica</span>
+                        <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(q4)} Vendas</h3>
+                        <span style="font-size:0.78rem; color:#60a5fa;">Sem Msg + Comprou Direto</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                st.markdown("<br>", unsafe_allow_html=True)
+
+                col_kpis, col_gauge = st.columns([1.1, 1], gap="medium")
+
+                with col_kpis:
+                    with st.container(border=True):
+                        st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:12px;'>💰 Resumo Financeiro & Conversão de Checkout</h5>", unsafe_allow_html=True)
+                        st.markdown(f"""
+                        <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:18px; border-radius:10px; color:#ffffff; line-height:1.6;">
+                            • <b>Total de Leads no Pop-up:</b> <b style="color:#60a5fa;">{total_leads} cadastros</b><br>
+                            • <b>Mensagens de WhatsApp Disparadas (Col R):</b> <b style="color:#fbbf24;">{total_msgs} disparos ({total_msgs/total_leads*100:.1f}% de cobertura)</b><br>
+                            • <b>Total de Compras Aprovadas (Col Q):</b> <b style="color:#4ade80;">{total_compras} vendas (R$ {faturado_total:,.2f})</b><br>
+                            • <b>Valor em Risco na Mesa (Abandonos):</b> <b style="color:#f87171;">R$ {valor_mesa:,.2f} ({total_abandonos} abandonos)</b><br>
+                            • <b>Taxa de Conversão nos Disparos WPP:</b> <b style="color:#4ade80;">25,0% (10 converteram de 40 impactados)</b>
+                        </div>
+                        """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
+
+                with col_gauge:
+                    with st.container(border=True):
+                        st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:10px;'>📊 Distribuição do Funil de Checkout</h5>", unsafe_allow_html=True)
+                        fig_donut = go.Figure(data=[go.Pie(
+                            labels=['🟢 Q1: WPP + Comprou (10)', '🟡 Q2: WPP + Não Comprou (30)', '🔴 Q3: Sem WPP + Não Comprou (5)', '🔵 Q4: Sem WPP + Comprou (18)'],
+                            values=[len(q1), len(q2), len(q3), len(q4)],
+                            hole=.4,
+                            marker=dict(colors=['#10b981', '#f59e0b', '#ef4444', '#3b82f6'])
+                        )])
+                        fig_donut.update_layout(
+                            height=240,
+                            margin=dict(l=10, r=10, t=10, b=10),
+                            paper_bgcolor="rgba(0,0,0,0)",
+                            font=dict(color="#ffffff"),
+                            showlegend=True
+                        )
+                        st.plotly_chart(fig_donut, use_container_width=True)
+
+                st.markdown("<br>", unsafe_allow_html=True)
+                st.markdown("---")
+
+                st.markdown("### 🚨 Fila de Atendimento Prioritário Comercial (Pop-Up LP)")
+
+                df_v['Status Atendimento'] = df_v.apply(
+                    lambda x: "🔴 ALERTA: Erro de Envio (Ligar Urgente)" if (x['Mensagem Enviada'] == '' and x['Comprou?'] == 'Não')
+                    else ("🟡 Aguardando Resposta (Q2)" if (x['Mensagem Enviada'] != '' and x['Comprou?'] == 'Não')
+                    else ("🟢 Comprou pós WPP (Q1)" if (x['Mensagem Enviada'] != '' and x['Comprou?'] == 'Sim')
+                    else "🔵 Comprou Direto (Q4)")), axis=1
+                )
+
+                cols_exibicao = ['DATA', 'NOME', 'EMAIL', 'TELEFONE', 'TELEFONE_STATUS', 'Status Atendimento']
+                df_display = df_v[cols_exibicao].sort_values(by='Status Atendimento')
+
+                def highlight_status(val):
+                    if 'ALERTA' in str(val):
+                        return 'background-color: #2d1215; color: #f87171; font-weight: bold;'
+                    elif 'Aguardando' in str(val):
+                        return 'background-color: #451a03; color: #fbbf24; font-weight: bold;'
+                    elif '🟢' in str(val):
+                        return 'background-color: #064e3b; color: #4ade80; font-weight: bold;'
+                    else:
+                        return 'background-color: #0f172a; color: #60a5fa;'
+
+                try:
+                    st.dataframe(df_display.style.map(highlight_status, subset=['Status Atendimento']), use_container_width=True, hide_index=True)
+                except AttributeError:
+                    st.dataframe(df_display.style.applymap(highlight_status, subset=['Status Atendimento']), use_container_width=True, hide_index=True)
+
+                st.markdown("""
+                <div style="background-color:#2d1215; border-left:6px solid #ef4444; padding:16px; border-radius:10px; color:#ffffff; margin-top:15px;">
+                    <h5 style="color:#ffffff; font-weight:700; margin:0;">🚨 Ação Prioritária para o Time de Vendas & Diagnóstico Técnico</h5>
+                    <p style="font-size:0.9rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                        • <b>Leads em Vermelho (Q3):</b> Abandonaram o checkout e NÃO receberam a mensagem automática.<br>
+                        &nbsp;&nbsp;&nbsp;- <b>2 Erros de Entrada do Cliente (Fator Humano):</b> <code>NUMERO_INVALIDO</code> (ex: DDD duplicado no formulário) e <code>QUANTIDADE_DIGITOS_INVALIDA</code> (ex: <i>Mikael Paz</i> - cadastrou sem o DDD).<br>
+                        &nbsp;&nbsp;&nbsp;- <b>Leads Válidos para Ligação Comercial Imediata:</b> <i>André, Lorenzo, Joao Arthur, Douglas</i> possuem telefones válidos e aguardam ligação do time!<br>
+                        • <b>Leads em Amarelo (Q2 - 30 Pessoas):</b> Receberam o WhatsApp, leram o aviso e estão com o carrinho aberto. Enviar áudio humanizado ou cupom de encerramento para converter os R$ 44.910,00 parados na mesa.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # =========================================================
+            # SUB-ABA 2: RECUPERAÇÃO DE VENDAS (CHECKOUT HOTMART) - 14 LEADS
+            # =========================================================
+            with tab_recup:
+                df_recuperacao['STATUS PÓS AUTOMAÇÃO'] = df_recuperacao['STATUS PÓS AUTOMAÇÃO'].fillna('').astype(str).str.strip()
+                df_recuperacao['Comprou?'] = df_recuperacao['Comprou?'].fillna('').astype(str).str.strip()
+                df_recuperacao['NOME'] = df_recuperacao['NOME'].fillna('').astype(str).str.strip()
+                df_recuperacao['EMAIL'] = df_recuperacao['EMAIL'].fillna('').astype(str).str.strip().str.lower()
+
+                # Limpeza auditada: exclui teste Rebeca Bodin e duplicata Alvaro Honda
+                mask_r = ~(
+                    (df_recuperacao['NOME'].str.lower().str.contains('rebeca bodin', na=False)) | 
+                    (df_recuperacao['EMAIL'].str.contains('automacoesa@gmail.com', na=False))
+                )
+                df_r_clean = df_recuperacao[mask_r].copy()
+                
+                # Remove duplicata exata de Alvaro Honda (mantém o primeiro registro)
+                df_r_clean = df_r_clean.drop_duplicates(subset=['NOME', 'EMAIL'], keep='first')
+
+                total_r_leads = len(df_r_clean) # 14 leads
+                msgs_enviadas_r = df_r_clean[df_r_clean['STATUS PÓS AUTOMAÇÃO'] == 'Mensagem Enviada']
+                
+                compraram_msg_r = msgs_enviadas_r[msgs_enviadas_r['Comprou?'] == 'Sim'] # 4 compras
+                nao_compraram_msg_r = msgs_enviadas_r[msgs_enviadas_r['Comprou?'] == 'Não'] # 7 não compraram
+
+                sem_msg_r = df_r_clean[df_r_clean['STATUS PÓS AUTOMAÇÃO'] != 'Mensagem Enviada']
+                compraram_sem_msg_r = sem_msg_r[sem_msg_r['Comprou?'] == 'Sim'] # 2 compras orgânicas
+                nao_compraram_sem_msg_r = sem_msg_r[sem_msg_r['Comprou?'] == 'Não'] # 1 não comprou
+
+                roi_recup_wpp = len(compraram_msg_r) * 1497
+                valor_pendente_wpp = len(nao_compraram_msg_r) * 1497
+
+                st.markdown("### 📈 Auditoria de Recuperação de Vendas (Checkout Hotmart)")
+                st.markdown("Monitoramento nominal dos **14 leads reais** de abandono de checkout na Hotmart:")
+
+                rc1, rc2, rc3, rc4 = st.columns(4)
+
+                with rc1:
+                    st.markdown(f"""
+                    <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                        <span style="font-size:0.78rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">📥 Total Auditado</span>
+                        <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{total_r_leads} Leads</h3>
+                        <span style="font-size:0.75rem; color:#60a5fa;">Exclui Testes & Duplicatas</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with rc2:
+                    st.markdown(f"""
+                    <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                        <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🟢 Compraram pós WPP</span>
+                        <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(compraram_msg_r)} Vendas</h3>
+                        <span style="font-size:0.75rem; color:#4ade80;">R$ {roi_recup_wpp:,.2f} Resgatados</span>
                     </div>
                     """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
 
-            with col_gauge:
-                with st.container(border=True):
-                    st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:10px;'>📊 Distribuição do Funil de Checkout</h5>", unsafe_allow_html=True)
-                    fig_donut = go.Figure(data=[go.Pie(
-                        labels=['🟢 Q1: WPP + Comprou (10)', '🟡 Q2: WPP + Não Comprou (30)', '🔴 Q3: Sem WPP + Não Comprou (5)', '🔵 Q4: Sem WPP + Comprou (18)'],
-                        values=[len(q1), len(q2), len(q3), len(q4)],
-                        hole=.4,
-                        marker=dict(colors=['#10b981', '#f59e0b', '#ef4444', '#3b82f6'])
-                    )])
-                    fig_donut.update_layout(
-                        height=240,
-                        margin=dict(l=10, r=10, t=10, b=10),
-                        paper_bgcolor="rgba(0,0,0,0)",
-                        font=dict(color="#ffffff"),
-                        showlegend=True
-                    )
-                    st.plotly_chart(fig_donut, use_container_width=True)
+                with rc3:
+                    st.markdown(f"""
+                    <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                        <span style="font-size:0.78rem; color:#fde68a; text-transform:uppercase; font-weight:700;">🟡 WPP Enviado s/ Compra</span>
+                        <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(nao_compraram_msg_r)} Leads</h3>
+                        <span style="font-size:0.75rem; color:#fbbf24;">R$ {valor_pendente_wpp:,.2f} na Mesa</span>
+                    </div>
+                    """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
 
-            st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown("---")
+                with rc4:
+                    st.markdown(f"""
+                    <div style="background-color:#2d1215; border-top:4px solid #ef4444; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                        <span style="font-size:0.78rem; color:#fca5a5; text-transform:uppercase; font-weight:700;">🔵 Orgânico / Sem Msg</span>
+                        <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(sem_msg_r)} Leads</h3>
+                        <span style="font-size:0.75rem; color:#f87171;">2 Compraram / 1 Pendente</span>
+                    </div>
+                    """, unsafe_allow_html=True)
 
-            # --- ETAPA 3: FILA COMERCIAL & ALERTAS CRÍTICOS ---
-            st.markdown("### 🚨 Fila de Atendimento Prioritário Comercial")
-            st.markdown("Acompanhamento nominal dos leads para acionamento imediato por Closer/Vendedor:")
+                st.markdown("<br>", unsafe_allow_html=True)
 
-            # Preparando DataFrame para exibição limpa
-            df_v['Status Atendimento'] = df_v.apply(
-                lambda x: "🔴 ALERTA: Erro de Envio (Ligar Urgente)" if (x['Mensagem Enviada'] == '' and x['Comprou?'] == 'Não')
-                else ("🟡 Aguardando Resposta (Q2)" if (x['Mensagem Enviada'] != '' and x['Comprou?'] == 'Não')
-                else ("🟢 Comprou pós WPP (Q1)" if (x['Mensagem Enviada'] != '' and x['Comprou?'] == 'Sim')
-                else "🔵 Comprou Direto (Q4)")), axis=1
-            )
+                # Cards dos 4 Compradores Confirmados via WPP
+                st.markdown("#### 🏆 Os 4 Clientes Recuperados Diretos pela Automação do WPP")
+                c_rec1, c_rec2, c_rec3, c_rec4 = st.columns(4)
 
-            cols_exibicao = ['DATA', 'NOME', 'EMAIL', 'TELEFONE', 'TELEFONE_STATUS', 'Status Atendimento']
-            df_display = df_v[cols_exibicao].sort_values(by='Status Atendimento')
+                compradores_lista = [
+                    ("Macley Garcia", "16/08 22:13", "macleygpassos@gmail.com"),
+                    ("Flávio Jesus", "17/08 10:11", "fjsilva@educacaopg.sp.gov.br"),
+                    ("Rubens de Freitas", "17/08 15:06", "droprubaobh@gmail.com"),
+                    ("Carlos Santos", "17/08 21:19", "santoscarlossantos733@gmail.com")
+                ]
 
-            # Renderização com destaque de cor nas células
-            def highlight_status(val):
-                if 'ALERTA' in str(val):
-                    return 'background-color: #2d1215; color: #f87171; font-weight: bold;'
-                elif 'Aguardando' in str(val):
-                    return 'background-color: #451a03; color: #fbbf24; font-weight: bold;'
-                elif '🟢' in str(val):
-                    return 'background-color: #064e3b; color: #4ade80; font-weight: bold;'
-                else:
-                    return 'background-color: #0f172a; color: #60a5fa;'
+                for idx, (c_col, (n_nome, d_data, e_email)) in enumerate(zip([c_rec1, c_rec2, c_rec3, c_rec4], compradores_lista)):
+                    with c_col:
+                        st.markdown(f"""
+                        <div style="background-color:#064e3b; border-left:4px solid #10b981; padding:14px; border-radius:8px; color:#ffffff;">
+                            <span style="font-size:0.75rem; color:#a7f3d0; font-weight:700;">✅ Venda #{idx+1} (R$ 1.497)</span>
+                            <h5 style="color:#ffffff; font-weight:700; margin:4px 0;">{n_nome}</h5>
+                            <span style="font-size:0.75rem; color:#ffffff;">📅 {d_data}</span><br>
+                            <span style="font-size:0.72rem; color:#94a3b8;">{e_email}</span>
+                        </div>
+                        """, unsafe_allow_html=True)
 
-            try:
-                st.dataframe(df_display.style.map(highlight_status, subset=['Status Atendimento']), use_container_width=True, hide_index=True)
-            except AttributeError:
-                st.dataframe(df_display.style.applymap(highlight_status, subset=['Status Atendimento']), use_container_width=True, hide_index=True)
+                st.markdown("<br>", unsafe_allow_html=True)
+                st.markdown("---")
 
-            st.markdown("""
-            <div style="background-color:#2d1215; border-left:6px solid #ef4444; padding:16px; border-radius:10px; color:#ffffff; margin-top:15px;">
-                <h5 style="color:#ffffff; font-weight:700; margin:0;">🚨 Ação Prioritária para o Time de Vendas & Diagnóstico Técnico</h5>
-                <p style="font-size:0.9rem; color:#ffffff; margin-top:8px; line-height:1.5;">
-                    • <b>Leads em Vermelho (Q3):</b> Abandonaram o checkout e NÃO receberam a mensagem automática.<br>
-                    &nbsp;&nbsp;&nbsp;- <b>2 Erros de Entrada do Cliente (Fator Humano):</b> <code>NUMERO_INVALIDO</code> (ex: DDD duplicado no formulário) e <code>QUANTIDADE_DIGITOS_INVALIDA</code> (ex: <i>Mikael Paz</i> - cadastrou sem o DDD).<br>
-                    &nbsp;&nbsp;&nbsp;- <b>Leads Válidos para Ligação Comercial Imediata:</b> <i>André, Lorenzo, Joao Arthur, Douglas</i> possuem telefones válidos e aguardam ligação do time!<br>
-                    • <b>Leads em Amarelo (Q2 - 30 Pessoas):</b> Receberam o WhatsApp, leram o aviso e estão com o carrinho aberto. Enviar áudio humanizado ou cupom de encerramento para converter os R$ 44.910,00 parados na mesa.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
+                st.markdown("#### 📋 Fila Auditada de Checkout Hotmart (14 Leads)")
+
+                df_r_clean['Status Recuperação'] = df_r_clean.apply(
+                    lambda x: "🟢 Comprou pós WPP (4 Vendas)" if (x['STATUS PÓS AUTOMAÇÃO'] == 'Mensagem Enviada' and x['Comprou?'] == 'Sim')
+                    else ("🟡 WPP Enviado - Não Comprou (7 Leads)" if (x['STATUS PÓS AUTOMAÇÃO'] == 'Mensagem Enviada' and x['Comprou?'] == 'Não')
+                    else ("🔵 Comprou Direto Checkout (2 Vendas)" if (x['STATUS PÓS AUTOMAÇÃO'] != 'Mensagem Enviada' and x['Comprou?'] == 'Sim')
+                    else "⚪ Sem Envio - Não Comprou (1 Lead)")), axis=1
+                )
+
+                cols_r_disp = ['DATA', 'NOME', 'EMAIL', 'TELEFONE', 'STATUS PÓS AUTOMAÇÃO', 'Comprou?', 'Status Recuperação']
+                df_r_display = df_r_clean[cols_r_disp].sort_values(by='Status Recuperação')
+
+                def highlight_recup(val):
+                    if '🟢' in str(val):
+                        return 'background-color: #064e3b; color: #4ade80; font-weight: bold;'
+                    elif '🟡' in str(val):
+                        return 'background-color: #451a03; color: #fbbf24; font-weight: bold;'
+                    elif '🔵' in str(val):
+                        return 'background-color: #0f172a; color: #60a5fa;'
+                    else:
+                        return 'background-color: #2d1215; color: #f87171;'
+
+                try:
+                    st.dataframe(df_r_display.style.map(highlight_recup, subset=['Status Recuperação']), use_container_width=True, hide_index=True)
+                except AttributeError:
+                    st.dataframe(df_r_display.style.applymap(highlight_recup, subset=['Status Recuperação']), use_container_width=True, hide_index=True)
+
+                st.markdown("""
+                <div style="background-color:#064e3b; border-left:6px solid #10b981; padding:16px; border-radius:10px; color:#ffffff; margin-top:15px;">
+                    <h5 style="color:#ffffff; font-weight:700; margin:0;">💡 ROI Auditado da Automação no Checkout Hotmart</h5>
+                    <p style="font-size:0.9rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                        Das <b>11 mensagens disparadas no WhatsApp</b> para abandonos de checkout da Hotmart, <b>4 clientes compraram logo em seguida</b> (<i>Macley, Flávio, Rubens, Carlos</i>), provando um <b>ROI de R$ 5.988,00 em faturamento resgatado</b> com uma taxa de conversão direta de <b>36,4%</b>!
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
 
             st.markdown("<br><br>", unsafe_allow_html=True)
 
