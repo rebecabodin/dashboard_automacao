@@ -244,10 +244,14 @@ if not df_captacao.empty:
     if 'menu_selecionado' not in st.session_state:
         st.session_state['menu_selecionado'] = '📊 Visão Principal de Cadastros'
 
-    def update_menu(key):
-        val = st.session_state.get(key)
+    def update_menu(active_key):
+        val = st.session_state.get(active_key)
         if val is not None:
             st.session_state['menu_selecionado'] = val
+            all_radio_keys = ['r_cat1', 'r_cat2', 'r_cat3', 'r_cat4', 'r_cat1_cli', 'r_cat2_cli', 'r_cat3_cli', 'r_cat4_cli']
+            for k in all_radio_keys:
+                if k != active_key and k in st.session_state:
+                    st.session_state[k] = None
 
     if is_admin:
         current_page = st.session_state['menu_selecionado']
