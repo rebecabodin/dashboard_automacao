@@ -298,6 +298,12 @@ if not df_captacao.empty:
         st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#34d399; font-size:0.8rem; margin-top:14px; margin-bottom:6px;'>💰 3. VENDAS & CONVERSÃO</div>", unsafe_allow_html=True)
         st.sidebar.radio("Vendas", opts_cat3, index=idx3, key='r_cat3_cli', on_change=update_menu, args=('r_cat3_cli',), label_visibility="collapsed")
 
+        # Categoria 4: Inteligência & Gestão BI (Cliente)
+        opts_cat4 = ['📑 Relatório Executivo BI']
+        idx4 = opts_cat4.index(current_page) if current_page in opts_cat4 else None
+        st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#fbbf24; font-size:0.8rem; margin-top:14px; margin-bottom:6px;'>⚙️ 4. INTELIGÊNCIA & GESTÃO BI</div>", unsafe_allow_html=True)
+        st.sidebar.radio("Gestão", opts_cat4, index=idx4, key='r_cat4_cli', on_change=update_menu, args=('r_cat4_cli',), label_visibility="collapsed")
+
         menu_selecionado = st.session_state['menu_selecionado']
     
     # Define o título dinamicamente com base na aba selecionada
