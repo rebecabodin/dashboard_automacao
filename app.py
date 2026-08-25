@@ -1018,26 +1018,13 @@ if not df_captacao.empty:
                 </div>
             </div>
             <p style="color: #c7d2fe; margin-top: 10px; margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
-                Cruzamento profundo de dados auditados em tempo real: <b>Captação ({total_capturados:,} Leads)</b>, <b>Carrinho Aberto ({carrinho_leads_qtd} Intenções)</b>, <b>Vendas Aprovadas no Lançamento ({vendas_lanc_qtd} Vendas / Base Oferta: R$ {faturamento_oferta_lanc:,.2f})</b> e <b>Base Total ({vendas_base_qtd} Vendas / Total Gross: R$ {faturamento_base_total:,.2f})</b>.
+                Cruzamento profundo de dados auditados em tempo real: <b>Captação ({total_capturados:,} Leads)</b>, <b>Carrinho Aberto ({carrinho_leads_qtd} Intenções)</b> e <b>Vendas Aprovadas no Lançamento ({vendas_lanc_qtd} Vendas / Base Oferta: R$ {faturamento_oferta_lanc:,.2f})</b>.
             </p>
         </div>
         """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
 
-        col_f1, col_f2 = st.columns([2, 1])
-        with col_f1:
-            filtro_rel_periodo = st.radio(
-                "Filtrar gráficos por período:",
-                ["📦 Base Completa / Todos os Períodos", "🚀 Lançamento Oficial (Pós 16/08)"],
-                horizontal=True,
-                key="r_rel_exec_periodo"
-            )
-
-        if "Lançamento" in filtro_rel_periodo:
-            df_rel_active = df_ca_lancamento if not df_ca_lancamento.empty else df_ca
-            lbl_periodo_text = "Lançamento Oficial (Pós 16/08)"
-        else:
-            df_rel_active = df_ca
-            lbl_periodo_text = "Base Completa / Todos os Períodos"
+        df_rel_active = df_ca_lancamento if not df_ca_lancamento.empty else df_ca
+        lbl_periodo_text = "Lançamento Oficial (Pós 16/08)"
 
         st.markdown("<div style='margin-bottom:15px;'></div>", unsafe_allow_html=True)
 
