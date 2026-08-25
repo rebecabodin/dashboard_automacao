@@ -1509,39 +1509,83 @@ if not df_captacao.empty:
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
-
-        # =========================================================
-        # TAB 3: PLANO ESTRATÉGICO & GUIA META API (LC8)
-        # =========================================================
         # =========================================================
         # TAB 3: PLANO ESTRATÉGICO & GUIA META API (LC8)
         # =========================================================
         with tab_estrategia:
-            st.markdown("## 🎯 Storytelling BI: Diagnóstico Executivo LC7 & Plano Estratégico LC8")
-            st.markdown("Uma análise orientada por dados conectando os investimentos do LC7, a causa raiz dos gargalos na Meta API e o plano de ação de conversão para o LC8.")
-
-            st.markdown("<br>", unsafe_allow_html=True)
+            # --- HEADER BANNER EXECUTIVO ---
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-left: 6px solid #3b82f6; padding: 22px 24px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <span style="background-color:#3b82f6; color:#ffffff; font-size:0.75rem; padding:4px 10px; border-radius:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Painel Executivo LC8</span>
+                        <h2 style="color: #ffffff; font-weight: 800; margin: 8px 0 0 0; font-size: 1.5rem; letter-spacing: -0.5px;">🎯 Storytelling BI: Diagnóstico LC7 & Plano Estratégico LC8</h2>
+                    </div>
+                </div>
+                <p style="color: #94a3b8; margin-top: 10px; margin-bottom: 0; font-size: 0.93rem; line-height: 1.5;">
+                    Uma jornada orientada por dados unindo o investimento real do LC7, a causa raiz dos gargalos na Meta API e o plano de ação tático de conversão para o LC8.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
 
             # ---------------------------------------------------------
-            # ETAPA 1: DIAGNÓSTICO FINANCEIRO & IMPACTO REAIS (SCQA - SITUAÇÃO)
+            # ETAPA 1: DIAGNÓSTICO FINANCEIRO (HERO METRIC CARDS)
             # ---------------------------------------------------------
-            st.subheader("📊 1. Diagnóstico Executivo de Custos: De Onde Veio o Impacto Financeiro?")
+            st.markdown("### 📊 1. Diagnóstico Executivo de Custos: De Onde Veio o Impacto Financeiro?")
             st.markdown("A auditoria financeira revelou que **US$ 155,18** foram consumidos no envio de WhatsApp da maratona. Veja a distribuição exata do investimento:")
 
-            f1, f2, f3, f4 = st.columns(4)
-            f1.metric("💵 Investimento Total", "US$ 155,18", "Periodo 10 a 16/08", delta_color="off")
-            f2.metric("💬 Msgs WhatsApp Utility", "4.283 msgs", "US$ 33,41 (US$ 0,0078/msg)", delta_color="normal")
-            f3.metric("🔥 Msgs Marketing Lite", "1.696 msgs", "US$ 121,77 (US$ 0,0718/msg)", delta_color="inverse")
-            f4.metric("📊 Taxa de Custo Extra", "9,2x mais caro", "Marketing vs Utility", delta_color="inverse")
+            c_f1, c_f2, c_f3, c_f4 = st.columns(4)
 
-            st.caption("💡 **Insight de BI:** 78,5% de todo o custo de envio do evento veio dos 1.696 disparos que a Meta reclassificou como Marketing Lite (9,2x mais caro que Utility). Essa reclassificação esgotou os créditos em carteira e causou travamentos na entrega dos lembretes.")
+            with c_f1:
+                st.markdown("""
+                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                    <span style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:600;">💵 Investimento Total</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">US$ 155,18</h3>
+                    <span style="font-size:0.78rem; color:#60a5fa;">Período 10 a 16/08</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with c_f2:
+                st.markdown("""
+                <div style="background-color:#0f172a; border-top:4px solid #10b981; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                    <span style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:600;">💬 Msgs WhatsApp Utility</span>
+                    <h3 style="color:#4ade80; font-weight:800; margin:6px 0; font-size:1.5rem;">4.283 msgs</h3>
+                    <span style="font-size:0.78rem; color:#34d399;">US$ 33,41 (US$ 0,0078/msg)</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with c_f3:
+                st.markdown("""
+                <div style="background-color:#0f172a; border-top:4px solid #f59e0b; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                    <span style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:600;">🔥 Msgs Marketing Lite</span>
+                    <h3 style="color:#fbbf24; font-weight:800; margin:6px 0; font-size:1.5rem;">1.696 msgs</h3>
+                    <span style="font-size:0.78rem; color:#fbbf24;">US$ 121,77 (US$ 0,0718/msg)</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with c_f4:
+                st.markdown("""
+                <div style="background-color:#0f172a; border-top:4px solid #ef4444; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                    <span style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:600;">📊 Taxa de Custo Extra</span>
+                    <h3 style="color:#f87171; font-weight:800; margin:6px 0; font-size:1.5rem;">9,2x mais caro</h3>
+                    <span style="font-size:0.78rem; color:#f87171;">Marketing vs Utility</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("""
+            <div style="background-color:#1e293b; border-left:4px solid #3b82f6; padding:14px 18px; border-radius:8px; color:#ffffff; font-size:0.9rem;">
+                💡 <b>Insight de BI Executivo:</b> 78,5% de todo o custo de envio do evento veio dos 1.696 disparos que a Meta reclassificou como Marketing Lite (9,2x mais caro que Utility). Essa reclassificação esgotou os créditos em carteira e causou travamentos na entrega dos lembretes das aulas.
+            </div>
+            """, unsafe_allow_html=True)
+
             st.markdown("<br>", unsafe_allow_html=True)
             st.markdown("---")
 
             # ---------------------------------------------------------
-            # ETAPA 2: ENGENHARIA DA META API & CAUSA RAIZ (COMPLICAÇÃO & DIAGNÓSTICO)
+            # ETAPA 2: ENGENHARIA DA META API & CAUSA RAIZ
             # ---------------------------------------------------------
-            st.subheader("🤖 2. Causa Raiz & Engenharia Meta API: Como Evitar a Reclassificação")
+            st.markdown("### 🤖 2. Causa Raiz & Engenharia Meta API: Como Evitar a Reclassificação")
             st.markdown("Para impedir estouros de orçamento no LC8, analisamos como o modelo de IA da Meta lê o conteúdo das mensagens:")
 
             with st.expander("📘 Entenda a Engenharia da Meta API: Utility vs. Marketing (Clique para Expandir)", expanded=True):
@@ -1574,56 +1618,76 @@ if not df_captacao.empty:
                     </div>
                     """, unsafe_allow_html=True)
 
-                st.markdown("---")
+                st.markdown("<br>", unsafe_allow_html=True)
                 st.markdown("#### 🛠️ O Script da Copy 'Blindada' (Como manter o aviso 100% em Utility):")
 
                 col_copy_ruim, col_copy_boa = st.columns(2)
 
                 with col_copy_ruim:
-                    st.error("""
-                    ❌ **COPY RECLASSIFICADA PARA MARKETING (Não usar):**
-                    
-                    "Olá, {{1}}! 🚨 A aula {{2}} da Jornada já está LIBERADA! 🔥 Não perca essa oportunidade incrível de dominar o mercado. Clica no botão abaixo para assistir agora! 👇"
-                    
-                    *Por que virou Marketing:* Adjetivos promocionais ('LIBERADA', 'incrível'), emojis de urgência (🚨, 🔥) e tom publicitário.
-                    """)
+                    st.markdown("""
+                    <div style="background-color:#2d1215; border-left:6px solid #ef4444; padding:18px; border-radius:10px; min-height:210px; color:#ffffff;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">❌ Copy Reclassificada para Marketing</h5>
+                            <span style="background-color:#ef4444; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">NÃO USAR</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:#ffffff; margin-top:12px; line-height:1.5; font-style:italic;">
+                            "Olá, {{1}}! 🚨 A aula {{2}} da Jornada já está LIBERADA! 🔥 Não perca essa oportunidade incrível de dominar o mercado. Clica no botão abaixo para assistir agora! 👇"
+                        </p>
+                        <div style="margin-top:10px; padding-top:8px; border-top:1px dashed rgba(255,255,255,0.2); font-size:0.8rem; color:#f87171;">
+                            <b>Por que virou Marketing:</b> Adjetivos promocionais ('LIBERADA', 'incrível'), emojis de urgência (🚨, 🔥) e tom publicitário.
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
                 with col_copy_boa:
-                    st.success("""
-                    ✅ **COPY BLINDADA PARA UTILITY (Aprovada e Mantida):**
-                    
-                    "Atualização da sua inscrição: A transmissão agendada do módulo {{1}} está disponível para acesso. Link oficial de transmissão: {{2}}. Suporte técnico: [URL]."
-                    
-                    *Por que se mantém em Utility:* Texto 100% transacional, focado estritamente na confirmação de entrega do serviço no qual o lead se cadastrou.
-                    """)
+                    st.markdown("""
+                    <div style="background-color:#064e3b; border-left:6px solid #10b981; padding:18px; border-radius:10px; min-height:210px; color:#ffffff;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">✅ Copy Blindada para Utility</h5>
+                            <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">APROVADA & MANTIDA</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:#ffffff; margin-top:12px; line-height:1.5; font-style:italic;">
+                            "Atualização da sua inscrição: A transmissão agendada do módulo {{1}} está disponível para acesso. Link oficial de transmissão: {{2}}. Suporte técnico: [URL]."
+                        </p>
+                        <div style="margin-top:10px; padding-top:8px; border-top:1px dashed rgba(255,255,255,0.2); font-size:0.8rem; color:#4ade80;">
+                            <b>Por que se mantém em Utility:</b> Texto 100% transacional, focado estritamente na confirmação de entrega do serviço cadastrado.
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             st.markdown("<br>", unsafe_allow_html=True)
             st.markdown("---")
 
             # ---------------------------------------------------------
-            # ETAPA 3: GESTÃO DE ATIVOS & AQUECIMENTO DE NÚMERO
+            # ETAPA 3: GESTÃO DE ATIVOS & AQUECIMENTO
             # ---------------------------------------------------------
-            st.subheader("⚠️ 3. Gestão de Ativos: O Perigo do 'Efeito Sanfona' entre Lançamentos")
+            st.markdown("### ⚠️ 3. Gestão de Ativos: O Perigo do 'Efeito Sanfona' entre Lançamentos")
             st.markdown("Compreenda como a inatividade de longo prazo entre lançamentos afeta a nota de reputação do número do WhatsApp:")
 
             w_col1, w_col2, w_col3 = st.columns(3)
 
             with w_col1:
                 st.markdown("""
-                <div style="background-color:#2d1215; border-left:5px solid #ef4444; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
-                    <h5 style="color:#ffffff; font-weight:700; margin:0;">📉 1. O Risco da Inatividade</h5>
-                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                <div style="background-color:#2d1215; border-left:6px solid #ef4444; padding:18px; border-radius:10px; min-height:230px; color:#ffffff;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0;">📉 1. O Risco da Inatividade</h5>
+                        <span style="background-color:#ef4444; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">PASSO 1</span>
+                    </div>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:12px; line-height:1.5;">
                         Se o seu WhatsApp dispara 5.000 mensagens no lançamento e depois fica <b style="color:#f87171;">30 dias parado sem enviar nada</b>, a Meta 'esquece' seu número.<br><br>
-                        <b style="color:#fbbf24;">O Castigo:</b> A Meta reduz seu limite diário (ex: de 10.000 msgs/dia para apenas 1.000/dia), travando o envio da CPL 01 do próximo lançamento!
+                        <b style="color:#fbbf24;">O Castigo:</b> A Meta reduz seu limite diário (ex: de 10.000 msgs/dia para apenas 1.000/dia), travando o envio da CPL 01 do próximo evento!
                     </p>
                 </div>
                 """, unsafe_allow_html=True)
 
             with w_col2:
                 st.markdown("""
-                <div style="background-color:#451a03; border-left:5px solid #f59e0b; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
-                    <h5 style="color:#ffffff; font-weight:700; margin:0;">⚡ 2. O Alerta Antispam</h5>
-                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                <div style="background-color:#451a03; border-left:6px solid #f59e0b; padding:18px; border-radius:10px; min-height:230px; color:#ffffff;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0;">⚡ 2. O Alerta Antispam</h5>
+                        <span style="background-color:#f59e0b; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">PASSO 2</span>
+                    </div>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:12px; line-height:1.5;">
                         Quando um número parado dispara milhares de mensagens de repente em 1 hora, a robô da Meta acha que o número foi <b style="color:#fbbf24;">hackeado ou é SPAM</b>.<br><br>
                         Se poucas pessoas denunciarem no 1º dia, a entrega cai e a Meta deixa o número em 'ritmo lento' (Throttling).
                     </p>
@@ -1632,9 +1696,12 @@ if not df_captacao.empty:
 
             with w_col3:
                 st.markdown("""
-                <div style="background-color:#064e3b; border-left:5px solid #10b981; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
-                    <h5 style="color:#ffffff; font-weight:700; margin:0;">🛡️ 3. A Solução Fácil p/ o LC8</h5>
-                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                <div style="background-color:#064e3b; border-left:6px solid #10b981; padding:18px; border-radius:10px; min-height:230px; color:#ffffff;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0;">🛡️ 3. A Solução Fácil p/ o LC8</h5>
+                        <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">PASSO 3</span>
+                    </div>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:12px; line-height:1.5;">
                         <b style="color:#4ade80;">• Manter o número 'acordado':</b> Mande 50 a 100 mensagens por semana (suporte, dicas rápidas ou onboarding) para o número não 'dormir'.<br><br>
                         <b style="color:#4ade80;">• Aquecer 7 dias antes:</b> Antes da CPL 01, comece disparando para 500 pessoas, depois 2.000, até chegar na base inteira.
                     </p>
@@ -1645,33 +1712,54 @@ if not df_captacao.empty:
             st.markdown("---")
 
             # ---------------------------------------------------------
-            # ETAPA 4: PLANO ESTRATÉGICO LC8 & MATRIZ DE DECISÃO (SOLUÇÃO FINAL)
+            # ETAPA 4: PLANO ESTRATÉGICO LC8 & MATRIZ DE DECISÃO
             # ---------------------------------------------------------
-            st.subheader("💡 4. Plano Estratégico LC8: Os 3 Pilares da Virada & Matriz de Decisão")
+            st.markdown("### 💡 4. Plano Estratégico LC8: Os 3 Pilares da Virada & Matriz de Decisão")
             st.markdown("A partir da comprovação empírica dos dados do LC7, estabelecemos 3 pilares práticos e a matriz de decisão tática:")
 
             p1, p2, p3 = st.columns(3)
 
             with p1:
-                st.success(
-                    "#### 🟢 1. Link Direto sem Pedágio\n\n"
-                    "**Ação:** A primeira mensagem de cada CPL deve conter o link da aula diretamente no botão ('Assistir Aula 1 Agora').\n\n"
-                    "**Impacto Esperado:** Subir o CTR de 5% para 25%+ (baseado na prova da CPL 01 Msg #5 com 88% de cliques)."
-                )
+                st.markdown("""
+                <div style="background-color:#064e3b; border-left:6px solid #10b981; padding:18px; border-radius:10px; min-height:210px; color:#ffffff;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0;">🟢 1. Link Direto sem Pedágio</h5>
+                        <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">PILAR 1</span>
+                    </div>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:12px; line-height:1.5;">
+                        <b>Ação:</b> A primeira mensagem de cada CPL deve conter o link da aula diretamente no botão ('Assistir Aula 1 Agora').<br><br>
+                        <b style="color:#4ade80;">Impacto Esperado:</b> Subir o CTR de 5% para 25%+ (baseado na prova da CPL 01 Msg #5 com 88% de cliques).
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
 
             with p2:
-                st.warning(
-                    "#### 🟡 2. Retenção Total no WhatsApp\n\n"
-                    "**Ação:** Não direcionar o lead para comentar no Instagram durante a maratona de aulas.\n\n"
-                    "**Impacto Esperado:** Eliminar a fuga de 99,5% e manter 100% da audiência engajada no canal oficial de vendas (WhatsApp)."
-                )
+                st.markdown("""
+                <div style="background-color:#451a03; border-left:6px solid #f59e0b; padding:18px; border-radius:10px; min-height:210px; color:#ffffff;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0;">🟡 2. Retenção Total WPP</h5>
+                        <span style="background-color:#f59e0b; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">PILAR 2</span>
+                    </div>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:12px; line-height:1.5;">
+                        <b>Ação:</b> Não direcionar o lead para comentar no Instagram durante a maratona de aulas.<br><br>
+                        <b style="color:#fbbf24;">Impacto Esperado:</b> Eliminar a fuga de 99,5% e manter 100% da audiência engajada no canal oficial de vendas (WhatsApp).
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
 
             with p3:
-                st.info(
-                    "#### 🔵 3. Templates Pagos nas Aulas\n\n"
-                    "**Ação:** Usar Templates Aprovados da Meta nos disparos das 08h00 do dia da aula.\n\n"
-                    "**Impacto Esperado:** Destravar os 74% a 80% de leads barrados pela regra da Janela de 24h."
-                )
+                st.markdown("""
+                <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:18px; border-radius:10px; min-height:210px; color:#ffffff;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0;">🔵 3. Templates Pagos Aulas</h5>
+                        <span style="background-color:#3b82f6; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">PILAR 3</span>
+                    </div>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:12px; line-height:1.5;">
+                        <b>Ação:</b> Usar Templates Aprovados da Meta nos disparos das 08h00 do dia da aula.<br><br>
+                        <b style="color:#60a5fa;">Impacto Esperado:</b> Destravar os 74% a 80% de leads barrados pela regra da Janela de 24h.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
 
             st.markdown("<br>", unsafe_allow_html=True)
 
