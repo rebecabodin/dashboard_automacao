@@ -939,20 +939,36 @@ if not df_captacao.empty:
                     st.success("Alinhamento feito! Vamos acompanhar se a distribuição melhora na próxima semana.")
             
     elif menu_selecionado in ['⚙️ Gestão BI | 📑 Relatório Executivo BI', '📑 Relatório Executivo BI', 'Relatório Executivo BI', 'Relatorio Executivo']:
-        # --- CARREGAMENTO VIA FUNÇÃO CACHEADA (mesma infra das outras abas) ---
+        # --- CARREGAMENTO EM TEMPO REAL DIRETO DA PLANILHA SHEETS ---
         df_ca_raw = carregar_compra_aprovada()
+        if (df_ca_raw is None or df_ca_raw.empty) and 'df_compra_aprovada_raw' in locals() and df_compra_aprovada_raw is not None and not df_compra_aprovada_raw.empty:
+            df_ca_raw = df_compra_aprovada_raw
 
-        if not df_ca_raw.empty:
+        if df_ca_raw is not None and not df_ca_raw.empty:
             df_ca = df_ca_raw.copy()
+            df_ca.columns = df_ca.columns.str.strip()
+            if 'DATA_DT' not in df_ca.columns and 'DATA' in df_ca.columns:
+                df_ca['DATA_DT'] = pd.to_datetime(df_ca['DATA'], format='%d/%m/%Y %H:%M', errors='coerce')
+            if 'GROSS_PRICE_NUM' not in df_ca.columns:
+                def _clean_c(val):
+                    if pd.isna(val): return 0.0
+                    return float(str(val).replace('R$', '').replace(' ', '').replace('.', '').replace(',', '.').strip() or 0.0)
+                if 'GROSS PRICE' in df_ca.columns:
+                    df_ca['GROSS_PRICE_NUM'] = df_ca['GROSS PRICE'].apply(_clean_c)
+                else:
+                    df_ca['GROSS_PRICE_NUM'] = 0.0
+            if 'SCK' not in df_ca.columns:
+                df_ca['SCK'] = 'Orgânico / Direto'
+
             df_ca_lancamento = df_ca[df_ca['DATA_DT'] >= pd.Timestamp(2026, 8, 16)].copy()
 
-            vendas_lanc_qtd    = len(df_ca_lancamento)
+            vendas_lanc_qtd        = len(df_ca_lancamento)
             faturamento_lanc_total = df_ca_lancamento['GROSS_PRICE_NUM'].sum()
-            ticket_medio_lanc  = faturamento_lanc_total / vendas_lanc_qtd if vendas_lanc_qtd > 0 else 0.0
+            ticket_medio_lanc      = faturamento_lanc_total / vendas_lanc_qtd if vendas_lanc_qtd > 0 else 0.0
 
-            vendas_base_qtd      = len(df_ca)
+            vendas_base_qtd        = len(df_ca)
             faturamento_base_total = df_ca['GROSS_PRICE_NUM'].sum()
-            ticket_medio_base    = faturamento_base_total / vendas_base_qtd if vendas_base_qtd > 0 else 0.0
+            ticket_medio_base      = faturamento_base_total / vendas_base_qtd if vendas_base_qtd > 0 else 0.0
 
             gabriela_lanc = len(df_ca_lancamento[
                 df_ca_lancamento['SCK'].astype(str).str.contains('GABRIELA', case=False, na=False)
