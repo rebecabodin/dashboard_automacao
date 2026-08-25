@@ -1119,19 +1119,69 @@ if not df_captacao.empty:
         # =========================================================
         # TAB 1: FUNIL CONSOLIDADO, KPIs GLOBAIS E TABELA INTERATIVA
         # =========================================================
+        # =========================================================
+        # TAB 1: FUNIL CONSOLIDADO, KPIs GLOBAIS E TABELA INTERATIVA
+        # =========================================================
         with tab_funil_geral:
-            # --- KPIs GLOBAIS ---
+            # --- HEADER BANNER EXECUTIVO TAB 1 ---
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-left: 6px solid #3b82f6; padding: 22px 24px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <span style="background-color:#3b82f6; color:#ffffff; font-size:0.75rem; padding:4px 10px; border-radius:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Resumo Executivo Consolidado</span>
+                        <h2 style="color: #ffffff; font-weight: 800; margin: 8px 0 0 0; font-size: 1.5rem; letter-spacing: -0.5px;">📊 Performance Geral dos Disparos do LC7</h2>
+                    </div>
+                </div>
+                <p style="color: #94a3b8; margin-top: 10px; margin-bottom: 0; font-size: 0.93rem; line-height: 1.5;">
+                    Visão macro do funil de automação no WhatsApp (10/08 a 16/08/2026), consolidando taxas de entrega, engajamento e métricas chave por CPL.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # --- HERO METRIC CARDS GLOBAIS ---
             total_disp = df_cpl['Disparados'].sum()
             total_ent  = df_cpl['Entregues'].sum()
             total_cli  = df_cpl['Cliques'].sum()
             taxa_ent   = (total_ent / total_disp) * 100 if total_disp > 0 else 0
             taxa_cli   = (total_cli / total_ent)  * 100 if total_ent  > 0 else 0
 
-            k1, k2, k3, k4 = st.columns(4)
-            k1.metric("📤 Total Disparado",  f"{total_disp:,}".replace(',','.'))
-            k2.metric("✅ Total Entregue",   f"{total_ent:,}".replace(',','.'),  f"{taxa_ent:.1f}% de entrega",  delta_color="normal")
-            k3.metric("👆 Total de Cliques", f"{total_cli:,}".replace(',','.'),  f"{taxa_cli:.1f}% CTR global",  delta_color="normal")
-            k4.metric("📅 CPLs Realizadas",  "4",  "10/08 a 16/08/2026", delta_color="off")
+            c_k1, c_k2, c_k3, c_k4 = st.columns(4)
+
+            with c_k1:
+                st.markdown(f"""
+                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                    <span style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:600;">📤 Total Disparado</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{total_disp:,}</h3>
+                    <span style="font-size:0.78rem; color:#60a5fa;">Base Total Intentada</span>
+                </div>
+                """.replace(',', '.'), unsafe_allow_html=True)
+
+            with c_k2:
+                st.markdown(f"""
+                <div style="background-color:#0f172a; border-top:4px solid #10b981; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                    <span style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:600;">✅ Total Entregue</span>
+                    <h3 style="color:#4ade80; font-weight:800; margin:6px 0; font-size:1.5rem;">{total_ent:,}</h3>
+                    <span style="font-size:0.78rem; color:#34d399;">{taxa_ent:.1f}% de Entrega Real</span>
+                </div>
+                """.replace(',', '.'), unsafe_allow_html=True)
+
+            with c_k3:
+                st.markdown(f"""
+                <div style="background-color:#0f172a; border-top:4px solid #f59e0b; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                    <span style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:600;">👆 Total de Cliques</span>
+                    <h3 style="color:#fbbf24; font-weight:800; margin:6px 0; font-size:1.5rem;">{total_cli:,}</h3>
+                    <span style="font-size:0.78rem; color:#fbbf24;">{taxa_cli:.1f}% CTR Global</span>
+                </div>
+                """.replace(',', '.'), unsafe_allow_html=True)
+
+            with c_k4:
+                st.markdown("""
+                <div style="background-color:#0f172a; border-top:4px solid #8b5cf6; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
+                    <span style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:600;">📅 CPLs Realizadas</span>
+                    <h3 style="color:#c084fc; font-weight:800; margin:6px 0; font-size:1.5rem;">4 Eventos</h3>
+                    <span style="font-size:0.78rem; color:#c084fc;">10/08 a 16/08/2026</span>
+                </div>
+                """, unsafe_allow_html=True)
 
             st.markdown("<br>", unsafe_allow_html=True)
 
@@ -1140,66 +1190,83 @@ if not df_captacao.empty:
 
             with col_funil:
                 with st.container(border=True):
-                    st.markdown("#### 📊 Funil Consolidado (Todas as CPLs)")
+                    st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:10px;'>📊 Funil Consolidado (Todas as CPLs)</h5>", unsafe_allow_html=True)
                     fig_funnel = go.Figure(go.Funnel(
                         y=["Disparados", "Entregues", "Cliques"],
                         x=[total_disp, total_ent, total_cli],
                         textinfo="value+percent initial",
-                        textfont=dict(size=14),
-                        marker={"color": ["#4B8BBE", "#28a745", "#FFD43B"]}
+                        textfont=dict(size=14, color="#ffffff"),
+                        marker={"color": ["#3b82f6", "#10b981", "#fbbf24"]}
                     ))
                     fig_funnel.update_layout(
                         margin=dict(t=20, b=20, l=10, r=10),
-                        height=440,
+                        height=420,
                         paper_bgcolor="rgba(0,0,0,0)",
-                        plot_bgcolor="rgba(0,0,0,0)"
+                        plot_bgcolor="rgba(0,0,0,0)",
+                        font=dict(color="#ffffff")
                     )
                     st.plotly_chart(fig_funnel, use_container_width=True)
                     
                     st.markdown("""
-                    <div style="background:#1e293b; border-radius:6px; padding:10px 14px; margin-top:5px; border-left:4px solid #3b82f6;">
-                        <div style="font-size:0.85rem; color:#cbd5e1;">
-                            <b>💡 Resumo Global do Funil:</b> Dos <b>11.357 disparos</b> realizados, <b>10.442 foram entregues (91.9%)</b> e <b>1.467 responderam/clicaram</b> (CTR global de <b>14.0%</b>).
+                    <div style="background:#1e293b; border-radius:8px; padding:12px 16px; margin-top:5px; border-left:4px solid #3b82f6; color:#ffffff;">
+                        <div style="font-size:0.88rem; color:#ffffff; line-height:1.5;">
+                            <b>💡 Resumo Global do Funil:</b> Dos <b style="color:#60a5fa;">11.357 disparos</b> realizados, <b style="color:#4ade80;">10.442 foram entregues (91.9%)</b> e <b style="color:#fbbf24;">1.467 responderam/clicaram</b> (CTR global de <b>14.0%</b>).
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
 
             with col_cards:
-                st.markdown("#### 🗂️ Resumo Auditado por CPL")
+                st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:12px;'>🗂️ Resumo Auditado por CPL</h5>", unsafe_allow_html=True)
 
                 anotacoes = {
-                    "CPL 01": ("🟢", "#1a3a1a", "#2ca02c", "Auditado: 4.604 disp. | 4.294 ent. (93,3%) | 1.023 cliques (23.8% CTR)<br>Pico de 88% CTR quando o link foi enviado sem fricção."),
-                    "CPL 02": ("🟢", "#1a3a1a", "#2ca02c", "Auditado: 896 disp. | 822 ent. (91,7%) | 94 cliques (11.4% CTR)<br>80,4% da base barrada na Meta (reclassificação de categoria)."),
-                    "CPL 03": ("🟢", "#1a3a1a", "#2ca02c", "Auditado: 1.314 disp. | 1.197 ent. (91,1%) | 142 cliques (11.9% CTR)<br>Teste A/B/C: Imagem venceu em Abertura. Grupo VIP = 28.3% CTR."),
-                    "CPL 04": ("🟢", "#1a3a1a", "#2ca02c", "Auditado: 4.543 disp. | 4.129 ent. (90,9%) | 208 cliques (5.0% CTR)<br>Botão de consentimento causou fuga de 95%."),
+                    "CPL 01": ("🟢", "#064e3b", "#10b981", "⭐ 23.8% CTR", "Auditado: 4.604 disp. | 4.294 ent. (93,3%) | 1.023 cliques<br><b style='color:#4ade80;'>Pico de 88% CTR</b> quando o link foi enviado diretamente sem pedágio."),
+                    "CPL 02": ("🟡", "#451a03", "#f59e0b", "⚠️ 80.4% Barrados", "Auditado: 896 disp. | 822 ent. (91,7%) | 94 cliques<br><b style='color:#fbbf24;'>Gargalo de Categoria:</b> Meta reclassificou template p/ Marketing durante o envio."),
+                    "CPL 03": ("🟢", "#0f172a", "#3b82f6", "🧪 Teste A/B/C", "Auditado: 1.314 disp. | 1.197 ent. (91,1%) | 142 cliques<br>Imagem venceu em Abertura. <b style='color:#60a5fa;'>Grupo VIP = 28.3% CTR</b> (maior conversão)."),
+                    "CPL 04": ("🔴", "#2d1215", "#ef4444", "❌ Pedágio 95%", "Auditado: 4.543 disp. | 4.129 ent. (90,9%) | 208 cliques<br><b style='color:#f87171;'>Botão de consentimento:</b> causou fuga de 95% dos leitores."),
                 }
 
                 for _, row in df_cpl.iterrows():
                     cpl = row['CPL']
-                    emoji, bg, cor, nota = anotacoes[cpl]
+                    emoji, bg, cor, badge_tag, nota = anotacoes[cpl]
                     ctr_card = (row['Cliques'] / row['Entregues'] * 100) if row['Entregues'] > 0 else 0
                     tx_ent_card = (row['Entregues'] / row['Disparados'] * 100) if row['Disparados'] > 0 else 0
                     st.markdown(f"""
-                    <div style="background:{bg}; border-left:4px solid {cor}; border-radius:8px;
-                                padding:12px 16px; margin-bottom:10px;">
+                    <div style="background:{bg}; border-left:6px solid {cor}; border-radius:10px; padding:14px 16px; margin-bottom:12px; color:#ffffff;">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-weight:700; font-size:1rem;">{emoji} {cpl}
-                                <span style="font-size:0.78rem; color:#aaa; font-weight:400; margin-left:8px;">{row['Data_Disparo']}</span>
+                            <span style="font-weight:700; font-size:1rem; color:#ffffff;">{emoji} {cpl}
+                                <span style="font-size:0.78rem; color:#94a3b8; font-weight:400; margin-left:8px;">📅 {row['Data_Disparo']}</span>
                             </span>
-                            <span style="font-size:0.9rem; color:{cor}; font-weight:700;">{ctr_card:.1f}% CTR</span>
+                            <span style="background-color:{cor}; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">{badge_tag}</span>
                         </div>
-                        <div style="display:flex; gap:16px; margin:6px 0 4px 0; font-size:0.82rem; color:#ccc;">
-                            <span>📤 {row['Disparados']:,} disp.</span>
-                            <span>✅ {row['Entregues']:,} ent. ({tx_ent_card:.0f}%)</span>
-                            <span>👆 {row['Cliques']:,} cliques</span>
+                        <div style="display:flex; gap:16px; margin:8px 0 6px 0; font-size:0.85rem; color:#ffffff;">
+                            <span>📤 <b>{row['Disparados']:,}</b> disp.</span>
+                            <span>✅ <b>{row['Entregues']:,}</b> ent. ({tx_ent_card:.0f}%)</span>
+                            <span>👆 <b>{row['Cliques']:,}</b> cliques</span>
                         </div>
-                        <div style="font-size:0.8rem; color:#bbb; border-top:1px solid #333;
-                                    padding-top:6px; margin-top:4px;">{nota}</div>
+                        <div style="font-size:0.82rem; color:#ffffff; border-top:1px dashed rgba(255,255,255,0.2); padding-top:6px; margin-top:4px; line-height:1.4;">
+                            {nota}
+                        </div>
                     </div>
                     """.replace(',', '.'), unsafe_allow_html=True)
 
+        # =========================================================
+        # TAB 2: RAIO-X AUDITADO NÓ A NÓ (CPLs 01 a 04)
+        # =========================================================
         with tab_raiox_nos:
-            st.markdown("### 📋 Status da Auditoria por CPL (Clique no card para abrir o Raio-X)")
+            # --- HEADER BANNER EXECUTIVO TAB 2 ---
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-left: 6px solid #10b981; padding: 22px 24px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:4px 10px; border-radius:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Auditoria Nó a Nó</span>
+                        <h2 style="color: #ffffff; font-weight: 800; margin: 8px 0 0 0; font-size: 1.5rem; letter-spacing: -0.5px;">🎬 Raio-X Detalhado das CPLs (01 a 04)</h2>
+                    </div>
+                </div>
+                <p style="color: #94a3b8; margin-top: 10px; margin-bottom: 0; font-size: 0.93rem; line-height: 1.5;">
+                    Explore a jornada do lead em cada capítulo da maratona. Selecione um dos 4 cards abaixo para visualizar disparos, testes e comportamentos.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
 
             if 'cpl_aba2_selected' not in st.session_state:
                 st.session_state['cpl_aba2_selected'] = "1️⃣ CPL 01"
@@ -1211,9 +1278,9 @@ if not df_captacao.empty:
                 border_c1 = "#10b981" if is_sel1 else "#334155"
                 bg_c1 = "#064e3b" if is_sel1 else "#1e293b"
                 st.markdown(f"""
-                <div style="border: 2px solid {border_c1}; background-color: {bg_c1}; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 8px;">
-                    <div style="font-size: 0.88rem; color: #4ade80; font-weight: bold;">🟢 CPL 01: 100% Auditado</div>
-                    <div style="font-size: 0.9rem; color: #ffffff; font-weight: bold; margin-top: 4px;">1️⃣ A Jornada Completa</div>
+                <div style="border: 2px solid {border_c1}; background-color: {bg_c1}; padding: 14px; border-radius: 10px; text-align: center; margin-bottom: 8px; color: #ffffff;">
+                    <div style="font-size: 0.85rem; color: #4ade80; font-weight: bold;">🟢 CPL 01: 100% Auditado</div>
+                    <div style="font-size: 0.95rem; color: #ffffff; font-weight: bold; margin-top: 4px;">1️⃣ A Jornada Completa</div>
                     <div style="font-size: 0.8rem; color: #fbbf24; margin-top: 2px;">📅 10/08 a 12/08</div>
                     <div style="font-size: 0.78rem; color: #cbd5e1; margin-top: 4px;">(3 Disparos | 9 Nós)</div>
                 </div>
@@ -1227,9 +1294,9 @@ if not df_captacao.empty:
                 border_c2 = "#10b981" if is_sel2 else "#334155"
                 bg_c2 = "#064e3b" if is_sel2 else "#1e293b"
                 st.markdown(f"""
-                <div style="border: 2px solid {border_c2}; background-color: {bg_c2}; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 8px;">
-                    <div style="font-size: 0.88rem; color: #4ade80; font-weight: bold;">🟢 CPL 02: 100% Auditado</div>
-                    <div style="font-size: 0.9rem; color: #ffffff; font-weight: bold; margin-top: 4px;">2️⃣ Gargalo de Categoria</div>
+                <div style="border: 2px solid {border_c2}; background-color: {bg_c2}; padding: 14px; border-radius: 10px; text-align: center; margin-bottom: 8px; color: #ffffff;">
+                    <div style="font-size: 0.85rem; color: #4ade80; font-weight: bold;">🟢 CPL 02: 100% Auditado</div>
+                    <div style="font-size: 0.95rem; color: #ffffff; font-weight: bold; margin-top: 4px;">2️⃣ Gargalo de Categoria</div>
                     <div style="font-size: 0.8rem; color: #fbbf24; margin-top: 2px;">📅 12/08</div>
                     <div style="font-size: 0.78rem; color: #cbd5e1; margin-top: 4px;">(1 Disparo | 5 Nós)</div>
                 </div>
@@ -1243,9 +1310,9 @@ if not df_captacao.empty:
                 border_c3 = "#10b981" if is_sel3 else "#334155"
                 bg_c3 = "#064e3b" if is_sel3 else "#1e293b"
                 st.markdown(f"""
-                <div style="border: 2px solid {border_c3}; background-color: {bg_c3}; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 8px;">
-                    <div style="font-size: 0.88rem; color: #4ade80; font-weight: bold;">🟢 CPL 03: 100% Auditado</div>
-                    <div style="font-size: 0.9rem; color: #ffffff; font-weight: bold; margin-top: 4px;">3️⃣ Teste A/B/C & Grupo VIP</div>
+                <div style="border: 2px solid {border_c3}; background-color: {bg_c3}; padding: 14px; border-radius: 10px; text-align: center; margin-bottom: 8px; color: #ffffff;">
+                    <div style="font-size: 0.85rem; color: #4ade80; font-weight: bold;">🟢 CPL 03: 100% Auditado</div>
+                    <div style="font-size: 0.95rem; color: #ffffff; font-weight: bold; margin-top: 4px;">3️⃣ Teste A/B/C & Grupo VIP</div>
                     <div style="font-size: 0.8rem; color: #fbbf24; margin-top: 2px;">📅 13/08 a 14/08</div>
                     <div style="font-size: 0.78rem; color: #cbd5e1; margin-top: 4px;">(2 Disparos | Teste A/B/C)</div>
                 </div>
@@ -1259,9 +1326,9 @@ if not df_captacao.empty:
                 border_c4 = "#10b981" if is_sel4 else "#334155"
                 bg_c4 = "#064e3b" if is_sel4 else "#1e293b"
                 st.markdown(f"""
-                <div style="border: 2px solid {border_c4}; background-color: {bg_c4}; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 8px;">
-                    <div style="font-size: 0.88rem; color: #4ade80; font-weight: bold;">🟢 CPL 04: 100% Auditado</div>
-                    <div style="font-size: 0.9rem; color: #ffffff; font-weight: bold; margin-top: 4px;">4️⃣ Botão de Consentimento</div>
+                <div style="border: 2px solid {border_c4}; background-color: {bg_c4}; padding: 14px; border-radius: 10px; text-align: center; margin-bottom: 8px; color: #ffffff;">
+                    <div style="font-size: 0.85rem; color: #4ade80; font-weight: bold;">🟢 CPL 04: 100% Auditado</div>
+                    <div style="font-size: 0.95rem; color: #ffffff; font-weight: bold; margin-top: 4px;">4️⃣ Botão de Consentimento</div>
                     <div style="font-size: 0.8rem; color: #fbbf24; margin-top: 2px;">📅 16/08</div>
                     <div style="font-size: 0.78rem; color: #cbd5e1; margin-top: 4px;">(5 Nós Mapeados)</div>
                 </div>
@@ -1272,14 +1339,14 @@ if not df_captacao.empty:
 
             cpl_auditoria_selecionada = st.session_state['cpl_aba2_selected']
 
-            st.markdown("---")
             st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("---")
 
             # ==========================================
             # CPL 01
             # ==========================================
             if "1️⃣ CPL 01" in cpl_auditoria_selecionada:
-                st.subheader("1️⃣ CPL 01 — A Jornada Completa (10/08 a 12/08)")
+                st.markdown("### 1️⃣ CPL 01 — A Jornada Completa (10/08 a 12/08)")
                 st.markdown("A CPL 01 utilizou uma estratégia de **3 disparos encadeados** para alcançar, engajar e recuperar os leads.")
 
                 c1, c2, c3, c4 = st.columns(4)
@@ -1291,7 +1358,7 @@ if not df_captacao.empty:
                 st.markdown("<br>", unsafe_allow_html=True)
 
                 with st.container(border=True):
-                    st.markdown("#### 🎬 Capítulo 1: O Disparo Principal (10/08 - 20h28)")
+                    st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:12px;'>🎬 Capítulo 1: O Disparo Principal (10/08 - 20h28)</h5>", unsafe_allow_html=True)
                     col_path_nao, col_path_sim = st.columns(2)
 
                     with col_path_nao:
@@ -1331,15 +1398,19 @@ if not df_captacao.empty:
                         """, unsafe_allow_html=True)
 
                 with st.container(border=True):
-                    st.markdown("#### 🎬 Capítulo 2: O Lembrete Direto para o Instagram (10/08)")
-                    st.markdown(
-                        "Um segundo disparo paralelo foi feito diretamente para **164 leads** com o link direto da postagem do Instagram.\n\n"
-                        "• **164 Entregues (100%)** | **144 Abertos (87.8%)** | **36 Cliques no Link (22.0% CTR)**\n\n"
-                        "**Conclusão:** O post do Instagram acumulou **129 comentários**, provando que o engajamento orgânico do próprio Instagram teve um papel relevante em conjunto com o tráfego do WhatsApp."
-                    )
+                    st.markdown("""
+                    <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:18px; border-radius:10px; color:#ffffff;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1rem;">🎬 Capítulo 2: O Lembrete Direto para o Instagram (10/08)</h5>
+                        <p style="font-size:0.92rem; color:#ffffff; margin-top:10px; line-height:1.5;">
+                            Um segundo disparo paralelo foi feito diretamente para <b style="color:#60a5fa;">164 leads</b> com o link direto da postagem do Instagram.<br><br>
+                            • <b>164 Entregues (100%)</b> | <b>144 Abertos (87.8%)</b> | <b style="color:#4ade80;">36 Cliques no Link (22.0% CTR)</b><br><br>
+                            <b style="color:#fbbf24;">Conclusão:</b> O post do Instagram acumulou <b>129 comentários</b>, provando que o engajamento orgânico do próprio Instagram teve um papel relevante em conjunto com o tráfego do WhatsApp.
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
 
                 with st.container(border=True):
-                    st.markdown("#### 🎬 Capítulo 3: Reprise + Aviso Ao Vivo Aula 2 (11/08 a 12/08)")
+                    st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:10px;'>🎬 Capítulo 3: Reprise + Aviso Ao Vivo Aula 2 (11/08 a 12/08)</h5>", unsafe_allow_html=True)
                     st.markdown("No dia seguinte (11/08 às 18h30), um fluxo retido em **Atraso Inteligente** preparou a base para a Aula 2:")
 
                     r1, r2, r3 = st.columns(3)
@@ -1347,17 +1418,22 @@ if not df_captacao.empty:
                     r2.metric("2️⃣ Pernoite (Atraso)", "893 Aprovados", "Aguardaram até 12/08 08h")
                     r3.metric("3️⃣ Ao Vivo Aula 2 (08h00)", "229 Entregues", "59 Cliques (25.8% CTR)")
 
-                    st.warning(
-                        "⚠️ **Gargalo Técnico Detectado:** Das 893 pessoas aprovadas no Atraso Inteligente para receber o aviso da Aula 2 às 08h00, apenas **230 receberam**.\n\n"
-                        "**Motivo:** A mensagem foi enviada usando a regra de *'Janela de 24 horas'*. Como 663 pessoas não tinham interagido nas últimas 24h, a Meta barrou a entrega.\n\n"
-                        "**Solução p/ LC8:** Utilizar um *Template Aprovado da Meta* nos avisos pontuais de aula para garantir 100% de entrega a todos os 893 leads."
-                    )
+                    st.markdown("""
+                    <div style="background-color:#451a03; border-left:6px solid #f59e0b; padding:16px; border-radius:10px; color:#ffffff; margin-top:12px;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0;">⚠️ Gargalo Técnico Detectado</h5>
+                        <p style="font-size:0.9rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                            Das 893 pessoas aprovadas no Atraso Inteligente para receber o aviso da Aula 2 às 08h00, apenas <b style="color:#fbbf24;">230 receberam</b>.<br><br>
+                            <b>Motivo:</b> A mensagem foi enviada usando a regra de <i>'Janela de 24 horas'</i>. Como 663 pessoas não tinham interagido nas últimas 24h, a Meta barrou a entrega.<br><br>
+                            <b style="color:#4ade80;">Solução p/ LC8:</b> Utilizar um <i>Template Aprovado da Meta</i> nos avisos pontuais de aula para garantir 100% de entrega a todos os 893 leads.
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             # ==========================================
             # CPL 02
             # ==========================================
             elif "2️⃣ CPL 02" in cpl_auditoria_selecionada:
-                st.subheader("2️⃣ CPL 02 — O Gargalo de Categoria na Meta (12/08)")
+                st.markdown("### 2️⃣ CPL 02 — O Gargalo de Categoria na Meta (12/08)")
                 st.markdown("A CPL 02 ilustra o maior desafio de infraestrutura do lançamento: o bloqueio/reclassificação de disparo da Meta.")
 
                 cpl2_1, cpl2_2, cpl2_3, cpl2_4 = st.columns(4)
@@ -1408,7 +1484,7 @@ if not df_captacao.empty:
             # CPL 03
             # ==========================================
             elif "3️⃣ CPL 03" in cpl_auditoria_selecionada:
-                st.subheader("3️⃣ CPL 03 — O Teste A/B/C e a Força do Grupo VIP (13/08 a 14/08)")
+                st.markdown("### 3️⃣ CPL 03 — O Teste A/B/C e a Força do Grupo VIP (13/08 a 14/08)")
                 st.markdown("A CPL 03 testou cientificamente **3 variações de copy no envio inicial** e introduziu o convite para o **Grupo de Super Interessados**.")
 
                 cpl3_1, cpl3_2, cpl3_3, cpl3_4 = st.columns(4)
@@ -1420,62 +1496,75 @@ if not df_captacao.empty:
                 st.markdown("<br>", unsafe_allow_html=True)
 
                 with st.container(border=True):
-                    st.markdown("#### 🧪 O Resultado do Teste A/B/C (Disparo 1 - 1.249 Enviados)")
+                    st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:12px;'>🧪 O Resultado do Teste A/B/C (Disparo 1 - 1.249 Enviados)</h5>", unsafe_allow_html=True)
                     
                     t_a, t_b, t_c = st.columns(3)
 
                     with t_a:
                         st.markdown("""
-                        <div style="background-color:#0f172a; border-left:5px solid #3b82f6; padding:14px; border-radius:8px;">
-                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🅰️ Texto Padrão</h5>
-                            <p style="font-size:0.9rem; color:#f8fafc; margin-top:8px; line-height:1.4;">
+                        <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:16px; border-radius:10px; color:#ffffff;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <h5 style="color:#ffffff; font-weight:700; margin:0;">🅰️ Texto Padrão</h5>
+                                <span style="background-color:#3b82f6; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">🥇 Vencedor CTR</span>
+                            </div>
+                            <p style="font-size:0.9rem; color:#ffffff; margin-top:10px; line-height:1.5;">
                                 • <b>380 Entregues</b> (87.8%)<br>
                                 • 234 Abertos (61.5% Open Rate)<br>
                                 • <b style="color:#60a5fa;">39 Cliques Únicos (10.3% CTR) 🥇</b><br>
-                                <i>Maior conversão na ação do botão!</i>
+                                <i style="color:#94a3b8;">Maior conversão na ação do botão!</i>
                             </p>
                         </div>
                         """, unsafe_allow_html=True)
 
                     with t_b:
                         st.markdown("""
-                        <div style="background-color:#062312; border-left:5px solid #10b981; padding:14px; border-radius:8px;">
-                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🅱️ Com Imagem</h5>
-                            <p style="font-size:0.9rem; color:#f8fafc; margin-top:8px; line-height:1.4;">
+                        <div style="background-color:#064e3b; border-left:6px solid #10b981; padding:16px; border-radius:10px; color:#ffffff;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <h5 style="color:#ffffff; font-weight:700; margin:0;">🅱️ Com Imagem</h5>
+                                <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">🥇 Vencedor Abertura</span>
+                            </div>
+                            <p style="font-size:0.9rem; color:#ffffff; margin-top:10px; line-height:1.5;">
                                 • <b>369 Entregues</b> (90.2%)<br>
-                                • <b style="color:#34d399;">247 Abertos (66.9% Open Rate) 🥇</b><br>
+                                • <b style="color:#4ade80;">247 Abertos (66.9% Open Rate) 🥇</b><br>
                                 • 35 Cliques Únicos (9.5% CTR)<br>
-                                <i>Maior atratividade na lista do WhatsApp!</i>
+                                <i style="color:#94a3b8;">Maior atratividade na lista do WhatsApp!</i>
                             </p>
                         </div>
                         """, unsafe_allow_html=True)
 
                     with t_c:
                         st.markdown("""
-                        <div style="background-color:#2a1b08; border-left:5px solid #f59e0b; padding:14px; border-radius:8px;">
-                            <h5 style="color:#ffffff; font-weight:700; margin:0;">Ⓒ Texto V2</h5>
-                            <p style="font-size:0.9rem; color:#f8fafc; margin-top:8px; line-height:1.4;">
+                        <div style="background-color:#451a03; border-left:6px solid #f59e0b; padding:16px; border-radius:10px; color:#ffffff;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <h5 style="color:#ffffff; font-weight:700; margin:0;">Ⓒ Texto V2</h5>
+                                <span style="background-color:#f59e0b; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">EQUILIBRADO</span>
+                            </div>
+                            <p style="font-size:0.9rem; color:#ffffff; margin-top:10px; line-height:1.5;">
                                 • <b>384 Entregues</b> (94.3%)<br>
                                 • 249 Abertos (64.8% Open Rate)<br>
                                 • 36 Cliques Únicos (9.4% CTR)<br>
-                                <i>Desempenho estável e equilibrado.</i>
+                                <i style="color:#94a3b8;">Desempenho estável e equilibrado.</i>
                             </p>
                         </div>
                         """, unsafe_allow_html=True)
 
                 with st.container(border=True):
-                    st.markdown("#### 🎬 Disparo 2: O Perto-e-Manhã (Reprise & Grupo de Super Interessados)")
-                    st.markdown(
-                        "• **Reprise (13/08 20h37):** 64 Entregues ➔ 56 Abertos (86.2%) ➔ **15 Cliques no Link da Reprise (23.4% CTR)**.<br>"
-                        "• **Pernoite no Atraso:** 948 contatos retidos da noite até 14/08 às 08h00.<br>"
-                        "• **Convite Grupo VIP (14/08 08h00):** 60 Entregues ➔ 52 Abertos (86.7%) ➔ **17 pessoas entraram no Grupo de Super Interessados (28.3% CTR)** ⭐"
-                    )
+                    st.markdown("""
+                    <div style="background-color:#0f172a; border-left:6px solid #10b981; padding:18px; border-radius:10px; color:#ffffff;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1rem;">🎬 Disparo 2: O Perto-e-Manhã (Reprise & Grupo VIP)</h5>
+                        <p style="font-size:0.92rem; color:#ffffff; margin-top:10px; line-height:1.5;">
+                            • <b>Reprise (13/08 20h37):</b> 64 Entregues ➔ 56 Abertos (86.2%) ➔ <b style="color:#4ade80;">15 Cliques no Link da Reprise (23.4% CTR)</b>.<br>
+                            • <b>Pernoite no Atraso:</b> 948 contatos retidos da noite até 14/08 às 08h00.<br>
+                            • <b>Convite Grupo VIP (14/08 08h00):</b> 60 Entregues ➔ 52 Abertos (86.7%) ➔ <b style="color:#fbbf24;">17 pessoas entraram no Grupo VIP (28.3% CTR)</b> ⭐
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             # ==========================================
             # CPL 04
             # ==========================================
             elif "4️⃣ CPL 04" in cpl_auditoria_selecionada:
-                st.subheader("4️⃣ CPL 04 — O Impacto do 'Botão de Consentimento' (16/08)")
+                st.markdown("### 4️⃣ CPL 04 — O Impacto do 'Botão de Consentimento' (16/08)")
                 st.markdown("A CPL 04 analisa o impacto do duplo opt-in exigido antes da liberação do link da aula.")
                 
                 col_cpl4_funil, col_cpl4_text = st.columns([1, 1])
@@ -1487,7 +1576,7 @@ if not df_captacao.empty:
                             y=["1. Disparados", "2. Entregues (90.9%)", "3. Abertos (56.9%)", "4. Cliques (5.0%)"],
                             x=[4543, 4129, 2348, 208],
                             textinfo="value+percent initial",
-                            marker={"color": ["#4B8BBE", "#28a745", "#ff7f0e", "#dc3545"]}
+                            marker={"color": ["#3b82f6", "#10b981", "#f59e0b", "#ef4444"]}
                         ))
                         fig_cpl4.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=260, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="#ffffff"))
                         st.plotly_chart(fig_cpl4, use_container_width=True)
