@@ -1296,29 +1296,37 @@ if not df_captacao.empty:
 
                     with col_path_nao:
                         st.markdown("""
-                        <div style="background-color:#0f291e; border-left:5px solid #10b981; padding:16px; border-radius:8px;">
-                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🟣 Caminho 'NÃO' (Ainda não assistiram)</h5>
-                            <p style="font-size:0.92rem; color:#f8fafc; margin-top:10px; line-height:1.5;">
-                                <b style="color:#4ade80;">540 leads</b> informaram que não tinham visto a aula.<br>
-                                • <b>Msg #5 (Link Direto):</b> 533 abriram e <b style="color:#4ade80;">477 clicaram (88% CTR)</b> para receber o link!<br>
-                                • <b>Msg #6 (Entrega da Aula):</b> 461 abriram e <b style="color:#4ade80;">376 clicaram p/ ASSISTIR (79% CTR)</b>.<br>
-                                • <b>SDR Virtual (Check-in 2h):</b> 370 receberam o lembrete e <b>145 confirmaram que assistiram (39% CTR)</b>.<br><br>
-                                <b style="color:#4ade80; font-size:0.95rem;">⭐ Insight de Ouro:</b> Quando o link foi entregue de forma direta (sem pedágio de consentimento), <b>88% da base clicou na hora</b>.
-                            </p>
+                        <div style="background-color:#064e3b; border-left:6px solid #10b981; padding:18px; border-radius:10px; min-height:300px; display:flex; flex-direction:column; justify-content:space-between;">
+                            <div>
+                                <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1rem;">🟣 Bifurcação A: Resgate & Entrega Direta (Caminho 'NÃO')</h5>
+                                <p style="font-size:0.92rem; color:#f8fafc; margin-top:10px; line-height:1.5;">
+                                    <b style="color:#4ade80;">540 leads</b> informaram que não tinham visto a aula.<br>
+                                    • <b>Msg #5 (Link Direto):</b> 533 abriram e <b style="color:#4ade80;">477 clicaram (88% CTR)</b> para receber o link!<br>
+                                    • <b>Msg #6 (Entrega da Aula):</b> 461 abriram e <b style="color:#4ade80;">376 clicaram p/ ASSISTIR (79% CTR)</b>.<br>
+                                    • <b>SDR Virtual (Check-in 2h):</b> 370 receberam o lembrete e <b>145 confirmaram que assistiram (39% CTR)</b>.
+                                </p>
+                            </div>
+                            <div style="margin-top:auto; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.2);">
+                                <b style="color:#4ade80; font-size:0.92rem;">⭐ Insight de Ouro:</b> Quando o link foi entregue de forma direta (sem pedágio), <b>88% da base clicou na hora</b>.
+                            </div>
                         </div>
                         """, unsafe_allow_html=True)
 
                     with col_path_sim:
                         st.markdown("""
-                        <div style="background-color:#342109; border-left:5px solid #f59e0b; padding:16px; border-radius:8px;">
-                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🟡 Caminho 'SIM' (Já assistiram)</h5>
-                            <p style="font-size:0.92rem; color:#f8fafc; margin-top:10px; line-height:1.5;">
-                                <b style="color:#fbbf24;">414 leads</b> disseram que já tinham assistido à Aula 1.<br>
-                                • <b>Msg #3 (Convite p/ Comentário):</b> 219 toparam ir ao Instagram (53%).<br>
-                                • <b>Msg #4 (Link do Post IG):</b> 170 clicaram no link e saíram do WhatsApp (78%).<br>
-                                • <b>Comentaram no IG (DM Automática):</b> <b>Apenas 21 pessoas comentaram de fato (12%)</b>.<br><br>
-                                <b style="color:#f87171; font-size:0.95rem;">🚨 Fuga de Canal:</b> Tirar o lead do WhatsApp para comentar no Instagram gerou uma <b>fuga de 99.5% da base total</b>. Apenas 21 de 4.604 pessoas completaram a ação.
-                            </p>
+                        <div style="background-color:#451a03; border-left:6px solid #f59e0b; padding:18px; border-radius:10px; min-height:300px; display:flex; flex-direction:column; justify-content:space-between;">
+                            <div>
+                                <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1rem;">🟡 Bifurcação B: Engajamento & Fuga de Canal (Caminho 'SIM')</h5>
+                                <p style="font-size:0.92rem; color:#f8fafc; margin-top:10px; line-height:1.5;">
+                                    <b style="color:#fbbf24;">414 leads</b> disseram que já tinham assistido à Aula 1.<br>
+                                    • <b>Msg #3 (Convite p/ Comentário):</b> 219 toparam ir ao Instagram (53%).<br>
+                                    • <b>Msg #4 (Link do Post IG):</b> 170 clicaram no link e saíram do WhatsApp (78%).<br>
+                                    • <b>Comentaram no IG (DM Automática):</b> <b>Apenas 21 pessoas comentaram de fato (12%)</b>.
+                                </p>
+                            </div>
+                            <div style="margin-top:auto; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.2);">
+                                <b style="color:#f87171; font-size:0.92rem;">🚨 Fuga de Canal:</b> Tirar o lead do WhatsApp para o Instagram gerou <b>fuga de 99.5% da base total</b>. Apenas 21 completaram a ação.
+                            </div>
                         </div>
                         """, unsafe_allow_html=True)
 
