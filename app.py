@@ -1093,12 +1093,7 @@ if not df_captacao.empty:
                     <td style="padding:10px; color:#34d399;"><b>{taxa_entrega:.1f}%</b></td>
                     <td style="padding:10px;">Ótima taxa de entrega inicial da API Oficial.</td>
                 </tr>
-                <tr style="border-bottom:1px solid #334155;">
-                    <td style="padding:10px;"><b>Leads sem Disparo / Não Entregues (WPP)</b></td>
-                    <td style="padding:10px;">{erros:,} leads</td>
-                    <td style="padding:10px; color:#f87171;">{(erros/total_capturados*100) if total_capturados>0 else 16.3:.1f}%</td>
-                    <td style="padding:10px; color:#fca5a5;">Diferença exata entre 5.605 cadastrados na LP e 4.690 confirmados no WhatsApp.</td>
-                </tr>
+
                 <tr style="border-bottom:1px solid #334155;">
                     <td style="padding:10px;"><b>Participantes da Pesquisa</b></td>
                     <td style="padding:10px;">4.096 respostas</td>
