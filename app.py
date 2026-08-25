@@ -2157,7 +2157,7 @@ if not df_captacao.empty:
             val_roi_perc = f"{roi_multiplicador*100:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.')
 
             st.markdown(f"""
-            <div style="background-color:#0f172a; border-left:6px solid #10b981; padding:22px 24px; border-radius:12px; margin-bottom:24px; box-shadow:0 4px 20px rgba(0,0,0,0.35); color:#ffffff;">
+            <div style="background-color:#0f172a; border-left:6px solid #10b981; padding:20px 24px; border-radius:12px; margin-bottom:16px; box-shadow:0 4px 20px rgba(0,0,0,0.35); color:#ffffff;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
                     <div>
                         <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:4px 12px; border-radius:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Inteligência Financeira de Canais</span>
@@ -2168,28 +2168,39 @@ if not df_captacao.empty:
                         <div style="font-size:1.45rem; font-weight:800; color:#34d399; margin-top:2px;">{roi_multiplicador:.1f}x Retorno <span style="font-size:0.85rem; color:#a7f3d0;">(ROI {val_roi_perc}%)</span></div>
                     </div>
                 </div>
-                
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:16px; margin-top:20px;">
-                    <div style="background-color:#1e293b; border-top:4px solid #3b82f6; padding:16px; border-radius:10px; color:#ffffff;">
-                        <span style="font-size:0.78rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">💳 Custo Total de Disparos API</span>
-                        <div style="font-size:1.4rem; font-weight:800; color:#ffffff; margin:6px 0;">US$ {custo_wpp_usd:.2f} <span style="font-size:0.85rem; color:#94a3b8; font-weight:600;">(~R$ {val_brl_str})</span></div>
-                        <span style="font-size:0.75rem; color:#94a3b8;">4.161 Utility Msgs (US$ 32,46) + 232 Marketing (US$ 16,66)</span>
-                    </div>
-                    
-                    <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px; border-radius:10px; color:#ffffff;">
-                        <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">📈 Faturamento Resgatado WPP</span>
-                        <div style="font-size:1.4rem; font-weight:800; color:#ffffff; margin:6px 0;">R$ {val_resg_str}</div>
-                        <span style="font-size:0.75rem; color:#a7f3d0;">14 Vendas Aprovadas Pós-Disparo (R$ 1.497 cada)</span>
-                    </div>
-                    
-                    <div style="background-color:#065f46; border-top:4px solid #34d399; padding:16px; border-radius:10px; color:#ffffff;">
-                        <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">💰 Lucro Líquido Resgatado</span>
-                        <div style="font-size:1.4rem; font-weight:800; color:#ffffff; margin:6px 0;">R$ {val_lucro_str}</div>
-                        <span style="font-size:0.75rem; color:#34d399;">Faturamento Resgatado - Custo dos Disparos</span>
-                    </div>
-                </div>
             </div>
             """, unsafe_allow_html=True)
+
+            dre_col1, dre_col2, dre_col3 = st.columns(3)
+
+            with dre_col1:
+                st.markdown(f"""
+                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:18px; border-radius:10px; text-align:center; color:#ffffff; min-height:140px;">
+                    <span style="font-size:0.78rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">💳 Custo Total Disparos API</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0; font-size:1.4rem;">US$ {custo_wpp_usd:.2f} <span style="font-size:0.85rem; color:#94a3b8;">(~R$ {val_brl_str})</span></h3>
+                    <span style="font-size:0.75rem; color:#60a5fa;">4.161 Utility + 232 Marketing Msgs</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with dre_col2:
+                st.markdown(f"""
+                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:18px; border-radius:10px; text-align:center; color:#ffffff; min-height:140px;">
+                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">📈 Faturamento Resgatado WPP</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0; font-size:1.4rem;">R$ {val_resg_str}</h3>
+                    <span style="font-size:0.75rem; color:#4ade80;">14 Vendas Aprovadas pós WPP</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with dre_col3:
+                st.markdown(f"""
+                <div style="background-color:#065f46; border-top:4px solid #34d399; padding:18px; border-radius:10px; text-align:center; color:#ffffff; min-height:140px;">
+                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">💰 Lucro Líquido do Canal</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0; font-size:1.4rem;">R$ {val_lucro_str}</h3>
+                    <span style="font-size:0.75rem; color:#34d399;">Faturamento - Custo de Disparos</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            st.markdown("<br>", unsafe_allow_html=True)
 
             # =========================================================
             # PASSO 2: VISUAL STORYTELLING & FUNIL INTERATIVO
