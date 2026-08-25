@@ -1123,18 +1123,6 @@ if not df_captacao.empty:
         # TAB 1: FUNIL CONSOLIDADO, KPIs GLOBAIS E TABELA INTERATIVA
         # =========================================================
         with tab_funil_geral:
-            # --- PAINEL FINANCEIRO DE INVESTIMENTOS META (10 - 16 AGOSTO) ---
-            st.markdown("### 💰 Custos Reais de Envio Meta / WhatsApp (10 a 16/08)")
-            f1, f2, f3, f4 = st.columns(4)
-            f1.metric("💵 Investimento Total", "US$ 155,18", "Periodo 10 a 16/08", delta_color="off")
-            f2.metric("💬 Msgs WhatsApp Utility", "4.283 msgs", "US$ 33,41 (US$ 0,0078/msg)", delta_color="normal")
-            f3.metric("🔥 Msgs Marketing Lite", "1.696 msgs", "US$ 121,77 (US$ 0,0718/msg)", delta_color="inverse")
-            f4.metric("📊 Taxa de Custo Extra", "9,2x mais caro", "Marketing vs Utility", delta_color="inverse")
-
-            st.caption("💡 **Auditoria Financeira:** 78,5% de todo o custo de envio do lançamento veio dos 1.696 disparos de Marketing Lite, provando que a reclassificação de categoria pela Meta foi a causa do esgotamento de saldo e do travamento de envios.")
-            
-            st.markdown("<br>", unsafe_allow_html=True)
-
             # --- KPIs GLOBAIS ---
             total_disp = df_cpl['Disparados'].sum()
             total_ent  = df_cpl['Entregues'].sum()
@@ -1428,8 +1416,22 @@ if not df_captacao.empty:
                         • <b>Fuga de 95%:</b> 2.140 pessoas leram a mensagem e fecharam o WhatsApp sem interagir.<br><br>
                         <b>Conclusão:</b> O público técnico quer o conteúdo direto. Intermediários matam a conversão.
                     </p>
-                </div>
                 """, unsafe_allow_html=True)
+
+            st.markdown("---")
+
+            # --- PAINEL FINANCEIRO DE INVESTIMENTOS META (10 - 16 AGOSTO) ---
+            st.subheader("💰 Balanço Financeiro Auditado: Custos Reais Meta / WhatsApp (10 a 16/08)")
+            st.markdown("Após entender o comportamento do lead e as mecânicas de envio de cada CPL, veja o impacto financeiro real gerado pela infraestrutura da Meta:")
+
+            f1, f2, f3, f4 = st.columns(4)
+            f1.metric("💵 Investimento Total", "US$ 155,18", "Periodo 10 a 16/08", delta_color="off")
+            f2.metric("💬 Msgs WhatsApp Utility", "4.283 msgs", "US$ 33,41 (US$ 0,0078/msg)", delta_color="normal")
+            f3.metric("🔥 Msgs Marketing Lite", "1.696 msgs", "US$ 121,77 (US$ 0,0718/msg)", delta_color="inverse")
+            f4.metric("📊 Taxa de Custo Extra", "9,2x mais caro", "Marketing vs Utility", delta_color="inverse")
+
+            st.caption("💡 **Auditoria Financeira:** 78,5% de todo o custo de envio do lançamento veio dos 1.696 disparos de Marketing Lite, provando que a reclassificação de categoria pela Meta foi a causa do esgotamento de saldo e do travamento de envios.")
+            st.markdown("<br>", unsafe_allow_html=True)
 
         # =========================================================
         # TAB 3: PLANO ESTRATÉGICO & GUIA META API (LC8)
