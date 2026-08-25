@@ -241,48 +241,30 @@ if not df_captacao.empty:
         st.rerun()
     st.sidebar.markdown("<div style='margin-bottom:10px;'></div>", unsafe_allow_html=True)
     
-    if 'menu_selecionado' not in st.session_state:
-        st.session_state['menu_selecionado'] = '📊 Visão Principal de Cadastros'
-
-    def update_menu(key):
-        st.session_state['menu_selecionado'] = st.session_state[key]
-
     if is_admin:
-        # Categoria 1: Captação
-        opts_cat1 = ['📊 Visão Principal de Cadastros', '🕸️ Funil WhatsApp & ManyChat', '🧠 Pesquisa & Raio-X da Audiência']
-        idx1 = opts_cat1.index(st.session_state['menu_selecionado']) if st.session_state['menu_selecionado'] in opts_cat1 else None
-        st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#38bdf8; font-size:0.8rem; margin-top:8px; margin-bottom:6px;'>📥 1. CAPTAÇÃO & LEADS</div>", unsafe_allow_html=True)
-        st.sidebar.radio("Captação", opts_cat1, index=idx1, key='r_cat1', on_change=update_menu, args=('r_cat1',), label_visibility="collapsed")
-
-        # Categoria 2: CPLs
-        opts_cat2 = ['🎯 Raio-X Didático das CPLs (1 a 4)', '✉️ Campanhas & Disparos de E-mail']
-        idx2 = opts_cat2.index(st.session_state['menu_selecionado']) if st.session_state['menu_selecionado'] in opts_cat2 else None
-        st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#818cf8; font-size:0.8rem; margin-top:14px; margin-bottom:6px;'>🎓 2. AULAS & CPLs</div>", unsafe_allow_html=True)
-        st.sidebar.radio("CPLs", opts_cat2, index=idx2, key='r_cat2', on_change=update_menu, args=('r_cat2',), label_visibility="collapsed")
-
-        # Categoria 3: Vendas
-        opts_cat3 = ['🛒 Carrinho Aberto & Recuperação', '💵 Vendas Aprovadas & Faturamento']
-        idx3 = opts_cat3.index(st.session_state['menu_selecionado']) if st.session_state['menu_selecionado'] in opts_cat3 else None
-        st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#34d399; font-size:0.8rem; margin-top:14px; margin-bottom:6px;'>💰 3. VENDAS & CONVERSÃO</div>", unsafe_allow_html=True)
-        st.sidebar.radio("Vendas", opts_cat3, index=idx3, key='r_cat3', on_change=update_menu, args=('r_cat3',), label_visibility="collapsed")
-
-        # Categoria 4: Inteligência & Gestão BI
-        opts_cat4 = ['🚨 Monitoramento Avançado & Erros', '📋 Plano de Ação BI & Decisões', '📑 Relatório Executivo BI']
-        idx4 = opts_cat4.index(st.session_state['menu_selecionado']) if st.session_state['menu_selecionado'] in opts_cat4 else None
-        st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#fbbf24; font-size:0.8rem; margin-top:14px; margin-bottom:6px;'>⚙️ 4. INTELIGÊNCIA & GESTÃO BI</div>", unsafe_allow_html=True)
-        st.sidebar.radio("Gestão", opts_cat4, index=idx4, key='r_cat4', on_change=update_menu, args=('r_cat4',), label_visibility="collapsed")
-
-        menu_selecionado = st.session_state['menu_selecionado']
+        opcoes_menu = [
+            '📥 Captação | 📊 Visão Principal de Cadastros', 
+            '📥 Captação | 🕸️ Funil WhatsApp & ManyChat', 
+            '📥 Captação | 🧠 Pesquisa & Raio-X da Audiência', 
+            '🎓 Aulas CPL | 🎯 Raio-X Didático das CPLs (1 a 4)',
+            '🎓 Aulas CPL | ✉️ Campanhas & Disparos de E-mail',
+            '💰 Vendas | 🛒 Carrinho Aberto & Recuperação',
+            '💰 Vendas | 💵 Vendas Aprovadas & Faturamento',
+            '⚙️ Gestão BI | 🚨 Monitoramento Avançado & Erros', 
+            '⚙️ Gestão BI | 📋 Plano de Ação BI & Decisões',
+            '⚙️ Gestão BI | 📑 Relatório Executivo BI'
+        ]
     else:
         opcoes_menu = [
-            '📊 Visão Principal de Cadastros', 
-            '🎯 Raio-X Didático das CPLs (1 a 4)', 
-            '🕸️ Funil WhatsApp & ManyChat'
+            '📥 Captação | 📊 Visão Principal de Cadastros', 
+            '🎓 Aulas CPL | 🎯 Raio-X Didático das CPLs (1 a 4)', 
+            '📥 Captação | 🕸️ Funil WhatsApp & ManyChat'
         ]
-        menu_selecionado = st.sidebar.radio("Ir para:", opcoes_menu, label_visibility="collapsed")
+        
+    menu_selecionado = st.sidebar.radio("Ir para:", opcoes_menu, label_visibility="collapsed")
     
     # Define o título dinamicamente com base na aba selecionada
-    if menu_selecionado in ['🎯 Raio-X Didático das CPLs (1 a 4)', '🎯 Raio-X Didático CPLs']:
+    if menu_selecionado in ['🎓 Aulas CPL | 🎯 Raio-X Didático das CPLs (1 a 4)', '🎯 Raio-X Didático das CPLs (1 a 4)', '🎯 Raio-X Didático CPLs']:
         title_placeholder.title("🎯 Raio-X Didático e Funil das CPLs")
         subtitle_placeholder.markdown("Dashboard Executivo e Auditado Nó a Nó — Métricas reais de conversão, engajamento e custos Meta.")
     else:
@@ -334,7 +316,7 @@ if not df_captacao.empty:
     df_falhas_global = calcular_leads_perdidos_20m(df_captacao_clean, df_boasvindas_clean)
     leads_perdidos = len(df_falhas_global)
 
-    if menu_selecionado in ['📊 Visão Principal de Cadastros', '📊 Visão Principal', 'Visão Principal']:
+    if menu_selecionado in ['📥 Captação | 📊 Visão Principal de Cadastros', '📊 Visão Principal de Cadastros', '📊 Visão Principal', 'Visão Principal']:
         col1, col2, col3, col4, col5, col6 = st.columns(6)
         col1.metric("Leads Capturados", f"{total_capturados}", help="Volume bruto de cadastros registrados na base principal (Landing Page).")
         col2.metric("Duplicados", f"{total_duplicados}", delta_color="inverse", help="Cadastros suspeitos de repetição (mesmo e-mail ou telefone).")
@@ -669,7 +651,7 @@ if not df_captacao.empty:
 
 
 
-    elif menu_selecionado in ['🚨 Monitoramento Avançado & Erros', '🚨 Monitoramento Avançado', 'Monitoramento Avançado']:
+    elif menu_selecionado in ['⚙️ Gestão BI | 🚨 Monitoramento Avançado & Erros', '🚨 Monitoramento Avançado & Erros', '🚨 Monitoramento Avançado', 'Monitoramento Avançado']:
         if True:
             st.header("🚨 Monitoramento Avançado (Analista)")
             st.markdown("Bem-vinda ao painel de infraestrutura técnica. Estes dados **não são visíveis** para o cliente.")
@@ -804,7 +786,7 @@ if not df_captacao.empty:
             except Exception as e:
                 st.error(f"Erro ao cruzar dados de perda: {e}") 
 
-    elif menu_selecionado in ['📋 Plano de Ação BI & Decisões', '🧠 Plano de Ação', 'Plano de Ação']:
+    elif menu_selecionado in ['⚙️ Gestão BI | 📋 Plano de Ação BI & Decisões', '📋 Plano de Ação BI & Decisões', '🧠 Plano de Ação', 'Plano de Ação']:
         if True:
             st.header("🧠 Central de Insights e Plano de Ação")
             st.markdown("Bem-vinda ao cérebro do projeto. Aqui eu mapeio os principais gargalos e te dou o passo a passo para resolver. Marque as caixinhas conforme for concluindo!")
@@ -873,7 +855,7 @@ if not df_captacao.empty:
                 if check3:
                     st.success("Alinhamento feito! Vamos acompanhar se a distribuição melhora na próxima semana.")
             
-    elif menu_selecionado in ['📑 Relatório Executivo BI', 'Relatório Executivo BI', 'Relatorio Executivo']:
+    elif menu_selecionado in ['⚙️ Gestão BI | 📑 Relatório Executivo BI', '📑 Relatório Executivo BI', 'Relatório Executivo BI', 'Relatorio Executivo']:
         # --- BANNER EXECUTIVO: RELATÓRIO CONSOLIDADO DE INTELIGÊNCIA DE DADOS ---
         st.markdown("""
         <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-left: 6px solid #10b981; padding: 24px 26px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
@@ -1047,7 +1029,7 @@ if not df_captacao.empty:
         """, unsafe_allow_html=True)
             
             
-    elif menu_selecionado in ['🕸️ Funil WhatsApp & ManyChat', '🕸️ Funil Manychat (WPP)', 'Funil Manychat (WPP)']:
+    elif menu_selecionado in ['📥 Captação | 🕸️ Funil WhatsApp & ManyChat', '🕸️ Funil WhatsApp & ManyChat', '🕸️ Funil Manychat (WPP)', 'Funil Manychat (WPP)']:
         st.header("🕸️ Funil de Boas-Vindas Manychat (BI A/B)")
         st.write("Identifique vazamentos na automação e entenda qual versão converte mais leads.")
         st.write("---")
@@ -1141,7 +1123,7 @@ if not df_captacao.empty:
             st.markdown("### 🚨 Diagnóstico de Perfis")
             st.warning("**Insight DBA:** O seu funil apresenta uma taxa alta de ação na pós-visualização do vídeo.\n\n**🎯 Destaque para a Repescagem:** A sua estratégia de perguntar 'Conseguiu entrar no grupo?' é fantástica! O lembrete secundário foi acionado para 213 Técnicos e 60 Empreendedores que clicaram em 'Não consegui'. Desse volume, o link bruto da repescagem conseguiu salvar e converter **181 Técnicos** (85.0%) e **55 Empreendedores** (91.7%). Sem esse nó inteligente, você teria perdido 236 leads extremamente qualificados e o seu CPL (Custo por Lead) teria disparado!")
         
-    elif menu_selecionado in ['🧠 Pesquisa & Raio-X da Audiência', '📊 Pesquisa (WordCloud)', 'Pesquisa', '5️⃣ Pesquisa', '🧠 Pesquisa']:
+    elif menu_selecionado in ['📥 Captação | 🧠 Pesquisa & Raio-X da Audiência', '🧠 Pesquisa & Raio-X da Audiência', '📊 Pesquisa (WordCloud)', 'Pesquisa', '5️⃣ Pesquisa', '🧠 Pesquisa']:
         # --- BANNER EXECUTIVO: INTELIGÊNCIA DE PESQUISA & ANÁLISE DE AUDIÊNCIA ---
         st.markdown("""
         <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-left: 6px solid #6366f1; padding: 24px 26px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
@@ -1380,7 +1362,7 @@ if not df_captacao.empty:
         except Exception as e:
             st.error(f"Erro ao processar a pesquisa: {e}")
             
-    elif menu_selecionado in ['🎯 Raio-X Didático das CPLs (1 a 4)', '🎯 Raio-X Didático CPLs', 'Raio-X Didático CPLs']:
+    elif menu_selecionado in ['🎓 Aulas CPL | 🎯 Raio-X Didático das CPLs (1 a 4)', '🎯 Raio-X Didático das CPLs (1 a 4)', '🎯 Raio-X Didático CPLs', 'Raio-X Didático CPLs']:
         # --- DADOS DE CPLS AUDITADOS NÓ A NÓ VIA MANYCHAT ---
         # Custos Reais da Meta/Manychat (10 - 16 de Agosto): Total US$ 155,18
         #   - 4.283 msgs WhatsApp Utility: US$ 33,41 (~US$ 0,0078 / msg)
@@ -2300,7 +2282,7 @@ if not df_captacao.empty:
                     </div>
                     """, unsafe_allow_html=True)
 
-    elif menu_selecionado in ['💵 Vendas Aprovadas & Faturamento', '💰 Vendas', 'Vendas']:
+    elif menu_selecionado in ['💰 Vendas | 💵 Vendas Aprovadas & Faturamento', '💵 Vendas Aprovadas & Faturamento', '💰 Vendas', 'Vendas']:
         # --- BANNER EXECUTIVO: INTELIGÊNCIA DE VENDAS AUDITADAS ---
         st.markdown("""
         <div style="background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%); border-left: 6px solid #10b981; padding: 24px 26px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
@@ -2726,7 +2708,7 @@ if not df_captacao.empty:
         except Exception as e:
             st.error(f"Erro ao processar a aba Compra Aprovada: {e}")
 
-    elif menu_selecionado in ['🛒 Carrinho Aberto & Recuperação', '🛒 Carrinho', 'Carrinho']:
+    elif menu_selecionado in ['💰 Vendas | 🛒 Carrinho Aberto & Recuperação', '🛒 Carrinho Aberto & Recuperação', '🛒 Carrinho', 'Carrinho']:
         # --- BANNER EXECUTIVO: INTELIGÊNCIA UNIFICADA DE CARRINHO & RECUPERAÇÃO ---
         st.markdown("""
         <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-left: 6px solid #10b981; padding: 24px 26px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
@@ -3163,7 +3145,7 @@ if not df_captacao.empty:
         except Exception as e:
             st.error(f"Erro ao processar dados de carrinho: {e}")
 
-    elif menu_selecionado in ['✉️ Campanhas & Disparos de E-mail', '5️⃣ E-mails', '✉️ E-mails', 'E-mails']:
+    elif menu_selecionado in ['🎓 Aulas CPL | ✉️ Campanhas & Disparos de E-mail', '✉️ Campanhas & Disparos de E-mail', '5️⃣ E-mails', '✉️ E-mails', 'E-mails']:
         # --- BANNER EXECUTIVO: INTELIGÊNCIA DE E-MAILS ---
         st.markdown("""
         <div style="background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border-left: 6px solid #6366f1; padding: 24px 26px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
