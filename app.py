@@ -1149,7 +1149,7 @@ if not df_captacao.empty:
                     contagem = Counter(palavras_filtradas)
                     top_5 = contagem.most_common(5)
                     
-                    st.markdown("<h5 style='text-align:left; font-weight:700; margin-bottom:12px; color:#ffffff;'>🏆 Top 5 Temas Mais Citados nas Expectativas</h5>", unsafe_allow_html=True)
+                    st.subheader("🏆 Top 5 Temas Mais Citados nas Expectativas")
                     cols_top = st.columns(5)
                     for i, (palavra, freq) in enumerate(top_5):
                         with cols_top[i]:
@@ -1163,15 +1163,13 @@ if not df_captacao.empty:
                     
                     st.markdown("<div style='margin-top:20px;'></div>", unsafe_allow_html=True)
                     
-                    # Renderização Compacta e Centralizada da Nuvem de Palavras
-                    st.markdown("<h5 style='text-align:left; font-weight:700; margin-bottom:8px; color:#ffffff;'>☁️ Nuvem de Palavras (Foco em Frequência)</h5>", unsafe_allow_html=True)
-                    col_wc_pad1, col_wc_center, col_wc_pad2 = st.columns([1, 2.2, 1])
-                    with col_wc_center:
-                        wordcloud = WordCloud(width=600, height=220, max_words=45, background_color='#0f172a', stopwords=stop_words, colormap='Wistia').generate(textos)
-                        fig_wc, ax = plt.subplots(figsize=(6, 2.2), facecolor='#0f172a')
-                        ax.imshow(wordcloud, interpolation='bilinear')
-                        ax.axis("off")
-                        st.pyplot(fig_wc)
+                    # Renderização com Largura Total Casada com as 5 Caixas Superiores
+                    st.subheader("☁️ Nuvem de Palavras (Foco em Frequência)")
+                    wordcloud = WordCloud(width=1100, height=260, max_words=55, background_color='#0f172a', stopwords=stop_words, colormap='Wistia').generate(textos)
+                    fig_wc, ax = plt.subplots(figsize=(11, 2.6), facecolor='#0f172a')
+                    ax.imshow(wordcloud, interpolation='bilinear')
+                    ax.axis("off")
+                    st.pyplot(fig_wc, use_container_width=True)
                     
                     termos_top = [p.title() for p, c in top_5]
                     st.markdown(f"""
