@@ -3083,25 +3083,35 @@ if not df_captacao.empty:
             col_ea1, col_ea2 = st.columns([1.3, 1])
 
             with col_ea1:
-                st.markdown(f"""<div style="background-color:#1e1b4b; border-left:6px solid #6366f1; padding:24px; border-radius:12px; color:#ffffff; min-height:230px; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                st.markdown(f"""<div style="background-color:#1e1b4b; border-left:6px solid #6366f1; padding:22px 24px; border-radius:12px; color:#ffffff; min-height:270px; box-shadow:0 4px 15px rgba(0,0,0,0.25); display:flex; flex-direction:column; justify-content:center;">
 <div style="text-align:center;">
 <span style="background-color:#6366f1; color:#ffffff; font-size:0.75rem; padding:4px 12px; border-radius:10px; font-weight:bold; text-transform:uppercase;">🚀 Automação Oficial LC7_MDE_AGO26</span>
-<h3 style="color:#ffffff; font-weight:800; margin:10px 0 4px 0;">OBRIGADO_LC7_MDE_AGO26</h3>
+<h3 style="color:#ffffff; font-weight:800; margin:8px 0 4px 0;">OBRIGADO_LC7_MDE_AGO26</h3>
 <span style="font-size:0.85rem; color:#c7d2fe;">Início da Comunicação: 23/07/2026</span>
 </div>
-<hr style="border-color:rgba(255,255,255,0.15); margin:16px 0;">
-<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-<span style="font-size:0.95rem;">Tamanho Real da Lista de Envio:</span>
-<b style="color:#818cf8; font-size:1.25rem;">{str_base_real} Leads Válidos</b>
+<hr style="border-color:rgba(255,255,255,0.15); margin:12px 0;">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+<span style="font-size:0.92rem;">Tamanho Real da Lista de Envio:</span>
+<b style="color:#818cf8; font-size:1.2rem;">{str_base_real} Leads Válidos</b>
 </div>
-<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-<span style="font-size:0.95rem;">Taxa de Abertura (Open Rate 14%):</span>
-<b style="color:#4ade80; font-size:1.25rem;">{aberturas_onboarding_reais} Aberturas Únicas</b>
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+<span style="font-size:0.92rem;">Taxa de Abertura (Open Rate 14%):</span>
+<b style="color:#4ade80; font-size:1.2rem;">{aberturas_onboarding_reais} Aberturas Únicas</b>
 </div>
 <div style="display:flex; justify-content:space-between; align-items:center;">
-<span style="font-size:0.95rem;">CTOR (Cliques sobre Aberturas 22%):</span>
-<b style="color:#38bdf8; font-size:1.25rem;">{cliques_onboarding_reais} Leads no WhatsApp</b>
+<span style="font-size:0.92rem;">CTOR (Cliques sobre Aberturas 22%):</span>
+<b style="color:#38bdf8; font-size:1.2rem;">{cliques_onboarding_reais} Leads no WhatsApp</b>
 </div>
+</div>""", unsafe_allow_html=True)
+
+            with col_ea2:
+                st.markdown(f"""<div style="background-color:#0f172a; border-left:5px solid #10b981; padding:22px 24px; border-radius:12px; color:#ffffff; min-height:270px; box-shadow:0 4px 15px rgba(0,0,0,0.25); display:flex; flex-direction:column; justify-content:center;">
+<h5 style="color:#ffffff; font-weight:700; margin:0 0 14px 0; text-align:center;">💡 Análise do Fluxo de Cadastro LC7 (Base Real)</h5>
+<p style="font-size:0.9rem; color:#ffffff; margin:0; line-height:1.6;">
+• <b>Tamanho Real da Lista:</b> {str_base_real} leads limpos e deduplicados compõem a base ativa de e-emails do lançamento <b>LC7_MDE_AGO26</b>.<br><br>
+• <b>Engajamento no Onboarding:</b> {aberturas_onboarding_reais} pessoas (14%) abriram a mensagem de boas-vindas.<br><br>
+• <b>Retenção para WhatsApp:</b> {cliques_onboarding_reais} leads (22% CTOR) clicaram na chamada do e-mail para ingressar nos grupos oficiais do WhatsApp.
+</p>
 </div>""", unsafe_allow_html=True)
 
             with col_ea2:
