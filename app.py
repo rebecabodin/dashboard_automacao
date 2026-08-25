@@ -1476,32 +1476,37 @@ if not df_captacao.empty:
             # ==========================================
             elif "4️⃣ CPL 04" in cpl_auditoria_selecionada:
                 st.subheader("4️⃣ CPL 04 — O Impacto do 'Botão de Consentimento' (16/08)")
+                st.markdown("A CPL 04 analisa o impacto do duplo opt-in exigido antes da liberação do link da aula.")
                 
                 col_cpl4_funil, col_cpl4_text = st.columns([1, 1])
 
                 with col_cpl4_funil:
                     with st.container(border=True):
-                        st.markdown("#### 📉 Funil Auditado CPL 04")
+                        st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:10px;'>📉 Funil Auditado CPL 04</h5>", unsafe_allow_html=True)
                         fig_cpl4 = go.Figure(go.Funnel(
                             y=["1. Disparados", "2. Entregues (90.9%)", "3. Abertos (56.9%)", "4. Cliques (5.0%)"],
                             x=[4543, 4129, 2348, 208],
                             textinfo="value+percent initial",
                             marker={"color": ["#4B8BBE", "#28a745", "#ff7f0e", "#dc3545"]}
                         ))
-                        fig_cpl4.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=260, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
+                        fig_cpl4.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=260, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="#ffffff"))
                         st.plotly_chart(fig_cpl4, use_container_width=True)
 
                 with col_cpl4_text:
                     st.markdown("""
-                    <div style="background-color:#2d1215; border-left:5px solid #ef4444; padding:16px; border-radius:8px;">
-                        <h5 style="color:#ffffff; font-weight:700; margin:0;">🚨 O Erro do Pedágio em Números</h5>
-                        <p style="font-size:0.92rem; color:#f8fafc; margin-top:10px; line-height:1.5;">
-                            • <b>2.348 pessoas abriram</b> a mensagem (57% Open Rate — excelente!).<br>
-                            • Porém, a mensagem exigia clicar em <i>'Receber Informações'</i> antes de liberar o link.<br>
-                            • Apenas <b>208 pessoas clicaram em algum botão</b> (8.9% dos que abriram).<br>
-                            • <b style="color:#f87171;">Fuga de 95%:</b> 2.140 pessoas leram a mensagem e fecharam o WhatsApp sem interagir.<br><br>
-                            <b style="color:#fbbf24;">Conclusão:</b> O público técnico quer o conteúdo direto. Intermediários matam a conversão.
-                        </p>
+                    <div style="background-color:#2d1215; border-left:6px solid #ef4444; padding:18px; border-radius:10px; min-height:335px; display:flex; flex-direction:column; justify-content:space-between; color:#ffffff;">
+                        <div>
+                            <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1rem;">🚨 O Erro do Pedágio em Números</h5>
+                            <p style="font-size:0.92rem; color:#ffffff; margin-top:12px; line-height:1.6;">
+                                • <b style="color:#4ade80;">2.348 pessoas abriram</b> <span style="color:#ffffff;">a mensagem (57% Open Rate — excelente!).</span><br>
+                                <span style="color:#ffffff;">• Porém, a mensagem exigia clicar em <i>'Receber Informações'</i> antes de liberar o link.</span><br>
+                                • <b style="color:#60a5fa;">Apenas 208 pessoas clicaram em algum botão</b> <span style="color:#ffffff;">(8.9% dos que abriram).</span><br>
+                                • <b style="color:#f87171;">Fuga de 95%:</b> <span style="color:#ffffff;">2.140 pessoas leram a mensagem e fecharam o WhatsApp sem interagir.</span>
+                            </p>
+                        </div>
+                        <div style="margin-top:auto; padding-top:12px; border-top:1px dashed rgba(255,255,255,0.3); color:#ffffff; font-size:0.92rem; line-height:1.5;">
+                            <b style="color:#fbbf24;">💡 Conclusão:</b> <span style="color:#ffffff;">O público técnico quer o conteúdo direto. Intermediários matam a conversão.</span>
+                        </div>
                     </div>
                     """, unsafe_allow_html=True)
 
