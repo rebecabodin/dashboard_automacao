@@ -2999,76 +2999,75 @@ if not df_captacao.empty:
 
         # TAB 1: PERFORMANCE POR CAMPANHA
         with tab_em_camp:
-            col_ec1, col_ec2 = st.columns([1.3, 1])
+            col_ec1, col_ec2 = st.columns([1.35, 1])
 
             with col_ec1:
-                with st.container(border=True):
-                    def clean_email_name(s):
-                        import re
-                        s_str = str(s).replace('LC7_MDE_AGO26 -', '').replace('\xa0', ' ').strip()
-                        if '[CARRINHO]' in s_str:
-                            m = re.search(r'E-MAIL (\d+)', s_str)
-                            n = m.group(1) if m else ''
-                            return f"E-mail 0{n} (Carrinho)" if n else s_str
-                        elif '[CPL]' in s_str:
-                            s_clean = s_str.replace('[CPL] -', '').strip()
-                            if 'ESTAMOS AO VIVO' in s_clean:
-                                return "E-mail 20 (Ao Vivo)"
-                            elif 'ABERTURA AMANHÃ' in s_clean:
-                                return "E-mail 21 (Abertura)"
-                            elif 'FALTA 1 HORA' in s_clean:
-                                return "E-mail 19 (Falta 1h)"
-                            elif 'SORTEIO + SP' in s_clean:
-                                return "E-mail 14 (Aula 3 + SP)"
-                            elif 'AULA 3 + SORTEIO' in s_clean:
-                                return "E-mail 12 (Aula 3)"
-                            elif 'AVISO AULA 4' in s_clean:
-                                return "E-mail 18 (Aviso Aula 4)"
-                            elif 'BLOG DE LANÇAMENTO' in s_clean:
-                                m = re.search(r'E-MAIL (\d+)', s_clean)
-                                return f"E-mail {m.group(1)} (Blog)" if m else s_clean
-                            elif 'É HOJE AULA 4' in s_clean:
-                                return "E-mail 16 (É Hoje Aula 4)"
-                            elif 'AVISO IMPORTANTE' in s_clean:
-                                return "E-mail 15 (Aviso Imp.)"
-                            return s_clean
-                        return s_str
+                def clean_email_name(s):
+                    import re
+                    s_str = str(s).replace('LC7_MDE_AGO26 -', '').replace('\xa0', ' ').strip()
+                    if '[CARRINHO]' in s_str:
+                        m = re.search(r'E-MAIL (\d+)', s_str)
+                        n = m.group(1) if m else ''
+                        return f"E-mail 0{n} (Carrinho)" if n else s_str
+                    elif '[CPL]' in s_str:
+                        s_clean = s_str.replace('[CPL] -', '').strip()
+                        if 'ESTAMOS AO VIVO' in s_clean:
+                            return "E-mail 20 (Ao Vivo)"
+                        elif 'ABERTURA AMANHÃ' in s_clean:
+                            return "E-mail 21 (Abertura)"
+                        elif 'FALTA 1 HORA' in s_clean:
+                            return "E-mail 19 (Falta 1h)"
+                        elif 'SORTEIO + SP' in s_clean:
+                            return "E-mail 14 (Aula 3 + SP)"
+                        elif 'AULA 3 + SORTEIO' in s_clean:
+                            return "E-mail 12 (Aula 3)"
+                        elif 'AVISO AULA 4' in s_clean:
+                            return "E-mail 18 (Aviso Aula 4)"
+                        elif 'BLOG DE LANÇAMENTO' in s_clean:
+                            m = re.search(r'E-MAIL (\d+)', s_clean)
+                            return f"E-mail {m.group(1)} (Blog)" if m else s_clean
+                        elif 'É HOJE AULA 4' in s_clean:
+                            return "E-mail 16 (É Hoje Aula 4)"
+                        elif 'AVISO IMPORTANTE' in s_clean:
+                            return "E-mail 15 (Aviso Imp.)"
+                        return s_clean
+                    return s_str
 
-                    df_camp['Campanha_Clean'] = df_camp['name'].apply(clean_email_name)
-                    
-                    fig_camp_perf = go.Figure()
-                    fig_camp_perf.add_trace(go.Bar(
-                        x=df_camp['Campanha_Clean'],
-                        y=df_camp['open_rate_percent'],
-                        name='Abertura (%)',
-                        marker_color='#6366f1',
-                        text=df_camp['open_rate_percent'].astype(str) + '%',
-                        textposition='auto'
-                    ))
-                    fig_camp_perf.add_trace(go.Bar(
-                        x=df_camp['Campanha_Clean'],
-                        y=df_camp['ctor_percent'],
-                        name='CTOR Clique/Abertura (%)',
-                        marker_color='#10b981',
-                        text=df_camp['ctor_percent'].astype(str) + '%',
-                        textposition='auto'
-                    ))
-                    
-                    fig_camp_perf.update_layout(
-                        title=dict(text="Taxa de Abertura (%) e CTOR (%) por Campanha", x=0.5, xanchor='center', font=dict(size=15, color="#ffffff")),
-                        barmode='group',
-                        height=420,
-                        margin=dict(l=15, r=15, t=60, b=90),
-                        paper_bgcolor="rgba(0,0,0,0)",
-                        plot_bgcolor="rgba(0,0,0,0)",
-                        font=dict(color="#ffffff"),
-                        xaxis=dict(tickangle=-35),
-                        legend=dict(orientation="h", y=1.12, x=0.5, xanchor='center')
-                    )
-                    st.plotly_chart(fig_camp_perf, use_container_width=True)
+                df_camp['Campanha_Clean'] = df_camp['name'].apply(clean_email_name)
+                
+                fig_camp_perf = go.Figure()
+                fig_camp_perf.add_trace(go.Bar(
+                    x=df_camp['Campanha_Clean'],
+                    y=df_camp['open_rate_percent'],
+                    name='Abertura (%)',
+                    marker_color='#6366f1',
+                    text=df_camp['open_rate_percent'].astype(str) + '%',
+                    textposition='auto'
+                ))
+                fig_camp_perf.add_trace(go.Bar(
+                    x=df_camp['Campanha_Clean'],
+                    y=df_camp['ctor_percent'],
+                    name='CTOR Clique/Abertura (%)',
+                    marker_color='#10b981',
+                    text=df_camp['ctor_percent'].astype(str) + '%',
+                    textposition='auto'
+                ))
+                
+                fig_camp_perf.update_layout(
+                    title=dict(text="Taxa de Abertura (%) e CTOR (%) por Campanha", x=0.5, xanchor='center', font=dict(size=15, color="#ffffff")),
+                    barmode='group',
+                    height=440,
+                    margin=dict(l=15, r=15, t=60, b=90),
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    plot_bgcolor="rgba(0,0,0,0)",
+                    font=dict(color="#ffffff"),
+                    xaxis=dict(tickangle=-35),
+                    legend=dict(orientation="h", y=1.12, x=0.5, xanchor='center')
+                )
+                st.plotly_chart(fig_camp_perf, use_container_width=True)
 
             with col_ec2:
-                st.markdown(f"""<div style="background-color:#0f172a; border-left:5px solid #ef4444; padding:22px 20px; border-radius:12px; color:#ffffff; min-height:435px; box-shadow:0 4px 15px rgba(0,0,0,0.25); display:flex; flex-direction:column; justify-content:center;">
+                st.markdown(f"""<div style="background-color:#0f172a; border-left:5px solid #ef4444; padding:22px 20px; border-radius:12px; color:#ffffff; min-height:440px; box-shadow:0 4px 15px rgba(0,0,0,0.25); display:flex; flex-direction:column; justify-content:center;">
 <h5 style="color:#ffffff; font-weight:700; margin:0 0 16px 0; text-align:center;">🚨 Diagnóstico Crítico sobre os {str_base_real} Leads Reais</h5>
 <p style="font-size:0.9rem; color:#ffffff; margin:0; line-height:1.6;">
 • <b>Baixo Open Rate Geral (2% a 4%):</b> Da base real de {str_base_real} e-mails enviados no carrinho, apenas <b>110 a 220 pessoas abriram o e-mail</b>.<br><br>
