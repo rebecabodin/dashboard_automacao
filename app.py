@@ -207,6 +207,44 @@ def carregar_dados():
         st.error(f"Erro ao ler o Google Sheets: {e}")
         return pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
 
+
+@st.cache_data(ttl=10)
+def carregar_compra_aprovada():
+    """Carrega a aba '📈 Compra Aprovada' do Google Sheets com cache de 10 segundos.
+    Retorna DataFrame com colunas normalizadas e coluna GROSS_PRICE_NUM numérica.
+    """
+    try:
+        import urllib.parse
+        sheet_id = "1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs"
+        aba = urllib.parse.quote("📈 Compra Aprovada")
+        timestamp = int(time.time())
+        url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={aba}&_t={timestamp}"
+        df = pd.read_csv(url)
+        df.columns = df.columns.str.strip()
+
+        df['DATA_DT'] = pd.to_datetime(df['DATA'], format='%d/%m/%Y %H:%M', errors='coerce')
+        df['FORMA_PAGAMENTO'] = df['FORMA_PAGAMENTO'].fillna('Não Especificado').astype(str).str.strip()
+        df['PARCELAMENTO'] = df['PARCELAMENTO'].fillna('1').astype(str).str.replace('.0', '', regex=False).str.strip()
+        df['ESTADO'] = df['ESTADO'].fillna('Não Identificado').astype(str).str.strip().str.upper()
+        df['Status Mensagem'] = df['Status Mensagem'].fillna('Não Enviado').astype(str).str.strip()
+        df['SCK'] = df['SCK'].fillna('Orgânico / Direto').astype(str).str.strip()
+
+        def _clean_curr(val):
+            if pd.isna(val):
+                return 0.0
+            s = str(val).replace('R$', '').replace(' ', '').replace('.', '').replace(',', '.').strip()
+            try:
+                return float(s)
+            except Exception:
+                return 0.0
+
+        df['GROSS_PRICE_NUM'] = df['GROSS PRICE'].apply(_clean_curr)
+        df['VALOR_OFERTA_NUM'] = df['Valor oferta'].apply(_clean_curr)
+        return df
+    except Exception as e:
+        return pd.DataFrame()
+
+
 df_captacao, df_boasvindas, df_grupo_tec, df_grupo_emp, df_pagina32 = carregar_dados()
 
 # --- CONSOLIDAÇÃO DE DISPAROS DE BOAS-VINDAS ---
@@ -903,67 +941,52 @@ if not df_captacao.empty:
                     st.success("Alinhamento feito! Vamos acompanhar se a distribuição melhora na próxima semana.")
             
     elif menu_selecionado in ['⚙️ Gestão BI | 📑 Relatório Executivo BI', '📑 Relatório Executivo BI', 'Relatório Executivo BI', 'Relatorio Executivo']:
-        # --- CARREGAMENTO DE DADOS EM TEMPO REAL ---
-        try:
-            timestamp_exec = int(time.time())
-            url_compra_aprovada = f"https://docs.google.com/spreadsheets/d/1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs/gviz/tq?tqx=out:csv&sheet=%F0%9F%93%88%20Compra%20Aprovada&_t={timestamp_exec}"
-            url_vendas = f"https://docs.google.com/spreadsheets/d/1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs/gviz/tq?tqx=out:csv&sheet=%5Bpop-up%5D%20Vendas&_t={timestamp_exec}"
-            url_recuperacao = f"https://docs.google.com/spreadsheets/d/1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs/gviz/tq?tqx=out:csv&sheet=%F0%9F%93%88%20Recupera%C3%A7%C3%A3o%20de%20Vendas&_t={timestamp_exec}"
+        # --- CARREGAMENTO VIA FUNÇÃO CACHEADA (mesma infra das outras abas) ---
+        df_ca_raw = carregar_compra_aprovada()
 
-            df_ca_raw = pd.read_csv(url_compra_aprovada)
-            df_v_raw = pd.read_csv(url_vendas)
-            df_r_raw = pd.read_csv(url_recuperacao)
-
+        if not df_ca_raw.empty:
             df_ca = df_ca_raw.copy()
-            df_ca.columns = df_ca.columns.str.strip()
-            df_ca['DATA_DT'] = pd.to_datetime(df_ca['DATA'], format='%d/%m/%Y %H:%M', errors='coerce')
-            df_ca['FORMA_PAGAMENTO'] = df_ca['FORMA_PAGAMENTO'].fillna('Não Especificado').astype(str).str.strip()
-            df_ca['PARCELAMENTO'] = df_ca['PARCELAMENTO'].fillna('1').astype(str).str.replace('.0', '', regex=False).str.strip()
-            df_ca['ESTADO'] = df_ca['ESTADO'].fillna('Não Identificado').astype(str).str.strip().str.upper()
-            df_ca['Status Mensagem'] = df_ca['Status Mensagem'].fillna('Não Enviado').astype(str).str.strip()
-            df_ca['SCK'] = df_ca['SCK'].fillna('Orgânico / Direto').astype(str).str.strip()
-
-            def clean_curr(val):
-                if pd.isna(val):
-                    return 0.0
-                v_str = str(val).replace('R$', '').replace(' ', '').replace('.', '').replace(',', '.').strip()
-                try:
-                    return float(v_str)
-                except:
-                    return 0.0
-
-            df_ca['GROSS_PRICE_NUM'] = df_ca['GROSS PRICE'].apply(clean_curr)
-            df_ca['VALOR_OFERTA_NUM'] = df_ca['Valor oferta'].apply(clean_curr)
-
             df_ca_lancamento = df_ca[df_ca['DATA_DT'] >= pd.Timestamp(2026, 8, 16)].copy()
 
-            vendas_lanc_qtd = len(df_ca_lancamento)
+            vendas_lanc_qtd    = len(df_ca_lancamento)
             faturamento_lanc_total = df_ca_lancamento['GROSS_PRICE_NUM'].sum()
-            ticket_medio_lanc = faturamento_lanc_total / vendas_lanc_qtd if vendas_lanc_qtd > 0 else 0.0
+            ticket_medio_lanc  = faturamento_lanc_total / vendas_lanc_qtd if vendas_lanc_qtd > 0 else 0.0
 
-            vendas_base_qtd = len(df_ca)
+            vendas_base_qtd      = len(df_ca)
             faturamento_base_total = df_ca['GROSS_PRICE_NUM'].sum()
-            ticket_medio_base = faturamento_base_total / vendas_base_qtd if vendas_base_qtd > 0 else 0.0
+            ticket_medio_base    = faturamento_base_total / vendas_base_qtd if vendas_base_qtd > 0 else 0.0
 
-            gabriela_lanc = len(df_ca_lancamento[df_ca_lancamento['SCK'].astype(str).str.contains('GABRIELA', case=False, na=False)])
+            gabriela_lanc = len(df_ca_lancamento[
+                df_ca_lancamento['SCK'].astype(str).str.contains('GABRIELA', case=False, na=False)
+            ])
             perc_gabriela = (gabriela_lanc / vendas_lanc_qtd * 100) if vendas_lanc_qtd > 0 else 0.0
-
-            df_v_clean = df_v_raw.dropna(subset=['EMAIL']) if 'EMAIL' in df_v_raw.columns else df_v_raw
-            df_r_clean = df_r_raw.dropna(subset=['EMAIL']) if 'EMAIL' in df_r_raw.columns else df_r_raw
-            carrinho_leads_qtd = len(df_v_clean) + len(df_r_clean)
-
-        except Exception as e_ca:
-            vendas_lanc_qtd = 68
+        else:
+            # Fallback caso o Google Sheets esteja inacessível
+            vendas_lanc_qtd        = 68
             faturamento_lanc_total = 95632.71
-            ticket_medio_lanc = round(95632.71 / 68, 2)
-            vendas_base_qtd = 75
+            ticket_medio_lanc      = round(95632.71 / 68, 2)
+            vendas_base_qtd        = 75
             faturamento_base_total = 103850.00
-            ticket_medio_base = round(103850.00 / 75, 2)
-            gabriela_lanc = 46
-            perc_gabriela = round(46 / 68 * 100, 1)
-            carrinho_leads_qtd = 76
-            df_ca = pd.DataFrame()
+            ticket_medio_base      = round(103850.00 / 75, 2)
+            gabriela_lanc          = 46
+            perc_gabriela          = round(46 / 68 * 100, 1)
+            df_ca          = pd.DataFrame()
             df_ca_lancamento = pd.DataFrame()
+
+        # Carrinho: [pop-up] Vendas + Recuperação de Vendas
+        try:
+            import urllib.parse as _up
+            _sid   = "1Sd7-iunFKcgpuexlWMC_IC3JO1pcR2x14utRYPpKggs"
+            _ts    = int(time.time())
+            _u_v   = f"https://docs.google.com/spreadsheets/d/{_sid}/gviz/tq?tqx=out:csv&sheet={_up.quote('[pop-up] Vendas')}&_t={_ts}"
+            _u_r   = f"https://docs.google.com/spreadsheets/d/{_sid}/gviz/tq?tqx=out:csv&sheet={_up.quote('📈 Recuperação de Vendas')}&_t={_ts}"
+            _df_v  = pd.read_csv(_u_v)
+            _df_r  = pd.read_csv(_u_r)
+            _df_v  = _df_v.dropna(subset=['EMAIL']) if 'EMAIL' in _df_v.columns else _df_v
+            _df_r  = _df_r.dropna(subset=['EMAIL']) if 'EMAIL' in _df_r.columns else _df_r
+            carrinho_leads_qtd = len(_df_v) + len(_df_r)
+        except Exception:
+            carrinho_leads_qtd = 76
 
 
         st.markdown(f"""
