@@ -1296,36 +1296,36 @@ if not df_captacao.empty:
 
                     with col_path_nao:
                         st.markdown("""
-                        <div style="background-color:#064e3b; border-left:6px solid #10b981; padding:18px; border-radius:10px; min-height:300px; display:flex; flex-direction:column; justify-content:space-between;">
+                        <div style="background-color:#064e3b; border-left:6px solid #10b981; padding:18px; border-radius:10px; min-height:300px; display:flex; flex-direction:column; justify-content:space-between; color:#ffffff;">
                             <div>
                                 <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1rem;">🟣 Bifurcação A: Resgate & Entrega Direta (Caminho 'NÃO')</h5>
-                                <p style="font-size:0.92rem; color:#f8fafc; margin-top:10px; line-height:1.5;">
-                                    <b style="color:#4ade80;">540 leads</b> informaram que não tinham visto a aula.<br>
-                                    • <b>Msg #5 (Link Direto):</b> 533 abriram e <b style="color:#4ade80;">477 clicaram (88% CTR)</b> para receber o link!<br>
-                                    • <b>Msg #6 (Entrega da Aula):</b> 461 abriram e <b style="color:#4ade80;">376 clicaram p/ ASSISTIR (79% CTR)</b>.<br>
-                                    • <b>SDR Virtual (Check-in 2h):</b> 370 receberam o lembrete e <b>145 confirmaram que assistiram (39% CTR)</b>.
+                                <p style="font-size:0.92rem; color:#ffffff; margin-top:10px; line-height:1.5;">
+                                    <b style="color:#4ade80;">540 leads</b> <span style="color:#ffffff;">informaram que não tinham visto a aula.</span><br>
+                                    <span style="color:#ffffff;">• <b>Msg #5 (Link Direto):</b> 533 abriram e</span> <b style="color:#4ade80;">477 clicaram (88% CTR)</b> <span style="color:#ffffff;">para receber o link!</span><br>
+                                    <span style="color:#ffffff;">• <b>Msg #6 (Entrega da Aula):</b> 461 abriram e</span> <b style="color:#4ade80;">376 clicaram p/ ASSISTIR (79% CTR)</b>.<br>
+                                    <span style="color:#ffffff;">• <b>SDR Virtual (Check-in 2h):</b> 370 receberam o lembrete e <b>145 confirmaram que assistiram (39% CTR)</b>.</span>
                                 </p>
                             </div>
-                            <div style="margin-top:auto; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.2);">
-                                <b style="color:#4ade80; font-size:0.92rem;">⭐ Insight de Ouro:</b> Quando o link foi entregue de forma direta (sem pedágio), <b>88% da base clicou na hora</b>.
+                            <div style="margin-top:auto; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.3); color:#ffffff; font-size:0.92rem; line-height:1.5;">
+                                <b style="color:#4ade80;">⭐ Insight de Ouro:</b> <span style="color:#ffffff;">Quando o link foi entregue de forma direta (sem pedágio),</span> <b style="color:#4ade80;">88% da base clicou na hora</b>.
                             </div>
                         </div>
                         """, unsafe_allow_html=True)
 
                     with col_path_sim:
                         st.markdown("""
-                        <div style="background-color:#451a03; border-left:6px solid #f59e0b; padding:18px; border-radius:10px; min-height:300px; display:flex; flex-direction:column; justify-content:space-between;">
+                        <div style="background-color:#451a03; border-left:6px solid #f59e0b; padding:18px; border-radius:10px; min-height:300px; display:flex; flex-direction:column; justify-content:space-between; color:#ffffff;">
                             <div>
                                 <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1rem;">🟡 Bifurcação B: Engajamento & Fuga de Canal (Caminho 'SIM')</h5>
-                                <p style="font-size:0.92rem; color:#f8fafc; margin-top:10px; line-height:1.5;">
-                                    <b style="color:#fbbf24;">414 leads</b> disseram que já tinham assistido à Aula 1.<br>
-                                    • <b>Msg #3 (Convite p/ Comentário):</b> 219 toparam ir ao Instagram (53%).<br>
-                                    • <b>Msg #4 (Link do Post IG):</b> 170 clicaram no link e saíram do WhatsApp (78%).<br>
-                                    • <b>Comentaram no IG (DM Automática):</b> <b>Apenas 21 pessoas comentaram de fato (12%)</b>.
+                                <p style="font-size:0.92rem; color:#ffffff; margin-top:10px; line-height:1.5;">
+                                    <b style="color:#fbbf24;">414 leads</b> <span style="color:#ffffff;">disseram que já tinham assistido à Aula 1.</span><br>
+                                    <span style="color:#ffffff;">• <b>Msg #3 (Convite p/ Comentário):</b> 219 toparam ir ao Instagram (53%).</span><br>
+                                    <span style="color:#ffffff;">• <b>Msg #4 (Link do Post IG):</b> 170 clicaram no link e saíram do WhatsApp (78%).</span><br>
+                                    <span style="color:#ffffff;">• <b>Comentaram no IG (DM Automática):</b> <b>Apenas 21 pessoas comentaram de fato (12%)</b>.</span>
                                 </p>
                             </div>
-                            <div style="margin-top:auto; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.2);">
-                                <b style="color:#f87171; font-size:0.92rem;">🚨 Fuga de Canal:</b> Tirar o lead do WhatsApp para o Instagram gerou <b>fuga de 99.5% da base total</b>. Apenas 21 completaram a ação.
+                            <div style="margin-top:auto; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.3); color:#ffffff; font-size:0.92rem; line-height:1.5;">
+                                <b style="color:#f87171;">🚨 Fuga de Canal:</b> <span style="color:#ffffff;">Tirar o lead do WhatsApp para o Instagram gerou</span> <b style="color:#f87171;">fuga de 99.5% da base total</b>. <span style="color:#ffffff;">Apenas 21 completaram a ação.</span>
                             </div>
                         </div>
                         """, unsafe_allow_html=True)
