@@ -1514,9 +1514,16 @@ if not df_captacao.empty:
         # TAB 3: PLANO ESTRATÉGICO & GUIA META API (LC8)
         # =========================================================
         with tab_estrategia:
-            # --- PAINEL FINANCEIRO DE INVESTIMENTOS META (10 - 16 AGOSTO) ---
-            st.subheader("💰 Balanço Financeiro Auditado: Custos Reais Meta / WhatsApp (10 a 16/08)")
-            st.markdown("Após entender o comportamento do lead e as mecânicas de envio de cada CPL, veja o impacto financeiro real gerado pela infraestrutura da Meta:")
+            st.markdown("## 🎯 Plano Estratégico LC8 & Engenharia de Envio Meta API")
+            st.markdown("Uma narrativa didática unindo a auditoria financeira do LC7, o plano de ação prático em 3 pilares, a autópsia crítica de performance e o guia de blindagem técnica para o próximo lançamento.")
+
+            st.markdown("<br>", unsafe_allow_html=True)
+
+            # ---------------------------------------------------------
+            # ACTO 1: O DIAGNÓSTICO FINANCEIRO (A VERDADE DOS DADOS)
+            # ---------------------------------------------------------
+            st.subheader("💵 Ato 1: O Diagnóstico Financeiro & Gargalos de Infraestrutura (LC7)")
+            st.markdown("Antes de desenhar o futuro, compreenda onde o investimento do LC7 foi consumido e por que a régua de envios sofreu travamentos:")
 
             f1, f2, f3, f4 = st.columns(4)
             f1.metric("💵 Investimento Total", "US$ 155,18", "Periodo 10 a 16/08", delta_color="off")
@@ -1526,12 +1533,13 @@ if not df_captacao.empty:
 
             st.caption("💡 **Auditoria Financeira:** 78,5% de todo o custo de envio do lançamento veio dos 1.696 disparos de Marketing Lite, provando que a reclassificação de categoria pela Meta foi a causa do esgotamento de saldo e do travamento de envios.")
             st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("---")
 
-        # =========================================================
-        # TAB 3: PLANO ESTRATÉGICO & GUIA META API (LC8)
-        # =========================================================
-        with tab_estrategia:
-            st.subheader("💡 Plano de Ação Estratégico para o Lançamento LC8")
+            # ---------------------------------------------------------
+            # ACTO 2: OS 3 PILARES DA VIRADA PARA O LC8 (A SOLUÇÃO)
+            # ---------------------------------------------------------
+            st.subheader("💡 Ato 2: Os 3 Pilares da Virada Estratégica para o LC8")
+            st.markdown("A partir dos dados reais auditados nas CPLs 01 a 04, estabelecemos 3 diretrizes inegociáveis para o próximo lançamento:")
 
             p1, p2, p3 = st.columns(3)
 
@@ -1539,28 +1547,30 @@ if not df_captacao.empty:
                 st.success(
                     "#### 🟢 1. Link Direto sem Pedágio\n\n"
                     "**Ação:** A primeira mensagem de cada CPL deve conter o link da aula diretamente no botão ('Assistir Aula 1 Agora').\n\n"
-                    "**Impacto Esperado:** Subir o CTR de 5% para 25%+ (baseado na prova da CPL 01 Msg #5)."
+                    "**Impacto Esperado:** Subir o CTR de 5% para 25%+ (baseado na prova da CPL 01 Msg #5 com 88% de cliques)."
                 )
 
             with p2:
                 st.warning(
                     "#### 🟡 2. Retenção Total no WhatsApp\n\n"
                     "**Ação:** Não direcionar o lead para comentar no Instagram durante a maratona de aulas.\n\n"
-                    "**Impacto Esperado:** Manter 100% da audiência engajada no canal oficial de vendas (WhatsApp)."
+                    "**Impacto Esperado:** Eliminar a fuga de 99,5% e manter 100% da audiência engajada no canal oficial de vendas (WhatsApp)."
                 )
 
             with p3:
                 st.info(
                     "#### 🔵 3. Templates Pagos nas Aulas\n\n"
                     "**Ação:** Usar Templates Aprovados da Meta nos disparos das 08h00 do dia da aula.\n\n"
-                    "**Impacto Esperado:** Destravar os 74% de leads barrados pela regra da Janela de 24h."
+                    "**Impacto Esperado:** Destravar os 74% a 80% de leads barrados pela regra da Janela de 24h."
                 )
 
             st.markdown("<br>", unsafe_allow_html=True)
             st.markdown("---")
 
-            # MATRIZ CRÍTICA
-            st.subheader("🧠 Autópsia Crítica do Fluxo: O que Manter, Melhorar, Eliminar e Testar")
+            # ---------------------------------------------------------
+            # ACTO 3: AUTÓPSIA CRÍTICA DE PERFORMANCE (O QUE FICA E O QUE SAI)
+            # ---------------------------------------------------------
+            st.subheader("🧠 Ato 3: Autópsia Crítica de Performance (Eliminar, Manter, Melhorar e Testar)")
             st.markdown("Uma avaliação rigorosa de Copy, CTAs, Reprises e Canais para maximizar a conversão de vendas no LC8.")
 
             m_elim, m_mant, m_melh, m_test = st.tabs([
@@ -1619,9 +1629,11 @@ if not df_captacao.empty:
             st.markdown("<br>", unsafe_allow_html=True)
             st.markdown("---")
 
-            # GUIA TÉCNICO META API
-            st.subheader("📜 Guia Técnico Meta API: Por que a Reclassificação Aconteceu e Como Blindar a Copy")
-            st.markdown("Uma análise das regras oficiais de engenharia de mensagens da Meta para evitar estouro de custos e bloqueios diários.")
+            # ---------------------------------------------------------
+            # ACTO 4: BLINDAGEM TÉCNICA META API & AQUECIMENTO
+            # ---------------------------------------------------------
+            st.subheader("📜 Ato 4: Blindagem Técnica Meta API & Aquecimento Pré-Lançamento")
+            st.markdown("Como funciona o algoritmo de análise de mensagens da Meta e como proteger a infraestrutura para não estourar custos nem sofrer bloqueios no LC8:")
 
             with st.expander("📘 Entenda a Engenharia da Meta API: Utility vs. Marketing (Clique para Expandir)", expanded=True):
                 meta_col1, meta_col2 = st.columns(2)
@@ -1670,9 +1682,8 @@ if not df_captacao.empty:
                     """)
 
             st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown("---")
 
-            # SEÇÃO 6: INATIVIDADE (PARA LEIGOS)
+            # SEÇÃO 6: INATIVIDADE (PARA LEIGOS - COM ALTO CONTRASTE BRANCO)
             st.subheader("⚠️ O Perigo do 'Efeito Sanfona' no WhatsApp entre Lançamentos")
             st.markdown("Entenda o que acontece quando o WhatsApp dispara mil mensagens no lançamento e depois fica semanas em silêncio.")
 
@@ -1680,21 +1691,21 @@ if not df_captacao.empty:
 
             with w_col1:
                 st.markdown("""
-                <div style="background-color:#3b1a1a; border-left:4px solid #e74c3c; padding:15px; border-radius:8px;">
-                    <h5 style="color:#e74c3c; margin:0;">📉 1. O Risco da Inatividade</h5>
-                    <p style="font-size:0.85rem; color:#ddd; margin-top:8px;">
-                        Se o seu WhatsApp dispara 5.000 mensagens no lançamento e depois fica <b>30 dias parado sem enviar nada</b>, a Meta 'esquece' seu número.<br><br>
-                        <b>O Castigo:</b> A Meta reduz seu limite diário (ex: de 10.000 mensagens/dia para apenas 1.000/dia), travando o envio da CPL 01 do próximo lançamento!
+                <div style="background-color:#2d1215; border-left:5px solid #ef4444; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
+                    <h5 style="color:#ffffff; font-weight:700; margin:0;">📉 1. O Risco da Inatividade</h5>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                        Se o seu WhatsApp dispara 5.000 mensagens no lançamento e depois fica <b style="color:#f87171;">30 dias parado sem enviar nada</b>, a Meta 'esquece' seu número.<br><br>
+                        <b style="color:#fbbf24;">O Castigo:</b> A Meta reduz seu limite diário (ex: de 10.000 msgs/dia para apenas 1.000/dia), travando o envio da CPL 01 do próximo lançamento!
                     </p>
                 </div>
                 """, unsafe_allow_html=True)
 
             with w_col2:
                 st.markdown("""
-                <div style="background-color:#3b2b1a; border-left:4px solid #f39c12; padding:15px; border-radius:8px;">
-                    <h5 style="color:#f39c12; margin:0;">⚡ 2. O Alerta Antispam</h5>
-                    <p style="font-size:0.85rem; color:#ddd; margin-top:8px;">
-                        Quando um número parado dispara milhares de mensagens de repente em 1 hora, a robô da Meta acha que o número foi <b>hackeado ou é SPAM</b>.<br><br>
+                <div style="background-color:#451a03; border-left:5px solid #f59e0b; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
+                    <h5 style="color:#ffffff; font-weight:700; margin:0;">⚡ 2. O Alerta Antispam</h5>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                        Quando um número parado dispara milhares de mensagens de repente em 1 hora, a robô da Meta acha que o número foi <b style="color:#fbbf24;">hackeado ou é SPAM</b>.<br><br>
                         Se poucas pessoas denunciarem no 1º dia, a entrega cai e a Meta deixa o número em 'ritmo lento' (Throttling).
                     </p>
                 </div>
@@ -1702,11 +1713,11 @@ if not df_captacao.empty:
 
             with w_col3:
                 st.markdown("""
-                <div style="background-color:#1a3b2b; border-left:4px solid #2ecc71; padding:15px; border-radius:8px;">
-                    <h5 style="color:#2ecc71; margin:0;">🛡️ 3. A Solução Fácil p/ o LC8</h5>
-                    <p style="font-size:0.85rem; color:#ddd; margin-top:8px;">
-                        <b>• Manter o número 'acordado':</b> Mande 50 a 100 mensagens por semana (suporte, dicas rápidas ou onboarding) para o número não 'dormir'.<br><br>
-                        <b>• Aquecer 7 dias antes:</b> Antes da CPL 01, comece disparando para 500 pessoas, depois 2.000, até chegar na base inteira.
+                <div style="background-color:#064e3b; border-left:5px solid #10b981; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
+                    <h5 style="color:#ffffff; font-weight:700; margin:0;">🛡️ 3. A Solução Fácil p/ o LC8</h5>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                        <b style="color:#4ade80;">• Manter o número 'acordado':</b> Mande 50 a 100 mensagens por semana (suporte, dicas rápidas ou onboarding) para o número não 'dormir'.<br><br>
+                        <b style="color:#4ade80;">• Aquecer 7 dias antes:</b> Antes da CPL 01, comece disparando para 500 pessoas, depois 2.000, até chegar na base inteira.
                     </p>
                 </div>
                 """, unsafe_allow_html=True)
