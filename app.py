@@ -336,26 +336,18 @@ if not df_captacao.empty:
         col_charts1, col_charts2 = st.columns(2)
     
         with col_charts1:
-            st.markdown(f"""
-            <div style="background-color:#0f172a; border-left:5px solid #3b82f6; padding:18px 20px; border-radius:12px; color:#ffffff; min-height:450px; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                <h5 style="color:#ffffff; font-weight:700; margin:0 0 14px 0; text-align:left;">Funil de Engajamento de Cadastros</h5>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown("<h4 style='font-weight:700; text-align:left; color:#ffffff; margin-bottom:12px;'>Funil de Engajamento de Cadastros</h4>", unsafe_allow_html=True)
             fig_funnel = go.Figure(go.Funnel(
                 y=['Capturados (Form)', 'Enviados p/ Automação', 'Mensagem Entregue'],
                 x=[total_capturados, total_automação, sucesso_envio],
                 textinfo="value+percent initial",
                 marker={"color": ["#1f77b4", "#ff7f0e", "#2ca02c"]}
             ))
-            fig_funnel.update_layout(margin=dict(l=20, r=20, t=10, b=20), height=380, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="#ffffff"))
+            fig_funnel.update_layout(margin=dict(l=10, r=10, t=10, b=10), height=380, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="#ffffff"))
             st.plotly_chart(fig_funnel, use_container_width=True)
 
         with col_charts2:
-            st.markdown(f"""
-            <div style="background-color:#0f172a; border-left:5px solid #9b59b6; padding:18px 20px; border-radius:12px; color:#ffffff; min-height:450px; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                <h5 style="color:#ffffff; font-weight:700; margin:0 0 14px 0; text-align:left;">Distribuição do Perfil do Aluno</h5>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown("<h4 style='font-weight:700; text-align:left; color:#ffffff; margin-bottom:12px;'>Distribuição do Perfil do Aluno</h4>", unsafe_allow_html=True)
             if 'perfil' in df_boasvindas.columns:
                 df_perfil_clean = df_boasvindas[df_boasvindas['perfil'].notna()].copy()
                 df_perfil_clean['perfil'] = df_perfil_clean['perfil'].astype(str).str.strip().str.capitalize()
