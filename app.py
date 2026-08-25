@@ -1011,19 +1011,7 @@ if not df_captacao.empty:
             carrinho_leads_qtd = 78
 
 
-        st.markdown(f"""
-        <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-left: 6px solid #10b981; padding: 24px 26px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:4px 12px; border-radius:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Auditoria de Inteligência BI & Vendas Aprovadas</span>
-                    <h2 style="color: #ffffff; font-weight: 800; margin: 8px 0 0 0; font-size: 1.6rem; letter-spacing: -0.5px;">📊 Relatório Executivo de BI & Auditoria de Lançamento</h2>
-                </div>
-            </div>
-            <p style="color: #c7d2fe; margin-top: 10px; margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
-                Cruzamento profundo de dados auditados em tempo real: <b>Captação ({total_capturados:,} Leads)</b>, <b>Carrinho Aberto ({carrinho_leads_qtd} Intenções)</b> e <b>Vendas Aprovadas no Lançamento ({vendas_lanc_qtd} Vendas / Base Oferta: R$ {faturamento_oferta_lanc:,.2f})</b>.
-            </p>
-        </div>
-        """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
+
 
         df_rel_active = df_ca_lancamento if not df_ca_lancamento.empty else df_ca
         lbl_periodo_text = "Lançamento Oficial (Pós 16/08)"
