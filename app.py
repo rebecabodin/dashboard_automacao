@@ -2089,9 +2089,9 @@ if not df_captacao.empty:
             with m3:
                 st.markdown(f"""
                 <div style="background-color:#2d1215; border-top:4px solid #ef4444; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
-                    <span style="font-size:0.78rem; color:#fca5a5; text-transform:uppercase; font-weight:700;">🔴 Q3: Erro de Envio</span>
+                    <span style="font-size:0.78rem; color:#fca5a5; text-transform:uppercase; font-weight:700;">🔴 Q3: Falha de Envio</span>
                     <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{len(q3)} Leads</h3>
-                    <span style="font-size:0.78rem; color:#f87171;">Sem Msg + Não Comprou</span>
+                    <span style="font-size:0.75rem; color:#f87171;">Sem Msg (2 Incorretos / 3 Válidos)</span>
                 </div>
                 """, unsafe_allow_html=True)
 
@@ -2176,9 +2176,11 @@ if not df_captacao.empty:
 
             st.markdown("""
             <div style="background-color:#2d1215; border-left:6px solid #ef4444; padding:16px; border-radius:10px; color:#ffffff; margin-top:15px;">
-                <h5 style="color:#ffffff; font-weight:700; margin:0;">🚨 Ação Prioritária para o Time de Vendas</h5>
+                <h5 style="color:#ffffff; font-weight:700; margin:0;">🚨 Ação Prioritária para o Time de Vendas & Diagnóstico Técnico</h5>
                 <p style="font-size:0.9rem; color:#ffffff; margin-top:8px; line-height:1.5;">
-                    • <b>Leads em Vermelho (Q3):</b> Abandonaram o checkout, <b>NÃO receberam a mensagem automática</b> mas possuem telefones válidos (ex: <i>André, Lorenzo, Joao Arthur, Douglas</i>). Fazer contato telefônico/manual imediatamente!<br>
+                    • <b>Leads em Vermelho (Q3):</b> Abandonaram o checkout e NÃO receberam a mensagem automática.<br>
+                    &nbsp;&nbsp;&nbsp;- <b>2 Erros de Entrada do Cliente (Fator Humano):</b> <code>NUMERO_INVALIDO</code> (ex: DDD duplicado no formulário) e <code>QUANTIDADE_DIGITOS_INVALIDA</code> (ex: <i>Mikael Paz</i> - cadastrou sem o DDD).<br>
+                    &nbsp;&nbsp;&nbsp;- <b>Leads Válidos para Ligação Comercial Imediata:</b> <i>André, Lorenzo, Joao Arthur, Douglas</i> possuem telefones válidos e aguardam ligação do time!<br>
                     • <b>Leads em Amarelo (Q2 - 30 Pessoas):</b> Receberam o WhatsApp, leram o aviso e estão com o carrinho aberto. Enviar áudio humanizado ou cupom de encerramento para converter os R$ 44.910,00 parados na mesa.
                 </p>
             </div>
