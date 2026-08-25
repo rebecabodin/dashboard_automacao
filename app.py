@@ -1474,34 +1474,33 @@ if not df_captacao.empty:
             col_funil, col_cards = st.columns([1, 1], gap="large")
 
             with col_funil:
-                with st.container(border=True):
-                    st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:10px;'>📊 Funil Consolidado (Todas as CPLs)</h5>", unsafe_allow_html=True)
-                    fig_funnel = go.Figure(go.Funnel(
-                        y=["Disparados", "Entregues", "Cliques"],
-                        x=[total_disp, total_ent, total_cli],
-                        textinfo="value+percent initial",
-                        textfont=dict(size=14, color="#ffffff"),
-                        marker={"color": ["#3b82f6", "#10b981", "#fbbf24"]}
-                    ))
-                    fig_funnel.update_layout(
-                        margin=dict(t=20, b=20, l=10, r=10),
-                        height=420,
-                        paper_bgcolor="rgba(0,0,0,0)",
-                        plot_bgcolor="rgba(0,0,0,0)",
-                        font=dict(color="#ffffff")
-                    )
-                    st.plotly_chart(fig_funnel, use_container_width=True)
-                    
-                    st.markdown("""
-                    <div style="background:#1e293b; border-radius:8px; padding:12px 16px; margin-top:5px; border-left:4px solid #3b82f6; color:#ffffff;">
-                        <div style="font-size:0.88rem; color:#ffffff; line-height:1.5;">
-                            <b>💡 Resumo Global do Funil:</b> Dos <b style="color:#60a5fa;">11.357 disparos</b> realizados, <b style="color:#4ade80;">10.442 foram entregues (91.9%)</b> e <b style="color:#fbbf24;">1.467 responderam/clicaram</b> (CTR global de <b>14.0%</b>).
-                        </div>
+                st.subheader("📊 Funil Consolidado (Todas as CPLs)")
+                fig_funnel = go.Figure(go.Funnel(
+                    y=["Disparados", "Entregues", "Cliques"],
+                    x=[total_disp, total_ent, total_cli],
+                    textinfo="value+percent initial",
+                    textfont=dict(size=14, color="#ffffff"),
+                    marker={"color": ["#3b82f6", "#10b981", "#fbbf24"]}
+                ))
+                fig_funnel.update_layout(
+                    margin=dict(t=20, b=20, l=10, r=10),
+                    height=390,
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    plot_bgcolor="rgba(0,0,0,0)",
+                    font=dict(color="#ffffff")
+                )
+                st.plotly_chart(fig_funnel, use_container_width=True)
+                
+                st.markdown("""
+                <div style="background:#0f172a; border-radius:10px; padding:14px 18px; margin-top:10px; border-left:5px solid #3b82f6; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <div style="font-size:0.88rem; color:#ffffff; line-height:1.5;">
+                        <b>💡 Resumo Global do Funil:</b> Dos <b style="color:#60a5fa;">11.357 disparos</b> realizados, <b style="color:#4ade80;">10.442 foram entregues (91.9%)</b> e <b style="color:#fbbf24;">1.467 responderam/clicaram</b> (CTR global de <b>14.0%</b>).
                     </div>
-                    """, unsafe_allow_html=True)
+                </div>
+                """, unsafe_allow_html=True)
 
             with col_cards:
-                st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:12px;'>🗂️ Resumo Auditado por CPL</h5>", unsafe_allow_html=True)
+                st.subheader("🗂️ Resumo Auditado por CPL")
 
                 anotacoes = {
                     "CPL 01": ("🟢", "#064e3b", "#10b981", "⭐ 23.8% CTR", "Auditado: 4.604 disp. | 4.294 ent. (93,3%) | 1.023 cliques<br><b style='color:#4ade80;'>Pico de 88% CTR</b> quando o link foi enviado diretamente sem pedágio."),
@@ -1516,7 +1515,7 @@ if not df_captacao.empty:
                     ctr_card = (row['Cliques'] / row['Entregues'] * 100) if row['Entregues'] > 0 else 0
                     tx_ent_card = (row['Entregues'] / row['Disparados'] * 100) if row['Disparados'] > 0 else 0
                     st.markdown(f"""
-                    <div style="background:{bg}; border-left:6px solid {cor}; border-radius:10px; padding:14px 16px; margin-bottom:12px; color:#ffffff;">
+                    <div style="background:{bg}; border-left:6px solid {cor}; border-radius:10px; padding:14px 16px; margin-bottom:12px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span style="font-weight:700; font-size:1rem; color:#ffffff;">{emoji} {cpl}
                                 <span style="font-size:0.78rem; color:#94a3b8; font-weight:400; margin-left:8px;">📅 {row['Data_Disparo']}</span>
