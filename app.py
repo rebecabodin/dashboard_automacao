@@ -1568,9 +1568,106 @@ if not df_captacao.empty:
             st.markdown("---")
 
             # ---------------------------------------------------------
-            # ACTO 3: AUTÓPSIA CRÍTICA DE PERFORMANCE (O QUE FICA E O QUE SAI)
+            # ACTO 3: BLINDAGEM TÉCNICA META API & AQUECIMENTO
             # ---------------------------------------------------------
-            st.subheader("🧠 Ato 3: Autópsia Crítica de Performance (Eliminar, Manter, Melhorar e Testar)")
+            st.subheader("📜 Ato 3: Blindagem Técnica Meta API & Engenharia da Meta")
+            st.markdown("Como funciona o algoritmo de análise de mensagens da Meta e como proteger a infraestrutura para não estourar custos nem sofrer bloqueios no LC8:")
+
+            with st.expander("📘 Entenda a Engenharia da Meta API: Utility vs. Marketing (Clique para Expandir)", expanded=True):
+                meta_col1, meta_col2 = st.columns(2)
+
+                with meta_col1:
+                    st.markdown("""
+                    #### 🤖 Como a IA da Meta reclassifica os Templates?
+                    A Meta utiliza um modelo de IA de NLP (Processamento de Linguagem Natural) que lê o conteúdo aprovado tanto no momento do envio quanto nas verificações periódicas pós-aprovação.<br><br>
+                    <b>Gatilhos que fazem a IA converter Utility ➔ Marketing Lite (9.2x mais caro):</b>
+                    1. <b>Adjetivos de Escassez/Urgência:</b> Termos como <i>'Liberado'</i>, <i>'Última chance'</i>, <i>'Oportunidade única'</i> ou <i>'Ao vivo agora'</i>.
+                    2. <b>Excesso de Emojis Promocionais:</b> 🚨, 💥, 💣, 🔥, ⚡, 🎁.
+                    3. <b>Links Externos Não Operacionais:</b> Direcionar para o Instagram, YouTube ou pesquisas fora da transação imediata.
+                    4. <b>Convocação Genérica:</b> Avisar sobre um evento sem citar os dados explícitos de cadastro transacional do usuário.
+                    """)
+
+                with meta_col2:
+                    st.markdown("""
+                    #### ⚡ Por que a entrega de Marketing falha mais que Utility?
+                    Além da diferença de custo (US$ 0,0718 vs US$ 0,0078), a Meta aplica 2 travas severas em mensagens da categoria Marketing:
+                    
+                    1. <b>Frequency Cap (Limite de Frequência de Marketing por Usuário):</b> A Meta impõe um limite máximo de mensagens de Marketing que um usuário pode receber no WhatsApp por dia de <i>qualquer empresa</i>. Se o lead já recebeu Marketing de outras contas no dia, a Meta <b>simplesmente não entrega a sua mensagem</b> para proteger o usuário de spam!
+                    2. <b>Quality Rating Throttling:</b> Quando um disparo de Marketing em massa tem baixos cliques ou bloqueios (como o botão de consentimento na CPL 04), a Meta reduz o ritmo de entrega por hora do número (Throttling).
+                    """)
+
+                st.markdown("---")
+                st.markdown("#### 🛠️ O Script da Copy 'Blindada' (Como manter o aviso 100% em Utility):")
+
+                col_copy_ruim, col_copy_boa = st.columns(2)
+
+                with col_copy_ruim:
+                    st.error("""
+                    ❌ **COPY RECLASSIFICADA PARA MARKETING (Não usar):**
+                    
+                    "Olá, {{1}}! 🚨 A aula {{2}} da Jornada já está LIBERADA! 🔥 Não perca essa oportunidade incrível de dominar o mercado. Clica no botão abaixo para assistir agora! 👇"
+                    
+                    *Por que virou Marketing:* Adjetivos promocionais ('LIBERADA', 'incrível'), emojis de urgência (🚨, 🔥) e tom publicitário.
+                    """)
+
+                with col_copy_boa:
+                    st.success("""
+                    ✅ **COPY BLINDADA PARA UTILITY (Aprovada e Mantida):**
+                    
+                    "Atualização da sua inscrição: A transmissão agendada do módulo {{1}} está disponível para acesso. Link oficial de transmissão: {{2}}. Suporte técnico: [URL]."
+                    
+                    *Por que se mantém em Utility:* Texto 100% transacional, focado estritamente na confirmação de entrega do serviço no qual o lead se cadastrou.
+                    """)
+
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("---")
+
+            # SEÇÃO: INATIVIDADE (O PERIGO DO EFEITO SANFONA)
+            st.subheader("⚠️ O Perigo do 'Efeito Sanfona' no WhatsApp entre Lançamentos")
+            st.markdown("Entenda o que acontece quando o WhatsApp dispara mil mensagens no lançamento e depois fica semanas em silêncio.")
+
+            w_col1, w_col2, w_col3 = st.columns(3)
+
+            with w_col1:
+                st.markdown("""
+                <div style="background-color:#2d1215; border-left:5px solid #ef4444; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
+                    <h5 style="color:#ffffff; font-weight:700; margin:0;">📉 1. O Risco da Inatividade</h5>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                        Se o seu WhatsApp dispara 5.000 mensagens no lançamento e depois fica <b style="color:#f87171;">30 dias parado sem enviar nada</b>, a Meta 'esquece' seu número.<br><br>
+                        <b style="color:#fbbf24;">O Castigo:</b> A Meta reduz seu limite diário (ex: de 10.000 msgs/dia para apenas 1.000/dia), travando o envio da CPL 01 do próximo lançamento!
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with w_col2:
+                st.markdown("""
+                <div style="background-color:#451a03; border-left:5px solid #f59e0b; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
+                    <h5 style="color:#ffffff; font-weight:700; margin:0;">⚡ 2. O Alerta Antispam</h5>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                        Quando um número parado dispara milhares de mensagens de repente em 1 hora, a robô da Meta acha que o número foi <b style="color:#fbbf24;">hackeado ou é SPAM</b>.<br><br>
+                        Se poucas pessoas denunciarem no 1º dia, a entrega cai e a Meta deixa o número em 'ritmo lento' (Throttling).
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with w_col3:
+                st.markdown("""
+                <div style="background-color:#064e3b; border-left:5px solid #10b981; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
+                    <h5 style="color:#ffffff; font-weight:700; margin:0;">🛡️ 3. A Solução Fácil p/ o LC8</h5>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                        <b style="color:#4ade80;">• Manter o número 'acordado':</b> Mande 50 a 100 mensagens por semana (suporte, dicas rápidas ou onboarding) para o número não 'dormir'.<br><br>
+                        <b style="color:#4ade80;">• Aquecer 7 dias antes:</b> Antes da CPL 01, comece disparando para 500 pessoas, depois 2.000, até chegar na base inteira.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("---")
+
+            # ---------------------------------------------------------
+            # ACTO 4: AUTÓPSIA CRÍTICA DE PERFORMANCE (POSICIONADO APÓS EFEITO SANFONA)
+            # ---------------------------------------------------------
+            st.subheader("🧠 Ato 4: Autópsia Crítica de Performance (Eliminar, Manter, Melhorar e Testar)")
             st.markdown("Uma avaliação rigorosa de Copy, CTAs, Reprises e Canais estruturada em cards de decisão estratégica:")
 
             m_elim, m_mant, m_melh, m_test = st.tabs([
@@ -1724,102 +1821,6 @@ if not df_captacao.empty:
                         </p>
                     </div>
                     """, unsafe_allow_html=True)
-
-            st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown("---")
-
-            # ---------------------------------------------------------
-            # ACTO 4: BLINDAGEM TÉCNICA META API & AQUECIMENTO
-            # ---------------------------------------------------------
-            st.subheader("📜 Ato 4: Blindagem Técnica Meta API & Aquecimento Pré-Lançamento")
-            st.markdown("Como funciona o algoritmo de análise de mensagens da Meta e como proteger a infraestrutura para não estourar custos nem sofrer bloqueios no LC8:")
-
-            with st.expander("📘 Entenda a Engenharia da Meta API: Utility vs. Marketing (Clique para Expandir)", expanded=True):
-                meta_col1, meta_col2 = st.columns(2)
-
-                with meta_col1:
-                    st.markdown("""
-                    #### 🤖 Como a IA da Meta reclassifica os Templates?
-                    A Meta utiliza um modelo de IA de NLP (Processamento de Linguagem Natural) que lê o conteúdo aprovado tanto no momento do envio quanto nas verificações periódicas pós-aprovação.<br><br>
-                    <b>Gatilhos que fazem a IA converter Utility ➔ Marketing Lite (9.2x mais caro):</b>
-                    1. <b>Adjetivos de Escassez/Urgência:</b> Termos como <i>'Liberado'</i>, <i>'Última chance'</i>, <i>'Oportunidade única'</i> ou <i>'Ao vivo agora'</i>.
-                    2. <b>Excesso de Emojis Promocionais:</b> 🚨, 💥, 💣, 🔥, ⚡, 🎁.
-                    3. <b>Links Externos Não Operacionais:</b> Direcionar para o Instagram, YouTube ou pesquisas fora da transação imediata.
-                    4. <b>Convocação Genérica:</b> Avisar sobre um evento sem citar os dados explícitos de cadastro transacional do usuário.
-                    """)
-
-                with meta_col2:
-                    st.markdown("""
-                    #### ⚡ Por que a entrega de Marketing falha mais que Utility?
-                    Além da diferença de custo (US$ 0,0718 vs US$ 0,0078), a Meta aplica 2 travas severas em mensagens da categoria Marketing:
-                    
-                    1. <b>Frequency Cap (Limite de Frequência de Marketing por Usuário):</b> A Meta impõe um limite máximo de mensagens de Marketing que um usuário pode receber no WhatsApp por dia de <i>qualquer empresa</i>. Se o lead já recebeu Marketing de outras contas no dia, a Meta <b>simplesmente não entrega a sua mensagem</b> para proteger o usuário de spam!
-                    2. <b>Quality Rating Throttling:</b> Quando um disparo de Marketing em massa tem baixos cliques ou bloqueios (como o botão de consentimento na CPL 04), a Meta reduz o ritmo de entrega por hora do número (Throttling).
-                    """)
-
-                st.markdown("---")
-                st.markdown("#### 🛠️ O Script da Copy 'Blindada' (Como manter o aviso 100% em Utility):")
-
-                col_copy_ruim, col_copy_boa = st.columns(2)
-
-                with col_copy_ruim:
-                    st.error("""
-                    ❌ **COPY RECLASSIFICADA PARA MARKETING (Não usar):**
-                    
-                    "Olá, {{1}}! 🚨 A aula {{2}} da Jornada já está LIBERADA! 🔥 Não perca essa oportunidade incrível de dominar o mercado. Clica no botão abaixo para assistir agora! 👇"
-                    
-                    *Por que virou Marketing:* Adjetivos promocionais ('LIBERADA', 'incrível'), emojis de urgência (🚨, 🔥) e tom publicitário.
-                    """)
-
-                with col_copy_boa:
-                    st.success("""
-                    ✅ **COPY BLINDADA PARA UTILITY (Aprovada e Mantida):**
-                    
-                    "Atualização da sua inscrição: A transmissão agendada do módulo {{1}} está disponível para acesso. Link oficial de transmissão: {{2}}. Suporte técnico: [URL]."
-                    
-                    *Por que se mantém em Utility:* Texto 100% transacional, focado estritamente na confirmação de entrega do serviço no qual o lead se cadastrou.
-                    """)
-
-            st.markdown("<br>", unsafe_allow_html=True)
-
-            # SEÇÃO 6: INATIVIDADE (PARA LEIGOS - COM ALTO CONTRASTE BRANCO)
-            st.subheader("⚠️ O Perigo do 'Efeito Sanfona' no WhatsApp entre Lançamentos")
-            st.markdown("Entenda o que acontece quando o WhatsApp dispara mil mensagens no lançamento e depois fica semanas em silêncio.")
-
-            w_col1, w_col2, w_col3 = st.columns(3)
-
-            with w_col1:
-                st.markdown("""
-                <div style="background-color:#2d1215; border-left:5px solid #ef4444; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
-                    <h5 style="color:#ffffff; font-weight:700; margin:0;">📉 1. O Risco da Inatividade</h5>
-                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
-                        Se o seu WhatsApp dispara 5.000 mensagens no lançamento e depois fica <b style="color:#f87171;">30 dias parado sem enviar nada</b>, a Meta 'esquece' seu número.<br><br>
-                        <b style="color:#fbbf24;">O Castigo:</b> A Meta reduz seu limite diário (ex: de 10.000 msgs/dia para apenas 1.000/dia), travando o envio da CPL 01 do próximo lançamento!
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-
-            with w_col2:
-                st.markdown("""
-                <div style="background-color:#451a03; border-left:5px solid #f59e0b; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
-                    <h5 style="color:#ffffff; font-weight:700; margin:0;">⚡ 2. O Alerta Antispam</h5>
-                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
-                        Quando um número parado dispara milhares de mensagens de repente em 1 hora, a robô da Meta acha que o número foi <b style="color:#fbbf24;">hackeado ou é SPAM</b>.<br><br>
-                        Se poucas pessoas denunciarem no 1º dia, a entrega cai e a Meta deixa o número em 'ritmo lento' (Throttling).
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-
-            with w_col3:
-                st.markdown("""
-                <div style="background-color:#064e3b; border-left:5px solid #10b981; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
-                    <h5 style="color:#ffffff; font-weight:700; margin:0;">🛡️ 3. A Solução Fácil p/ o LC8</h5>
-                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
-                        <b style="color:#4ade80;">• Manter o número 'acordado':</b> Mande 50 a 100 mensagens por semana (suporte, dicas rápidas ou onboarding) para o número não 'dormir'.<br><br>
-                        <b style="color:#4ade80;">• Aquecer 7 dias antes:</b> Antes da CPL 01, comece disparando para 500 pessoas, depois 2.000, até chegar na base inteira.
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
 
     elif menu_selecionado == '2️⃣ Vendas e Carrinho':
         st.header("2️⃣ Captação de Vendas e Abandono de Carrinho")
