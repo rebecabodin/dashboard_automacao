@@ -1358,7 +1358,11 @@ if not df_captacao.empty:
                 st.markdown("<br>", unsafe_allow_html=True)
 
                 with st.container(border=True):
-                    st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:12px;'>🎬 Capítulo 1: O Disparo Principal (10/08 - 20h28)</h5>", unsafe_allow_html=True)
+                    st.markdown("""
+                    <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:14px 18px; border-radius:10px; margin-bottom:14px; color:#ffffff;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1.05rem;">🎬 Capítulo 1: O Disparo Principal (10/08 - 20h28)</h5>
+                    </div>
+                    """, unsafe_allow_html=True)
                     col_path_nao, col_path_sim = st.columns(2)
 
                     with col_path_nao:
@@ -1410,7 +1414,11 @@ if not df_captacao.empty:
                     """, unsafe_allow_html=True)
 
                 with st.container(border=True):
-                    st.markdown("<h5 style='color:#ffffff; font-weight:700; margin-bottom:10px;'>🎬 Capítulo 3: Reprise + Aviso Ao Vivo Aula 2 (11/08 a 12/08)</h5>", unsafe_allow_html=True)
+                    st.markdown("""
+                    <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:14px 18px; border-radius:10px; margin-bottom:14px; color:#ffffff;">
+                        <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1.05rem;">🎬 Capítulo 3: Reprise + Aviso Ao Vivo Aula 2 (11/08 a 12/08)</h5>
+                    </div>
+                    """, unsafe_allow_html=True)
                     st.markdown("No dia seguinte (11/08 às 18h30), um fluxo retido em **Atraso Inteligente** preparou a base para a Aula 2:")
 
                     r1, r2, r3 = st.columns(3)
