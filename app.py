@@ -1096,7 +1096,7 @@ if not df_captacao.empty:
                     <td style="padding:10px;"><b>Erros de Envio (WhatsApp)</b></td>
                     <td style="padding:10px;">{erros:,} leads</td>
                     <td style="padding:10px; color:#f87171;">{(erros/total_automação*100) if total_automação>0 else 16.3:.1f}%</td>
-                    <td style="padding:10px; color:#fca5a5;">Falhas por falta de DDD/telefone no formulário da LP.</td>
+                    <td style="padding:10px; color:#fca5a5;">Disparos não entregues (status 'erro' retornado na aba Boas-vindas).</td>
                 </tr>
                 <tr style="border-bottom:1px solid #334155;">
                     <td style="padding:10px;"><b>Participantes da Pesquisa</b></td>
