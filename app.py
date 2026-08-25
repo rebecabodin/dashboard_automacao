@@ -278,12 +278,27 @@ if not df_captacao.empty:
 
         menu_selecionado = st.session_state['menu_selecionado']
     else:
-        opcoes_menu = [
-            '📊 Visão Principal de Cadastros', 
-            '🎯 Raio-X Didático das CPLs (1 a 4)', 
-            '🕸️ Funil WhatsApp & ManyChat'
-        ]
-        menu_selecionado = st.sidebar.radio("Ir para:", opcoes_menu, label_visibility="collapsed")
+        current_page = st.session_state['menu_selecionado']
+
+        # Categoria 1: Captação (Cliente)
+        opts_cat1 = ['📊 Visão Principal de Cadastros', '🕸️ Funil WhatsApp & ManyChat', '🧠 Pesquisa & Raio-X da Audiência']
+        idx1 = opts_cat1.index(current_page) if current_page in opts_cat1 else None
+        st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#38bdf8; font-size:0.8rem; margin-top:8px; margin-bottom:6px;'>📥 1. CAPTAÇÃO & LEADS</div>", unsafe_allow_html=True)
+        st.sidebar.radio("Captação", opts_cat1, index=idx1, key='r_cat1_cli', on_change=update_menu, args=('r_cat1_cli',), label_visibility="collapsed")
+
+        # Categoria 2: CPLs (Cliente)
+        opts_cat2 = ['🎯 Raio-X Didático das CPLs (1 a 4)']
+        idx2 = opts_cat2.index(current_page) if current_page in opts_cat2 else None
+        st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#818cf8; font-size:0.8rem; margin-top:14px; margin-bottom:6px;'>🎓 2. AULAS & CPLs</div>", unsafe_allow_html=True)
+        st.sidebar.radio("CPLs", opts_cat2, index=idx2, key='r_cat2_cli', on_change=update_menu, args=('r_cat2_cli',), label_visibility="collapsed")
+
+        # Categoria 3: Vendas & Conversão (Cliente)
+        opts_cat3 = ['🛒 Carrinho Aberto & Recuperação', '💵 Vendas Aprovadas & Faturamento']
+        idx3 = opts_cat3.index(current_page) if current_page in opts_cat3 else None
+        st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#34d399; font-size:0.8rem; margin-top:14px; margin-bottom:6px;'>💰 3. VENDAS & CONVERSÃO</div>", unsafe_allow_html=True)
+        st.sidebar.radio("Vendas", opts_cat3, index=idx3, key='r_cat3_cli', on_change=update_menu, args=('r_cat3_cli',), label_visibility="collapsed")
+
+        menu_selecionado = st.session_state['menu_selecionado']
     
     # Define o título dinamicamente com base na aba selecionada
     if menu_selecionado in ['🎓 Aulas CPL | 🎯 Raio-X Didático das CPLs (1 a 4)', '🎯 Raio-X Didático das CPLs (1 a 4)', '🎯 Raio-X Didático CPLs']:
