@@ -2260,11 +2260,11 @@ if not df_captacao.empty:
             st.markdown("---")
 
             # =========================================================
-            # PASSO 4: FILA CONSOLIDADA UNIFICADA (76 LEADS)
+            # PASSO 4: QUADRO KANBAN & FILA UNIFICADA (76 LEADS)
             # =========================================================
             st.markdown("""
             <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:14px 18px; border-radius:10px; margin-bottom:16px; color:#ffffff;">
-                <h4 style="color:#ffffff; font-weight:700; margin:0; font-size:1.15rem;">📋 Fila Unificada de Atendimento Comercial & Checkout (76 Leads)</h4>
+                <h4 style="color:#ffffff; font-weight:700; margin:0; font-size:1.15rem;">📋 Fila de Atendimento Comercial & Checkout (76 Leads)</h4>
             </div>
             """, unsafe_allow_html=True)
 
@@ -2277,6 +2277,13 @@ if not df_captacao.empty:
 
             df_unificado = pd.concat([df_v_sub, df_r_sub], ignore_index=True)
 
+            df_unificado['Status Category'] = df_unificado.apply(
+                lambda x: "ALERTA" if (x['Mensagem Enviada'] == '' and x['Comprou?'] == 'Não')
+                else ("PENDENTE" if (x['Mensagem Enviada'] != '' and x['Comprou?'] == 'Não')
+                else ("COMPROU_WPP" if (x['Mensagem Enviada'] != '' and x['Comprou?'] == 'Sim')
+                else "COMPROU_ORG")), axis=1
+            )
+
             df_unificado['Status Global'] = df_unificado.apply(
                 lambda x: "🔴 ALERTA: Erro de Envio (Ligar Urgente)" if (x['Mensagem Enviada'] == '' and x['Comprou?'] == 'Não')
                 else ("🟡 Aguardando Resposta WPP (37 Leads)" if (x['Mensagem Enviada'] != '' and x['Comprou?'] == 'Não')
@@ -2284,22 +2291,128 @@ if not df_captacao.empty:
                 else "🔵 Comprou Direto Checkout (20 Vendas)")), axis=1
             )
 
-            df_unificado_display = df_unificado[['DATA', 'NOME', 'EMAIL', 'TELEFONE', 'Origem', 'Status Global']].sort_values(by='Status Global')
+            tab_kanban, tab_tabela = st.tabs(["🗂️ 1. Visão Quadro Kanban", "📊 2. Visão Tabela Tradicional"])
 
-            def highlight_global(val):
-                if 'ALERTA' in str(val):
-                    return 'background-color: #2d1215; color: #f87171; font-weight: bold;'
-                elif 'Aguardando' in str(val):
-                    return 'background-color: #451a03; color: #fbbf24; font-weight: bold;'
-                elif '🟢' in str(val):
-                    return 'background-color: #064e3b; color: #4ade80; font-weight: bold;'
-                else:
-                    return 'background-color: #0f172a; color: #60a5fa;'
+            # ---------------------------------------------------------
+            # TAB KANBAN: QUADRO VISUAL EM 4 COLUNAS
+            # ---------------------------------------------------------
+            with tab_kanban:
+                st.markdown("##### 📌 Quadro Kanban de Atendimento em Tempo Real")
+                st.markdown("Arraste visualmente os status e acione os leads prioritários para conversão comercial:")
 
-            try:
-                st.dataframe(df_unificado_display.style.map(highlight_global, subset=['Status Global']), use_container_width=True, hide_index=True)
-            except AttributeError:
-                st.dataframe(df_unificado_display.style.applymap(highlight_global, subset=['Status Global']), use_container_width=True, hide_index=True)
+                k_col1, k_col2, k_col3, k_col4 = st.columns(4)
+
+                # Coluna 1: 🔴 ALERTA (Falha de Envio)
+                df_k1 = df_unificado[df_unificado['Status Category'] == 'ALERTA']
+                with k_col1:
+                    st.markdown(f"""
+                    <div style="background-color:#2d1215; border-top:4px solid #ef4444; padding:12px; border-radius:8px; text-align:center; margin-bottom:12px; color:#ffffff;">
+                        <b style="font-size:0.85rem; color:#fca5a5;">🔴 ALERTA ENVIO ({len(df_k1)})</b><br>
+                        <span style="font-size:0.72rem; color:#f87171;">Ligar Imediatamente</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    for _, row in df_k1.iterrows():
+                        n_nome = str(row['NOME']) if str(row['NOME']).strip() and str(row['NOME']) != 'nan' else 'Sem Nome'
+                        e_email = str(row['EMAIL']) if str(row['EMAIL']) != 'nan' else ''
+                        t_tel = str(row['TELEFONE']).replace('.0', '').strip() if str(row['TELEFONE']) != 'nan' else ''
+                        st.markdown(f"""
+                        <div style="background-color:#0f172a; border-left:4px solid #ef4444; border-radius:8px; padding:10px 12px; margin-bottom:10px; color:#ffffff; box-shadow:0 2px 8px rgba(0,0,0,0.3);">
+                            <div style="font-weight:700; font-size:0.88rem; color:#ffffff;">{n_nome}</div>
+                            <div style="font-size:0.72rem; color:#94a3b8; margin:2px 0;">📅 {row['DATA']} | 🏷️ {row['Origem']}</div>
+                            <div style="font-size:0.75rem; color:#ffffff; word-break:break-all;">✉️ {e_email}</div>
+                            <div style="font-size:0.78rem; color:#f87171; font-weight:700; margin-top:4px;">📞 {t_tel}</div>
+                        </div>
+                        """, unsafe_allow_html=True)
+
+                # Coluna 2: 🟡 CARRINHO ABERTO (Aguardando WPP)
+                df_k2 = df_unificado[df_unificado['Status Category'] == 'PENDENTE']
+                with k_col2:
+                    st.markdown(f"""
+                    <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:12px; border-radius:8px; text-align:center; margin-bottom:12px; color:#ffffff;">
+                        <b style="font-size:0.85rem; color:#fde68a;">🟡 CARRINHO ABERTO ({len(df_k2)})</b><br>
+                        <span style="font-size:0.72rem; color:#fbbf24;">Recebeu WPP s/ Compra</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    with st.container(height=520):
+                        for _, row in df_k2.iterrows():
+                            n_nome = str(row['NOME']) if str(row['NOME']).strip() and str(row['NOME']) != 'nan' else 'Sem Nome'
+                            e_email = str(row['EMAIL']) if str(row['EMAIL']) != 'nan' else ''
+                            t_tel = str(row['TELEFONE']).replace('.0', '').strip() if str(row['TELEFONE']) != 'nan' else ''
+                            st.markdown(f"""
+                            <div style="background-color:#0f172a; border-left:4px solid #f59e0b; border-radius:8px; padding:10px 12px; margin-bottom:10px; color:#ffffff; box-shadow:0 2px 8px rgba(0,0,0,0.3);">
+                                <div style="font-weight:700; font-size:0.88rem; color:#ffffff;">{n_nome}</div>
+                                <div style="font-size:0.72rem; color:#94a3b8; margin:2px 0;">📅 {row['DATA']} | 🏷️ {row['Origem']}</div>
+                                <div style="font-size:0.75rem; color:#ffffff; word-break:break-all;">✉️ {e_email}</div>
+                                <div style="font-size:0.78rem; color:#fbbf24; font-weight:600; margin-top:4px;">📱 {t_tel}</div>
+                            </div>
+                            """, unsafe_allow_html=True)
+
+                # Coluna 3: 🟢 COMPROU PÓS WPP
+                df_k3 = df_unificado[df_unificado['Status Category'] == 'COMPROU_WPP']
+                with k_col3:
+                    st.markdown(f"""
+                    <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:12px; border-radius:8px; text-align:center; margin-bottom:12px; color:#ffffff;">
+                        <b style="font-size:0.85rem; color:#a7f3d0;">🟢 VENDA PÓS WPP ({len(df_k3)})</b><br>
+                        <span style="font-size:0.72rem; color:#4ade80;">Resgatado p/ Automação</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    with st.container(height=520):
+                        for _, row in df_k3.iterrows():
+                            n_nome = str(row['NOME']) if str(row['NOME']).strip() and str(row['NOME']) != 'nan' else 'Sem Nome'
+                            e_email = str(row['EMAIL']) if str(row['EMAIL']) != 'nan' else ''
+                            st.markdown(f"""
+                            <div style="background-color:#0f172a; border-left:4px solid #10b981; border-radius:8px; padding:10px 12px; margin-bottom:10px; color:#ffffff; box-shadow:0 2px 8px rgba(0,0,0,0.3);">
+                                <div style="font-weight:700; font-size:0.88rem; color:#ffffff;">{n_nome}</div>
+                                <div style="font-size:0.72rem; color:#94a3b8; margin:2px 0;">📅 {row['DATA']} | 🏷️ {row['Origem']}</div>
+                                <div style="font-size:0.75rem; color:#ffffff; word-break:break-all;">✉️ {e_email}</div>
+                                <div style="font-size:0.75rem; color:#4ade80; font-weight:700; margin-top:4px;">💰 R$ 1.497,00 Aprovado</div>
+                            </div>
+                            """, unsafe_allow_html=True)
+
+                # Coluna 4: 🔵 COMPROU DIRETO
+                df_k4 = df_unificado[df_unificado['Status Category'] == 'COMPROU_ORG']
+                with k_col4:
+                    st.markdown(f"""
+                    <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:12px; border-radius:8px; text-align:center; margin-bottom:12px; color:#ffffff;">
+                        <b style="font-size:0.85rem; color:#bfdbfe;">🔵 VENDA DIRETA ({len(df_k4)})</b><br>
+                        <span style="font-size:0.72rem; color:#60a5fa;">Conversão Orgânica</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    with st.container(height=520):
+                        for _, row in df_k4.iterrows():
+                            n_nome = str(row['NOME']) if str(row['NOME']).strip() and str(row['NOME']) != 'nan' else 'Sem Nome'
+                            e_email = str(row['EMAIL']) if str(row['EMAIL']) != 'nan' else ''
+                            st.markdown(f"""
+                            <div style="background-color:#0f172a; border-left:4px solid #3b82f6; border-radius:8px; padding:10px 12px; margin-bottom:10px; color:#ffffff; box-shadow:0 2px 8px rgba(0,0,0,0.3);">
+                                <div style="font-weight:700; font-size:0.88rem; color:#ffffff;">{n_nome}</div>
+                                <div style="font-size:0.72rem; color:#94a3b8; margin:2px 0;">📅 {row['DATA']} | 🏷️ {row['Origem']}</div>
+                                <div style="font-size:0.75rem; color:#ffffff; word-break:break-all;">✉️ {e_email}</div>
+                                <div style="font-size:0.75rem; color:#60a5fa; font-weight:700; margin-top:4px;">💰 R$ 1.497,00 Aprovado</div>
+                            </div>
+                            """, unsafe_allow_html=True)
+
+            # ---------------------------------------------------------
+            # TAB TABELA: VISÃO TABULAR TRADICIONAL
+            # ---------------------------------------------------------
+            with tab_tabela:
+                df_unificado_display = df_unificado[['DATA', 'NOME', 'EMAIL', 'TELEFONE', 'Origem', 'Status Global']].sort_values(by='Status Global')
+
+                def highlight_global(val):
+                    if 'ALERTA' in str(val):
+                        return 'background-color: #2d1215; color: #f87171; font-weight: bold;'
+                    elif 'Aguardando' in str(val):
+                        return 'background-color: #451a03; color: #fbbf24; font-weight: bold;'
+                    elif '🟢' in str(val):
+                        return 'background-color: #064e3b; color: #4ade80; font-weight: bold;'
+                    else:
+                        return 'background-color: #0f172a; color: #60a5fa;'
+
+                try:
+                    st.dataframe(df_unificado_display.style.map(highlight_global, subset=['Status Global']), use_container_width=True, hide_index=True)
+                except AttributeError:
+                    st.dataframe(df_unificado_display.style.applymap(highlight_global, subset=['Status Global']), use_container_width=True, hide_index=True)
+
+            st.markdown("<br><br>", unsafe_allow_html=True)
 
             st.markdown("<br><br>", unsafe_allow_html=True)
 
