@@ -1066,8 +1066,18 @@ if not df_captacao.empty:
 
         st.markdown("<div style='margin-top:24px;'></div>", unsafe_allow_html=True)
 
-        conv_checkout_perc = (vendas_lanc_qtd / carrinho_leads_qtd * 100) if carrinho_leads_qtd > 0 else 46.1
-        conv_checkout_base_perc = (vendas_base_qtd / carrinho_leads_qtd * 100) if carrinho_leads_qtd > 0 else 98.7
+        conv_checkout_perc = (vendas_lanc_qtd / carrinho_leads_qtd * 100) if carrinho_leads_qtd > 0 else 88.5
+
+        _total_cap_fmt        = f"{total_capturados:,}".replace(',', '.')
+        _sucesso_envio_fmt    = f"{sucesso_envio:,}".replace(',', '.')
+        _taxa_entrega_fmt     = f"{taxa_entrega:.1f}".replace('.', ',')
+        _carrinho_leads_fmt   = f"{carrinho_leads_qtd:,}".replace(',', '.')
+        _carrinho_taxa_fmt    = f"{(carrinho_leads_qtd/total_capturados*100):.2f}".replace('.', ',') if total_capturados > 0 else "1,39"
+        _conv_checkout_fmt    = f"{conv_checkout_perc:.1f}".replace('.', ',')
+        _fat_oferta_fmt       = f"{faturamento_oferta_lanc:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+        _fat_gross_fmt        = f"{faturamento_lanc_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+        _ticket_medio_fmt     = f"{ticket_medio_lanc:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+
         st.markdown(f"""
         <div style="background-color:#0f172a; border-left:5px solid #6366f1; padding:18px 22px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
             <h4 style="color:#ffffff; font-weight:700; margin:0 0 10px 0; text-align:left;">1. 📈 Visão Geral do Funil de Lançamento (Macro KPIs)</h4>
@@ -1083,14 +1093,14 @@ if not df_captacao.empty:
                 </tr>
                 <tr style="border-bottom:1px solid #334155;">
                     <td style="padding:10px;"><b>Leads Capturados (LP)</b></td>
-                    <td style="padding:10px;">{total_capturados:,} leads</td>
+                    <td style="padding:10px;">{_total_cap_fmt} leads</td>
                     <td style="padding:10px;">100,0%</td>
                     <td style="padding:10px; color:#a7f3d0;">Base robusta capturada na Landing Page.</td>
                 </tr>
                 <tr style="border-bottom:1px solid #334155;">
                     <td style="padding:10px;"><b>Entregues no WhatsApp (Boas-Vindas)</b></td>
-                    <td style="padding:10px;">{sucesso_envio:,} leads</td>
-                    <td style="padding:10px; color:#34d399;"><b>{taxa_entrega:.1f}%</b></td>
+                    <td style="padding:10px;">{_sucesso_envio_fmt} leads</td>
+                    <td style="padding:10px; color:#34d399;"><b>{_taxa_entrega_fmt}%</b></td>
                     <td style="padding:10px;">Ótima taxa de entrega inicial da API Oficial.</td>
                 </tr>
 
@@ -1102,19 +1112,19 @@ if not df_captacao.empty:
                 </tr>
                 <tr style="border-bottom:1px solid #334155;">
                     <td style="padding:10px;"><b>Leads no Checkout (Carrinho)</b></td>
-                    <td style="padding:10px;">{carrinho_leads_qtd} leads</td>
-                    <td style="padding:10px;">{(carrinho_leads_qtd/total_capturados*100) if total_capturados>0 else 1.39:.2f}% da base total</td>
+                    <td style="padding:10px;">{_carrinho_leads_fmt} leads</td>
+                    <td style="padding:10px;">{_carrinho_taxa_fmt}% da base total</td>
                     <td style="padding:10px;">62 via Pop-Up LP + 14 no Checkout Hotmart.</td>
                 </tr>
                 <tr>
                     <td style="padding:10px;"><b>Vendas Aprovadas (Lançamento Pós 16/08)</b></td>
                     <td style="padding:10px; color:#34d399;"><b>{vendas_lanc_qtd} vendas</b></td>
-                    <td style="padding:10px; color:#34d399;"><b>{conv_checkout_perc:.1f}% do checkout</b></td>
-                    <td style="padding:10px; color:#34d399;"><b>R$ {faturamento_oferta_lanc:,.2f} Base Ofertas</b> (Gross: R$ {faturamento_lanc_total:,.2f} | Ticket Médio: R$ {ticket_medio_lanc:,.2f}).</td>
+                    <td style="padding:10px; color:#34d399;"><b>{_conv_checkout_fmt}% do checkout</b></td>
+                    <td style="padding:10px; color:#34d399;"><b>R$ {_fat_oferta_fmt} Base Ofertas</b> (Gross: R$ {_fat_gross_fmt} | Ticket Médio: R$ {_ticket_medio_fmt}).</td>
                 </tr>
             </table>
         </div>
-        """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
 
         st.markdown("""
         <div style="background-color:#0f172a; border-left:5px solid #38bdf8; padding:18px 22px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
