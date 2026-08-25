@@ -251,7 +251,8 @@ if not df_captacao.empty:
             '🛒 Carrinho Aberto & Recuperação',
             '💵 Vendas Aprovadas & Faturamento',
             '🚨 Monitoramento Avançado & Erros', 
-            '📋 Plano de Ação BI & Decisões'
+            '📋 Plano de Ação BI & Decisões',
+            '📑 Relatório Executivo BI'
         ]
     else:
         opcoes_menu = [
@@ -853,6 +854,166 @@ if not df_captacao.empty:
                 check3 = st.checkbox("✅ Alinhei os criativos com o Gestor de Tráfego", key="chk_trafego_perfil")
                 if check3:
                     st.success("Alinhamento feito! Vamos acompanhar se a distribuição melhora na próxima semana.")
+            
+    elif menu_selecionado in ['📑 Relatório Executivo BI', 'Relatório Executivo BI', 'Relatorio Executivo']:
+        # --- BANNER EXECUTIVO: RELATÓRIO CONSOLIDADO DE INTELIGÊNCIA DE DADOS ---
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-left: 6px solid #10b981; padding: 24px 26px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:4px 12px; border-radius:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Auditoria de Inteligência BI</span>
+                    <h2 style="color: #ffffff; font-weight: 800; margin: 8px 0 0 0; font-size: 1.6rem; letter-spacing: -0.5px;">📊 Relatório Executivo de BI & Auditoria de Lançamento</h2>
+                </div>
+            </div>
+            <p style="color: #c7d2fe; margin-top: 10px; margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
+                Cruzamento profundo de dados auditados de <b>Captação (5.605 Leads)</b>, <b>Nível Técnico & Renda</b>, <b>Engajamento das CPLs</b>, <b>E-mail Marketing</b>, <b>Carrinho Aberto (R$ 76k)</b> e <b>Vendas Aprovadas (R$ 38,6k)</b>.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Scorecards de topo
+        sr1, sr2, sr3, sr4 = st.columns(4)
+        with sr1:
+            st.markdown("""
+            <div style="background-color:#0f172a; border-top:4px solid #6366f1; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <span style="font-size:0.7rem; color:#c7d2fe; text-transform:uppercase; font-weight:700;">📋 Leads Capturados</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">5.605 Leads</h3>
+                <span style="font-size:0.68rem; color:#818cf8;">83,7% Entregues WPP</span>
+            </div>
+            """, unsafe_allow_html=True)
+        with sr2:
+            st.markdown("""
+            <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <span style="font-size:0.7rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🏆 Vendas Aprovadas</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">35 Vendas</h3>
+                <span style="font-size:0.68rem; color:#34d399;">Ticket Médio: R$ 1.103,57</span>
+            </div>
+            """, unsafe_allow_html=True)
+        with sr3:
+            st.markdown("""
+            <div style="background-color:#065f46; border-top:4px solid #34d399; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <span style="font-size:0.7rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">💰 Total Transacionado</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">R$ 38.625,00</h3>
+                <span style="font-size:0.68rem; color:#a7f3d0;">68,5% via Atendimento 1x1</span>
+            </div>
+            """, unsafe_allow_html=True)
+        with sr4:
+            st.markdown("""
+            <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <span style="font-size:0.7rem; color:#fde68a; text-transform:uppercase; font-weight:700;">🛒 Recuperação de Carrinho</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">R$ 20.958,00</h3>
+                <span style="font-size:0.68rem; color:#fbbf24;">34,2% de Conversão de Checkout</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<div style='margin-top:24px;'></div>", unsafe_allow_html=True)
+
+        # SEÇÃO 1: MACRO KPIS
+        st.markdown("""
+        <div style="background-color:#0f172a; border-left:5px solid #6366f1; padding:18px 22px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+            <h4 style="color:#ffffff; font-weight:700; margin:0 0 10px 0; text-align:left;">1. 📈 Visão Geral do Funil de Lançamento (Macro KPIs)</h4>
+            <p style="color:#cbd5e1; font-size:0.9rem; margin:0 0 12px 0; text-align:left; line-height:1.6;">
+                Tabela consolidada das métricas de topo ao final do funil de vendas.
+            </p>
+            <table style="width:100%; border-collapse:collapse; color:#ffffff; font-size:0.88rem; text-align:left;">
+                <tr style="background-color:#1e293b; border-bottom:2px solid #334155;">
+                    <th style="padding:10px;">Etapa do Funil</th>
+                    <th style="padding:10px;">Volume Absoluto</th>
+                    <th style="padding:10px;">Taxa de Conversão / Eficiência</th>
+                    <th style="padding:10px;">Diagnóstico da Engenharia</th>
+                </tr>
+                <tr style="border-bottom:1px solid #334155;">
+                    <td style="padding:10px;"><b>Leads Capturados (LP)</b></td>
+                    <td style="padding:10px;">5.605 leads</td>
+                    <td style="padding:10px;">100,0%</td>
+                    <td style="padding:10px; color:#a7f3d0;">Base robusta capturada na Landing Page.</td>
+                </tr>
+                <tr style="border-bottom:1px solid #334155;">
+                    <td style="padding:10px;"><b>Entregues no WhatsApp (Boas-Vindas)</b></td>
+                    <td style="padding:10px;">4.690 leads</td>
+                    <td style="padding:10px; color:#34d399;"><b>83,7%</b></td>
+                    <td style="padding:10px;">Ótima taxa de entrega inicial da API Oficial.</td>
+                </tr>
+                <tr style="border-bottom:1px solid #334155;">
+                    <td style="padding:10px;"><b>Erros de Envio (WhatsApp)</b></td>
+                    <td style="padding:10px;">915 leads</td>
+                    <td style="padding:10px; color:#f87171;">16,3%</td>
+                    <td style="padding:10px; color:#fca5a5;">Falhas por falta de DDD/telefone no formulário da LP.</td>
+                </tr>
+                <tr style="border-bottom:1px solid #334155;">
+                    <td style="padding:10px;"><b>Participantes da Pesquisa</b></td>
+                    <td style="padding:10px;">556 a 600 respostas</td>
+                    <td style="padding:10px;">~10,7% da base</td>
+                    <td style="padding:10px;">Amostra altamente representativa (erro estatístico &lt; 4%).</td>
+                </tr>
+                <tr style="border-bottom:1px solid #334155;">
+                    <td style="padding:10px;"><b>Leads no Checkout (Carrinho)</b></td>
+                    <td style="padding:10px;">76 leads</td>
+                    <td style="padding:10px;">1,35% da base total</td>
+                    <td style="padding:10px;">32 via Pop-Up LP + 44 no Checkout Hotmart.</td>
+                </tr>
+                <tr>
+                    <td style="padding:10px;"><b>Vendas Aprovadas (Lançamento)</b></td>
+                    <td style="padding:10px; color:#34d399;"><b>35 vendas</b></td>
+                    <td style="padding:10px; color:#34d399;"><b>46,1% conversão de checkout</b></td>
+                    <td style="padding:10px; color:#34d399;"><b>R$ 38.625,00 transacionados</b> (Ticket Médio: R$ 1.103,57).</td>
+                </tr>
+            </table>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # SEÇÃO 2: PERFIL DA AUDIÊNCIA
+        st.markdown("""
+        <div style="background-color:#0f172a; border-left:5px solid #38bdf8; padding:18px 22px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+            <h4 style="color:#ffffff; font-weight:700; margin:0 0 10px 0; text-align:left;">2. 🧠 Análise Cruzada de Perfil da Audiência & Comportamento (Pesquisa)</h4>
+            <div style="line-height:1.6; color:#e2e8f0; font-size:0.9rem; text-align:left;">
+                <p>• <b>Cruzamento Renda vs Cartão de Crédito:</b> <b>72,4% dos leads</b> declararam ter cartão de crédito ativo. Porém, a renda mensal de <b>60%+ da base</b> se concentra na faixa de <b>1 a 3 salários mínimos</b> (R$ 1.412 a R$ 4.236).</p>
+                <p>• <b>Diagnóstico de Precificação:</b> O lead <i>tem o cartão</i>, mas possui orçamento mensal restrito e limite único limitado. Exigir o valor cheio de R$ 1.497 de uma só vez gera susto e abandono de carrinho. A ancoragem do pitch precisa ser o valor da parcela mensal (ex: <i>"menos de R$ 5/dia"</i> ou <i>"12x de R$ 149"</i>), sendo vital oferecer <b>Pagamento Híbrido (Pix + Cartão)</b> e <b>Dois Cartões</b> no checkout.</p>
+                <p>• <b>Nível Técnico & Didática:</b> <b>88,2% da base é leiga ou iniciante</b> (concentrada na faixa de 35 a 54 anos). É necessário eliminar termos elétricos complexos e focar nas promessas <i>"passo a passo seguro do zero"</i> e <i>"método à prova de falhas"</i>.</p>
+                <p>• <b>Top 5 Dores Latentes (WordCloud):</b> 1º <i>Manutenção</i> (771), 2º <i>Conhecimento</i> (495), 3º <i>Elétrica</i> (350), 4º <i>Scooter</i> (238), 5º <i>Consertar</i> (207).</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # SEÇÃO 3: WHATSAPP VS EMAIL
+        st.markdown("""
+        <div style="background-color:#0f172a; border-left:5px solid #f59e0b; padding:18px 22px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+            <h4 style="color:#ffffff; font-weight:700; margin:0 0 10px 0; text-align:left;">3. 🔥 Auditoria de Canais: WhatsApp vs E-mail Marketing</h4>
+            <div style="line-height:1.6; color:#e2e8f0; font-size:0.9rem; text-align:left;">
+                <p>• <b>WhatsApp (Canal Campeão):</b> 4.283 mensagens Utility disparadas durante a Maratona (Custo Meta US$ 33,41). Apresentou taxa de engajamento de <b>45,2% a 54,8% de cliques reais</b> nos lembretes de aula ao vivo.</p>
+                <p>• <b>Repescagem Inteligente:</b> A pergunta <i>"Conseguiu entrar no grupo?"</i> com link secundário salvou <b>181 Técnicos (85,0%)</b> e <b>55 Empreendedores (91,7%)</b>, resgatando 236 leads altamente qualificados.</p>
+                <p>• <b>E-mail Marketing (Gargalo de Performance):</b> Apresentou Open Rate médio de apenas <b>2,5%</b> (110 a 220 leituras por e-mail) e Click Rate de <b>2 a 13 cliques reais</b> por disparo (0,05% a 0,2%).</p>
+                <p>• <b>Conclusão BI:</b> <b>Não invista tempo escrevendo copys longas de e-mail</b>. Use o e-mail 100% automatizado apenas para direcionar o lead para o WhatsApp no cadastro e entregar acessos institucionais da Hotmart.</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # SEÇÃO 4: CARRINHO E VENDAS 1X1
+        st.markdown("""
+        <div style="background-color:#0f172a; border-left:5px solid #a855f7; padding:18px 22px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+            <h4 style="color:#ffffff; font-weight:700; margin:0 0 10px 0; text-align:left;">4. 🛒 Análise de Carrinho Aberto, Recuperação & Atendimento 1x1 (Gabriela)</h4>
+            <div style="line-height:1.6; color:#e2e8f0; font-size:0.9rem; text-align:left;">
+                <p>• <b>Recuperação de Carrinho:</b> Dos 76 leads que entraram no checkout, a automação + atendimento resgataram <b>26 vendas (R$ 20.958,00 recuperados)</b>.</p>
+                <p>• <b>Oportunidade na Mesa:</b> Existem <b>50 leads que não converteram</b>, representando <b>R$ 55.389,00 parados na mesa</b>.</p>
+                <p>• <b>Destaque de Vendas 1x1 (Gabriela):</b> Das 35 vendas auditadas no lançamento, <b>24 vendas (68,5% do faturamento total)</b> vieram com a tag <code>gabriela_wpp_1x1</code> no rastreamento de SCK.</p>
+                <p>• <b>Conclusão Comercial:</b> O atendimento humano e ativo da Gabriela no WhatsApp 1x1 foi o <b>maior motor de faturamento do lançamento</b>.</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # SEÇÃO 5: PLANO DE AÇÃO EM 5 PILARES
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-left:5px solid #10b981; padding:20px 24px; border-radius:12px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+            <h4 style="color:#ffffff; font-weight:700; margin:0 0 12px 0; text-align:left;">🚀 5. Plano Recomendado em 5 Pilares (Ações Estratégicas)</h4>
+            <div style="line-height:1.7; color:#e2e8f0; font-size:0.9rem; text-align:left;">
+                <p>1. <b>Foco Massivo no WhatsApp (85% do Esforço):</b> Manter o WhatsApp como canal número 1 de transmissão, avisos e fechamento de vendas.</p>
+                <p>2. <b>Atendimento Ativo 1x1 no Carrinho (Gabriela):</b> Focar a abordagem individual nos 50 leads que estão com carrinho aberto (R$ 55 mil parados) com oferta de parcelamento e suporte a dúvidas.</p>
+                <p>3. <b>Implementação Rígida de Rastreio (<code>?sck=</code>):</b> Padronizar todos os links de checkout e anúncios com o parâmetro <code>?sck=nome_da_campanha</code> para garantir 100% de rastreabilidade do ROI dos anúncios Meta Ads.</p>
+                <p>4. <b>Oferta Híbrida e Parcelamento Facilitado:</b> Destacar o valor em 12x na oferta e promover abertamente o pagamento em <b>2 Cartões</b> e <b>Pix + Cartão</b>.</p>
+                <p>5. <b>Automatização Enxuta de E-mail:</b> Manter a esteira de e-mail automatizada e sem retrabalho manual, focando o tempo da equipe na criação de anúncios e mensagens diretas para o WhatsApp.</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
             
             
     elif menu_selecionado in ['🕸️ Funil WhatsApp & ManyChat', '🕸️ Funil Manychat (WPP)', 'Funil Manychat (WPP)']:
