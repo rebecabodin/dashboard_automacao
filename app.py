@@ -267,7 +267,7 @@ if not df_captacao.empty:
         st.sidebar.radio("Vendas", opts_cat3, index=idx3, key='r_cat3', on_change=update_menu, args=('r_cat3',), label_visibility="collapsed")
 
         # Categoria 4: Inteligência & Gestão BI
-        opts_cat4 = ['📑 Relatório Executivo BI', '🚨 Monitoramento Avançado & Erros', '📋 Plano de Ação BI & Decisões']
+        opts_cat4 = ['🚨 Monitoramento Avançado & Erros', '📋 Plano de Ação BI & Decisões', '📑 Relatório Executivo BI']
         idx4 = opts_cat4.index(st.session_state['menu_selecionado']) if st.session_state['menu_selecionado'] in opts_cat4 else None
         st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#fbbf24; font-size:0.8rem; margin-top:14px; margin-bottom:6px;'>⚙️ 4. INTELIGÊNCIA & GESTÃO BI</div>", unsafe_allow_html=True)
         st.sidebar.radio("Gestão", opts_cat4, index=idx4, key='r_cat4', on_change=update_menu, args=('r_cat4',), label_visibility="collapsed")
