@@ -2105,17 +2105,21 @@ if not df_captacao.empty:
             top_estado = df_active['ESTADO'].mode()[0] if not df_active['ESTADO'].empty else 'SP'
             top_estado_qtd = len(df_active[df_active['ESTADO'] == top_estado])
 
-            # --- SCORECARDS DE TOPO ---
-            st.subheader(f"📊 KPIs Executivos de Vendas Reais ({lbl_periodo})")
+            # Quantidade de Onboarding (Mensagens enviadas)
+            wpp_enviado_qtd = len(df_active[df_active['Status Mensagem'].str.lower() == 'enviado'])
+            perc_wpp_enviado = (wpp_enviado_qtd / vendas_qtd * 100) if vendas_qtd > 0 else 0
 
-            sv1, sv2, sv3, sv4, sv5 = st.columns(5)
+            # --- SCORECARDS DE TOPO ---
+            st.subheader(f"📊 KPIs Executivos de Vendas & Onboarding ({lbl_periodo})")
+
+            sv1, sv2, sv3, sv4, sv5, sv6 = st.columns(6)
 
             with sv1:
                 st.markdown(f"""
-                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                    <span style="font-size:0.72rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🏆 Vendas Realizadas</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.4rem;">{vendas_qtd} Vendas</h3>
-                    <span style="font-size:0.7rem; color:#4ade80;">{lbl_periodo}</span>
+                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px 10px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.7rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🏆 Vendas Realizadas</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.3rem;">{vendas_qtd} Vendas</h3>
+                    <span style="font-size:0.68rem; color:#4ade80;">{lbl_periodo}</span>
                 </div>
                 """, unsafe_allow_html=True)
 
@@ -2123,37 +2127,46 @@ if not df_captacao.empty:
                 val_gross_fmt = f"{faturamento_gross_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
                 val_of_fmt = f"{faturamento_oferta_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
                 st.markdown(f"""
-                <div style="background-color:#065f46; border-top:4px solid #34d399; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                    <span style="font-size:0.72rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">💰 Total Transacionado</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.4rem;">R$ {val_gross_fmt}</h3>
-                    <span style="font-size:0.7rem; color:#34d399;">Base Ofertas: R$ {val_of_fmt}</span>
+                <div style="background-color:#065f46; border-top:4px solid #34d399; padding:16px 10px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.7rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">💰 Total Transacionado</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.3rem;">R$ {val_gross_fmt}</h3>
+                    <span style="font-size:0.68rem; color:#34d399;">Base Ofertas: R$ {val_of_fmt}</span>
                 </div>
                 """, unsafe_allow_html=True)
 
             with sv3:
                 st.markdown(f"""
-                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                    <span style="font-size:0.72rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">💳 Meio Principal</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.2rem;">{top_pagamento}</h3>
-                    <span style="font-size:0.7rem; color:#60a5fa;">Forma Preferida</span>
+                <div style="background-color:#0284c7; border-top:4px solid #38bdf8; padding:16px 10px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.7rem; color:#bae6fd; text-transform:uppercase; font-weight:700;">🎉 Onboarding WPP</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.3rem;">{wpp_enviado_qtd} Enviados</h3>
+                    <span style="font-size:0.68rem; color:#7dd3fc;">{perc_wpp_enviado:.1f}% de Cobertura</span>
                 </div>
                 """, unsafe_allow_html=True)
 
             with sv4:
                 st.markdown(f"""
-                <div style="background-color:#1e293b; border-top:4px solid #a855f7; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                    <span style="font-size:0.72rem; color:#e9d5ff; text-transform:uppercase; font-weight:700;">📌 Parcelado em 12x</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.4rem;">{perc_12x:.1f}%</h3>
-                    <span style="font-size:0.7rem; color:#c084fc;">{parc_12x} Alunos em 12x</span>
+                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:16px 10px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.7rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">💳 Meio Principal</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.15rem;">{top_pagamento}</h3>
+                    <span style="font-size:0.68rem; color:#60a5fa;">Forma Preferida</span>
                 </div>
                 """, unsafe_allow_html=True)
 
             with sv5:
                 st.markdown(f"""
-                <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                    <span style="font-size:0.72rem; color:#fde68a; text-transform:uppercase; font-weight:700;">📍 Estado Líder</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.4rem;">{top_estado} ({top_estado_qtd})</h3>
-                    <span style="font-size:0.7rem; color:#fbbf24;">{top_estado_qtd/vendas_qtd*100:.1f}% das Vendas</span>
+                <div style="background-color:#1e293b; border-top:4px solid #a855f7; padding:16px 10px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.7rem; color:#e9d5ff; text-transform:uppercase; font-weight:700;">📌 Parcelado em 12x</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.3rem;">{perc_12x:.1f}%</h3>
+                    <span style="font-size:0.68rem; color:#c084fc;">{parc_12x} Alunos em 12x</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with sv6:
+                st.markdown(f"""
+                <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:16px 10px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.7rem; color:#fde68a; text-transform:uppercase; font-weight:700;">📍 Estado Líder</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.3rem;">{top_estado} ({top_estado_qtd})</h3>
+                    <span style="font-size:0.68rem; color:#fbbf24;">{top_estado_qtd/vendas_qtd*100:.1f}% das Vendas</span>
                 </div>
                 """, unsafe_allow_html=True)
 
@@ -2247,6 +2260,16 @@ if not df_captacao.empty:
                             font=dict(color="#ffffff")
                         )
                         st.plotly_chart(fig_sck, use_container_width=True)
+
+                st.markdown(f"""
+                <div style="background-color:#0f172a; border-left:4px solid #38bdf8; padding:14px 20px; border-radius:10px; margin-top:16px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <h5 style="color:#ffffff; font-weight:700; margin:0;">🎉 Auditoria de Onboarding & Boas-Vindas Pós-Venda (ManyChat)</h5>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                        • <b>{wpp_enviado_qtd} Alunos Receberam Boas-Vindas no WhatsApp:</b> Representa uma cobertura de <b style="color:#38bdf8;">{perc_wpp_enviado:.1f}% de todos os compradores</b> via fluxo automático Onboarding (56 execuções LIVE no ManyChat).<br>
+                        • <b>{vendas_qtd - wpp_enviado_qtd} Alunos Pendentes de Boas-Vindas:</b> Recomenda-se envio manual pelo suporte para garantir 100% de onboarding na área de membros.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
 
             # TAB 2: MAPA & UF DOS COMPRADORES
             with tab_geo:
