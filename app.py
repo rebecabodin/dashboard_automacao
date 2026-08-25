@@ -2053,6 +2053,19 @@ if not df_captacao.empty:
             df_ca['Status Mensagem'] = df_ca['Status Mensagem'].fillna('Não Enviado').astype(str).str.strip()
             df_ca['SCK'] = df_ca['SCK'].fillna('Orgânico / Direto').astype(str).str.strip()
             
+            # Função auxiliar para conversão de moedas
+            def clean_currency(val):
+                if pd.isna(val):
+                    return 0.0
+                v_str = str(val).replace('R$', '').replace(' ', '').replace('.', '').replace(',', '.').strip()
+                try:
+                    return float(v_str)
+                except:
+                    return 0.0
+
+            df_ca['GROSS_PRICE_NUM'] = df_ca['GROSS PRICE'].apply(clean_currency)
+            df_ca['VALOR_OFERTA_NUM'] = df_ca['Valor oferta'].apply(clean_currency)
+            
             # Filtro por Período de Lançamento (A partir de 16/08/2026)
             df_lançamento = df_ca[df_ca['DATA_DT'] >= pd.Timestamp(2026, 8, 16)].copy()
 
@@ -2075,9 +2088,11 @@ if not df_captacao.empty:
                 df_active = df_ca
                 lbl_periodo = "Período Completo (Base Total)"
 
-            # --- MÉTRICAS CHAVE ---
+            # --- MÉTRICAS CHAVE DINÂMICAS ---
             vendas_qtd = len(df_active)
-            faturamento_estimado = vendas_qtd * 1497
+            faturamento_gross_total = df_active['GROSS_PRICE_NUM'].sum()
+            faturamento_oferta_total = df_active['VALOR_OFERTA_NUM'].sum()
+            ticket_medio_real = faturamento_gross_total / vendas_qtd if vendas_qtd > 0 else 0
             
             # Pagamento mais usado
             top_pagamento = df_active['FORMA_PAGAMENTO'].mode()[0] if not df_active['FORMA_PAGAMENTO'].empty else 'N/A'
@@ -2091,7 +2106,7 @@ if not df_captacao.empty:
             top_estado_qtd = len(df_active[df_active['ESTADO'] == top_estado])
 
             # --- SCORECARDS DE TOPO ---
-            st.subheader(f"📊 KPIs Executivos de Vendas ({lbl_periodo})")
+            st.subheader(f"📊 KPIs Executivos de Vendas Reais ({lbl_periodo})")
 
             sv1, sv2, sv3, sv4, sv5 = st.columns(5)
 
@@ -2105,13 +2120,15 @@ if not df_captacao.empty:
                 """, unsafe_allow_html=True)
 
             with sv2:
+                val_gross_fmt = f"{faturamento_gross_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+                val_of_fmt = f"{faturamento_oferta_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
                 st.markdown(f"""
                 <div style="background-color:#065f46; border-top:4px solid #34d399; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                    <span style="font-size:0.72rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">💰 Faturamento Bruto</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.4rem;">R$ {faturamento_estimado:,.2f}</h3>
-                    <span style="font-size:0.7rem; color:#34d399;">Ticket R$ 1.497,00</span>
+                    <span style="font-size:0.72rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">💰 Total Transacionado</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.4rem;">R$ {val_gross_fmt}</h3>
+                    <span style="font-size:0.7rem; color:#34d399;">Base Ofertas: R$ {val_of_fmt}</span>
                 </div>
-                """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
 
             with sv3:
                 st.markdown(f"""
@@ -2329,10 +2346,20 @@ if not df_captacao.empty:
                 col_d1, col_d2 = st.columns([1.2, 1])
 
                 with col_d1:
-                    st.markdown("""
+                    val_g_str = f"{faturamento_gross_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+                    val_o_str = f"{faturamento_oferta_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+                    st.markdown(f"""
                     <div style="background-color:#0f172a; padding:18px; border-radius:10px; color:#ffffff; border-left:4px solid #10b981;">
-                        <h5 style="color:#ffffff; font-weight:700; margin:0;">📊 DRE Consolidada da Operação WhatsApp (Meta API)</h5>
+                        <h5 style="color:#ffffff; font-weight:700; margin:0;">📊 DRE Consolidada de Vendas Reais & Operação Meta API</h5>
                         <table style="width:100%; margin-top:14px; border-collapse:collapse; color:#ffffff; font-size:0.9rem;">
+                            <tr style="border-bottom:1px solid #334155; height:36px;">
+                                <td><b>🏆 Total Transacionado no Checkout (Gross Price - {vendas_qtd} Vendas):</b></td>
+                                <td style="text-align:right; color:#34d399; font-weight:bold;">R$ {val_g_str}</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #334155; height:36px;">
+                                <td><b>🏷️ Receita Base de Ofertas (Valor Oferta):</b></td>
+                                <td style="text-align:right; color:#60a5fa;">R$ {val_o_str}</td>
+                            </tr>
                             <tr style="border-bottom:1px solid #334155; height:36px;">
                                 <td><b>(+) Faturamento Resgatado via WhatsApp (14 Vendas):</b></td>
                                 <td style="text-align:right; color:#34d399; font-weight:bold;">R$ 20.958,00</td>
