@@ -2100,8 +2100,8 @@ if not df_captacao.empty:
             # PASSO 1: SCORECARDS CONSOLIDADOS GLOBAIS
             # =========================================================
             st.markdown("""
-            <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:14px 18px; border-radius:10px; margin-bottom:16px; color:#ffffff;">
-                <h4 style="color:#ffffff; font-weight:700; margin:0; font-size:1.15rem;">📊 1. Visão Consolidada de Vendas & Eficiência do WhatsApp</h4>
+            <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:16px 20px; border-radius:12px; margin-top:10px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+                <h4 style="color:#ffffff; font-weight:700; margin:0; font-size:1.2rem;">📊 1. Visão Consolidada de Vendas & Eficiência do WhatsApp</h4>
             </div>
             """, unsafe_allow_html=True)
 
@@ -2109,39 +2109,42 @@ if not df_captacao.empty:
 
             with g1:
                 st.markdown(f"""
-                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
-                    <span style="font-size:0.78rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">📥 Intenções de Checkout</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{total_unificado_leads} Leads</h3>
+                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:20px 14px; border-radius:12px; text-align:center; color:#ffffff; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+                    <span style="font-size:0.78rem; color:#bfdbfe; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">📥 Intenções de Checkout</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0 6px 0; font-size:1.55rem;">{total_unificado_leads} Leads</h3>
                     <span style="font-size:0.75rem; color:#60a5fa;">62 Pop-Up LP + 14 Hotmart</span>
                 </div>
                 """, unsafe_allow_html=True)
 
             with g2:
                 st.markdown(f"""
-                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
-                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🏆 Vendas Concluídas</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{vendas_globais} Vendas</h3>
+                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:20px 14px; border-radius:12px; text-align:center; color:#ffffff; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">🏆 Vendas Concluídas</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0 6px 0; font-size:1.55rem;">{vendas_globais} Vendas</h3>
                     <span style="font-size:0.75rem; color:#4ade80;">R$ {faturamento_global:,.2f} Faturados</span>
                 </div>
                 """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
 
             with g3:
                 st.markdown(f"""
-                <div style="background-color:#065f46; border-top:4px solid #34d399; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
-                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🚀 Resgatados p/ WhatsApp</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{vendas_wpp_total} Vendas</h3>
+                <div style="background-color:#065f46; border-top:4px solid #34d399; padding:20px 14px; border-radius:12px; text-align:center; color:#ffffff; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">🚀 Resgatados p/ WhatsApp</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0 6px 0; font-size:1.55rem;">{vendas_wpp_total} Vendas</h3>
                     <span style="font-size:0.75rem; color:#34d399;">R$ {roi_resgatado_wpp:,.2f} ROI WPP</span>
                 </div>
                 """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
 
             with g4:
                 st.markdown(f"""
-                <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:16px; border-radius:10px; text-align:center; color:#ffffff;">
-                    <span style="font-size:0.78rem; color:#fde68a; text-transform:uppercase; font-weight:700;">🟡 Carrinhos na Mesa</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.5rem;">{abertos_wpp_total} Leads</h3>
+                <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:20px 14px; border-radius:12px; text-align:center; color:#ffffff; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+                    <span style="font-size:0.78rem; color:#fde68a; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">🟡 Carrinhos na Mesa</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0 6px 0; font-size:1.55rem;">{abertos_wpp_total} Leads</h3>
                     <span style="font-size:0.75rem; color:#fbbf24;">R$ {faturamento_mesa:,.2f} Pendentes</span>
                 </div>
                 """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
+
+            # Espaçamento entre seções principais
+            st.markdown("<div style='margin-top:24px;'></div>", unsafe_allow_html=True)
 
             # --- DRE & ROI DO INVESTIMENTO EM DISPAROS DE WHATSAPP (17 A 24 DE AGOSTO) ---
             custo_wpp_usd = 49.11
@@ -2155,7 +2158,7 @@ if not df_captacao.empty:
             val_roi_perc = f"{roi_multiplicador*100:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.')
 
             st.markdown(f"""
-            <div style="background-color:#0f172a; border-left:6px solid #10b981; padding:20px 24px; border-radius:12px; margin-bottom:16px; box-shadow:0 4px 20px rgba(0,0,0,0.35); color:#ffffff;">
+            <div style="background-color:#0f172a; border-left:6px solid #10b981; padding:20px 24px; border-radius:12px; margin-bottom:20px; box-shadow:0 4px 20px rgba(0,0,0,0.35); color:#ffffff;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
                     <div>
                         <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:4px 12px; border-radius:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Inteligência Financeira de Canais</span>
@@ -2173,32 +2176,32 @@ if not df_captacao.empty:
 
             with dre_col1:
                 st.markdown(f"""
-                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:18px; border-radius:10px; text-align:center; color:#ffffff; min-height:140px;">
-                    <span style="font-size:0.78rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">💳 Custo Total Disparos API</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0; font-size:1.4rem;">US$ {custo_wpp_usd:.2f} <span style="font-size:0.85rem; color:#94a3b8;">(~R$ {val_brl_str})</span></h3>
+                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:20px 16px; border-radius:12px; text-align:center; color:#ffffff; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+                    <span style="font-size:0.78rem; color:#bfdbfe; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">💳 Custo Total Disparos API</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0 6px 0; font-size:1.45rem;">US$ {custo_wpp_usd:.2f} <span style="font-size:0.85rem; color:#94a3b8;">(~R$ {val_brl_str})</span></h3>
                     <span style="font-size:0.75rem; color:#60a5fa;">4.161 Utility + 232 Marketing Msgs</span>
                 </div>
                 """, unsafe_allow_html=True)
 
             with dre_col2:
                 st.markdown(f"""
-                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:18px; border-radius:10px; text-align:center; color:#ffffff; min-height:140px;">
-                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">📈 Faturamento Resgatado WPP</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0; font-size:1.4rem;">R$ {val_resg_str}</h3>
+                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:20px 16px; border-radius:12px; text-align:center; color:#ffffff; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">📈 Faturamento Resgatado WPP</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0 6px 0; font-size:1.45rem;">R$ {val_resg_str}</h3>
                     <span style="font-size:0.75rem; color:#4ade80;">14 Vendas Aprovadas pós WPP</span>
                 </div>
                 """, unsafe_allow_html=True)
 
             with dre_col3:
                 st.markdown(f"""
-                <div style="background-color:#065f46; border-top:4px solid #34d399; padding:18px; border-radius:10px; text-align:center; color:#ffffff; min-height:140px;">
-                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">💰 Lucro Líquido do Canal</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0; font-size:1.4rem;">R$ {val_lucro_str}</h3>
+                <div style="background-color:#065f46; border-top:4px solid #34d399; padding:20px 16px; border-radius:12px; text-align:center; color:#ffffff; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">💰 Lucro Líquido do Canal</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0 6px 0; font-size:1.45rem;">R$ {val_lucro_str}</h3>
                     <span style="font-size:0.75rem; color:#34d399;">Faturamento - Custo de Disparos</span>
                 </div>
                 """, unsafe_allow_html=True)
 
-            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("<div style='margin-top:24px;'></div>", unsafe_allow_html=True)
 
             # =========================================================
             # PASSO 2: VISUAL STORYTELLING & FUNIL INTERATIVO
