@@ -287,7 +287,7 @@ if not df_captacao.empty:
         st.sidebar.radio("Captação", opts_cat1, index=idx1, key='r_cat1_cli', on_change=update_menu, args=('r_cat1_cli',), label_visibility="collapsed")
 
         # Categoria 2: CPLs (Cliente)
-        opts_cat2 = ['🎯 Raio-X Didático das CPLs (1 a 4)']
+        opts_cat2 = ['🎯 Raio-X Didático das CPLs (1 a 4)', '✉️ Campanhas & Disparos de E-mail']
         idx2 = opts_cat2.index(current_page) if current_page in opts_cat2 else None
         st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#818cf8; font-size:0.8rem; margin-top:14px; margin-bottom:6px;'>🎓 2. AULAS & CPLs</div>", unsafe_allow_html=True)
         st.sidebar.radio("CPLs", opts_cat2, index=idx2, key='r_cat2_cli', on_change=update_menu, args=('r_cat2_cli',), label_visibility="collapsed")
