@@ -3003,9 +3003,38 @@ if not df_captacao.empty:
 
             with col_ec1:
                 with st.container(border=True):
-                    st.markdown("<h5 style='margin:0 0 14px 0; font-weight:700; text-align:center; color:#ffffff;'>Taxa de Abertura (%) e CTOR (%) por Campanha</h5>", unsafe_allow_html=True)
-                    
-                    df_camp['Campanha_Clean'] = df_camp['name'].astype(str).str.replace('LC7_MDE_AGO26 -', '', regex=False).str.strip()
+                    def clean_email_name(s):
+                        import re
+                        s_str = str(s).replace('LC7_MDE_AGO26 -', '').replace('\xa0', ' ').strip()
+                        if '[CARRINHO]' in s_str:
+                            m = re.search(r'E-MAIL (\d+)', s_str)
+                            n = m.group(1) if m else ''
+                            return f"E-mail 0{n} (Carrinho)" if n else s_str
+                        elif '[CPL]' in s_str:
+                            s_clean = s_str.replace('[CPL] -', '').strip()
+                            if 'ESTAMOS AO VIVO' in s_clean:
+                                return "E-mail 20 (Ao Vivo)"
+                            elif 'ABERTURA AMANHÃ' in s_clean:
+                                return "E-mail 21 (Abertura)"
+                            elif 'FALTA 1 HORA' in s_clean:
+                                return "E-mail 19 (Falta 1h)"
+                            elif 'SORTEIO + SP' in s_clean:
+                                return "E-mail 14 (Aula 3 + SP)"
+                            elif 'AULA 3 + SORTEIO' in s_clean:
+                                return "E-mail 12 (Aula 3)"
+                            elif 'AVISO AULA 4' in s_clean:
+                                return "E-mail 18 (Aviso Aula 4)"
+                            elif 'BLOG DE LANÇAMENTO' in s_clean:
+                                m = re.search(r'E-MAIL (\d+)', s_clean)
+                                return f"E-mail {m.group(1)} (Blog)" if m else s_clean
+                            elif 'É HOJE AULA 4' in s_clean:
+                                return "E-mail 16 (É Hoje Aula 4)"
+                            elif 'AVISO IMPORTANTE' in s_clean:
+                                return "E-mail 15 (Aviso Imp.)"
+                            return s_clean
+                        return s_str
+
+                    df_camp['Campanha_Clean'] = df_camp['name'].apply(clean_email_name)
                     
                     fig_camp_perf = go.Figure()
                     fig_camp_perf.add_trace(go.Bar(
@@ -3026,14 +3055,15 @@ if not df_captacao.empty:
                     ))
                     
                     fig_camp_perf.update_layout(
+                        title=dict(text="Taxa de Abertura (%) e CTOR (%) por Campanha", x=0.5, xanchor='center', font=dict(size=15, color="#ffffff")),
                         barmode='group',
-                        height=390,
-                        margin=dict(l=10, r=10, t=10, b=80),
+                        height=420,
+                        margin=dict(l=15, r=15, t=60, b=90),
                         paper_bgcolor="rgba(0,0,0,0)",
                         plot_bgcolor="rgba(0,0,0,0)",
                         font=dict(color="#ffffff"),
-                        xaxis=dict(tickangle=-45),
-                        legend=dict(orientation="h", y=1.1, x=0.25)
+                        xaxis=dict(tickangle=-35),
+                        legend=dict(orientation="h", y=1.12, x=0.5, xanchor='center')
                     )
                     st.plotly_chart(fig_camp_perf, use_container_width=True)
 
