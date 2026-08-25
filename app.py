@@ -2936,59 +2936,76 @@ if not df_captacao.empty:
 
         # Cálculo das métricas gerais
         total_leads_inscritos = 17082
+        base_ativa_media = df_camp['total_sent'].mean() if not df_camp.empty else 5580
         total_disparados_campanhas = df_camp['total_sent'].sum()
         media_abertura_campanhas = df_camp['open_rate_percent'].mean()
-        max_ctor = df_camp['ctor_percent'].max()
 
         # --- SCORECARDS DE TOPO ---
         st.subheader("📊 Métricas Consolidadas de E-mail Marketing (Hotmart Send)")
         
-        m1, m2, m3, m4, m5 = st.columns(5)
+        m1, m2, m3, m4, m5, m6 = st.columns(6)
 
         with m1:
             st.markdown(f"""
-            <div style="background-color:#1e1b4b; border-top:4px solid #6366f1; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                <span style="font-size:0.7rem; color:#c7d2fe; text-transform:uppercase; font-weight:700;">📥 Base Cadastrada</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.3rem;">17.082 Leads</h3>
-                <span style="font-size:0.68rem; color:#818cf8;">Automação Entrada</span>
+            <div style="background-color:#1e1b4b; border-top:4px solid #6366f1; padding:16px 10px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <span style="font-size:0.68rem; color:#c7d2fe; text-transform:uppercase; font-weight:700;">📥 Cadastros Brutos</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.25rem;">17.082</h3>
+                <span style="font-size:0.65rem; color:#818cf8;">Histórico Automação</span>
             </div>
             """, unsafe_allow_html=True)
 
         with m2:
             st.markdown(f"""
-            <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                <span style="font-size:0.7rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">📩 Total Disparados</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.3rem;">{total_disparados_campanhas:,.0f}</h3>
-                <span style="font-size:0.68rem; color:#60a5fa;">15 Campanhas Disparadas</span>
+            <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px 10px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <span style="font-size:0.68rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🎯 Base Ativa Limpa</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.25rem;">{base_ativa_media:,.0f}</h3>
+                <span style="font-size:0.65rem; color:#34d399;">Leads Válidos p/ Disparo</span>
             </div>
             """.replace(',', '.'), unsafe_allow_html=True)
 
         with m3:
-            st.markdown("""
-            <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                <span style="font-size:0.7rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">👁️ Abertura Cadastro</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.3rem;">14,0%</h3>
-                <span style="font-size:0.68rem; color:#4ade80;">2.391 Aberturas Onboarding</span>
+            st.markdown(f"""
+            <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:16px 10px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <span style="font-size:0.68rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">📩 Total Disparados</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.25rem;">{total_disparados_campanhas:,.0f}</h3>
+                <span style="font-size:0.65rem; color:#60a5fa;">15 Campanhas Disparadas</span>
             </div>
-            """, unsafe_allow_html=True)
+            """.replace(',', '.'), unsafe_allow_html=True)
 
         with m4:
             st.markdown("""
-            <div style="background-color:#0284c7; border-top:4px solid #38bdf8; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                <span style="font-size:0.7rem; color:#bae6fd; text-transform:uppercase; font-weight:700;">⚡ CTOR Cadastro</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.3rem;">22,0%</h3>
-                <span style="font-size:0.68rem; color:#7dd3fc;">Click-to-Open Rate</span>
+            <div style="background-color:#0284c7; border-top:4px solid #38bdf8; padding:16px 10px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <span style="font-size:0.68rem; color:#bae6fd; text-transform:uppercase; font-weight:700;">👁️ Abertura Cadastro</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.25rem;">14,0%</h3>
+                <span style="font-size:0.65rem; color:#7dd3fc;">2.391 Aberturas Entrada</span>
             </div>
             """, unsafe_allow_html=True)
 
         with m5:
-            st.markdown(f"""
-            <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                <span style="font-size:0.7rem; color:#fde68a; text-transform:uppercase; font-weight:700;">🎯 Média Abertura CPLs</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.3rem;">{media_abertura_campanhas:.1f}%</h3>
-                <span style="font-size:0.68rem; color:#fbbf24;">Pico de 4% na Aula 4</span>
+            st.markdown("""
+            <div style="background-color:#4c1d95; border-top:4px solid #a855f7; padding:16px 10px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <span style="font-size:0.68rem; color:#e9d5ff; text-transform:uppercase; font-weight:700;">⚡ CTOR Cadastro</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.25rem;">22,0%</h3>
+                <span style="font-size:0.65rem; color:#c084fc;">Cliques p/ WhatsApp</span>
             </div>
             """, unsafe_allow_html=True)
+
+        with m6:
+            st.markdown(f"""
+            <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:16px 10px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <span style="font-size:0.68rem; color:#fde68a; text-transform:uppercase; font-weight:700;">🎯 Abertura CPLs</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.25rem;">{media_abertura_campanhas:.1f}%</h3>
+                <span style="font-size:0.65rem; color:#fbbf24;">Pico de 4% na Aula 4</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown(f"""
+        <div style="background-color:#0f172a; border-left:4px solid #3b82f6; padding:14px 18px; border-radius:10px; margin-top:16px; margin-bottom:20px; color:#ffffff; font-size:0.88rem; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+            💡 <b>Nota Técnica de Engenharia de Dados (Diferença entre 17.082 vs 5.580):</b><br>
+            • <b>17.082 (Cadastros Brutos):</b> É o volume total acumulado na automação <i>OBRIGADO_LC7_MDE_AGO26</i> desde 23/07/2026, contabilizando todos os formulários preenchidos, incluindo re-cadastros de leads antigos e entradas duplicadas.<br>
+            • <b>~5.580 (Base Ativa Limpa):</b> É a lista real e deduplicada enviada nas campanhas ativas de e-mail marketing do lançamento LC7, após a remoção automática de descadastrados, e-mails inválidos (bounces) e cadastros duplicados pelo Hotmart Send.
+        </div>
+        """, unsafe_allow_html=True)
 
         st.markdown("<div style='margin-top:20px;'></div>", unsafe_allow_html=True)
 
