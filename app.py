@@ -2933,6 +2933,10 @@ if not df_captacao.empty:
         aberturas_onboarding_reais = int(base_real_lista * 0.14)
         cliques_onboarding_reais = int(aberturas_onboarding_reais * 0.22)
 
+        # Strings formatadas para exibição sem afetar o HTML
+        str_base_real = f"{base_real_lista:,.0f}".replace(',', '.')
+        str_disp_total = f"{total_disparados_campanhas:,.0f}".replace(',', '.')
+
         # --- SCORECARDS DE TOPO (FOCADOS 100% NA BASE REAL) ---
         st.subheader("📊 Métricas Consolidadas sobre a Base Real do LC7 (Hotmart Send)")
         
@@ -2942,19 +2946,19 @@ if not df_captacao.empty:
             st.markdown(f"""
             <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
                 <span style="font-size:0.7rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🎯 Base Real Inscrita</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">{base_real_lista:,.0f} Leads</h3>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">{str_base_real} Leads</h3>
                 <span style="font-size:0.68rem; color:#34d399;">Lista Limpa & Ativa LC7</span>
             </div>
-            """.replace(',', '.'), unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
         with m2:
             st.markdown(f"""
             <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
                 <span style="font-size:0.7rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">📩 Total Disparados</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">{total_disparados_campanhas:,.0f}</h3>
+                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">{str_disp_total}</h3>
                 <span style="font-size:0.68rem; color:#60a5fa;">15 Campanhas Broadcast</span>
             </div>
-            """.replace(',', '.'), unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
         with m3:
             st.markdown(f"""
@@ -3036,15 +3040,15 @@ if not df_captacao.empty:
             with col_ec2:
                 st.markdown(f"""
                 <div style="background-color:#0f172a; border-left:4px solid #ef4444; padding:18px; border-radius:10px; color:#ffffff; height:100%; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                    <h5 style="color:#ffffff; font-weight:700; margin:0;">🚨 Diagnóstico Crítico sobre os {base_real_lista:,.0f} Leads Reais</h5>
+                    <h5 style="color:#ffffff; font-weight:700; margin:0;">🚨 Diagnóstico Crítico sobre os {str_base_real} Leads Reais</h5>
                     <p style="font-size:0.88rem; color:#ffffff; margin-top:12px; line-height:1.6;">
-                        • <b>Baixo Open Rate Geral (2% a 4%):</b> Da base real de {base_real_lista:,.0f} e-mails enviados no carrinho, apenas <b>110 a 220 pessoas abriram o e-mail</b>.<br><br>
+                        • <b>Baixo Open Rate Geral (2% a 4%):</b> Da base real de {str_base_real} e-mails enviados no carrinho, apenas <b>110 a 220 pessoas abriram o e-mail</b>.<br><br>
                         • <b>Pico na Aula 4 ao Vivo (4%):</b> O E-mail 20 ('Estamos ao vivo') atingiu 222 aberturas únicas.<br><br>
                         • <b>Destaque de Cliques no E-mail 15 (6% CTOR):</b> O E-mail 'Aviso importante' gerou a maior taxa de cliques da maratona.<br><br>
                         👉 <b>Conclusão BI:</b> Depender unicamente do E-mail Marketing para fechamento de vendas causa perdas massivas. O WhatsApp deve ser o canal primário de conversão e o E-mail como apoio secundário.
                     </p>
                 </div>
-                """.replace(',', '.'), unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
 
         # TAB 2: AUTOMAÇÃO DE ENTRADA & BOAS-VINDAS (EXCLUSIVO LC7_MDE_AGO26)
         with tab_em_aut:
@@ -3061,7 +3065,7 @@ if not df_captacao.empty:
                     
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                         <span style="font-size:0.95rem;">Tamanho Real da Lista de Envio:</span>
-                        <b style="color:#818cf8; font-size:1.25rem;">{base_real_lista:,.0f} Leads Válidos</b>
+                        <b style="color:#818cf8; font-size:1.25rem;">{str_base_real} Leads Válidos</b>
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                         <span style="font-size:0.95rem;">Taxa de Abertura (Open Rate 14%):</span>
@@ -3072,19 +3076,19 @@ if not df_captacao.empty:
                         <b style="color:#38bdf8; font-size:1.25rem;">{cliques_onboarding_reais} Leads no WhatsApp</b>
                     </div>
                 </div>
-                """.replace(',', '.'), unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
 
             with col_ea2:
                 st.markdown(f"""
                 <div style="background-color:#0f172a; border-left:4px solid #10b981; padding:22px; border-radius:12px; color:#ffffff; height:100%; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
                     <h5 style="color:#ffffff; font-weight:700; margin:0;">💡 Análise do Fluxo de Cadastro LC7 (Base Real)</h5>
                     <p style="font-size:0.9rem; color:#ffffff; margin-top:12px; line-height:1.6;">
-                        • <b>Tamanho Real da Lista:</b> {base_real_lista:,.0f} leads limpos e deduplicados compõem a base ativa de e-mails do lançamento <b>LC7_MDE_AGO26</b>.<br><br>
+                        • <b>Tamanho Real da Lista:</b> {str_base_real} leads limpos e deduplicados compõem a base ativa de e-mails do lançamento <b>LC7_MDE_AGO26</b>.<br><br>
                         • <b>Engajamento no Onboarding:</b> {aberturas_onboarding_reais} pessoas (14%) abriram a mensagem de boas-vindas.<br><br>
                         • <b>Retenção para WhatsApp:</b> {cliques_onboarding_reais} leads (22% CTOR) clicaram na chamada do e-mail para ingressar nos grupos oficiais do WhatsApp.
                     </p>
                 </div>
-                """.replace(',', '.'), unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
 
         # TAB 3: CRONOGRAMA DE CONTROLE (E-MAIL & WPP)
         with tab_em_ctrl:
