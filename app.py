@@ -1369,28 +1369,38 @@ if not df_captacao.empty:
                 st.markdown("<br>", unsafe_allow_html=True)
                 
                 with st.container(border=True):
-                    st.markdown("#### 🎬 A Jornada do Lead na CPL 02")
                     cpl2_col_text, cpl2_col_alert = st.columns([1, 1])
 
                     with cpl2_col_text:
                         st.markdown("""
-                        • <b>Broadcast Inicial:</b> 896 enviados ➔ 822 entregues ➔ <b>579 abriram (65%)</b>.<br>
-                        • <b>94 pessoas únicas clicaram</b> em botões de ação (11.4% CTR).<br>
-                        • <b>Path 'Assistir Agora':</b> 63 solicitaram a aula ➔ <b>55 clicaram p/ ABRIR A AULA (87.3% CTR)</b>.<br>
-                        • <b>Path 'Já assisti':</b> 79 responderam ➔ 30 toparam ir ao IG (38%) ➔ <b>25 abriram o Instagram (83.3%)</b>.<br>
-                        • <b>Automação IG (DM Pós-Comentário):</b> 16 pessoas comentaram no post ➔ <b>100% receberam a DM da Aula 3 e 12 abriram (75% Open Rate)</b>.<br>
-                        • <b>Opt-out (Parar mensagens):</b> Apenas 7 solicitaram (0.85% da base) ➔ 0 reverteram.
+                        <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:18px; border-radius:10px; min-height:280px; display:flex; flex-direction:column; justify-content:space-between; color:#ffffff;">
+                            <div>
+                                <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1rem;">🎬 A Jornada do Lead na CPL 02</h5>
+                                <p style="font-size:0.92rem; color:#ffffff; margin-top:10px; line-height:1.5;">
+                                    <span style="color:#ffffff;">• <b>Broadcast Inicial:</b> 896 enviados ➔ 822 entregues ➔</span> <b style="color:#60a5fa;">579 abriram (65%)</b>.<br>
+                                    <span style="color:#ffffff;">• <b>94 pessoas únicas clicaram</b> em botões de ação (11.4% CTR).</span><br>
+                                    <span style="color:#ffffff;">• <b>Path 'Assistir Agora':</b> 63 solicitaram a aula ➔</span> <b style="color:#4ade80;">55 clicaram p/ ABRIR A AULA (87.3% CTR)</b>.<br>
+                                    <span style="color:#ffffff;">• <b>Path 'Já assisti':</b> 79 responderam ➔ 30 toparam ir ao IG (38%) ➔ 25 abriram o Instagram (83.3%).</span><br>
+                                    <span style="color:#ffffff;">• <b>Automação IG (DM Pós-Comentário):</b> 16 pessoas comentaram ➔ 100% receberam DM e 12 abriram (75%).</span><br>
+                                    <span style="color:#ffffff;">• <b>Opt-out:</b> Apenas 7 solicitaram (0.85% da base) ➔ 0 reverteram.</span>
+                                </p>
+                            </div>
+                        </div>
                         """, unsafe_allow_html=True)
 
                     with cpl2_col_alert:
                         st.markdown("""
-                        <div style="background-color:#2d1215; border-left:5px solid #ef4444; padding:16px; border-radius:8px;">
-                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🚨 O Aprendizado Crítico da CPL 02</h5>
-                            <p style="font-size:0.92rem; color:#f8fafc; margin-top:10px; line-height:1.5;">
-                                <b style="color:#f87171;">Mais de 3.600 leads (80.4% da base)</b> foram impedidos de receber o aviso da Aula 2.<br><br>
-                                <b>Motivo:</b> A Meta reclassificou o template de <i>'Utility'</i> para <i>'Marketing'</i> durante a transmissão.<br><br>
-                                <b style="color:#fbbf24;">Solução p/ LC8:</b> Diversificar janelas de envio e manter saldo em carteira reservado para templates da categoria Marketing.
-                            </p>
+                        <div style="background-color:#2d1215; border-left:6px solid #ef4444; padding:18px; border-radius:10px; min-height:280px; display:flex; flex-direction:column; justify-content:space-between; color:#ffffff;">
+                            <div>
+                                <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1rem;">🚨 O Aprendizado Crítico da CPL 02</h5>
+                                <p style="font-size:0.92rem; color:#ffffff; margin-top:10px; line-height:1.5;">
+                                    <b style="color:#f87171;">Mais de 3.600 leads (80.4% da base)</b> <span style="color:#ffffff;">foram impedidos de receber o aviso da Aula 2.</span><br><br>
+                                    <b style="color:#ffffff;">Motivo:</b> <span style="color:#ffffff;">A Meta reclassificou o template de <i>'Utility'</i> para <i>'Marketing'</i> durante a transmissão.</span>
+                                </p>
+                            </div>
+                            <div style="margin-top:auto; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.3); color:#ffffff; font-size:0.92rem; line-height:1.5;">
+                                <b style="color:#fbbf24;">Solução p/ LC8:</b> <span style="color:#ffffff;">Diversificar janelas de envio e manter saldo em carteira reservado para templates da categoria Marketing.</span>
+                            </div>
                         </div>
                         """, unsafe_allow_html=True)
 
