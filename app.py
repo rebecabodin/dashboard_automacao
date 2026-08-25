@@ -2097,58 +2097,52 @@ if not df_captacao.empty:
             faturamento_mesa = abertos_wpp_total * 1497
 
             # =========================================================
-            # PASSO 1: SCORECARDS CONSOLIDADOS GLOBAIS
+            # PASSO 1: SCORECARDS CONSOLIDADOS GLOBAIS DE VENDAS
             # =========================================================
-            st.markdown("""
-            <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:16px 20px; border-radius:12px; margin-top:10px; margin-bottom:20px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
-                <h4 style="color:#ffffff; font-weight:700; margin:0; font-size:1.2rem;">📊 1. Visão Consolidada de Vendas & Eficiência do WhatsApp</h4>
-            </div>
-            """, unsafe_allow_html=True)
+            st.subheader("📊 1. Visão Consolidada de Vendas & Eficiência do WhatsApp")
+            st.caption("Métricas consolidadas do Pop-Up da Landing Page + Checkout Hotmart (auditado sem dados de teste).")
 
             g1, g2, g3, g4 = st.columns(4)
 
             with g1:
                 st.markdown(f"""
-                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:20px 14px; border-radius:12px; text-align:center; color:#ffffff; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
-                    <span style="font-size:0.78rem; color:#bfdbfe; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">📥 Intenções de Checkout</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0 6px 0; font-size:1.55rem;">{total_unificado_leads} Leads</h3>
-                    <span style="font-size:0.75rem; color:#60a5fa;">62 Pop-Up LP + 14 Hotmart</span>
+                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:18px 14px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.75rem; color:#bfdbfe; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">📥 Intenções de Checkout</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0 4px 0; font-size:1.5rem;">{total_unificado_leads} Leads</h3>
+                    <span style="font-size:0.72rem; color:#60a5fa;">62 Pop-Up LP + 14 Hotmart</span>
                 </div>
                 """, unsafe_allow_html=True)
 
             with g2:
                 st.markdown(f"""
-                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:20px 14px; border-radius:12px; text-align:center; color:#ffffff; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
-                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">🏆 Vendas Concluídas</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0 6px 0; font-size:1.55rem;">{vendas_globais} Vendas</h3>
-                    <span style="font-size:0.75rem; color:#4ade80;">R$ {faturamento_global:,.2f} Faturados</span>
+                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:18px 14px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.75rem; color:#a7f3d0; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">🏆 Vendas Concluídas</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0 4px 0; font-size:1.5rem;">{vendas_globais} Vendas</h3>
+                    <span style="font-size:0.72rem; color:#4ade80;">R$ {faturamento_global:,.2f} Faturados</span>
                 </div>
                 """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
 
             with g3:
                 st.markdown(f"""
-                <div style="background-color:#065f46; border-top:4px solid #34d399; padding:20px 14px; border-radius:12px; text-align:center; color:#ffffff; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
-                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">🚀 Resgatados p/ WhatsApp</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0 6px 0; font-size:1.55rem;">{vendas_wpp_total} Vendas</h3>
-                    <span style="font-size:0.75rem; color:#34d399;">R$ {roi_resgatado_wpp:,.2f} ROI WPP</span>
+                <div style="background-color:#065f46; border-top:4px solid #34d399; padding:18px 14px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.75rem; color:#a7f3d0; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">🚀 Resgatados p/ WhatsApp</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0 4px 0; font-size:1.5rem;">{vendas_wpp_total} Vendas</h3>
+                    <span style="font-size:0.72rem; color:#34d399;">R$ {roi_resgatado_wpp:,.2f} ROI WPP</span>
                 </div>
                 """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
 
             with g4:
                 st.markdown(f"""
-                <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:20px 14px; border-radius:12px; text-align:center; color:#ffffff; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
-                    <span style="font-size:0.78rem; color:#fde68a; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">🟡 Carrinhos na Mesa</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0 6px 0; font-size:1.55rem;">{abertos_wpp_total} Leads</h3>
-                    <span style="font-size:0.75rem; color:#fbbf24;">R$ {faturamento_mesa:,.2f} Pendentes</span>
+                <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:18px 14px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                    <span style="font-size:0.75rem; color:#fde68a; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">🟡 Carrinhos na Mesa</span>
+                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0 4px 0; font-size:1.5rem;">{abertos_wpp_total} Leads</h3>
+                    <span style="font-size:0.72rem; color:#fbbf24;">R$ {faturamento_mesa:,.2f} Pendentes</span>
                 </div>
                 """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
 
-            # Espaçamento entre seções principais
-            st.markdown("<div style='margin-top:24px;'></div>", unsafe_allow_html=True)
-
-            # --- DRE & ROI DO INVESTIMENTO EM DISPAROS DE WHATSAPP (17 A 24 DE AGOSTO) ---
+            # --- RESUMO FINANCEIRO HORIZONTAL CLEAN ---
             custo_wpp_usd = 49.11
-            custo_wpp_brl = custo_wpp_usd * 5.60 # Câmbio estimado de R$ 5,60/USD (~R$ 275,00)
+            custo_wpp_brl = custo_wpp_usd * 5.60
             lucro_liquido_wpp = roi_resgatado_wpp - custo_wpp_brl
             roi_multiplicador = roi_resgatado_wpp / custo_wpp_brl if custo_wpp_brl > 0 else 0
 
@@ -2158,242 +2152,176 @@ if not df_captacao.empty:
             val_roi_perc = f"{roi_multiplicador*100:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.')
 
             st.markdown(f"""
-            <div style="background-color:#0f172a; border-left:6px solid #10b981; padding:20px 24px; border-radius:12px; margin-bottom:20px; box-shadow:0 4px 20px rgba(0,0,0,0.35); color:#ffffff;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-                    <div>
-                        <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:4px 12px; border-radius:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Inteligência Financeira de Canais</span>
-                        <h3 style="color:#ffffff; font-weight:800; margin:8px 0 0 0; font-size:1.4rem;">💵 Demonstrativo Financeiro & ROI do WhatsApp (17 a 24/08)</h3>
+            <div style="background-color:#0f172a; border-left:4px solid #10b981; padding:14px 20px; border-radius:10px; margin-top:16px; margin-bottom:28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+                <div>
+                    <span style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; font-weight:700;">💵 Balanço Financeiro do WhatsApp (17 a 24/08)</span>
+                    <div style="font-size:0.95rem; font-weight:600; color:#ffffff; margin-top:2px;">
+                        Custo Disparos: <b style="color:#60a5fa;">US$ {custo_wpp_usd:.2f} (~R$ {val_brl_str})</b> &nbsp;|&nbsp; 
+                        Resgatado WPP: <b style="color:#34d399;">R$ {val_resg_str}</b> &nbsp;|&nbsp; 
+                        Lucro Líquido: <b style="color:#a7f3d0;">R$ {val_lucro_str}</b>
                     </div>
-                    <div style="background-color:#064e3b; border:2px solid #10b981; padding:10px 18px; border-radius:10px; text-align:center;">
-                        <span style="font-size:0.72rem; color:#a7f3d0; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">Multiplicador de Retorno</span>
-                        <div style="font-size:1.45rem; font-weight:800; color:#34d399; margin-top:2px;">{roi_multiplicador:.1f}x Retorno <span style="font-size:0.85rem; color:#a7f3d0;">(ROI {val_roi_perc}%)</span></div>
-                    </div>
+                </div>
+                <div style="background-color:#064e3b; border:1px solid #10b981; padding:6px 14px; border-radius:8px;">
+                    <span style="font-size:0.95rem; font-weight:800; color:#34d399;">⚡ {roi_multiplicador:.1f}x Retorno <span style="font-size:0.75rem; color:#a7f3d0;">(ROI {val_roi_perc}%)</span></span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
-            dre_col1, dre_col2, dre_col3 = st.columns(3)
-
-            with dre_col1:
-                st.markdown(f"""
-                <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:20px 16px; border-radius:12px; text-align:center; color:#ffffff; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
-                    <span style="font-size:0.78rem; color:#bfdbfe; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">💳 Custo Total Disparos API</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0 6px 0; font-size:1.45rem;">US$ {custo_wpp_usd:.2f} <span style="font-size:0.85rem; color:#94a3b8;">(~R$ {val_brl_str})</span></h3>
-                    <span style="font-size:0.75rem; color:#60a5fa;">4.161 Utility + 232 Marketing Msgs</span>
-                </div>
-                """, unsafe_allow_html=True)
-
-            with dre_col2:
-                st.markdown(f"""
-                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:20px 16px; border-radius:12px; text-align:center; color:#ffffff; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
-                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">📈 Faturamento Resgatado WPP</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0 6px 0; font-size:1.45rem;">R$ {val_resg_str}</h3>
-                    <span style="font-size:0.75rem; color:#4ade80;">14 Vendas Aprovadas pós WPP</span>
-                </div>
-                """, unsafe_allow_html=True)
-
-            with dre_col3:
-                st.markdown(f"""
-                <div style="background-color:#065f46; border-top:4px solid #34d399; padding:20px 16px; border-radius:12px; text-align:center; color:#ffffff; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
-                    <span style="font-size:0.78rem; color:#a7f3d0; text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">💰 Lucro Líquido do Canal</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:8px 0 6px 0; font-size:1.45rem;">R$ {val_lucro_str}</h3>
-                    <span style="font-size:0.75rem; color:#34d399;">Faturamento - Custo de Disparos</span>
-                </div>
-                """, unsafe_allow_html=True)
-
-            st.markdown("<div style='margin-top:24px;'></div>", unsafe_allow_html=True)
-
             # =========================================================
-            # PASSO 2: VISUAL STORYTELLING & FUNIL INTERATIVO
+            # PASSO 2: FUNIL VISUAL, DIAGNÓSTICOS E STORYTELLING EM ABAS
             # =========================================================
-            col_funil_c, col_donut_c = st.columns([1.1, 1], gap="medium")
+            st.subheader("📈 2. Análise Gráfica & Diagnóstico Operacional")
 
-            with col_funil_c:
-                with st.container(border=True):
+            tab_graficos, tab_timing, tab_storytelling = st.tabs([
+                "📊 1. Funil & Distribuição de Leads", 
+                "⏳ 2. Diagnóstico de Timing & Operação", 
+                "🧠 3. Insights Chave de Vendas"
+            ])
+
+            # TAB 1: GRÁFICOS VISUAIS (FUNIL + PIE CHART)
+            with tab_graficos:
+                col_funil_c, col_donut_c = st.columns([1.1, 1], gap="medium")
+
+                with col_funil_c:
+                    with st.container(border=True):
+                        st.markdown("<h5 style='margin:0 0 10px 0; font-weight:700;'>Funil Consolidado de Checkout</h5>", unsafe_allow_html=True)
+                        fig_funnel_sales = go.Figure(go.Funnel(
+                            y=["Intenção Checkout", "Disparados WPP", "Vendas via WPP", "Vendas Aprovadas"],
+                            x=[total_unificado_leads, total_disparados_wpp, vendas_wpp_total, vendas_globais],
+                            textinfo="value+percent initial",
+                            textfont=dict(size=12),
+                            marker={"color": ["#3b82f6", "#f59e0b", "#10b981", "#059669"]}
+                        ))
+                        fig_funnel_sales.update_layout(
+                            margin=dict(t=10, b=10, l=10, r=10),
+                            height=320,
+                            paper_bgcolor="rgba(0,0,0,0)",
+                            plot_bgcolor="rgba(0,0,0,0)"
+                        )
+                        st.plotly_chart(fig_funnel_sales, use_container_width=True)
+
+                with col_donut_c:
+                    with st.container(border=True):
+                        st.markdown("<h5 style='margin:0 0 10px 0; font-weight:700;'>Distribuição do Resultado dos Leads</h5>", unsafe_allow_html=True)
+                        fig_donut_c = go.Figure(data=[go.Pie(
+                            labels=[
+                                f'🟢 Venda WPP ({vendas_wpp_total})', 
+                                f'🔵 Venda Orgânica ({vendas_org_total})', 
+                                f'🟡 Carrinho Aberto ({abertos_wpp_total})', 
+                                f'🔴 Sem Envio/Falha ({falha_total})'
+                            ],
+                            values=[vendas_wpp_total, vendas_org_total, abertos_wpp_total, falha_total],
+                            hole=.4,
+                            marker=dict(colors=['#10b981', '#3b82f6', '#f59e0b', '#ef4444'])
+                        )])
+                        fig_donut_c.update_layout(
+                            height=320,
+                            margin=dict(l=10, r=10, t=10, b=10),
+                            paper_bgcolor="rgba(0,0,0,0)",
+                            font=dict(color="#ffffff"),
+                            showlegend=True
+                        )
+                        st.plotly_chart(fig_donut_c, use_container_width=True)
+
+            # TAB 2: DIAGNÓSTICO DE TIMING & MANYCHAT
+            with tab_timing:
+                t_col1, t_col2, t_col3 = st.columns(3)
+                with t_col1:
                     st.markdown("""
-                    <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:12px 16px; border-radius:8px; margin-bottom:12px; color:#ffffff;">
-                        <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1rem;">🎨 Visual Storytelling: Funil Consolidado de Checkout</h5>
+                    <div style="background-color:#1e293b; border-top:3px solid #f59e0b; padding:14px; border-radius:8px; text-align:center; color:#ffffff;">
+                        <span style="font-size:0.75rem; color:#fde68a; font-weight:700; text-transform:uppercase;">🛒 Flow Carrinho (ManyChat)</span>
+                        <h4 style="color:#ffffff; font-weight:800; margin:4px 0;">42 Execuções</h4>
+                        <span style="font-size:0.72rem; color:#94a3b8;">Status: STOPPED (45 tags)</span>
                     </div>
                     """, unsafe_allow_html=True)
 
-                    fig_funnel_sales = go.Figure(go.Funnel(
-                        y=["Intenção de Checkout", "Disparados no WPP", "Vendas via WPP", "Vendas Totais Aprovadas"],
-                        x=[total_unificado_leads, total_disparados_wpp, vendas_wpp_total, vendas_globais],
-                        textinfo="value+percent initial",
-                        textfont=dict(size=13),
-                        marker={"color": ["#3b82f6", "#f59e0b", "#10b981", "#059669"]}
-                    ))
-                    fig_funnel_sales.update_layout(
-                        margin=dict(t=20, b=20, l=10, r=10),
-                        height=360,
-                        paper_bgcolor="rgba(0,0,0,0)",
-                        plot_bgcolor="rgba(0,0,0,0)"
-                    )
-                    st.plotly_chart(fig_funnel_sales, use_container_width=True)
-
-            with col_donut_c:
-                with st.container(border=True):
+                with t_col2:
                     st.markdown("""
-                    <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:12px 16px; border-radius:8px; margin-bottom:12px; color:#ffffff;">
-                        <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1rem;">📊 Distribuição Global do Resultado dos Leads</h5>
+                    <div style="background-color:#064e3b; border-top:3px solid #10b981; padding:14px; border-radius:8px; text-align:center; color:#ffffff;">
+                        <span style="font-size:0.75rem; color:#a7f3d0; font-weight:700; text-transform:uppercase;">🎉 Flow Onboarding (Boas-Vindas)</span>
+                        <h4 style="color:#ffffff; font-weight:800; margin:4px 0;">56 Execuções</h4>
+                        <span style="font-size:0.72rem; color:#4ade80;">Status: LIVE (60 tags)</span>
                     </div>
                     """, unsafe_allow_html=True)
 
-                    fig_donut_c = go.Figure(data=[go.Pie(
-                        labels=[
-                            f'🟢 Venda WPP ({vendas_wpp_total})', 
-                            f'🔵 Venda Orgânica ({vendas_org_total})', 
-                            f'🟡 Carrinho Aberto WPP ({abertos_wpp_total})', 
-                            f'🔴 Falha / Sem Envio ({falha_total})'
-                        ],
-                        values=[vendas_wpp_total, vendas_org_total, abertos_wpp_total, falha_total],
-                        hole=.4,
-                        marker=dict(colors=['#10b981', '#3b82f6', '#f59e0b', '#ef4444'])
-                    )])
-                    fig_donut_c.update_layout(
-                        height=360,
-                        margin=dict(l=10, r=10, t=10, b=10),
-                        paper_bgcolor="rgba(0,0,0,0)",
-                        font=dict(color="#ffffff"),
-                        showlegend=True
-                    )
-                    st.plotly_chart(fig_donut_c, use_container_width=True)
-
-            st.markdown("<br>", unsafe_allow_html=True)
-
-            # --- PAINEL DIAGNÓSTICO DE OPERAÇÃO, TIMING E FORMULÁRIO ---
-            st.markdown("""
-            <div style="background-color:#0f172a; border-left:6px solid #f59e0b; padding:20px 24px; border-radius:12px; margin-bottom:16px; box-shadow:0 4px 20px rgba(0,0,0,0.35); color:#ffffff;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-                    <div>
-                        <span style="background-color:#f59e0b; color:#0f172a; font-size:0.75rem; padding:4px 12px; border-radius:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;">Análise Crítica de Operação & Timing</span>
-                        <h4 style="color:#ffffff; font-weight:800; margin:8px 0 0 0; font-size:1.35rem;">⏳ Diagnóstico: Liberação Tardia da Régua de Carrinho (Atraso de 20h)</h4>
+                with t_col3:
+                    st.markdown("""
+                    <div style="background-color:#451a03; border-top:3px solid #ef4444; padding:14px; border-radius:8px; text-align:center; color:#ffffff;">
+                        <span style="font-size:0.75rem; color:#fca5a5; font-weight:700; text-transform:uppercase;">⚡ Meta API (17/08 16:07)</span>
+                        <h4 style="color:#ffffff; font-weight:800; margin:4px 0;">7 Leads Disparados</h4>
+                        <span style="font-size:0.72rem; color:#fbbf24;">100% Entregue | 85,7% Lido (6)</span>
                     </div>
-                    <div style="background-color:#451a03; border:2px solid #f59e0b; padding:8px 16px; border-radius:10px; text-align:center;">
-                        <span style="font-size:0.72rem; color:#fde68a; text-transform:uppercase; font-weight:700;">Data/Hora da Liberação</span>
-                        <div style="font-size:1.2rem; font-weight:800; color:#fbbf24; margin-top:2px;">17/08 às 16:07</div>
-                    </div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+                    """, unsafe_allow_html=True)
 
-            t_col1, t_col2, t_col3 = st.columns(3)
-
-            with t_col1:
                 st.markdown("""
-                <div style="background-color:#1e293b; border-top:4px solid #f59e0b; padding:16px; border-radius:10px; text-align:center; color:#ffffff; min-height:130px;">
-                    <span style="font-size:0.75rem; color:#fde68a; font-weight:700; text-transform:uppercase;">🛒 Flow: Carrinho (ManyChat)</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.4rem;">42 Execuções</h3>
-                    <span style="font-size:0.72rem; color:#94a3b8;">Status: STOPPED (45 tags atribuídas)</span>
+                <div style="background-color:#0f172a; border-left:4px solid #f59e0b; padding:16px 20px; border-radius:10px; margin-top:14px; color:#ffffff;">
+                    <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1rem;">📝 Análise de Causa Raiz & Recomendação Técnica</h5>
+                    <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.5;">
+                        • <b>Delay de Aprovação (20h):</b> As vendas abriram no CPL 4 ao vivo (16/08 às 20h), mas a decisão de soltar o fluxo automático ocorreu apenas no dia seguinte (17/08 às 16h07).<br>
+                        • <b>Alta Taxa de Abertura:</b> No lote emergencial de 7 leads às 16:07, <b>85,7% leram na hora</b>. Se a régua estivesse ativa logo no pós-live, o volume de resgate seria muito maior.<br>
+                        • <b>⚠️ Trava de Formulário na LP:</b> O Pop-up exigia apenas <i>E-mail</i> obrigatório (sem trava de Telefone/DDD), causando recusa na API para cadastros incompletos (ex: <i>Mikael Paz</i> sem DDD).<br>
+                        👉 <b>Ação Recomendada:</b> Pré-aprovar fluxos para disparar 15 min pós-live e incluir máscara de DDD no formulário da LP.
+                    </p>
                 </div>
                 """, unsafe_allow_html=True)
 
-            with t_col2:
-                st.markdown("""
-                <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px; border-radius:10px; text-align:center; color:#ffffff; min-height:130px;">
-                    <span style="font-size:0.75rem; color:#a7f3d0; font-weight:700; text-transform:uppercase;">🎉 Flow: Onboarding (Boas-Vindas)</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.4rem;">56 Execuções</h3>
-                    <span style="font-size:0.72rem; color:#4ade80;">Status: LIVE (60 tags de boas-vindas)</span>
-                </div>
-                """, unsafe_allow_html=True)
+            # TAB 3: STORYTELLING INSIGHTS
+            with tab_storytelling:
+                c_st1, c_st2, c_st3 = st.columns(3)
 
-            with t_col3:
-                st.markdown("""
-                <div style="background-color:#451a03; border-top:4px solid #ef4444; padding:16px; border-radius:10px; text-align:center; color:#ffffff; min-height:130px;">
-                    <span style="font-size:0.75rem; color:#fca5a5; font-weight:700; text-transform:uppercase;">⚡ Disparo Emergencial Meta API</span>
-                    <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.4rem;">7 Leads Disparados</h3>
-                    <span style="font-size:0.72rem; color:#fbbf24;">100% Entregue | 85,7% Lido (6)</span>
-                </div>
-                """, unsafe_allow_html=True)
+                with c_st1:
+                    st.markdown(f"""
+                    <div style="background-color:#064e3b; border-left:4px solid #10b981; padding:16px; border-radius:8px; min-height:220px; color:#ffffff; display:flex; flex-direction:column; justify-content:space-between;">
+                        <div>
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🟢 1. Impacto Direto WPP</h5>
+                            <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.4;">
+                                Dos 51 disparos, <b style="color:#a7f3d0;">14 vendas foram concluídas pós-mensagem</b>.<br>
+                                Resgate de <b style="color:#a7f3d0;">R$ {roi_resgatado_wpp:,.2f}</b> (conversão direta de <b>27,5%</b>).
+                            </p>
+                        </div>
+                        <div style="font-size:0.8rem; color:#a7f3d0; border-top:1px dashed rgba(255,255,255,0.3); padding-top:6px;">
+                            <b>⭐ ROI Comprovado:</b> Mais de R$ 20 mil resgatados.
+                        </div>
+                    </div>
+                    """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
 
-            st.markdown("<br>", unsafe_allow_html=True)
+                with c_st2:
+                    st.markdown(f"""
+                    <div style="background-color:#451a03; border-left:4px solid #f59e0b; padding:16px; border-radius:8px; min-height:220px; color:#ffffff; display:flex; flex-direction:column; justify-content:space-between;">
+                        <div>
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🟡 2. Oportunidade na Mesa</h5>
+                            <p style="font-size:0.88rem; color:#ffffff; margin-top:8px; line-height:1.4;">
+                                <b style="color:#fde68a;">37 leads em aberto</b> receberam e leram o WhatsApp mas não finalizaram.<br>
+                                Representa <b style="color:#fde68a;">R$ {faturamento_mesa:,.2f} pendentes</b> na mesa.
+                            </p>
+                        </div>
+                        <div style="font-size:0.8rem; color:#fde68a; border-top:1px dashed rgba(255,255,255,0.3); padding-top:6px;">
+                            <b>📞 Ação:</b> Discar/enviar áudio para os 37.
+                        </div>
+                    </div>
+                    """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
 
-            st.markdown("""
-            <div style="background-color:#0f172a; border-left:6px solid #f59e0b; padding:18px 22px; border-radius:12px; color:#ffffff; margin-bottom:20px; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
-                <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1.05rem;">📝 Síntese Executiva de Causa Raiz & Recomendação</h5>
-                <p style="font-size:0.9rem; color:#ffffff; margin-top:10px; line-height:1.6;">
-                    • <b>Análise de Causa Raiz & Decision-Making Delay:</b> A abertura oficial de vendas ocorreu no CPL 4 ao vivo no domingo (16/08 às 20h). Porém, a tomada de decisão e autorização para liberar o fluxo automático de recuperação no WhatsApp <b>ocorreu apenas no dia seguinte (17/08 às 16h07) — quase 20 horas depois e já no final da tarde</b>.<br>
-                    • <b>Comprovação de Eficiência da Mensagem:</b> No lote emergencial liberado às 16:07 para <b>7 leads</b>, a taxa de abertura foi de <b>85,7% (6 de 7 leram na hora)</b>. Isso comprova que se a régua estivesse ativa de forma imediata no pós-live (domingo à noite), o resgate de vendas teria sido significativamente maior!<br>
-                    • <b>⚠️ Diagnóstico Técnico de Formulário & Duplicidades:</b> Excluímos todos os testes internos (<i>Teste Novo, 321teste, Rebeca Bodin/Automações</i>) e deduplicamos o lead <i>Alvaro Honda</i> (cadastrado 2x com .com e .com.ar). Além disso, identificamos que o formulário da LP exigia obrigatoriedade <b>apenas no E-mail</b> (sem trava para Telefone/DDD), gerando falha no envio para cadastros incompletos (ex: <i>Mikael Paz</i> sem DDD).<br>
-                    👉 <b>Recomendação Executiva p/ Próximo Lançamento:</b> Deixar os fluxos de carrinho pré-aprovados para disparar no máximo <b>15 minutos após a live</b> e aplicar a trava <code>required</code> com máscara de DDD no formulário.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-
-            st.markdown("---")
-            st.markdown("---")
+                with c_st3:
+                    st.markdown("""
+                    <div style="background-color:#2d1215; border-left:4px solid #ef4444; padding:16px; border-radius:8px; min-height:220px; color:#ffffff; display:flex; flex-direction:column; justify-content:space-between;">
+                        <div>
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🔴 3. Diagnóstico de Erros</h5>
+                            <p style="font-size:0.85rem; color:#ffffff; margin-top:8px; line-height:1.4;">
+                                • <b>2 Erros de Entrada:</b> <code>NUMERO_INVALIDO</code> e <code>QUANTIDADE_DIGITOS_INVALIDA</code> (sem DDD).<br>
+                                • <b>4 Leads Válidos p/ Ligação:</b> André, Lorenzo, Joao Arthur e Douglas.
+                            </p>
+                        </div>
+                        <div style="font-size:0.8rem; color:#fca5a5; border-top:1px dashed rgba(255,255,255,0.3); padding-top:6px;">
+                            <b>🚨 Ajuste LP:</b> Validação de DDD no formulário.
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             # =========================================================
-            # PASSO 3: CARTÕES EXECUTIVOS DE INSIGHTS & STORYTELLING
+            # PASSO 3: QUADRO KANBAN & FILA UNIFICADA (76 LEADS)
             # =========================================================
-            st.markdown("""
-            <div style="background-color:#0f172a; border-left:6px solid #10b981; padding:14px 18px; border-radius:10px; margin-bottom:16px; color:#ffffff;">
-                <h4 style="color:#ffffff; font-weight:700; margin:0; font-size:1.15rem;">🧠 Storytelling Didático: 3 Insights Chave de Vendas</h4>
-            </div>
-            """, unsafe_allow_html=True)
-
-            c_st1, c_st2, c_st3 = st.columns(3)
-
-            with c_st1:
-                st.markdown(f"""
-                <div style="background-color:#064e3b; border-left:6px solid #10b981; padding:18px; border-radius:10px; min-height:280px; color:#ffffff; display:flex; flex-direction:column; justify-content:space-between;">
-                    <div>
-                        <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1.05rem;">🟢 1. O Impacto Direto do WhatsApp</h5>
-                        <p style="font-size:0.9rem; color:#ffffff; margin-top:10px; line-height:1.5;">
-                            Dos 51 disparos realizados, <b style="color:#a7f3d0;">14 vendas foram concluídas diretamente pós-mensagem</b>.<br><br>
-                            A automação resgatou <b style="color:#a7f3d0;">R$ {roi_resgatado_wpp:,.2f} em faturamento líquido</b>, registrando uma taxa de conversão direta de <b>27,5%</b>!
-                        </p>
-                    </div>
-                    <div style="margin-top:auto; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.3); font-size:0.85rem; color:#a7f3d0;">
-                        <b>⭐ ROI Comprovado:</b> Sem o disparo, mais de R$ 20 mil seriam perdidos.
-                    </div>
-                </div>
-                """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
-
-            with c_st2:
-                st.markdown(f"""
-                <div style="background-color:#451a03; border-left:6px solid #f59e0b; padding:18px; border-radius:10px; min-height:280px; color:#ffffff; display:flex; flex-direction:column; justify-content:space-between;">
-                    <div>
-                        <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1.05rem;">🟡 2. A Maior Oportunidade na Mesa</h5>
-                        <p style="font-size:0.9rem; color:#ffffff; margin-top:10px; line-height:1.5;">
-                            Temos <b style="color:#fde68a;">37 leads em aberto</b> que receberam a mensagem no WhatsApp, leram o aviso, mas não finalizaram a compra.<br><br>
-                            Isso representa <b style="color:#fde68a;">R$ {faturamento_mesa:,.2f} retidos na mesa</b> aguardando um contato de fechamento.
-                        </p>
-                    </div>
-                    <div style="margin-top:auto; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.3); font-size:0.85rem; color:#fde68a;">
-                        <b>📞 Ação Comercial:</b> Enviar áudio humanizado ou discar para os 37 leads.
-                    </div>
-                </div>
-                """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
-
-            with c_st3:
-                st.markdown("""
-                <div style="background-color:#2d1215; border-left:6px solid #ef4444; padding:18px; border-radius:10px; min-height:280px; color:#ffffff; display:flex; flex-direction:column; justify-content:space-between;">
-                    <div>
-                        <h5 style="color:#ffffff; font-weight:700; margin:0; font-size:1.05rem;">🔴 3. Diagnóstico Técnico de Erros</h5>
-                        <p style="font-size:0.9rem; color:#ffffff; margin-top:10px; line-height:1.5;">
-                            Das falhas de envio:<br>
-                            • <b>2 Erros de Entrada do Cliente:</b> <code>NUMERO_INVALIDO</code> (DDD duplicado) e <code>QUANTIDADE_DIGITOS_INVALIDA</code> (<i>Mikael Paz</i> - sem DDD).<br>
-                            • <b>4 Telefones Válidos p/ Ligação:</b> <i>André, Lorenzo, Joao Arthur, Douglas</i> aguardando acionamento comercial.
-                        </p>
-                    </div>
-                    <div style="margin-top:auto; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.3); font-size:0.85rem; color:#fca5a5;">
-                        <b>🚨 Ajuste de Form:</b> Adicionar máscara de DDD no cadastro da LP.
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-
-            st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown("---")
-
-            # =========================================================
-            # PASSO 4: QUADRO KANBAN & FILA UNIFICADA (76 LEADS)
-            # =========================================================
-            st.markdown("""
-            <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:14px 18px; border-radius:10px; margin-bottom:16px; color:#ffffff;">
-                <h4 style="color:#ffffff; font-weight:700; margin:0; font-size:1.15rem;">📋 Fila de Atendimento Comercial & Checkout (76 Leads)</h4>
-            </div>
-            """, unsafe_allow_html=True)
+            st.subheader("📋 3. Fila de Atendimento Comercial & Quadro Kanban")
+            st.caption("Acompanhe visualmente cada lead por estresse de conversão e acione a equipe comercial.")
 
             # Unificando os DataFrames de Pop-up e Recuperacao
             cols_pop = ['DATA', 'NOME', 'EMAIL', 'TELEFONE', 'Origem', 'Mensagem Enviada', 'Comprou?']
