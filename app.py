@@ -245,9 +245,9 @@ if not df_captacao.empty:
             '🧠 Plano de Ação', 
             '📊 Pesquisa (WordCloud)', 
             '🎯 Raio-X Didático CPLs',
+            '✉️ E-mails',
             '💰 Vendas',
-            '🛒 Carrinho',
-            '✉️ E-mails'
+            '🛒 Carrinho'
         ]
     else:
         opcoes_menu = ['📊 Visão Principal', '🎯 Raio-X Didático CPLs', '🕸️ Funil Manychat (WPP)']
