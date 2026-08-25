@@ -235,28 +235,51 @@ if not df_captacao.empty:
     is_admin = st.query_params.get("admin") == "mda2026"
     
     st.sidebar.markdown("---")
-    st.sidebar.markdown("### 🧭 Navegação")
+    st.sidebar.markdown("### 🧭 NAVEGAÇÃO DO LANÇAMENTO")
     
     if is_admin:
-        opcoes_menu = [
-            '📊 Visão Principal de Cadastros', 
-            '🕸️ Funil WhatsApp & ManyChat', 
-            '🧠 Pesquisa & Raio-X da Audiência', 
-            '🎯 Raio-X Didático das CPLs (1 a 4)',
-            '✉️ Campanhas & Disparos de E-mail',
-            '🛒 Carrinho Aberto & Recuperação',
-            '💵 Vendas Aprovadas & Faturamento',
-            '🚨 Monitoramento Avançado & Erros', 
-            '📋 Plano de Ação BI & Decisões'
-        ]
+        categoria_selecionada = st.sidebar.radio(
+            "Etapa do Funil:",
+            [
+                "📥 1. Captação & Leads",
+                "🎓 2. Aulas & CPLs",
+                "💰 3. Conversão & Vendas",
+                "⚙️ 4. Gestão & Operação"
+            ]
+        )
+        
+        st.sidebar.markdown("---")
+        
+        if categoria_selecionada == "📥 1. Captação & Leads":
+            sub_opcoes = [
+                '📊 Visão Principal de Cadastros', 
+                '🕸️ Funil WhatsApp & ManyChat', 
+                '🧠 Pesquisa & Raio-X da Audiência'
+            ]
+        elif categoria_selecionada == "🎓 2. Aulas & CPLs":
+            sub_opcoes = [
+                '🎯 Raio-X Didático das CPLs (1 a 4)',
+                '✉️ Campanhas & Disparos de E-mail'
+            ]
+        elif categoria_selecionada == "💰 3. Conversão & Vendas":
+            sub_opcoes = [
+                '🛒 Carrinho Aberto & Recuperação',
+                '💵 Vendas Aprovadas & Faturamento'
+            ]
+        else:
+            sub_opcoes = [
+                '🚨 Monitoramento Avançado & Erros', 
+                '📋 Plano de Ação BI & Decisões'
+            ]
+            
+        menu_selecionado = st.sidebar.radio("Selecione a Visualização:", sub_opcoes)
     else:
         opcoes_menu = [
             '📊 Visão Principal de Cadastros', 
             '🎯 Raio-X Didático das CPLs (1 a 4)', 
             '🕸️ Funil WhatsApp & ManyChat'
         ]
-        
-    menu_selecionado = st.sidebar.radio("Ir para:", opcoes_menu, label_visibility="collapsed")
+        menu_selecionado = st.sidebar.radio("Ir para:", opcoes_menu, label_visibility="collapsed")
     
     # Define o título dinamicamente com base na aba selecionada
     if menu_selecionado in ['🎯 Raio-X Didático das CPLs (1 a 4)', '🎯 Raio-X Didático CPLs']:
