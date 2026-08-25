@@ -2433,9 +2433,13 @@ if not df_captacao.empty:
                 </div>
                 """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
 
-            # --- RESUMO FINANCEIRO HORIZONTAL CLEAN ---
-            custo_wpp_usd = 49.11
-            custo_wpp_brl = custo_wpp_usd * 5.60
+            # --- RESUMO FINANCEIRO HORIZONTAL CLEAN COM HISTÓRICO DE USO OFICIAL MANYCHAT ---
+            custo_utility_usd = 122.36
+            custo_mkt_usd = 138.50
+            custo_total_usd = 260.86
+            
+            taxa_usd_brl = 5.60
+            custo_wpp_brl = custo_total_usd * taxa_usd_brl
             lucro_liquido_wpp = roi_resgatado_wpp - custo_wpp_brl
             roi_multiplicador = roi_resgatado_wpp / custo_wpp_brl if custo_wpp_brl > 0 else 0
 
@@ -2447,9 +2451,9 @@ if not df_captacao.empty:
             st.markdown(f"""
             <div style="background-color:#0f172a; border-left:4px solid #10b981; padding:14px 20px; border-radius:10px; margin-top:16px; margin-bottom:28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
                 <div>
-                    <span style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; font-weight:700;">💵 Balanço Financeiro do WhatsApp (17 a 24/08)</span>
-                    <div style="font-size:0.95rem; font-weight:600; color:#ffffff; margin-top:2px;">
-                        Custo Disparos: <b style="color:#60a5fa;">US$ {custo_wpp_usd:.2f} (~R$ {val_brl_str})</b> &nbsp;|&nbsp; 
+                    <span style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; font-weight:700;">💵 Balanço Financeiro de Disparos WhatsApp (Histórico Oficial ManyChat 27/07 a 24/08)</span>
+                    <div style="font-size:0.92rem; font-weight:600; color:#ffffff; margin-top:4px;">
+                        Custo Disparos Meta: <b style="color:#60a5fa;">US$ {custo_total_usd:.2f} (~R$ {val_brl_str})</b> <span style="font-size:0.78rem; color:#94a3b8;">(15.687 Utility: US$ 122,36 + 1.929 Marketing: US$ 138,50)</span> &nbsp;|&nbsp; 
                         Resgatado WPP: <b style="color:#34d399;">R$ {val_resg_str}</b> &nbsp;|&nbsp; 
                         Lucro Líquido: <b style="color:#a7f3d0;">R$ {val_lucro_str}</b>
                     </div>
@@ -2517,31 +2521,40 @@ if not df_captacao.empty:
 
             # TAB 2: DIAGNÓSTICO DE TIMING & MANYCHAT
             with tab_timing:
-                t_col1, t_col2, t_col3 = st.columns(3)
+                t_col1, t_col2, t_col3, t_col4 = st.columns(4)
                 with t_col1:
                     st.markdown("""
                     <div style="background-color:#1e293b; border-top:3px solid #f59e0b; padding:14px; border-radius:8px; text-align:center; color:#ffffff;">
-                        <span style="font-size:0.75rem; color:#fde68a; font-weight:700; text-transform:uppercase;">🛒 Flow Carrinho (ManyChat)</span>
+                        <span style="font-size:0.72rem; color:#fde68a; font-weight:700; text-transform:uppercase;">🛒 Flow Carrinho</span>
                         <h4 style="color:#ffffff; font-weight:800; margin:4px 0;">42 Execuções</h4>
-                        <span style="font-size:0.72rem; color:#94a3b8;">Status: STOPPED (45 tags)</span>
+                        <span style="font-size:0.7rem; color:#94a3b8;">Status: STOPPED</span>
                     </div>
                     """, unsafe_allow_html=True)
 
                 with t_col2:
                     st.markdown("""
                     <div style="background-color:#064e3b; border-top:3px solid #10b981; padding:14px; border-radius:8px; text-align:center; color:#ffffff;">
-                        <span style="font-size:0.75rem; color:#a7f3d0; font-weight:700; text-transform:uppercase;">🎉 Flow Onboarding (Boas-Vindas)</span>
+                        <span style="font-size:0.72rem; color:#a7f3d0; font-weight:700; text-transform:uppercase;">🎉 Flow Onboarding</span>
                         <h4 style="color:#ffffff; font-weight:800; margin:4px 0;">56 Execuções</h4>
-                        <span style="font-size:0.72rem; color:#4ade80;">Status: LIVE (60 tags)</span>
+                        <span style="font-size:0.7rem; color:#4ade80;">Status: LIVE</span>
                     </div>
                     """, unsafe_allow_html=True)
 
                 with t_col3:
                     st.markdown("""
+                    <div style="background-color:#0f172a; border-top:3px solid #3b82f6; padding:14px; border-radius:8px; text-align:center; color:#ffffff;">
+                        <span style="font-size:0.72rem; color:#bfdbfe; font-weight:700; text-transform:uppercase;">⚡ Meta Utility</span>
+                        <h4 style="color:#ffffff; font-weight:800; margin:4px 0;">15.687 Envíos</h4>
+                        <span style="font-size:0.7rem; color:#60a5fa;">US$ 122,36 (~R$ 685)</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with t_col4:
+                    st.markdown("""
                     <div style="background-color:#451a03; border-top:3px solid #ef4444; padding:14px; border-radius:8px; text-align:center; color:#ffffff;">
-                        <span style="font-size:0.75rem; color:#fca5a5; font-weight:700; text-transform:uppercase;">⚡ Meta API (17/08 16:07)</span>
-                        <h4 style="color:#ffffff; font-weight:800; margin:4px 0;">7 Leads Disparados</h4>
-                        <span style="font-size:0.72rem; color:#fbbf24;">100% Entregue | 85,7% Lido (6)</span>
+                        <span style="font-size:0.72rem; color:#fca5a5; font-weight:700; text-transform:uppercase;">📢 Marketing Lite</span>
+                        <h4 style="color:#ffffff; font-weight:800; margin:4px 0;">1.929 Envíos</h4>
+                        <span style="font-size:0.7rem; color:#fbbf24;">US$ 138,50 (~R$ 775)</span>
                     </div>
                     """, unsafe_allow_html=True)
 
