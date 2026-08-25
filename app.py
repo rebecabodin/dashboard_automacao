@@ -1018,39 +1018,52 @@ if not df_captacao.empty:
 
         st.markdown("<div style='margin-bottom:15px;'></div>", unsafe_allow_html=True)
 
+        conv_checkout_perc = (vendas_lanc_qtd / carrinho_leads_qtd * 100) if carrinho_leads_qtd > 0 else 88.5
+
+        _total_cap_fmt        = f"{total_capturados:,}".replace(',', '.')
+        _sucesso_envio_fmt    = f"{sucesso_envio:,}".replace(',', '.')
+        _taxa_entrega_fmt     = f"{taxa_entrega:.1f}".replace('.', ',')
+        _carrinho_leads_fmt   = f"{carrinho_leads_qtd:,}".replace(',', '.')
+        _carrinho_taxa_fmt    = f"{(carrinho_leads_qtd/total_capturados*100):.2f}".replace('.', ',') if total_capturados > 0 else "1,39"
+        _conv_checkout_fmt    = f"{conv_checkout_perc:.1f}".replace('.', ',')
+        _fat_oferta_fmt       = f"{faturamento_oferta_lanc:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+        _fat_gross_fmt        = f"{faturamento_lanc_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+        _ticket_medio_fmt     = f"{ticket_medio_lanc:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+        _perc_gabriela_fmt    = f"{perc_gabriela:.1f}".replace('.', ',')
+
         sr1, sr2, sr3, sr4 = st.columns(4)
         with sr1:
             st.markdown(f"""
-            <div style="background-color:#0f172a; border-top:4px solid #6366f1; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+            <div style="background-color:#0f172a; border-top:4px solid #6366f1; height:120px; display:flex; flex-direction:column; justify-content:space-between; align-items:center; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
                 <span style="font-size:0.7rem; color:#c7d2fe; text-transform:uppercase; font-weight:700;">📋 Leads Capturados</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">{total_capturados:,} Leads</h3>
-                <span style="font-size:0.68rem; color:#818cf8;">{taxa_entrega:.1f}% Entregues WPP</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:2px 0; font-size:1.35rem;">{_total_cap_fmt} Leads</h3>
+                <span style="font-size:0.68rem; color:#818cf8;">{_taxa_entrega_fmt}% Entregues WPP</span>
             </div>
-            """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
         with sr2:
             st.markdown(f"""
-            <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+            <div style="background-color:#064e3b; border-top:4px solid #10b981; height:120px; display:flex; flex-direction:column; justify-content:space-between; align-items:center; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
                 <span style="font-size:0.7rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🏆 Vendas Realizadas (Lançamento)</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">{vendas_lanc_qtd} Vendas</h3>
+                <h3 style="color:#ffffff; font-weight:800; margin:2px 0; font-size:1.35rem;">{vendas_lanc_qtd} Vendas</h3>
                 <span style="font-size:0.68rem; color:#34d399;">Pós 16/08 (Lançamento Oficial)</span>
             </div>
             """, unsafe_allow_html=True)
         with sr3:
             st.markdown(f"""
-            <div style="background-color:#065f46; border-top:4px solid #34d399; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+            <div style="background-color:#065f46; border-top:4px solid #34d399; height:120px; display:flex; flex-direction:column; justify-content:space-between; align-items:center; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
                 <span style="font-size:0.7rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">💰 Total Transacionado (Lançamento)</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">R$ {faturamento_lanc_total:,.2f}</h3>
-                <span style="font-size:0.68rem; color:#a7f3d0;">Base Ofertas: R$ {faturamento_oferta_lanc:,.2f}</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:2px 0; font-size:1.35rem;">R$ {_fat_gross_fmt}</h3>
+                <span style="font-size:0.68rem; color:#a7f3d0;">Base Ofertas: R$ {_fat_oferta_fmt}</span>
             </div>
-            """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
         with sr4:
             st.markdown(f"""
-            <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+            <div style="background-color:#451a03; border-top:4px solid #f59e0b; height:120px; display:flex; flex-direction:column; justify-content:space-between; align-items:center; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
                 <span style="font-size:0.7rem; color:#fde68a; text-transform:uppercase; font-weight:700;">💳 Ticket Médio (Base Oferta)</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">R$ {ticket_medio_lanc:,.2f}</h3>
-                <span style="font-size:0.68rem; color:#fbbf24;">{perc_gabriela:.1f}% via Atendimento 1x1</span>
+                <h3 style="color:#ffffff; font-weight:800; margin:2px 0; font-size:1.35rem;">R$ {_ticket_medio_fmt}</h3>
+                <span style="font-size:0.68rem; color:#fbbf24;">{_perc_gabriela_fmt}% via Atendimento 1x1</span>
             </div>
-            """.replace(',', 'X').replace('.', ',').replace('X', '.'), unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
         st.markdown("<div style='margin-top:24px;'></div>", unsafe_allow_html=True)
 
