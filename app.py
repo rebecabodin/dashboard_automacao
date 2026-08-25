@@ -2938,56 +2938,56 @@ if not df_captacao.empty:
         str_disp_total = f"{total_disparados_campanhas:,.0f}".replace(',', '.')
 
         # --- SCORECARDS DE TOPO (FOCADOS 100% NA BASE REAL) ---
-        st.subheader("📊 Métricas Consolidadas sobre a Base Real do LC7 (Hotmart Send)")
+        st.markdown("<h4 style='text-align:center; font-weight:800; margin-bottom:20px; color:#ffffff;'>📊 Métricas Consolidadas sobre a Base Real do LC7 (Hotmart Send)</h4>", unsafe_allow_html=True)
         
         m1, m2, m3, m4, m5 = st.columns(5)
 
         with m1:
             st.markdown(f"""
-            <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+            <div style="background-color:#064e3b; border-top:4px solid #10b981; padding:18px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
                 <span style="font-size:0.7rem; color:#a7f3d0; text-transform:uppercase; font-weight:700;">🎯 Base Real Inscrita</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">{str_base_real} Leads</h3>
+                <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.35rem;">{str_base_real} Leads</h3>
                 <span style="font-size:0.68rem; color:#34d399;">Lista Limpa & Ativa LC7</span>
             </div>
             """, unsafe_allow_html=True)
 
         with m2:
             st.markdown(f"""
-            <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+            <div style="background-color:#0f172a; border-top:4px solid #3b82f6; padding:18px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
                 <span style="font-size:0.7rem; color:#bfdbfe; text-transform:uppercase; font-weight:700;">📩 Total Disparados</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">{str_disp_total}</h3>
+                <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.35rem;">{str_disp_total}</h3>
                 <span style="font-size:0.68rem; color:#60a5fa;">15 Campanhas Broadcast</span>
             </div>
             """, unsafe_allow_html=True)
 
         with m3:
             st.markdown(f"""
-            <div style="background-color:#0284c7; border-top:4px solid #38bdf8; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+            <div style="background-color:#0284c7; border-top:4px solid #38bdf8; padding:18px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
                 <span style="font-size:0.7rem; color:#bae6fd; text-transform:uppercase; font-weight:700;">👁️ Abertura Cadastro</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">14,0%</h3>
+                <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.35rem;">14,0%</h3>
                 <span style="font-size:0.68rem; color:#7dd3fc;">{aberturas_onboarding_reais} Aberturas Únicas</span>
             </div>
             """, unsafe_allow_html=True)
 
         with m4:
             st.markdown(f"""
-            <div style="background-color:#4c1d95; border-top:4px solid #a855f7; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+            <div style="background-color:#4c1d95; border-top:4px solid #a855f7; padding:18px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
                 <span style="font-size:0.7rem; color:#e9d5ff; text-transform:uppercase; font-weight:700;">⚡ CTOR Cadastro</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">22,0%</h3>
+                <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.35rem;">22,0%</h3>
                 <span style="font-size:0.68rem; color:#c084fc;">{cliques_onboarding_reais} Cliques p/ WhatsApp</span>
             </div>
             """, unsafe_allow_html=True)
 
         with m5:
             st.markdown(f"""
-            <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:16px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+            <div style="background-color:#451a03; border-top:4px solid #f59e0b; padding:18px 12px; border-radius:12px; text-align:center; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
                 <span style="font-size:0.7rem; color:#fde68a; text-transform:uppercase; font-weight:700;">🎯 Média Abertura CPLs</span>
-                <h3 style="color:#ffffff; font-weight:800; margin:4px 0; font-size:1.35rem;">{media_abertura_campanhas:.1f}%</h3>
+                <h3 style="color:#ffffff; font-weight:800; margin:6px 0; font-size:1.35rem;">{media_abertura_campanhas:.1f}%</h3>
                 <span style="font-size:0.68rem; color:#fbbf24;">Pico de 4% na Aula 4</span>
             </div>
             """, unsafe_allow_html=True)
 
-        st.markdown("<div style='margin-top:20px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='margin-top:24px;'></div>", unsafe_allow_html=True)
 
         # --- ABAS DE ANÁLISE DE E-MAILS ---
         tab_em_camp, tab_em_aut, tab_em_ctrl, tab_em_raw = st.tabs([
@@ -3003,7 +3003,7 @@ if not df_captacao.empty:
 
             with col_ec1:
                 with st.container(border=True):
-                    st.markdown("<h5 style='margin:0 0 10px 0; font-weight:700;'>Taxa de Abertura (%) e CTOR (%) por Campanha</h5>", unsafe_allow_html=True)
+                    st.markdown("<h5 style='margin:0 0 14px 0; font-weight:700; text-align:center; color:#ffffff;'>Taxa de Abertura (%) e CTOR (%) por Campanha</h5>", unsafe_allow_html=True)
                     
                     df_camp['Campanha_Clean'] = df_camp['name'].astype(str).str.replace('LC7_MDE_AGO26 -', '', regex=False).str.strip()
                     
@@ -3027,38 +3027,38 @@ if not df_captacao.empty:
                     
                     fig_camp_perf.update_layout(
                         barmode='group',
-                        height=380,
+                        height=390,
                         margin=dict(l=10, r=10, t=10, b=80),
                         paper_bgcolor="rgba(0,0,0,0)",
                         plot_bgcolor="rgba(0,0,0,0)",
                         font=dict(color="#ffffff"),
                         xaxis=dict(tickangle=-45),
-                        legend=dict(orientation="h", y=1.1)
+                        legend=dict(orientation="h", y=1.1, x=0.25)
                     )
                     st.plotly_chart(fig_camp_perf, use_container_width=True)
 
             with col_ec2:
-                st.markdown(f"""
-                <div style="background-color:#0f172a; border-left:4px solid #ef4444; padding:18px; border-radius:10px; color:#ffffff; height:100%; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                    <h5 style="color:#ffffff; font-weight:700; margin:0;">🚨 Diagnóstico Crítico sobre os {str_base_real} Leads Reais</h5>
-                    <p style="font-size:0.88rem; color:#ffffff; margin-top:12px; line-height:1.6;">
-                        • <b>Baixo Open Rate Geral (2% a 4%):</b> Da base real de {str_base_real} e-mails enviados no carrinho, apenas <b>110 a 220 pessoas abriram o e-mail</b>.<br><br>
-                        • <b>Pico na Aula 4 ao Vivo (4%):</b> O E-mail 20 ('Estamos ao vivo') atingiu 222 aberturas únicas.<br><br>
-                        • <b>Destaque de Cliques no E-mail 15 (6% CTOR):</b> O E-mail 'Aviso importante' gerou a maior taxa de cliques da maratona.<br><br>
-                        👉 <b>Conclusão BI:</b> Depender unicamente do E-mail Marketing para fechamento de vendas causa perdas massivas. O WhatsApp deve ser o canal primário de conversão e o E-mail como apoio secundário.
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
+                st.markdown(f"""<div style="background-color:#0f172a; border-left:5px solid #ef4444; padding:22px 20px; border-radius:12px; color:#ffffff; min-height:435px; box-shadow:0 4px 15px rgba(0,0,0,0.25); display:flex; flex-direction:column; justify-content:center;">
+<h5 style="color:#ffffff; font-weight:700; margin:0 0 16px 0; text-align:center;">🚨 Diagnóstico Crítico sobre os {str_base_real} Leads Reais</h5>
+<p style="font-size:0.9rem; color:#ffffff; margin:0; line-height:1.6;">
+• <b>Baixo Open Rate Geral (2% a 4%):</b> Da base real de {str_base_real} e-mails enviados no carrinho, apenas <b>110 a 220 pessoas abriram o e-mail</b>.<br><br>
+• <b>Pico na Aula 4 ao Vivo (4%):</b> O E-mail 20 ('Estamos ao vivo') atingiu 222 aberturas únicas.<br><br>
+• <b>Destaque de Cliques no E-mail 15 (6% CTOR):</b> O E-mail 'Aviso importante' gerou a maior taxa de cliques da maratona.<br><br>
+👉 <b style="color:#f87171;">Conclusão BI:</b> Depender unicamente do E-mail Marketing para fechamento de vendas causa perdas massivas. O WhatsApp deve ser o canal primário de conversão e o E-mail como apoio secundário.
+</p>
+</div>""", unsafe_allow_html=True)
 
         # TAB 2: AUTOMAÇÃO DE ENTRADA & BOAS-VINDAS (EXCLUSIVO LC7_MDE_AGO26)
         with tab_em_aut:
             col_ea1, col_ea2 = st.columns([1.3, 1])
 
             with col_ea1:
-                st.markdown(f"""<div style="background-color:#1e1b4b; border-left:6px solid #6366f1; padding:22px; border-radius:12px; color:#ffffff; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-<span style="background-color:#6366f1; color:#ffffff; font-size:0.75rem; padding:4px 10px; border-radius:10px; font-weight:bold; text-transform:uppercase;">🚀 Automação Oficial LC7_MDE_AGO26</span>
+                st.markdown(f"""<div style="background-color:#1e1b4b; border-left:6px solid #6366f1; padding:24px; border-radius:12px; color:#ffffff; min-height:230px; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+<div style="text-align:center;">
+<span style="background-color:#6366f1; color:#ffffff; font-size:0.75rem; padding:4px 12px; border-radius:10px; font-weight:bold; text-transform:uppercase;">🚀 Automação Oficial LC7_MDE_AGO26</span>
 <h3 style="color:#ffffff; font-weight:800; margin:10px 0 4px 0;">OBRIGADO_LC7_MDE_AGO26</h3>
 <span style="font-size:0.85rem; color:#c7d2fe;">Início da Comunicação: 23/07/2026</span>
+</div>
 <hr style="border-color:rgba(255,255,255,0.15); margin:16px 0;">
 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
 <span style="font-size:0.95rem;">Tamanho Real da Lista de Envio:</span>
@@ -3075,20 +3075,18 @@ if not df_captacao.empty:
 </div>""", unsafe_allow_html=True)
 
             with col_ea2:
-                st.markdown(f"""
-                <div style="background-color:#0f172a; border-left:4px solid #10b981; padding:22px; border-radius:12px; color:#ffffff; height:100%; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
-                    <h5 style="color:#ffffff; font-weight:700; margin:0;">💡 Análise do Fluxo de Cadastro LC7 (Base Real)</h5>
-                    <p style="font-size:0.9rem; color:#ffffff; margin-top:12px; line-height:1.6;">
-                        • <b>Tamanho Real da Lista:</b> {str_base_real} leads limpos e deduplicados compõem a base ativa de e-mails do lançamento <b>LC7_MDE_AGO26</b>.<br><br>
-                        • <b>Engajamento no Onboarding:</b> {aberturas_onboarding_reais} pessoas (14%) abriram a mensagem de boas-vindas.<br><br>
-                        • <b>Retenção para WhatsApp:</b> {cliques_onboarding_reais} leads (22% CTOR) clicaram na chamada do e-mail para ingressar nos grupos oficiais do WhatsApp.
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
+                st.markdown(f"""<div style="background-color:#0f172a; border-left:5px solid #10b981; padding:24px; border-radius:12px; color:#ffffff; min-height:230px; box-shadow:0 4px 15px rgba(0,0,0,0.25);">
+<h5 style="color:#ffffff; font-weight:700; margin:0 0 14px 0; text-align:center;">💡 Análise do Fluxo de Cadastro LC7 (Base Real)</h5>
+<p style="font-size:0.9rem; color:#ffffff; margin:0; line-height:1.6;">
+• <b>Tamanho Real da Lista:</b> {str_base_real} leads limpos e deduplicados compõem a base ativa de e-mails do lançamento <b>LC7_MDE_AGO26</b>.<br><br>
+• <b>Engajamento no Onboarding:</b> {aberturas_onboarding_reais} pessoas (14%) abriram a mensagem de boas-vindas.<br><br>
+• <b>Retenção para WhatsApp:</b> {cliques_onboarding_reais} leads (22% CTOR) clicaram na chamada do e-mail para ingressar nos grupos oficiais do WhatsApp.
+</p>
+</div>""", unsafe_allow_html=True)
 
         # TAB 3: CRONOGRAMA DE CONTROLE (E-MAIL & WPP)
         with tab_em_ctrl:
-            st.markdown("##### 📅 Cronograma de Disparos Auditado (Hotmart Send & Grupos WhatsApp)")
+            st.markdown("<h5 style='text-align:center; font-weight:700; margin-bottom:16px; color:#ffffff;'>📅 Cronograma de Disparos Auditado (Hotmart Send & Grupos WhatsApp)</h5>", unsafe_allow_html=True)
             
             try:
                 df_ctrl = pd.read_csv(f_ctrl_email)
@@ -3111,7 +3109,17 @@ if not df_captacao.empty:
 
         # TAB 4: TABELA BRUTA DE CAMPANHAS
         with tab_em_raw:
-            st.markdown("##### 📋 Relatório Consolidado de Campanhas Hotmart Send")
+            st.markdown("<h5 style='text-align:center; font-weight:700; margin-bottom:16px; color:#ffffff;'>📋 Relatório Consolidado de Campanhas Hotmart Send</h5>", unsafe_allow_html=True)
+            
+            df_camp_display = df_camp[['name', 'data_comunicação', 'total_sent', 'open_rate_percent', 'ctor_percent']].copy()
+            df_camp_display.columns = ['Campanha / Assunto', 'Data Disparo', 'Total Disparados', 'Abertura (%)', 'CTOR (%)']
+            
+            def style_camp_row(val):
+                if isinstance(val, (int, float)) and val >= 4:
+                    return 'background-color: #064e3b; color: #4ade80; font-weight: bold;'
+                return ''
+                
+            st.dataframe(df_camp_display.style.map(style_camp_row, subset=['Abertura (%)']), use_container_width=True, hide_index=True)
             
             df_camp_display = df_camp[['name', 'data_comunicação', 'total_sent', 'open_rate_percent', 'ctor_percent']].copy()
             df_camp_display.columns = ['Campanha / Assunto', 'Data Disparo', 'Total Disparados', 'Abertura (%)', 'CTOR (%)']
