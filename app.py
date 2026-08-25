@@ -239,23 +239,27 @@ if not df_captacao.empty:
     
     if is_admin:
         opcoes_menu = [
-            '📊 Visão Principal', 
-            '🕸️ Funil Manychat (WPP)', 
-            '🚨 Monitoramento Avançado', 
-            '🧠 Plano de Ação', 
-            '📊 Pesquisa (WordCloud)', 
-            '🎯 Raio-X Didático CPLs',
-            '✉️ E-mails',
-            '🛒 Carrinho',
-            '💰 Vendas'
+            '📊 Visão Principal de Cadastros', 
+            '🕸️ Funil WhatsApp & ManyChat', 
+            '🧠 Pesquisa & Raio-X da Audiência', 
+            '🎯 Raio-X Didático das CPLs (1 a 4)',
+            '✉️ Campanhas & Disparos de E-mail',
+            '🛒 Carrinho Aberto & Recuperação',
+            '💵 Vendas Aprovadas & Faturamento',
+            '🚨 Monitoramento Avançado & Erros', 
+            '📋 Plano de Ação BI & Decisões'
         ]
     else:
-        opcoes_menu = ['📊 Visão Principal', '🎯 Raio-X Didático CPLs', '🕸️ Funil Manychat (WPP)']
+        opcoes_menu = [
+            '📊 Visão Principal de Cadastros', 
+            '🎯 Raio-X Didático das CPLs (1 a 4)', 
+            '🕸️ Funil WhatsApp & ManyChat'
+        ]
         
     menu_selecionado = st.sidebar.radio("Ir para:", opcoes_menu, label_visibility="collapsed")
     
     # Define o título dinamicamente com base na aba selecionada
-    if menu_selecionado == '🎯 Raio-X Didático CPLs':
+    if menu_selecionado in ['🎯 Raio-X Didático das CPLs (1 a 4)', '🎯 Raio-X Didático CPLs']:
         title_placeholder.title("🎯 Raio-X Didático e Funil das CPLs")
         subtitle_placeholder.markdown("Dashboard Executivo e Auditado Nó a Nó — Métricas reais de conversão, engajamento e custos Meta.")
     else:
@@ -307,7 +311,7 @@ if not df_captacao.empty:
     df_falhas_global = calcular_leads_perdidos_20m(df_captacao_clean, df_boasvindas_clean)
     leads_perdidos = len(df_falhas_global)
 
-    if menu_selecionado == '📊 Visão Principal':
+    if menu_selecionado in ['📊 Visão Principal de Cadastros', '📊 Visão Principal', 'Visão Principal']:
         col1, col2, col3, col4, col5, col6 = st.columns(6)
         col1.metric("Leads Capturados", f"{total_capturados}", help="Volume bruto de cadastros registrados na base principal (Landing Page).")
         col2.metric("Duplicados", f"{total_duplicados}", delta_color="inverse", help="Cadastros suspeitos de repetição (mesmo e-mail ou telefone).")
@@ -650,7 +654,7 @@ if not df_captacao.empty:
 
 
 
-    elif menu_selecionado == '🚨 Monitoramento Avançado':
+    elif menu_selecionado in ['🚨 Monitoramento Avançado & Erros', '🚨 Monitoramento Avançado', 'Monitoramento Avançado']:
         if True:
             st.header("🚨 Monitoramento Avançado (Analista)")
             st.markdown("Bem-vinda ao painel de infraestrutura técnica. Estes dados **não são visíveis** para o cliente.")
@@ -785,7 +789,7 @@ if not df_captacao.empty:
             except Exception as e:
                 st.error(f"Erro ao cruzar dados de perda: {e}") 
 
-    elif menu_selecionado == '🧠 Plano de Ação':
+    elif menu_selecionado in ['📋 Plano de Ação BI & Decisões', '🧠 Plano de Ação', 'Plano de Ação']:
         if True:
             st.header("🧠 Central de Insights e Plano de Ação")
             st.markdown("Bem-vinda ao cérebro do projeto. Aqui eu mapeio os principais gargalos e te dou o passo a passo para resolver. Marque as caixinhas conforme for concluindo!")
@@ -855,7 +859,7 @@ if not df_captacao.empty:
                     st.success("Alinhamento feito! Vamos acompanhar se a distribuição melhora na próxima semana.")
             
             
-    elif menu_selecionado == '🕸️ Funil Manychat (WPP)':
+    elif menu_selecionado in ['🕸️ Funil WhatsApp & ManyChat', '🕸️ Funil Manychat (WPP)', 'Funil Manychat (WPP)']:
         st.header("🕸️ Funil de Boas-Vindas Manychat (BI A/B)")
         st.write("Identifique vazamentos na automação e entenda qual versão converte mais leads.")
         st.write("---")
@@ -1188,7 +1192,7 @@ if not df_captacao.empty:
         except Exception as e:
             st.error(f"Erro ao processar a pesquisa: {e}")
             
-    elif menu_selecionado == '🎯 Raio-X Didático CPLs':
+    elif menu_selecionado in ['🎯 Raio-X Didático das CPLs (1 a 4)', '🎯 Raio-X Didático CPLs', 'Raio-X Didático CPLs']:
         # --- DADOS DE CPLS AUDITADOS NÓ A NÓ VIA MANYCHAT ---
         # Custos Reais da Meta/Manychat (10 - 16 de Agosto): Total US$ 155,18
         #   - 4.283 msgs WhatsApp Utility: US$ 33,41 (~US$ 0,0078 / msg)
@@ -2109,7 +2113,7 @@ if not df_captacao.empty:
                     </div>
                     """, unsafe_allow_html=True)
 
-    elif menu_selecionado == '💰 Vendas':
+    elif menu_selecionado in ['💵 Vendas Aprovadas & Faturamento', '💰 Vendas', 'Vendas']:
         # --- BANNER EXECUTIVO: INTELIGÊNCIA DE VENDAS AUDITADAS ---
         st.markdown("""
         <div style="background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%); border-left: 6px solid #10b981; padding: 24px 26px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
@@ -2534,7 +2538,7 @@ if not df_captacao.empty:
         except Exception as e:
             st.error(f"Erro ao processar a aba Compra Aprovada: {e}")
 
-    elif menu_selecionado == '🛒 Carrinho':
+    elif menu_selecionado in ['🛒 Carrinho Aberto & Recuperação', '🛒 Carrinho', 'Carrinho']:
         # --- BANNER EXECUTIVO: INTELIGÊNCIA UNIFICADA DE CARRINHO & RECUPERAÇÃO ---
         st.markdown("""
         <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-left: 6px solid #10b981; padding: 24px 26px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
