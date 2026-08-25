@@ -241,27 +241,45 @@ if not df_captacao.empty:
         st.rerun()
     st.sidebar.markdown("<div style='margin-bottom:10px;'></div>", unsafe_allow_html=True)
     
+    if 'menu_selecionado' not in st.session_state:
+        st.session_state['menu_selecionado'] = '📊 Visão Principal de Cadastros'
+
+    def update_menu(key):
+        st.session_state['menu_selecionado'] = st.session_state[key]
+
     if is_admin:
-        opcoes_menu = [
-            '📊 Visão Principal de Cadastros', 
-            '🕸️ Funil WhatsApp & ManyChat', 
-            '🧠 Pesquisa & Raio-X da Audiência', 
-            '🎯 Raio-X Didático das CPLs (1 a 4)',
-            '✉️ Campanhas & Disparos de E-mail',
-            '🛒 Carrinho Aberto & Recuperação',
-            '💵 Vendas Aprovadas & Faturamento',
-            '🚨 Monitoramento Avançado & Erros', 
-            '📋 Plano de Ação BI & Decisões',
-            '📑 Relatório Executivo BI'
-        ]
+        # Categoria 1: Captação
+        opts_cat1 = ['📊 Visão Principal de Cadastros', '🕸️ Funil WhatsApp & ManyChat', '🧠 Pesquisa & Raio-X da Audiência']
+        idx1 = opts_cat1.index(st.session_state['menu_selecionado']) if st.session_state['menu_selecionado'] in opts_cat1 else None
+        st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#38bdf8; font-size:0.8rem; margin-top:8px; margin-bottom:6px;'>📥 1. CAPTAÇÃO & LEADS</div>", unsafe_allow_html=True)
+        st.sidebar.radio("Captação", opts_cat1, index=idx1, key='r_cat1', on_change=update_menu, args=('r_cat1',), label_visibility="collapsed")
+
+        # Categoria 2: CPLs
+        opts_cat2 = ['🎯 Raio-X Didático das CPLs (1 a 4)', '✉️ Campanhas & Disparos de E-mail']
+        idx2 = opts_cat2.index(st.session_state['menu_selecionado']) if st.session_state['menu_selecionado'] in opts_cat2 else None
+        st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#818cf8; font-size:0.8rem; margin-top:14px; margin-bottom:6px;'>🎓 2. AULAS & CPLs</div>", unsafe_allow_html=True)
+        st.sidebar.radio("CPLs", opts_cat2, index=idx2, key='r_cat2', on_change=update_menu, args=('r_cat2',), label_visibility="collapsed")
+
+        # Categoria 3: Vendas
+        opts_cat3 = ['🛒 Carrinho Aberto & Recuperação', '💵 Vendas Aprovadas & Faturamento']
+        idx3 = opts_cat3.index(st.session_state['menu_selecionado']) if st.session_state['menu_selecionado'] in opts_cat3 else None
+        st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#34d399; font-size:0.8rem; margin-top:14px; margin-bottom:6px;'>💰 3. VENDAS & CONVERSÃO</div>", unsafe_allow_html=True)
+        st.sidebar.radio("Vendas", opts_cat3, index=idx3, key='r_cat3', on_change=update_menu, args=('r_cat3',), label_visibility="collapsed")
+
+        # Categoria 4: Inteligência & Gestão BI
+        opts_cat4 = ['📑 Relatório Executivo BI', '🚨 Monitoramento Avançado & Erros', '📋 Plano de Ação BI & Decisões']
+        idx4 = opts_cat4.index(st.session_state['menu_selecionado']) if st.session_state['menu_selecionado'] in opts_cat4 else None
+        st.sidebar.markdown("<div style='background-color:#1e293b; padding:6px 12px; border-radius:6px; font-weight:700; color:#fbbf24; font-size:0.8rem; margin-top:14px; margin-bottom:6px;'>⚙️ 4. INTELIGÊNCIA & GESTÃO BI</div>", unsafe_allow_html=True)
+        st.sidebar.radio("Gestão", opts_cat4, index=idx4, key='r_cat4', on_change=update_menu, args=('r_cat4',), label_visibility="collapsed")
+
+        menu_selecionado = st.session_state['menu_selecionado']
     else:
         opcoes_menu = [
             '📊 Visão Principal de Cadastros', 
             '🎯 Raio-X Didático das CPLs (1 a 4)', 
             '🕸️ Funil WhatsApp & ManyChat'
         ]
-        
-    menu_selecionado = st.sidebar.radio("Ir para:", opcoes_menu, label_visibility="collapsed")
+        menu_selecionado = st.sidebar.radio("Ir para:", opcoes_menu, label_visibility="collapsed")
     
     # Define o título dinamicamente com base na aba selecionada
     if menu_selecionado in ['🎯 Raio-X Didático das CPLs (1 a 4)', '🎯 Raio-X Didático CPLs']:
