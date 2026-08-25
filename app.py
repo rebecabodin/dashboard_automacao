@@ -1571,7 +1571,7 @@ if not df_captacao.empty:
             # ACTO 3: AUTÓPSIA CRÍTICA DE PERFORMANCE (O QUE FICA E O QUE SAI)
             # ---------------------------------------------------------
             st.subheader("🧠 Ato 3: Autópsia Crítica de Performance (Eliminar, Manter, Melhorar e Testar)")
-            st.markdown("Uma avaliação rigorosa de Copy, CTAs, Reprises e Canais para maximizar a conversão de vendas no LC8.")
+            st.markdown("Uma avaliação rigorosa de Copy, CTAs, Reprises e Canais estruturada em cards de decisão estratégica:")
 
             m_elim, m_mant, m_melh, m_test = st.tabs([
                 "🛑 1. O que ELIMINAR",
@@ -1581,50 +1581,149 @@ if not df_captacao.empty:
             ])
 
             with m_elim:
-                st.markdown("""
-                #### 🛑 1. O que ELIMINAR urgentemente:
-                * **Botão de Consentimento ('Receber Informações'):** 
-                  - *Por que tirar:* Na CPL 04, causou a fuga de **95% da base** (2.140 leram e saíram). Exigir duplo opt-in para quem já é lead gera atrito extremo no perfil técnico.
-                  - *Punição oculta:* A Meta enxerga mensagens sem interação como SPAM, rebaixando a nota de qualidade (Quality Rating) do número do WhatsApp.
-                * **Fluxo Automatizado WhatsApp ➔ Instagram:**
-                  - *Por que tirar:* Na CPL 01 e CPL 02, de 4.604 disparados, **apenas 16 a 21 pessoas completaram o ciclo até o comentário** (0.35% a 0.45% de conversão final).
-                  - *Perda de Foco:* Retirar o lead da rede oficial de conversão durante o lançamento rasga a atenção do comprador.
-                """)
+                e_col1, e_col2 = st.columns(2)
+                with e_col1:
+                    st.markdown("""
+                    <div style="background-color:#2d1215; border-left:6px solid #ef4444; padding:18px; border-radius:10px; min-height:220px; color:#ffffff;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🛑 Botão de Consentimento</h5>
+                            <span style="background-color:#ef4444; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">❌ Fuga de 95%</span>
+                        </div>
+                        <p style="font-size:0.9rem; color:#ffffff; margin-top:12px; line-height:1.5;">
+                            <b>Motivo:</b> Na CPL 04, exigiu duplo opt-in ('Receber Informações') e causou a fuga de <b>95% da base</b> (2.140 pessoas leram e fecharam o WhatsApp sem clicar). Exigir pedágio de quem já é lead gera atrito extremo no perfil técnico.<br><br>
+                            <b style="color:#f87171;">Punição Oculta:</b> A Meta enxerga mensagens sem interação como SPAM, rebaixando a nota de qualidade (Quality Rating) do número.
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                with e_col2:
+                    st.markdown("""
+                    <div style="background-color:#2d1215; border-left:6px solid #ef4444; padding:18px; border-radius:10px; min-height:220px; color:#ffffff;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🛑 Fluxo WPP ➔ Instagram</h5>
+                            <span style="background-color:#ef4444; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">❌ Fuga de 99.5%</span>
+                        </div>
+                        <p style="font-size:0.9rem; color:#ffffff; margin-top:12px; line-height:1.5;">
+                            <b>Motivo:</b> Nas CPLs 01 e 02, de 4.604 disparados, <b>apenas 16 a 21 pessoas completaram o ciclo até o comentário</b> (0.35% a 0.45% de conversão final).<br><br>
+                            <b style="color:#f87171;">Perda de Foco:</b> Retirar o lead da rede oficial de conversão (WhatsApp) para o Instagram durante a maratona rasga a atenção do comprador.
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             with m_mant:
-                st.markdown("""
-                #### 🟢 2. O que MANTER (Padrão Ouro):
-                * **Envio de Link Direto com Botão Único ('▶️ Assistir Aula 1 Agora'):**
-                  - *Comprovação em Dados:* Sempre que o link foi entregue sem intermediários (CPL 01 Msg 5, CPL 02 Msg 10, CPL 03 Msg 10), a taxa de cliques ficou em incríveis **87% a 88%**.
-                * **Atrasos Inteligentes de Pernoite:**
-                  - Retiveram centenas de leads com 100% de precisão operacional durante a noite (893 na CPL 01, 948 na CPL 03).
-                * **Convite para o Grupo VIP / Super Interessados:**
-                  - *Comprovação em Dados:* O envio do convite no disparo matinal da CPL 03 gerou **28.3% de CTR**, a maior taxa de conversão direta para grupos de todo o evento.
-                """)
+                k_col1, k_col2, k_col3 = st.columns(3)
+                with k_col1:
+                    st.markdown("""
+                    <div style="background-color:#064e3b; border-left:6px solid #10b981; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🟢 Link Direto sem Pedágio</h5>
+                            <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">⭐ 88% CTR</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:#ffffff; margin-top:10px; line-height:1.5;">
+                            <b>Comprovação em Dados:</b> Sempre que o link da aula foi entregue de forma direta no botão ('▶️ Assistir Aula 1 Agora'), a taxa de cliques atingiu incríveis <b>87% a 88%</b> (CPL 01 Msg 5, CPL 02 Msg 10, CPL 03 Msg 10).
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with k_col2:
+                    st.markdown("""
+                    <div style="background-color:#064e3b; border-left:6px solid #10b981; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🟢 Atraso Pernoite</h5>
+                            <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">🛡️ Retenção 100%</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:#ffffff; margin-top:10px; line-height:1.5;">
+                            <b>Comprovação em Dados:</b> Retiveram centenas de leads com 100% de precisão operacional durante a madrugada (893 leads retidos na CPL 01 e 948 na CPL 03 aguardando o aviso da manhã).
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with k_col3:
+                    st.markdown("""
+                    <div style="background-color:#064e3b; border-left:6px solid #10b981; padding:16px; border-radius:10px; min-height:220px; color:#ffffff;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🟢 Convite Grupo VIP</h5>
+                            <span style="background-color:#10b981; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">🚀 28.3% CTR</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:#ffffff; margin-top:10px; line-height:1.5;">
+                            <b>Comprovação em Dados:</b> O envio do convite no disparo matinal da CPL 03 gerou <b>28.3% de CTR</b>, a maior taxa de conversão direta para grupos de super interessados de todo o evento.
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             with m_melh:
-                st.markdown("""
-                #### 🟡 3. O que MELHORAR (Crítica de Copy, CTAs e Reprises):
-                * **Faz sentido ter Reprise?**
-                  - **SIM, mas com Copy reformulada.** Nas CPLs 01 e 03, as reprises geraram de **15.6% a 23.4% CTR**.
-                  - *Crítica de Copy:* As mensagens atuais são transacionais genéricas (*'Passando para avisar que já está liberado...'*).
-                  - *Como melhorar:* Mudar para **Escassez Real e Recorte de Aprendizado** (*'Perdeu o diagnóstico de baterias ensinado ontem? A gravação sai do ar em 24h. Assista o trecho crítico aqui 👇'*).
-                * **Crítica de CTAs:**
-                  - CTAs genéricos como *'Assistir Aula'* ou *'Receber Informação'* competem com a preguiça mental.
-                  - *CTAs recomendados:* **'▶️ Liberar Aula 1 Agora'**, **'🔓 Acessar Aula Gratuita'**, **'👥 Entrar no Grupo VIP'**.
-                * **Disparos Matinais das 08h00:**
-                  - *O Problema:* Usar a regra *'Dentro da Janela de 24h'* bloqueou **74% a 80% dos leads** nos avisos matinais.
-                  - *Como melhorar:* Configurar como **Template Pago da Meta** para garantir entrega para 100% dos leads retidos.
-                """)
+                imp_col1, imp_col2, imp_col3 = st.columns(3)
+                with imp_col1:
+                    st.markdown("""
+                    <div style="background-color:#451a03; border-left:6px solid #f59e0b; padding:16px; border-radius:10px; min-height:240px; color:#ffffff;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🟡 Copy de Reprise</h5>
+                            <span style="background-color:#f59e0b; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">💡 Escassez Real</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:#ffffff; margin-top:10px; line-height:1.5;">
+                            <b>Diagnóstico:</b> As reprises geram de 15.6% a 23.4% CTR, mas as mensagens atuais são transacionais genéricas.<br><br>
+                            <b style="color:#fbbf24;">Melhoria:</b> Mudar para <b>Escassez Real e Recorte de Aprendizado</b> ('Perdeu o diagnóstico de baterias? A gravação sai do ar em 24h').
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with imp_col2:
+                    st.markdown("""
+                    <div style="background-color:#451a03; border-left:6px solid #f59e0b; padding:16px; border-radius:10px; min-height:240px; color:#ffffff;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🟡 Otimização de CTAs</h5>
+                            <span style="background-color:#f59e0b; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">🎯 Botões Diretos</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:#ffffff; margin-top:10px; line-height:1.5;">
+                            <b>Diagnóstico:</b> CTAs genéricos como 'Assistir Aula' competem com a preguiça mental.<br><br>
+                            <b style="color:#fbbf24;">Melhoria:</b> Usar botões de ação específicos: <b>'▶️ Liberar Aula 1 Agora'</b>, <b>'🔓 Acessar Aula Gratuita'</b>, <b>'👥 Entrar no Grupo VIP'</b>.
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with imp_col3:
+                    st.markdown("""
+                    <div style="background-color:#451a03; border-left:6px solid #f59e0b; padding:16px; border-radius:10px; min-height:240px; color:#ffffff;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🟡 Disparos Matinais 08h</h5>
+                            <span style="background-color:#f59e0b; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">⚡ Template Pago</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:#ffffff; margin-top:10px; line-height:1.5;">
+                            <b>Diagnóstico:</b> Usar a regra 'Dentro da Janela de 24h' bloqueou 74% a 80% dos leads nos avisos da manhã.<br><br>
+                            <b style="color:#fbbf24;">Melhoria:</b> Configurar como <b>Template Pago da Meta</b> para garantir entrega a 100% dos leads retidos.
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             with m_test:
-                st.markdown("""
-                #### 🧪 4. O que TESTAR no LC8:
-                * **Vídeo-Notes Curtos (10s) do Taffarell no WhatsApp:**
-                  - O Teste A/B/C da CPL 03 provou que conteúdos visuais geram **+5.4% de abertura**. Testar um vídeo rápido no lugar de imagens estáticas.
-                * **Pesquisa de 1 Clique no WhatsApp (Quick Replies):**
-                  - Em vez de mandar o lead pro Instagram, perguntar no WPP: *'Qual seu maior obstáculo hoje? [A] Diagnóstico [B] Ferramentas [C] Clientes'*. Captura inteligência de vendas com 40%+ de resposta direta.
-                """)
+                t_col1, t_col2 = st.columns(2)
+                with t_col1:
+                    st.markdown("""
+                    <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:18px; border-radius:10px; min-height:200px; color:#ffffff;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🧪 Vídeo-Notes Curtos (10s) no WPP</h5>
+                            <span style="background-color:#3b82f6; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">🎥 +5.4% Abertura</span>
+                        </div>
+                        <p style="font-size:0.9rem; color:#ffffff; margin-top:12px; line-height:1.5;">
+                            O Teste A/B/C da CPL 03 provou que conteúdos visuais geram <b>+5.4% de abertura</b> em relação ao texto puro.<br><br>
+                            <b style="color:#60a5fa;">Ação no LC8:</b> Testar um vídeo-note rápido do Taffarell (10s) no lugar de imagens estáticas no disparo de convite.
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with t_col2:
+                    st.markdown("""
+                    <div style="background-color:#0f172a; border-left:6px solid #3b82f6; padding:18px; border-radius:10px; min-height:200px; color:#ffffff;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h5 style="color:#ffffff; font-weight:700; margin:0;">🧪 Pesquisa de 1 Clique (Quick Replies)</h5>
+                            <span style="background-color:#3b82f6; color:#ffffff; font-size:0.75rem; padding:3px 8px; border-radius:12px; font-weight:bold;">📊 40%+ Resposta</span>
+                        </div>
+                        <p style="font-size:0.9rem; color:#ffffff; margin-top:12px; line-height:1.5;">
+                            Em vez de mandar o lead pro Instagram para responder perguntas, enviar botões nativos no WhatsApp: <i>'Qual seu maior obstáculo hoje? [A] Diagnóstico [B] Ferramentas [C] Clientes'</i>.<br><br>
+                            <b style="color:#60a5fa;">Ação no LC8:</b> Captura inteligência de vendas com mais de 40% de resposta direta sem tirar o lead do WhatsApp.
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             st.markdown("<br>", unsafe_allow_html=True)
             st.markdown("---")
