@@ -1122,17 +1122,11 @@ if not df_captacao.empty:
                     <td style="padding:10px;">{(carrinho_leads_qtd/total_capturados*100) if total_capturados>0 else 1.35:.2f}% da base total</td>
                     <td style="padding:10px;">Pop-Up LP + Checkout Hotmart.</td>
                 </tr>
-                <tr style="border-bottom:1px solid #334155;">
+                <tr>
                     <td style="padding:10px;"><b>Vendas Aprovadas (Lançamento Pós 16/08)</b></td>
                     <td style="padding:10px; color:#34d399;"><b>{vendas_lanc_qtd} vendas</b></td>
                     <td style="padding:10px; color:#34d399;"><b>{conv_checkout_perc:.1f}% do checkout</b></td>
                     <td style="padding:10px; color:#34d399;"><b>R$ {faturamento_oferta_lanc:,.2f} Base Ofertas</b> (Gross: R$ {faturamento_lanc_total:,.2f} | Ticket Médio: R$ {ticket_medio_lanc:,.2f}).</td>
-                </tr>
-                <tr>
-                    <td style="padding:10px;"><b>Vendas Aprovadas (Base Total Acumulada)</b></td>
-                    <td style="padding:10px; color:#a7f3d0;"><b>{vendas_base_qtd} vendas</b></td>
-                    <td style="padding:10px; color:#a7f3d0;"><b>Ticket Médio: R$ {ticket_medio_base:,.2f}</b></td>
-                    <td style="padding:10px; color:#a7f3d0;"><b>R$ {faturamento_base_total:,.2f} total acumulado</b> (inclui vendas pré-lançamento).</td>
                 </tr>
             </table>
         </div>
